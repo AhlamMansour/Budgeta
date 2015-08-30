@@ -1,0 +1,81 @@
+﻿dd
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   .gitignore
+#	renamed:    Budgeta-Core-Test/.project -> .project
+#	deleted:    Budgeta-Core-Test/.classpath
+#	deleted:    Budgeta-Core-Test/.gitignore
+#	deleted:    Budgeta-Core-Test/.settings/org.eclipse.jdt.core.prefs
+#	deleted:    Budgeta-Core-Test/.settings/org.eclipse.m2e.core.prefs
+#	deleted:    Budgeta-Core-Test/Basic.properties
+#	deleted:    Budgeta-Core-Test/pom.xml
+#	deleted:    Budgeta-Core-Test/src/main/java/budgeta/test/BudgetaDDT.xlsx
+#	deleted:    Budgeta-Core-Test/src/main/java/budgeta/test/BudgetaLoginInOut.java
+#	deleted:    Budgeta-Core-Test/src/main/java/budgeta/test/CreateBudget.java
+#	deleted:    Budgeta-Core-Test/src/main/java/budgeta/test/Identifier.java
+#	deleted:    Budgeta-Core-Test/src/main/java/budgeta/test/Test.java
+#	deleted:    Budgeta-Core-Test/src/main/java/budgeta/test/UserDetails.xlsx
+#	deleted:    Budgeta-Core-Test/target/classes/main/java/budgeta/test/BudgetaDDT.xlsx
+#	deleted:    Budgeta-Core-Test/target/classes/main/java/budgeta/test/BudgetaLoginInOut.class
+#	deleted:    Budgeta-Core-Test/target/classes/main/java/budgeta/test/CreateBudget.class
+#	deleted:    Budgeta-Core-Test/target/classes/main/java/budgeta/test/Identifier.class
+#	deleted:    Budgeta-Core-Test/target/classes/main/java/budgeta/test/Test.class
+#	deleted:    Budgeta-Core-Test/target/classes/main/java/budgeta/test/UserDetails.xlsx
+#	new file:   README.md
+#	new file:   contributors.txt
+#	new file:   drivers/chromedriver-for-macosx
+#	new file:   libs/reportng-galilcustomized.jar
+#	new file:   pom.xml
+#	new file:   src/main/java/com/budgeta/BudgetaBorad.java
+#	renamed:    Budgeta-Core-Test/src/main/java/budgeta/component/LoginPage.java -> src/main/java/com/budgeta/LoginPage.java
+#	new file:   src/main/java/com/budgeta/TopBar.java
+#	new file:   src/main/java/com/budgeta/WelcomeScreen.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/AbstractPOM.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/SelTestProps.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/SeleniumDriver.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/TestParamsThreadPool.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/listeners/DataProviderParams.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/listeners/KnownIssue.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/listeners/MethodListener.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/listeners/Retry.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/listeners/RetryListener.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/listeners/TestFirst.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/listeners/TestLast.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/listeners/TestNGListener.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/logging/SelTestLog.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/restapi/RestCall.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/restapi/RestObject.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/restapi/RestResponse.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/restapi/client/RestClient.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/restapi/test/base/BaseRestAPITest.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/restapi/test/base/FlowAPITest.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/restapi/test/demo/DemoRestTest.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/restapi/test/utils/RestParser.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/restapi/test/utils/RestValidator.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/testConfig/BaseSeleniumTest.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/testConfig/TearDown.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/testConfig/WebPageSanityTest.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/utilities/DDTUtils.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/utilities/EmailReader.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/utilities/ExcelUtils.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/utilities/FileDownloader.java
+#	renamed:    Budgeta-Core-Test/src/main/java/budgeta/utilities/WebElementUtils.java -> src/main/java/com/galilsoftware/AF/core/utilities/WebElementUtils.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/utilities/WebPageSanityUtils.java
+#	renamed:    Budgeta-Core-Test/src/main/java/budgeta/utilities/WebdriverUtils.java -> src/main/java/com/galilsoftware/AF/core/utilities/WebdriverUtils.java
+#	new file:   src/main/java/com/galilsoftware/AF/core/utilities/Xls_Reader.java
+#	new file:   src/main/java/resources/TestProps.properties
+#	new file:   src/test/java/com/budgeta/test/BudgetaTest.java
+#	new file:   src/test/java/com/budgeta/test/WrapperTest.java
+#	new file:   src/test/java/com/budgeta/test/runners/testsRunner.xml
+#	new file:   src/test/java/com/budgeta/test/tryTest.java
+#	new file:   src/test/java/log4j.xml
+#
+# Untracked files:
+#	43apn0hc.pyj.txt
+#	gozngmvf.siy.txt
+#
+
