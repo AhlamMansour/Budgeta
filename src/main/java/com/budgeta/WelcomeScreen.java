@@ -26,10 +26,10 @@ public class WelcomeScreen extends AbstractPOM{
 	private WebElement skipTheTourBtn;
 	
 	
-	public BudgetaBorad clickSkipTour(){
+	public BudgetaBoard clickSkipTour(){
 		skipTheTourBtn.click();
 		WebdriverUtils.waitForElementToDisappear(driver, By.className("skip-tour"));
-		return new BudgetaBorad();
+		return new BudgetaBoard();
 	}
 	
 	@Override

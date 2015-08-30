@@ -12,7 +12,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
  *
  */
 
-public class BudgetaBorad extends AbstractPOM{
+public class BudgetaBoard extends AbstractPOM{
 
 	@FindBy(className = "main-content")
 	private WebElement wrapper;
