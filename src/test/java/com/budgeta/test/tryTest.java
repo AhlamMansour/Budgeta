@@ -3,9 +3,9 @@ package com.budgeta.test;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.budgeta.BudgetaBoard;
-import com.budgeta.TopBar;
-import com.budgeta.WelcomeScreen;
+import com.budgeta.pom.BudgetaBoard;
+import com.budgeta.pom.TopBar;
+import com.budgeta.pom.WelcomeScreen;
 import com.galilsoftware.AF.core.listeners.KnownIssue;
 
 public class tryTest extends WrapperTest {

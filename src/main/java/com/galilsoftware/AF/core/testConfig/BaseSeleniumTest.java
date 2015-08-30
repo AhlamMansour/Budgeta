@@ -185,14 +185,10 @@ public class BaseSeleniumTest {
 			throwableMessage += "\nBug ID is: " + bugID;
 		}
 
-		if (result.isSuccess()
-				&& testAnnotation.toString().contains(
-						"expectedExceptions=[class")) {
-			result.getTestContext().getPassedTests()
-					.removeResult(result.getMethod());
+		if (result.isSuccess() && testAnnotation.toString().contains("expectedExceptions=[class")) {
+			result.getTestContext().getPassedTests().removeResult(result.getMethod());
 			result.setThrowable(new Throwable(throwableMessage));
-			result.getTestContext().getSkippedTests()
-					.addResult(result, result.getMethod());
+			result.getTestContext().getSkippedTests().addResult(result, result.getMethod());
 		}
 
 	}

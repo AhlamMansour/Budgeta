@@ -1,4 +1,4 @@
-package com.budgeta;
+package com.budgeta.pom;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

@@ -4,7 +4,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 
-import com.budgeta.LoginPage;
+import com.budgeta.pom.LoginPage;
 import com.galilsoftware.AF.core.SelTestProps;
 import com.galilsoftware.AF.core.logging.SelTestLog;
 import com.galilsoftware.AF.core.testConfig.TearDown;
