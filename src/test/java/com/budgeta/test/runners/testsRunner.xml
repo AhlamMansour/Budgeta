@@ -8,10 +8,6 @@
 	</listeners>
 
 
-	<suite-files>
-		<suite-file path="./testsRunner.xml" />
-	</suite-files>
-
 	<test name="Budgeta Tests">
 		<classes>
 			<class name="com.budgeta.test.tryTest"></class>

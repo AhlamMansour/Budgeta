@@ -6,10 +6,11 @@ import org.testng.annotations.Test;
 import com.budgeta.BudgetaBoard;
 import com.budgeta.TopBar;
 import com.budgeta.WelcomeScreen;
+import com.galilsoftware.AF.core.listeners.KnownIssue;
 
 public class tryTest extends WrapperTest {
-
-	@Test
+	
+	@Test(enabled = true)
 	public void try1() {
 		System.out.println("success");
 		WelcomeScreen wl = new WelcomeScreen();
@@ -19,5 +20,18 @@ public class tryTest extends WrapperTest {
 		bar.clickLogout();
 		
 		
+	}
+	
+	
+	@Test(enabled = true)
+	public void failTest() {
+		Assert.assertTrue(false);
+		
+	}
+	
+	@KnownIssue(bugID = "231")
+	@Test(enabled  =true,expectedExceptions = AssertionError.class)
+	public void  knowFail(){
+		Assert.assertEquals(false, true);
 	}
 }

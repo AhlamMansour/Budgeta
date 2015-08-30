@@ -45,7 +45,7 @@ public class BaseSeleniumTest {
 	protected boolean ie;
 	protected boolean retry;
 	public static boolean local;
-	protected static final String OUTPUT_PATH = "test-output/";
+	protected static final String OUTPUT_PATH = "test-output/screenshots/";
 	private static String testHost = System
 			.getProperty("webdriver.test.testHost");
 	protected WebDriverWait wait;
