@@ -1,0 +1,35 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Tests" parallel="tests" thread-count="1" time-out="2000000"
+	verbose="3">
+
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	</listeners>
+
+
+	<suite-files>
+		<suite-file path="./testsRunner.xml" />
+	</suite-files>
+
+	<test name="Budgeta Tests">
+		<classes>
+			<class name="com.budgeta.test.tryTest"></class>
+		</classes>
+	</test>
+
+
+</suite>
+
+
+
+
+
+
+
+
+
+
+
+
+
