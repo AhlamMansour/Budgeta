@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetaBoard;
+import com.budgeta.pom.NewBudgetPopup;
 import com.budgeta.pom.TopBar;
 import com.budgeta.pom.WelcomeScreen;
 import com.galilsoftware.AF.core.listeners.KnownIssue;
@@ -15,6 +16,10 @@ public class tryTest extends WrapperTest {
 		System.out.println("success");
 		WelcomeScreen wl = new WelcomeScreen();
 		BudgetaBoard board = wl.clickSkipTour();
+		
+		NewBudgetPopup popup = board.addBudgeta();
+		popup.isDisplayed();
+		
 		Assert.assertTrue(board.isDisplayed(), "aaa");
 		TopBar bar = new TopBar();
 		bar.clickLogout();
