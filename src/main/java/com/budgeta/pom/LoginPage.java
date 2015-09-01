@@ -40,6 +40,12 @@ public class LoginPage extends AbstractPOM{
 	@FindBy(id = "terms-cond-btn")
 	WebElement termsAndCondBtn;
 	
+	@FindBy(className = "error")
+	private WebElement generalError;
+	
+	private By fieldError = By.className("input-error");
+	
+	
 	public LoginPage(){
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("login-page"));
 		wait.until(ExpectedConditions.visibilityOf(loginBtn));
@@ -72,12 +78,30 @@ public class LoginPage extends AbstractPOM{
 	public void clickLogin(){
 		loginBtn.click();
 		WebdriverUtils.waitForElementToDisappear(driver, By.className("login-page"));
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
 		try{
 			WebdriverUtils.waitForElementToBeFound(driver, By.className("tour-page"));
 		}
 		catch(Exception e){
 			WebdriverUtils.waitForElementToBeFound(driver, By.className("tour-page"));
 		}
+	}
+	
+	public String getEmailErrorMessage(){
+		if(emailHasError())
+			return  email.findElement(By.xpath("..")).findElement(fieldError).getText();
+		return "";
+	}
+	
+	public String getPasswordErrorMessage(){
+		if(emailHasError())
+			return  password.findElement(By.xpath("..")).findElement(fieldError).getText();
+		return "";
+	}
+	
+	public String getErrorMessage(){
+		return generalError.getText();
 	}
 
 	@Override

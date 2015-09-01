@@ -194,6 +194,42 @@ public class WebdriverUtils {
 		list.removeAll(Collections.singleton(null));
 		return list.toArray(new String[list.size()]);
 	}
+	
+	public static void waitForBudgetaLoadBar(WebDriver driver) {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		sleep(600);
+
+		wait.until(new Function<WebDriver, Boolean>() {
+			@Override
+			public Boolean apply(WebDriver arg0) {
+				try {
+					return !arg0.findElement(By.className("uploading")).isDisplayed();
+				} catch (Exception e) {
+					return true;
+				}
+			}
+		});
+		sleep(1300);
+	}
+	
+	
+	public static void waitForBudgetaBusyBar(WebDriver driver) {
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		sleep(600);
+
+		wait.until(new Function<WebDriver, Boolean>() {
+			@Override
+			public Boolean apply(WebDriver arg0) {
+				try {
+					return !arg0.findElement(By.className("busy"))
+							.isDisplayed();
+				} catch (Exception e) {
+					return true;
+				}
+			}
+		});
+		sleep(1200);
+	}
 
 	// public static String uploadExcelFile(WebElement uploadButton, WebDriver
 	// driver, String fileName, FileType fileType) {
