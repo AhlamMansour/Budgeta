@@ -62,9 +62,10 @@ public class BaseSeleniumTest {
 		ie = SelTestProps.getBoolean("common.ie");
 		local = SelTestProps.getBoolean("common.local");
 		retry = SelTestProps.getBoolean("common.retry", false);
-		nameOfXls = SelTestProps.get("common.base.test.db");
+		nameOfXls = SelTestProps.get("common.rest.excel.name");
 		// xls = new Xls_Reader(System.getProperty("user.dir") +
 		// "\\src\\main\\java\\resources\\" + nameOfXls);
+		xls = new Xls_Reader(System.getProperty("user.dir") + "\\src\\main\\java\\resources\\" + nameOfXls);
 	}
 
 	@BeforeSuite

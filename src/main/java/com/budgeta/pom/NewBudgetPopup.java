@@ -92,6 +92,14 @@ public class NewBudgetPopup extends AbstractPOM{
 		WebdriverUtils.waitForElementToBeFound(driver, By.id("continue-btn"));
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
+	
+	public BudgetaType getBudgetaType(String type){
+		for(BudgetaType budgeta : BudgetaType.values()){
+			if(budgeta.getName().equalsIgnoreCase(type))
+				return budgeta;
+		}
+		return null;
+	}
 /***********************************************************************************/	
 	private void openDropDownBudgetaType(){
 		if(!type.getAttribute("class").contains("open")){
