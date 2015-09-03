@@ -5,13 +5,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicHttpEntityEnclosingRequest;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -24,7 +17,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import com.galilsoftware.AF.core.logging.SelTestLog;
 import com.galilsoftware.AF.core.testConfig.BaseSeleniumTest;
 //import org.apache.http.impl.client.DefaultHttpClient;
-import com.google.gson.JsonObject;
 
 
 /**

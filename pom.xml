@@ -117,8 +117,11 @@
 							</property>
 							<property>
 								<name>listener</name>
-								<value>org.uncommons.reportng.HTMLReporter,
-									org.uncommons.reportng.JUnitXMLReporter</value>
+								<value>	org.uncommons.reportng.JUnitXMLReporter</value>
+							</property>
+							<property>
+								<name>reporter</name>
+								<value>org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter</value>
 							</property>
 						</properties>
 					</configuration>
