@@ -29,7 +29,24 @@ public class NewBudgetPopup extends AbstractPOM{
 	
 	@FindBy(id = "confirm-btn")
 	private WebElement createBtn;
+
+	@FindBy(id = "ember1564")
+	private WebElement currency;
 	
+	@FindBy(id = "ember1565")
+	private WebElement start;
+	
+	@FindBy(id = "ember1626")
+	private WebElement cashBalance;
+	
+	@FindBy(id = "ember1579")
+	private WebElement accountNumberCheckBox;
+	
+	@FindBy(id = "ember1581")
+	private WebElement productFieldCheckBox;
+	
+	@FindBy(id = "ember1583")
+	private WebElement geographyFieldCheckBox;
 	
 	private By dropdownOptions = By.cssSelector("ul.dropdown-menu li");
 	
@@ -62,13 +79,7 @@ public class NewBudgetPopup extends AbstractPOM{
 	}
 	
 	public void setType(BudgetaType budgetaType){
-		openDropDownBudgetaType();
-		for(WebElement el : type.findElements(dropdownOptions)){
-			if(budgetaType.getName().equalsIgnoreCase(el.getText())){
-				el.click();
-				WebdriverUtils.waitForElementToDisappear(driver, By.className("open"));
-			}
-		}
+		setOptionInDropDown(type, budgetaType.getName());
 	}
 	
 	public void clickContinue(){
@@ -100,12 +111,70 @@ public class NewBudgetPopup extends AbstractPOM{
 		}
 		return null;
 	}
+	
+	public void setCurrency(String curr){
+		setOptionInDropDown(currency, curr);
+	}
+	
+	public void setFiscalYearStartOn(String _year){
+		setOptionInDropDown(start, _year);
+	}
+	
+	public void setCashBalance(String cash){
+		cashBalance.sendKeys(cash);
+	}
+	
+	public void selectAccountNumberField(){
+		selectCheckBox(accountNumberCheckBox);
+	}
+	
+	public void removeAccountNumberField(){
+		removeCheckBox(accountNumberCheckBox);
+	}
+	
+	public void selectProductField(){
+		selectCheckBox(productFieldCheckBox);
+	}
+	
+	public void removeProductField(){
+		removeCheckBox(productFieldCheckBox);
+	}
+	
+	public void selectGeographyField(){
+		selectCheckBox(geographyFieldCheckBox);
+	}
+	
+	public void removeGeographyField(){
+		removeCheckBox(geographyFieldCheckBox);
+	}
 /***********************************************************************************/	
-	private void openDropDownBudgetaType(){
-		if(!type.getAttribute("class").contains("open")){
-			type.click();
-			WebdriverUtils.elementToHaveClass(type, "open");
+	private void openDropDown(WebElement dropdown){
+		if(!dropdown.getAttribute("class").contains("open")){
+			dropdown.click();
+			WebdriverUtils.elementToHaveClass(dropdown, "open");
 		}
+	}
+	
+	private void setOptionInDropDown(WebElement dropdown, String option){
+		openDropDown(dropdown);
+		for(WebElement el : dropdown.findElements(dropdownOptions)){
+			if(el.getText().equalsIgnoreCase(option)){
+				el.click();
+				WebdriverUtils.waitForElementToDisappear(driver, By.className("open"));
+			}
+		}
+	}
+	
+	private void selectCheckBox(WebElement checkBox){
+		if(checkBox.isSelected())
+			return;
+		checkBox.click();
+	}
+	
+	private void removeCheckBox(WebElement checkBox){
+		if(!checkBox.isSelected())
+			return;
+		checkBox.click();
 	}
 	
 	@Override
