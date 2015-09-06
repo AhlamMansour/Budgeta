@@ -1,5 +1,7 @@
 package com.budgeta.test;
 
+import java.util.Hashtable;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -21,6 +23,8 @@ public class BudgetaTest extends TearDown{
 	protected String password;
 	protected LoginPage loginPage;
 	
+	static Hashtable<String, String> months = new Hashtable<String, String>();
+	
 	
 	@BeforeClass
 	@Parameters()
@@ -28,6 +32,18 @@ public class BudgetaTest extends TearDown{
 		username = SelTestProps.get("common.username");
 		password = SelTestProps.get("common.password");
 		
+		months.put("Jan", "01");
+		months.put("Feb", "02");
+		months.put("Mar", "03");
+		months.put("Apr", "04");
+		months.put("May", "05");
+		months.put("Jun", "06");
+		months.put("Jul", "07");
+		months.put("Aug", "08");
+		months.put("Sep", "09");
+		months.put("Oct", "10");
+		months.put("Nov", "11");
+		months.put("Dec", "12");
 	}
 	
 	protected void doLogin(){

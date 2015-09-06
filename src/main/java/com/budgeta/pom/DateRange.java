@@ -70,6 +70,10 @@ public class DateRange extends AbstractPOM{
 		WebdriverUtils.waitForInvisibilityOfElement(driver, wrapper, 10);
 	}
 	
+	public String getDateRange(){
+		return wrapper.findElement(By.className("ember-text-field")).getAttribute("value");
+	}
+	
 /*****************************************************************************************/	
 	private void initWrapper(){
 		for(WebElement el : wrappers){
