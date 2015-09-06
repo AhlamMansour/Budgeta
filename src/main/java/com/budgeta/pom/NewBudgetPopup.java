@@ -18,6 +18,12 @@ public class NewBudgetPopup extends AbstractPOM{
 	@FindBy(id = "budget-type-dropdown")
 	private WebElement type;
 	
+	@FindBy(css = "div.month-picker.from")
+	private WebElement dateRange_from;
+	
+	@FindBy(css = "div.month-picker.to")
+	private WebElement dateRange_to;
+	
 	@FindBy(id = "cancel-btn")
 	private WebElement cancelBtn;
 	
@@ -37,7 +43,7 @@ public class NewBudgetPopup extends AbstractPOM{
 	private WebElement start;
 	
 	@FindBy(id = "ember1626")
-	private WebElement cashBalance;
+	private WebElement beginningCashBalance;
 	
 	@FindBy(id = "ember1579")
 	private WebElement accountNumberCheckBox;
@@ -104,6 +110,12 @@ public class NewBudgetPopup extends AbstractPOM{
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
+	public void clickCreate(){
+		createBtn.click();
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
 	public BudgetaType getBudgetaType(String type){
 		for(BudgetaType budgeta : BudgetaType.values()){
 			if(budgeta.getName().equalsIgnoreCase(type))
@@ -120,8 +132,8 @@ public class NewBudgetPopup extends AbstractPOM{
 		setOptionInDropDown(start, _year);
 	}
 	
-	public void setCashBalance(String cash){
-		cashBalance.sendKeys(cash);
+	public void setbeginninhCashBalance(String cash){
+		beginningCashBalance.sendKeys(cash);
 	}
 	
 	public void selectAccountNumberField(){
@@ -146,6 +158,16 @@ public class NewBudgetPopup extends AbstractPOM{
 	
 	public void removeGeographyField(){
 		removeCheckBox(geographyFieldCheckBox);
+	}
+	
+	public DateRange openDateRangeFrom(){
+		dateRange_from.click();
+		return new DateRange("from");
+	}
+	
+	public DateRange openDateRangeTo(){
+		dateRange_to.click();
+		return new DateRange("to");
 	}
 /***********************************************************************************/	
 	private void openDropDown(WebElement dropdown){

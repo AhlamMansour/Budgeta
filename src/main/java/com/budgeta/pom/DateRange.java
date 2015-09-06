@@ -58,11 +58,17 @@ public class DateRange extends AbstractPOM{
 			if(el.getText().equalsIgnoreCase(wantedMonth)){
 				el.click();
 				WebdriverUtils.waitForInvisibilityOfElement(driver, wrapper, 10);
+				return;
 			}
 		}
 	}
 	
+	public void setMonthByIndex(int index){
+		wrapper.findElements(months).get(index-1).click();
+		WebdriverUtils.waitForInvisibilityOfElement(driver, wrapper, 10);
+	}
 	
+/*****************************************************************************************/	
 	private void initWrapper(){
 		for(WebElement el : wrappers){
 			if(el.isDisplayed())
