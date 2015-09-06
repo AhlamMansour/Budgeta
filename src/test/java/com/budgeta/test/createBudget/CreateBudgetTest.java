@@ -30,7 +30,7 @@ public class CreateBudgetTest extends WrapperTest{
 		BudgetaBoard board = new BudgetaBoard();
 		NewBudgetPopup popup = board.addBudgeta();
 		
-		String budgetaName = WebdriverUtils.getTimeStamp(data.get("name"));
+		String budgetaName = WebdriverUtils.getTimeStamp(data.get("name")+"_");
 		popup.setName(budgetaName);
 		popup.setType(popup.getBudgetaType(data.get("Type")));
 		

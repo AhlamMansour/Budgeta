@@ -1,5 +1,7 @@
 package com.budgeta.pom;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,23 +37,23 @@ public class NewBudgetPopup extends AbstractPOM{
 	
 	@FindBy(id = "confirm-btn")
 	private WebElement createBtn;
-
-	@FindBy(id = "ember1564")
+	
+	@FindBy(className = "flex")
+	private List<WebElement> fields;
+	
+	@FindBy(className = "ember-checkbox")
+	private List<WebElement> checkBoxes;
+	
 	private WebElement currency;
 	
-	@FindBy(id = "ember1565")
-	private WebElement start;
+	private WebElement Fiscalstart;
 	
-	@FindBy(id = "ember1626")
 	private WebElement beginningCashBalance;
 	
-	@FindBy(id = "ember1579")
 	private WebElement accountNumberCheckBox;
 	
-	@FindBy(id = "ember1581")
 	private WebElement productFieldCheckBox;
 	
-	@FindBy(id = "ember1583")
 	private WebElement geographyFieldCheckBox;
 	
 	private By dropdownOptions = By.cssSelector("ul.dropdown-menu li");
@@ -93,6 +95,24 @@ public class NewBudgetPopup extends AbstractPOM{
 		WebdriverUtils.waitForElementToBeFound(driver, By.id("back-btn"));
 		WebdriverUtils.waitForElementToBeFound(driver, By.id("confirm-btn"));
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		
+		for(WebElement el : fields){
+			if(el.findElement(By.tagName("label")).getText().contains("Currency"))
+				currency = el;
+			if(el.findElement(By.tagName("label")).getText().contains("Fiscal"))
+				Fiscalstart = el;
+			if(el.findElement(By.tagName("label")).getText().contains("Beginning cash"))
+				beginningCashBalance = el.findElement(By.tagName("input"));
+		}
+		
+		for(WebElement el : checkBoxes){
+			if(el.findElement(By.xpath("..")).getText().contains("account number"))
+				accountNumberCheckBox = el;
+			if(el.findElement(By.xpath("..")).getText().contains("product field"))
+				productFieldCheckBox = el;
+			if(el.findElement(By.xpath("..")).getText().contains("geography field"))
+				geographyFieldCheckBox = el;
+		}
 	}
 	
 	public BudgetaBoard clickCancel(){
@@ -129,10 +149,12 @@ public class NewBudgetPopup extends AbstractPOM{
 	}
 	
 	public void setFiscalYearStartOn(String _year){
-		setOptionInDropDown(start, _year);
+		setOptionInDropDown(Fiscalstart, _year);
 	}
 	
 	public void setbeginninhCashBalance(String cash){
+		beginningCashBalance.click();
+		beginningCashBalance.clear();
 		beginningCashBalance.sendKeys(cash);
 	}
 	
