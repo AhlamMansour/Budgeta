@@ -19,6 +19,7 @@ public abstract class AbstractPOM {
 	protected Wait<WebDriver> wait = WebdriverUtils.initializePOM(driver, this);
 	
 	protected WebElement wrapper;
+	protected WebElement Success;
 	
 	public abstract boolean isDisplayed();
 	

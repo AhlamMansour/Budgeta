@@ -103,6 +103,12 @@ public class LoginPage extends AbstractPOM{
 	public String getErrorMessage(){
 		return generalError.getText();
 	}
+	
+	public SignUpPage clickSignUp(){
+		signUpBtn.click();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		return new SignUpPage();
+	}
 
 	@Override
 	public boolean isDisplayed() {
