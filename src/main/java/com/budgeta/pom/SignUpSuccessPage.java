@@ -39,6 +39,8 @@ public class SignUpSuccessPage extends AbstractPOM {
 		*/
 		
 	}
+	
+	
 
 	@Override
 	public boolean isDisplayed() {

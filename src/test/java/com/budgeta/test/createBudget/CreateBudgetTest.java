@@ -45,6 +45,7 @@ public class CreateBudgetTest extends WrapperTest{
 		popup.clickContinue();
 		
 		popup.setCurrency(data.get("Currency"));
+		
 		popup.setFiscalYearStartOn(data.get("FiscalYearStartsOn"));
 		popup.setbeginninhCashBalance(data.get("BeginningCashBalance"));
 		

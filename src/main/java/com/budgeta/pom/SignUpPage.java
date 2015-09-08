@@ -41,8 +41,12 @@ public class SignUpPage extends AbstractPOM {
 	@FindBy(className = "error")
 	private WebElement generalError;
 	
-	private By fieldError = By.className("input-error");
+	@FindBy(className = "login")
+	private WebElement Login;
 	
+	
+	private By fieldError = By.className("input-error");
+
 	
 	public SignUpPage()
 	{
@@ -151,6 +155,58 @@ public class SignUpPage extends AbstractPOM {
 		
 	}
 	
+	
+	public String getEmailErrorMessage(){
+		
+		if(EmailHasError())
+			return  email.findElement(By.xpath("..")).findElement(fieldError).getText();
+		return "";
+	}
+	
+	public String getInvitationCodeMessage(){
+		
+		if(EmailHasError())
+			return  InvitationCode.findElement(By.xpath("..")).findElement(fieldError).getText();
+		return "";
+	}
+
+
+	public String getFirstNameMessage(){
+	
+	if(EmailHasError())
+		return  FirstNmae.findElement(By.xpath("..")).findElement(fieldError).getText();
+	return "";
+}
+
+	public String getLastNameMessage(){
+	
+	if(EmailHasError())
+		return  LastName.findElement(By.xpath("..")).findElement(fieldError).getText();
+	return "";
+}
+	
+	public String getPasswordMessage(){
+		
+		if(EmailHasError())
+			return  password.findElement(By.xpath("..")).findElement(fieldError).getText();
+		return "";
+	}
+	
+public String getPassworVerifydMessage(){
+		
+		if(EmailHasError())
+			return  PasswordVerify.findElement(By.xpath("..")).findElement(fieldError).getText();
+		return "";
+	}
+
+	
+	public String getError(){
+		return generalError.getText();
+	}
+	
+	public boolean isGeneralErrorAppear(){
+		return WebdriverUtils.isDisplayed(generalError);
+	}
 
 	@Override
 	public boolean isDisplayed() {
