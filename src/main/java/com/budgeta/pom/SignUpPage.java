@@ -205,7 +205,7 @@ public String getPassworVerifydMessage(){
 	}
 	
 	public boolean isGeneralErrorAppear(){
-		return WebdriverUtils.isDisplayed(generalError);
+		return !generalError.getText().equals("");
 	}
 
 	@Override

@@ -7,16 +7,16 @@ import org.testng.annotations.Test;
 
 import com.budgeta.pom.LoginPage;
 import com.budgeta.pom.SignUpPage;
-import com.budgeta.pom.SignUpSuccessPage;
 import com.budgeta.test.BudgetaTest;
 import com.galilsoftware.AF.core.listeners.DataProviderParams;
-import com.galilsoftware.AF.core.listeners.TestFirst;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 
 
 public class SignUpTest extends BudgetaTest{
 	
 	SignUpPage signUpPage ;
+	String existEmail = "";
 	
 	@Test(dataProvider = "ExcelFileLoader", enabled = true)
 	@DataProviderParams(sheet = "SignUp" , area = "CreateUser")
@@ -34,17 +34,36 @@ public class SignUpTest extends BudgetaTest{
 		//Assert.assertTrue(signUpPage.InvitationCodeHasError(), "Request a beta invitation.");
 		signUpPage.setFirstName(data.get("FirstName"));
 		signUpPage.setLastName(data.get("LastName"));
-		signUpPage.setEmail(data.get("email"));
+		String email = data.get("email");
+		
+		if(email.contains("@")){
+			String prefix = email.substring(0, email.indexOf("@"));
+			String suffix = email.substring(email.indexOf("@"));
+			email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
+		}
+		
+		if(data.get("ExistEmail").equals("FALSE")){
+			existEmail = email;
+		}
+		else{
+			email = existEmail;
+		}
+		
+		signUpPage.setEmail(email);
 		signUpPage.setPassword(data.get("password"));
 		signUpPage.setPasswordVerify(data.get("PasswordVerify"));
 		
 		signUpPage.clickSignUp();
 		
-		
-		if(data.get("ErrorField").equals("InvitationCode"))
-			Assert.assertEquals(signUpPage.InvitationCodeHasError(), "Value is required");
-		
-		
+		String errorField = data.get("ErrorField");
+		if(errorField.equals("InvitationCode"))
+			Assert.assertTrue(signUpPage.InvitationCodeHasError(),"Value is required");
+		if(errorField.equals("email"))
+			Assert.assertTrue(signUpPage.EmailHasError(),"Email address is invalid");
+		if(errorField.equals("SignUpErrorPass"))
+			Assert.assertTrue(signUpPage.isGeneralErrorAppear(),"Passwords don't match");
+		if(errorField.equals("SignUpErrorUser"))
+			Assert.assertTrue(signUpPage.isGeneralErrorAppear(),"An account with this email address already exists");
 		
 		//Assert.assertTrue(signUpPage.isGeneralErrorAppear(), "");
 		//Assert.assertEquals(signUpPage.getError(), "");
