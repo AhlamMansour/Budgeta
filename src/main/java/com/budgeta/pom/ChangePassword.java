@@ -23,6 +23,9 @@ public class ChangePassword extends AbstractPOM{
 	@FindBy(className = "ember-text-field")
 	private List<WebElement> textFields;
 	
+	@FindBy(className = "alert-danger")
+	private WebElement error;
+	
 	
 	public ChangePassword(){
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
@@ -58,11 +61,19 @@ public class ChangePassword extends AbstractPOM{
 		return new BudgetaBoard();
 	}
 	
-	public BudgetaBoard clickSave(){
+	public BudgetaBoard clickSave(boolean doSave){
 		getSaveButton().click();
+		if(!doSave){
+			WebdriverUtils.sleep(2000);
+			return null;
+		}
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
 		return new BudgetaBoard();
+	}
+	
+	public boolean isErrorDisplayed(){
+		return WebdriverUtils.isDisplayed(error);
 	}
 	
 	private WebElement getCurrentPasswordField(){

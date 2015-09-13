@@ -43,7 +43,11 @@ import com.google.common.base.Function;
  * 
  */
 public class WebdriverUtils {
-
+	
+	public enum FileTypes {
+		DOC, DOCX, PDF, TXT, GIF, JPG, JPEG, PNG
+	}
+	
 	public static class EmptyElemetCondition implements
 			ExpectedCondition<Boolean> {
 
@@ -229,6 +233,31 @@ public class WebdriverUtils {
 			}
 		});
 		sleep(1200);
+	}
+	
+	public static String uploadExcelFile(WebElement uploadButton,
+			WebDriver driver, String fileName, FileTypes fileType) {
+		String fileNamex = "";
+		if (SelTestProps.getBoolean("common.local")) {
+			File file;
+			file = new File(System.getProperty("user.dir")
+					+ "\\resources\\files\\" + fileName + "."
+					+ fileType.name().toLowerCase());
+			uploadButton.sendKeys(file.getAbsolutePath());
+			fileNamex = file.getName();
+		} else {
+			System.out.println("Uploading File: " + fileName);
+			if (getCurrentRunningBrowserType(driver).toLowerCase().equals("chrome")) {
+				uploadButton.sendKeys(System.getProperty("user.dir") + "//resources//files//" + fileName + "." + fileType.name().toLowerCase());
+			} else {
+				uploadButton.sendKeys(System.getProperty("user.dir") + "//resources//files//" + fileName + "." + fileType.name().toLowerCase());
+			}
+
+		}
+
+		WebdriverUtils.sleep(1000);
+		driver.switchTo().defaultContent();
+		return fileNamex;
 	}
 
 	// public static String uploadExcelFile(WebElement uploadButton, WebDriver
