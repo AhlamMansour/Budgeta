@@ -44,6 +44,9 @@ public class NewBudgetPopup extends AbstractPOM{
 	@FindBy(className = "ember-checkbox")
 	private List<WebElement> checkBoxes;
 	
+	@FindBy(css = "label.error")
+	private List<WebElement> errors;
+	
 	private WebElement currency;
 	
 	private WebElement Fiscalstart;
@@ -90,8 +93,11 @@ public class NewBudgetPopup extends AbstractPOM{
 		setOptionInDropDown(type, budgetaType.getName());
 	}
 	
-	public void clickContinue(){
+	public void clickContinue(boolean doContinue){
 		continueBtn.click();
+		if(!doContinue)
+			return;
+		
 		WebdriverUtils.waitForElementToBeFound(driver, By.id("back-btn"));
 		WebdriverUtils.waitForElementToBeFound(driver, By.id("confirm-btn"));
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
@@ -190,6 +196,14 @@ public class NewBudgetPopup extends AbstractPOM{
 	public DateRange openDateRangeTo(){
 		dateRange_to.click();
 		return new DateRange("to");
+	}
+	
+	public String getVisibleErrorText(){
+		for(WebElement error : errors){
+			if(!error.getText().isEmpty())
+				return error.getText();
+		}
+		return "no errors";
 	}
 /***********************************************************************************/	
 	private void openDropDown(WebElement dropdown){

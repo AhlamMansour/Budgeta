@@ -47,29 +47,36 @@ public class CreateBudgetTest extends WrapperTest{
 		to.setYear(data.get("DateRange_year_to"));
 		to.setMonth(data.get("DateRange_month_to"));
 		
-		popup.clickContinue();
 		
-		popup.setCurrency(data.get("Currency"));
+		if(data.get("ContinueShouldPass").equals("FALSE")){
+			popup.clickContinue(false);
+			Assert.assertEquals(popup.getVisibleErrorText(), "Start Date must be before End Date");
+		}
+		else{
+			popup.clickContinue(true);
+			popup.setCurrency(data.get("Currency"));
 		
-		popup.setFiscalYearStartOn(data.get("FiscalYearStartsOn"));
-		popup.setbeginninhCashBalance(data.get("BeginningCashBalance"));
+			popup.setFiscalYearStartOn(data.get("FiscalYearStartsOn"));
+			popup.setbeginninhCashBalance(data.get("BeginningCashBalance"));
 		
-		if(data.get("AccountNumber").equalsIgnoreCase("Yes"))
-			popup.selectAccountNumberField();
-		if(data.get("ProductField").equalsIgnoreCase("Yes"))
-			popup.selectProductField();
-		if(data.get("GeographyField").equalsIgnoreCase("Yes"))
-			popup.selectGeographyField();
+			if(data.get("AccountNumber").equalsIgnoreCase("Yes"))
+				popup.selectAccountNumberField();
+			if(data.get("ProductField").equalsIgnoreCase("Yes"))
+				popup.selectProductField();
+			if(data.get("GeographyField").equalsIgnoreCase("Yes"))
+				popup.selectGeographyField();
 		
-		popup.clickCreate();
+			popup.clickCreate();
 		
-		Assert.assertEquals(secondaryBoard.getNameOfSelectedBudgeta(), budgetaName);
+			Assert.assertEquals(secondaryBoard.getNameOfSelectedBudgeta(), budgetaName);
 		
-		GeneralSection general = new GeneralSection();
+			GeneralSection general = new GeneralSection();
 		
-		Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_year_from"), data.get("DateRange_year_from")));
-		Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_year_to"), data.get("DateRange_year_to")));
-		Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
-	}	
+			Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_year_from"), data.get("DateRange_year_from")));
+			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_year_to"), data.get("DateRange_year_to")));
+			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+		}	
+	
+		}
 	
 }
