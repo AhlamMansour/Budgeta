@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.NewBudgetPopup;
+import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.TopBar;
 import com.budgeta.pom.WelcomeScreen;
 import com.galilsoftware.AF.core.listeners.KnownIssue;
@@ -20,8 +21,9 @@ public class tryTest extends WrapperTest {
 		System.out.println("success");
 		WelcomeScreen wl = new WelcomeScreen();
 		BudgetaBoard board = wl.clickSkipTour();
+		SecondaryBoard secondaryBoard = board.getSecondaryBoard();
 
-		NewBudgetPopup popup = board.addBudgeta();
+		NewBudgetPopup popup = secondaryBoard.addBudgeta();
 		popup.isDisplayed();
 
 		Assert.assertTrue(board.isDisplayed(), "aaa");

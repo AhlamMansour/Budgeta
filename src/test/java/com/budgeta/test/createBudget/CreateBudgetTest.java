@@ -8,7 +8,10 @@ import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.DateRange;
+import com.budgeta.pom.GeneralSection;
 import com.budgeta.pom.NewBudgetPopup;
+import com.budgeta.pom.SecondaryBoard;
+import com.budgeta.test.BudgetaTest;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.DataProviderParams;
 import com.galilsoftware.AF.core.listeners.MethodListener;
@@ -28,7 +31,9 @@ public class CreateBudgetTest extends WrapperTest{
 		driver.get(baseURL);
 		
 		BudgetaBoard board = new BudgetaBoard();
-		NewBudgetPopup popup = board.addBudgeta();
+		SecondaryBoard secondaryBoard = board.getSecondaryBoard();
+		
+		NewBudgetPopup popup = secondaryBoard.addBudgeta();
 		
 		String budgetaName = WebdriverUtils.getTimeStamp(data.get("name")+"_");
 		popup.setName(budgetaName);
@@ -58,7 +63,13 @@ public class CreateBudgetTest extends WrapperTest{
 		
 		popup.clickCreate();
 		
-		Assert.assertTrue(board.isBudgetExist(budgetaName), "expected to add budgeta successfully");
-	}
+		Assert.assertEquals(secondaryBoard.getNameOfSelectedBudgeta(), budgetaName);
+		
+		GeneralSection general = new GeneralSection();
+		
+		Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_year_from"), data.get("DateRange_year_from")));
+		Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_year_to"), data.get("DateRange_year_to")));
+		Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+	}	
 	
 }

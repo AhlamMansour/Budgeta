@@ -62,6 +62,10 @@ public class BudgetaTest extends TearDown{
 		loginPage.clickLogin();
 	}
 	
+	public static String getDateByNumbersFormat(String month, String year){
+		return months.get(month)+"/"+year;
+	}
+	
 	
 	@BeforeMethod
 	public void clearFocus() {
