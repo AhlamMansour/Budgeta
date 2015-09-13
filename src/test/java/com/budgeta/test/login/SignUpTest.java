@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import com.budgeta.pom.LoginPage;
 import com.budgeta.pom.SignUpPage;
+import com.budgeta.pom.SignUpSuccessPage;
 import com.budgeta.test.BudgetaTest;
 import com.galilsoftware.AF.core.listeners.DataProviderParams;
 import com.galilsoftware.AF.core.listeners.MethodListener;
@@ -19,6 +20,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class SignUpTest extends BudgetaTest{
 	
 	SignUpPage signUpPage ;
+	SignUpSuccessPage signUpSuccessPage;
 	String existEmail = "";
 	
 	@Test(dataProvider = "ExcelFileLoader", enabled = true)
@@ -27,6 +29,7 @@ public class SignUpTest extends BudgetaTest{
 	
 		driver.get(baseURL);
 		LoginPage loginPage = new LoginPage();
+		
 		signUpPage = loginPage.clickSignUp();
 		String EmailError = signUpPage.getEmailErrorMessage();
 		System.out.println(EmailError);
@@ -72,6 +75,14 @@ public class SignUpTest extends BudgetaTest{
 		//Assert.assertEquals(signUpPage.getError(), "");
 		
 		//Assert.assertTrue(signUpPage.InvitationCodeHasError(), "Request a beta invitation.");
+		if (data.get("ShouldPass").equals("TRUE")){
+			signUpSuccessPage = new SignUpSuccessPage();
+			Assert.assertTrue(signUpSuccessPage.isDisplayed(), "Expected To Sign Uo Seccess page to be dispaly");
+			signUpSuccessPage.ConfirmSignUp();
+		}
+		
+		
+		
 		
 		
 	}
