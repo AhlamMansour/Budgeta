@@ -23,6 +23,7 @@ public class BudgetaTest extends TearDown{
 	protected String password;
 	protected LoginPage loginPage;
 	
+	protected String newPassword = "aaa1234";
 	static Hashtable<String, String> months = new Hashtable<String, String>();
 	
 	
@@ -59,7 +60,7 @@ public class BudgetaTest extends TearDown{
 		loginPage.isDisplayed();
 		loginPage.setEmail(username);
 		loginPage.setPassword(password);
-		loginPage.clickLogin();
+		loginPage.clickLogin(true);
 	}
 	
 	public static String getDateByNumbersFormat(String month, String year){

@@ -47,11 +47,12 @@ public class CreateBudgetTest extends WrapperTest{
 		to.setYear(data.get("DateRange_year_to"));
 		to.setMonth(data.get("DateRange_month_to"));
 		
-		
+		//error in the first page
 		if(data.get("ContinueShouldPass").equals("FALSE")){
 			popup.clickContinue(false);
 			Assert.assertEquals(popup.getVisibleErrorText(), "Start Date must be before End Date");
 		}
+		//else, continue to the next page
 		else{
 			popup.clickContinue(true);
 			popup.setCurrency(data.get("Currency"));

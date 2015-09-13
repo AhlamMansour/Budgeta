@@ -75,8 +75,12 @@ public class LoginPage extends AbstractPOM{
 		return password.findElement(By.xpath("..")).getAttribute("class").contains("has-error");
 	}
 	
-	public void clickLogin(){
+	public void clickLogin(boolean doLogin){
 		loginBtn.click();
+		if(!doLogin){
+			WebdriverUtils.sleep(5000);
+			return;
+		}
 		WebdriverUtils.waitForElementToDisappear(driver, By.className("login-page"));
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
@@ -102,6 +106,10 @@ public class LoginPage extends AbstractPOM{
 	
 	public String getErrorMessage(){
 		return generalError.getText();
+	}
+	
+	public boolean isGeneralErrorAppear(){
+		return !getErrorMessage().isEmpty();
 	}
 	
 	public SignUpPage clickSignUp(){

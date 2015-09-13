@@ -3,16 +3,19 @@ package com.budgeta.test.login;
 import java.util.Hashtable;
 
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.LoginPage;
 import com.budgeta.pom.SignUpPage;
 import com.budgeta.test.BudgetaTest;
 import com.galilsoftware.AF.core.listeners.DataProviderParams;
+import com.galilsoftware.AF.core.listeners.MethodListener;
+import com.galilsoftware.AF.core.listeners.TestNGListener;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 
-
+@Listeners({ MethodListener.class, TestNGListener.class })
 public class SignUpTest extends BudgetaTest{
 	
 	SignUpPage signUpPage ;

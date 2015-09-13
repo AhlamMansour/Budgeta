@@ -54,6 +54,10 @@ public class TopBar extends AbstractPOM{
 		}
 	}
 	
+	public String getUserName(){
+		return userMenu.findElement(By.className("user-name")).getText();
+	}
+	
 	public boolean isUserMenuOpened(){
 		return isdropdownOpened(userMenu);
 	}
