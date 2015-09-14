@@ -37,7 +37,7 @@ public class SignUpTest extends BudgetaTest{
 		
 		signUpPage.setInvitationCode(data.get("InvitationCode"));
 		
-		//Assert.assertTrue(signUpPage.InvitationCodeHasError(), "Request a beta invitation.");
+		
 		signUpPage.setFirstName(data.get("FirstName"));
 		signUpPage.setLastName(data.get("LastName"));
 		String email = data.get("email");
@@ -71,65 +71,13 @@ public class SignUpTest extends BudgetaTest{
 		if(errorField.equals("SignUpErrorUser"))
 			Assert.assertTrue(signUpPage.isGeneralErrorAppear(),"An account with this email address already exists");
 		
-		//Assert.assertTrue(signUpPage.isGeneralErrorAppear(), "");
-		//Assert.assertEquals(signUpPage.getError(), "");
-		
-		//Assert.assertTrue(signUpPage.InvitationCodeHasError(), "Request a beta invitation.");
+	
 		if (data.get("ShouldPass").equals("TRUE")){
 			signUpSuccessPage = new SignUpSuccessPage();
 			Assert.assertTrue(signUpSuccessPage.isDisplayed(), "Expected To Sign Uo Seccess page to be dispaly");
 			signUpSuccessPage.ConfirmSignUp();
 		}
-		
-		
-		
-		
-		
+				
 	}
 
-
-	
-	/*
-	
-	SignUpPage signUpPage ;
-	SignUpSuccessPage signUpSuccessPage;
-	
-	@TestFirst
-	@Test(enabled = true)
-	public void insertToSignUpPage(){
-		
-		driver.get(baseURL);
-		LoginPage loginPage = new LoginPage();
-		signUpPage = loginPage.clickSignUp();
-		
-		Assert.assertTrue(signUpPage.isDisplayed(),"expected to sign up page be displayed");
-	
-		
-	}
-
-	@Test(enabled = true)
-	public void signUpTest(){
-		
-		signUpPage.setFirstName("trybudgeta");
-		signUpPage.setLastName("last");
-		signUpPage.setEmail("ahlam1@hotmail.com");
-		signUpPage.setInvitationCode("trybudgeta");
-		signUpPage.setPassword("123");
-		signUpPage.setPasswordVerify("123");
-		
-		
-		
-		
-		signUpPage.clickSignUp();
-		Assert.assertTrue(signUpPage.isGeneralErrorAppear(), "");
-		Assert.assertEquals(signUpPage.getError(), "");
-		
-	
-		//Assert.assertTrue(signUpPage.getEmailErrorMessage(),"expected to sign up page be displayed");	
-		//Assert.assertTrue(signUpPage.getEmailErrorMessage(), "same user");
-	}
-	
-
-	*/
-	
 }
