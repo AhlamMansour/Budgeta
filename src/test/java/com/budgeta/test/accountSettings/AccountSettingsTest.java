@@ -13,6 +13,7 @@ import com.budgeta.pom.TopBar;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class AccountSettingsTest extends WrapperTest{
@@ -56,10 +57,25 @@ public class AccountSettingsTest extends WrapperTest{
 		Assert.assertTrue(changePassword.isDisplayed(), "expected change password page to be displayed");
 		Assert.assertEquals(changePassword.getTitle(), "CHANGE PASSWORD");
 		
+		//error current password
+		changePassword.setCurrentPassword(WebdriverUtils.getTimeStamp(""));
+		changePassword.setNewPassword(newPassword);
+		changePassword.setVerifyPassword(newPassword);
+		changePassword.clickSave(false);
+		Assert.assertTrue(changePassword.isErrorDisplayed(), "expected to error");
+		
+		//error verify password
+		changePassword.setCurrentPassword(password);
+		changePassword.setNewPassword(newPassword);
+		changePassword.setVerifyPassword(newPassword+WebdriverUtils.getTimeStamp(""));
+		changePassword.clickSave(false);
+		Assert.assertTrue(changePassword.isErrorDisplayed(), "expected to error");
+		
+		//success change password
 		changePassword.setCurrentPassword(password);
 		changePassword.setNewPassword(newPassword);
 		changePassword.setVerifyPassword(newPassword);
-		changePassword.clickSave();
+		changePassword.clickSave(true);
 		
 		topBar.clickLogout();
 		
@@ -82,7 +98,7 @@ public class AccountSettingsTest extends WrapperTest{
 		changePassword.setCurrentPassword(newPassword);
 		changePassword.setNewPassword(password);
 		changePassword.setVerifyPassword(password);
-		changePassword.clickSave();
+		changePassword.clickSave(true);
 		
 	}
 }

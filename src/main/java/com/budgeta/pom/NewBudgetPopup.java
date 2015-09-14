@@ -198,12 +198,16 @@ public class NewBudgetPopup extends AbstractPOM{
 		return new DateRange("to");
 	}
 	
+	public boolean pageHasError(){
+		return !getVisibleErrorText().isEmpty();
+	}
+	
 	public String getVisibleErrorText(){
 		for(WebElement error : errors){
 			if(!error.getText().isEmpty())
 				return error.getText();
 		}
-		return "no errors";
+		return "";
 	}
 /***********************************************************************************/	
 	private void openDropDown(WebElement dropdown){

@@ -23,7 +23,6 @@ public class AccountSettings extends AbstractPOM{
 	@FindBy(css = "div.center button")
 	private List<WebElement> footerButtons;
 	
-	
 	public AccountSettings(){
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
@@ -66,8 +65,6 @@ public class AccountSettings extends AbstractPOM{
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
 		return new BudgetaBoard();
 	}
-	
-	
 	
 	private WebElement getSaveButton() {
 		for(WebElement el : footerButtons){

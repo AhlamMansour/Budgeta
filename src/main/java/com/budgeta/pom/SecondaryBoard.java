@@ -39,7 +39,7 @@ public class SecondaryBoard extends AbstractPOM{
 	@FindBy(css = "ol.tree.nav")
 	private List<WebElement> selectedBudget;
 	
-	private By line = By.className("droppable");
+	private By line = By.className("new-line");
 	
 	private By budgetName = By.className("budget-name");
 	
@@ -99,13 +99,16 @@ public class SecondaryBoard extends AbstractPOM{
 			getSelectedBudget().findElement(addLinesBtn).click();
 			WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
 		}
-		List<WebElement> lines = getLines();
-		for(WebElement el : lines){
-				WebElement add = el.findElement(addLineBtn);
-				if(add.getAttribute("class").contains("enabled")){
-					add.click();
-					WebdriverUtils.elementToHaveClass(add,"enabled");
-				}
+		WebElement line = null;
+		while(getNextLineToAdd() != null ){
+			line = getNextLineToAdd();
+			WebElement add = line.findElement(addLineBtn);
+			if(add.getAttribute("class").contains("enable")){
+				add.click();
+				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				WebdriverUtils.sleep(1500);
+			}
 		}
 	}
 	
@@ -116,11 +119,11 @@ public class SecondaryBoard extends AbstractPOM{
 		}
 		List<WebElement> lines = getLines();
 		for(WebElement el : lines){
-			if(el.findElement(lineName).equals(lineTitle)){
+			if(el.findElement(lineName).getText().equals(lineTitle)){
 				WebElement add = el.findElement(addLineBtn);
-				if(add.getAttribute("class").contains("enabled")){
+				if(add.getAttribute("class").contains("enable")){
 					add.click();
-					WebdriverUtils.elementToHaveClass(add,"enabled");
+					WebdriverUtils.elementToHaveClass(add,"enable");
 				}
 			}
 		}			
@@ -139,14 +142,30 @@ public class SecondaryBoard extends AbstractPOM{
 	}
 	
 	private WebElement getSelectedBudget(){
-		return selectedBudget.get(1).findElement(By.cssSelector("li.active")).findElements(By.className("actions-toggle")).get(0);
+		return selectedBudget.get(1).findElement(By.className("selected-root")).findElements(By.className("actions-toggle")).get(0);
 	}
 	
 	private List<WebElement> getLines(){
-		return selectedBudget.get(1).findElement(By.cssSelector("li.active")).findElement(By.tagName("ol")).findElements(line);
+		return driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol")).findElements(line);
 	}
 	
-		
+	private WebElement getNextLineToAdd(){
+		List<WebElement> lines = getLines();
+		for(WebElement el : lines){
+			if(el.getAttribute("data-level").equals("1") && el.getAttribute("class").contains("new-line")){
+				if(el.findElement(lineName).getText().equals("Model 1"))
+					return null;
+				try{
+					if(el.findElement(addLineBtn).getAttribute("class").contains("enable"))
+						return el;
+				}
+				catch(Exception e){
+					continue;
+				}
+			}
+		}
+		return null;
+	}
 	
 	@Override
 	public boolean isDisplayed() {
