@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Tests" parallel="tests" thread-count="1" time-out="2000000"
-	verbose="3">
+<suite name="Budgeta Tests" parallel="tests" thread-count="1"
+	time-out="2000000" verbose="3">
 
 	<listeners>
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
@@ -8,9 +8,15 @@
 	</listeners>
 
 
-	<test name="Budgeta Tests">
+	<test name="Account Settings Test">
 		<classes>
-			<class name="com.budgeta.test.tryTest"></class>
+			<class name="com.budgeta.test.accountSettings.AccountSettingsTest"></class>
+		</classes>
+	</test>
+
+	<test name="Create Budget Test">
+		<classes>
+			<class name="com.budgeta.test.createBudget.CreateBudgetTest"></class>
 		</classes>
 	</test>
 
