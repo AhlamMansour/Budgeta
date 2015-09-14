@@ -23,7 +23,6 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class CreateBudgetTest extends WrapperTest{
 	
-	
 	@Test(dataProvider = "ExcelFileLoader", enabled = true)
 	@DataProviderParams(sheet = "CreateBudget" , area = "CreateNewBudget")
 	public void createBudgetTest(Hashtable<String, String> data) {
@@ -34,8 +33,9 @@ public class CreateBudgetTest extends WrapperTest{
 		SecondaryBoard secondaryBoard = board.getSecondaryBoard();
 		
 		NewBudgetPopup popup = secondaryBoard.addBudgeta();
-		
-		String budgetaName = WebdriverUtils.getTimeStamp(data.get("name")+"_");
+		String budgetaName = data.get("name");
+		if(!budgetaName.isEmpty())
+			budgetaName = WebdriverUtils.getTimeStamp(budgetaName+"_");
 		popup.setName(budgetaName);
 		popup.setType(popup.getBudgetaType(data.get("Type")));
 		
@@ -50,7 +50,8 @@ public class CreateBudgetTest extends WrapperTest{
 		//error in the first page
 		if(data.get("ContinueShouldPass").equals("FALSE")){
 			popup.clickContinue(false);
-			Assert.assertEquals(popup.getVisibleErrorText(), "Start Date must be before End Date");
+			Assert.assertTrue(popup.pageHasError(), "expected error to be displayed");
+			//Assert.assertEquals(popup.getVisibleErrorText(), "Start Date must be before End Date");
 		}
 		//else, continue to the next page
 		else{
@@ -73,9 +74,10 @@ public class CreateBudgetTest extends WrapperTest{
 		
 			GeneralSection general = new GeneralSection();
 		
-			Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_year_from"), data.get("DateRange_year_from")));
-			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_year_to"), data.get("DateRange_year_to")));
+			Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_month_from"), data.get("DateRange_year_from")));
+			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_month_to"), data.get("DateRange_year_to")));
 			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+			secondaryBoard.addAllLines();
 		}	
 	
 		}
