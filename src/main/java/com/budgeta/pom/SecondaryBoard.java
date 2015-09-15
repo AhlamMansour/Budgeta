@@ -93,6 +93,16 @@ public class SecondaryBoard extends AbstractPOM{
 		WebdriverUtils.waitForElementToBeFound(driver,By.id("section-General"));
 	}
 	
+	public void selectRandomBudgeta(){
+		openBudgetsList();
+		int random = WebElementUtils.getRandomNumberByRange(0, getNumbreOfExistBudgets()-1);
+		WebElementUtils.hoverOverField(budgetsList.get(random), driver, null);
+		budgetsList.get(random).click();
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("budget-list")));
+		WebdriverUtils.waitForElementToDisappear(driver, By.className("level-0"));
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("level-1"));
+	}
+	
 	public int getNumbreOfExistBudgets(){
 		return budgetsList.size();
 	}

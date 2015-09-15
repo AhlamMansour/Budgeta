@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 
+import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.LoginPage;
 import com.galilsoftware.AF.core.SelTestProps;
 import com.galilsoftware.AF.core.logging.SelTestLog;
@@ -19,6 +20,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
  */
 public class BudgetaTest extends TearDown{
 	
+	protected BudgetaBoard board;
 	protected String username;
 	protected String password;
 	protected LoginPage loginPage;
@@ -61,6 +63,7 @@ public class BudgetaTest extends TearDown{
 		loginPage.setEmail(username);
 		loginPage.setPassword(password);
 		loginPage.clickLogin(true);
+		board = new BudgetaBoard();
 	}
 	
 	public static String getDateByNumbersFormat(String month, String year){
