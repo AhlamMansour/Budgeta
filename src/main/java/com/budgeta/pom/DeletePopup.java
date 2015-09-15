@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
-public class DeleteScenario extends AbstractPOM {
+public class DeletePopup extends AbstractPOM {
 
 	@FindBy(className = "modal-content")
 	private WebElement wrapper;
