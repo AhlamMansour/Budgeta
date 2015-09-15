@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.galilsoftware.AF.core.AbstractPOM;
+import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 /**
@@ -21,7 +22,7 @@ public class SecondaryBoard extends AbstractPOM{
 	@FindBy(className = "secondary")
 	private WebElement wrapper;
 	
-	@FindBy(className = "budget-list-item")
+	@FindBy(css = "ol.has-search li.budget-list-item")
 	private List<WebElement> budgetsList;
 
 	@FindBy(className = "add-root-budget")
@@ -29,7 +30,13 @@ public class SecondaryBoard extends AbstractPOM{
 	
 	@FindBy(className = "select-root")
 	private WebElement showBudgetsBtn;
-
+	
+	@FindBy(id = "selected-root-menu")
+	private WebElement budgetOptionsMenuBtn;
+ 
+	@FindBy(css = "div.popup-menu div.drop-down ul.narrow li")
+	private List<WebElement> budgetDropDownOptions;
+	
 	@FindBy(className = "budget-list")
 	private WebElement budgetsListWrapper;
 	
@@ -86,6 +93,10 @@ public class SecondaryBoard extends AbstractPOM{
 		WebdriverUtils.waitForElementToBeFound(driver,By.id("section-General"));
 	}
 	
+	public int getNumbreOfExistBudgets(){
+		return budgetsList.size();
+	}
+	
 	public void addLine(){
 		if(!wrapper.getAttribute("class").contains("tree-edit")){	
 			getSelectedBudget().findElement(addLinesBtn).click();
@@ -131,6 +142,35 @@ public class SecondaryBoard extends AbstractPOM{
 	
 	public String getNameOfSelectedBudgeta(){
 		return getSelectedBudget().findElement(budgetName).getText().split("\n")[0];
+	}
+	
+	public void openBudgetDropDownOptionsMenu(){
+		if(isBudgetDropDownOptionsOpen()){
+			budgetOptionsMenuBtn.click();
+			WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
+			wait.until(ExpectedConditions.visibilityOfAllElements(budgetDropDownOptions));
+		}
+	}
+	
+	public synchronized void selectBudgetOption(String option){
+		openBudgetDropDownOptionsMenu();
+		for(WebElement el : budgetDropDownOptions){
+			if(el.getText().equalsIgnoreCase(option)){
+				WebElementUtils.hoverOverField(el, driver, null);
+				el.click();
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				WebdriverUtils.waitForBudgetaBusyBar(driver);
+			}
+		}
+	}
+	
+	private boolean isBudgetDropDownOptionsOpen(){
+		try{
+			return driver.findElement(By.className("qtip-focus")).isDisplayed();
+		}
+		catch(Exception e){
+			return false;
+		}
 	}
 	
 	private void openBudgetsList(){
