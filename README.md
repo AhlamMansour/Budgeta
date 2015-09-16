@@ -38,4 +38,4 @@ return null;
 
 ### Who do I talk to? ###
 
-* For Technical questions please contact Nael Abd-Aljawad. (nael.abdaljawad@galilsoftware.com)
+
