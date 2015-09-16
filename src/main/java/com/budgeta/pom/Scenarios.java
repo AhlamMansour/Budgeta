@@ -56,14 +56,16 @@ public class Scenarios extends AbstractPOM{
 	
 	public CreateNewScenarioPopup clickRenameScenario(){
 		selectScenarioTrigger("Rename");
-		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
 		return new CreateNewScenarioPopup();
 	}
 	
-	public void deleteScenario(){
+	public DeletePopup deleteScenario(){
 		selectScenarioTrigger("Delete");
-
+		return new DeletePopup();
+	}
+	
+	public boolean isScenarioTriggerDisplayed(){
+		return WebdriverUtils.isDisplayed(scenarioTrigger);
 	}
 /*************************************************************************************/
 	private void openDropDown(){
@@ -104,6 +106,8 @@ public class Scenarios extends AbstractPOM{
 			if(el.getText().equals(option))
 				el.click();
 		}
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
 	}
 	
 	@Override

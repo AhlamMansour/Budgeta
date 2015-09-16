@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.DateRange;
+import com.budgeta.pom.DropDown;
 import com.budgeta.pom.GeneralSection;
 import com.budgeta.pom.NewBudgetPopup;
 import com.budgeta.pom.SecondaryBoard;
@@ -76,7 +77,8 @@ public class CreateBudgetTest extends WrapperTest{
 		
 			Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_month_from"), data.get("DateRange_year_from")));
 			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_month_to"), data.get("DateRange_year_to")));
-			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+			DropDown currencyDropDown = general.getCurrencyDropDown();
+			Assert.assertEquals(currencyDropDown.getSelectedValue(), data.get("Currency"));
 			secondaryBoard.addAllLines();
 		}	
 	
