@@ -27,7 +27,7 @@ public class ScenariosTest extends WrapperTest{
 		scenarios = new Scenarios();
 		Assert.assertTrue(scenarios.isDisplayed(), "expected scenarios to be displayed");
 		
-		CreateNewScenarioPopup popup = scenarios.clickCreateNewScenario();
+		CreateNewScenarioPopup popup = scenarios.createNewScenario();
 		Assert.assertTrue(popup.isDisplayed(), "expected create new scenario popup to be displayed");
 		popup.setName(scenarioName);
 		popup.clickCreate();

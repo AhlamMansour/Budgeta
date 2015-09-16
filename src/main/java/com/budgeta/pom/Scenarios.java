@@ -26,7 +26,7 @@ public class Scenarios extends AbstractPOM{
 	private By actions = By.cssSelector("div.actions div.ember-view");
 	private By scenarioTriggerMenu = By.cssSelector("div.qtip-focus ul.narrow li");
 	
-	public CreateNewScenarioPopup clickCreateNewScenario(){
+	public CreateNewScenarioPopup createNewScenario(){
 		getCreateNewScenarioButton().click();
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
