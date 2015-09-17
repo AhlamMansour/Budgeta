@@ -7,6 +7,7 @@ import com.budgeta.pom.CreateNewScenarioPopup;
 import com.budgeta.pom.DeletePopup;
 import com.budgeta.pom.Scenarios;
 import com.budgeta.pom.SecondaryBoard;
+import com.budgeta.pom.SmallPopup;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.TestFirst;
 
@@ -23,17 +24,17 @@ public class ScenariosTest extends WrapperTest{
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		secondary.selectRandomBudgeta();
 		
-		//secondary click scenario
+		scenarios = secondary.openScenarios();
 		scenarios = new Scenarios();
 		Assert.assertTrue(scenarios.isDisplayed(), "expected scenarios to be displayed");
 		
 		CreateNewScenarioPopup popup = scenarios.createNewScenario();
 		Assert.assertTrue(popup.isDisplayed(), "expected create new scenario popup to be displayed");
 		popup.setName(scenarioName);
-		popup.clickCreate();
+		popup.clickConfirm();
 		
 		Assert.assertTrue(scenarios.isScenarioTriggerDisplayed(), "expected scenario trigger to be displayed");
-		Assert.assertEquals(scenarios.getSelectedScenario(), scenarioName);
+		Assert.assertEquals(scenarios.getSelectedScenario().trim(), scenarioName);
 	}
 	
 	@Test(enabled = true, priority = 1)
@@ -48,13 +49,13 @@ public class ScenariosTest extends WrapperTest{
 	
 	@Test(enabled = true, priority = 3)
 	public void renameScenarioTest(){
-		CreateNewScenarioPopup popup = scenarios.clickRenameScenario();
+		SmallPopup popup = scenarios.clickRenameScenario();
 		Assert.assertTrue(popup.isDisplayed(), "expected rename popup to be displayed");
 		popup.setName(scenarioReName);
-		popup.clickCreate();
+		popup.clickConfirm();
 		
 		Assert.assertTrue(scenarios.isScenarioTriggerDisplayed(), "expected scenario trigger to be displayed");
-		Assert.assertEquals(scenarios.getSelectedScenario(), scenarioReName);
+		Assert.assertEquals(scenarios.getSelectedScenario().trim(), scenarioReName);
 		
 		
 	}
@@ -63,7 +64,7 @@ public class ScenariosTest extends WrapperTest{
 	public void deleteScenarioTest(){
 		DeletePopup popup = scenarios.deleteScenario();
 		Assert.assertTrue(popup.isDisplayed(), "expected delete popup to be displayed");
-		popup.clickDelete();
+		popup.clickConfirm();
 		scenarios = new Scenarios();
 		Assert.assertFalse(scenarios.isScenarioExist(scenarioReName), "expected to scenario with name:"+scenarioReName+" to be deleted");
 		

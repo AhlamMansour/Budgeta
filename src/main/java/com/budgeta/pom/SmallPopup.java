@@ -34,7 +34,7 @@ public class SmallPopup extends AbstractPOM{
 		wrapper.findElement(nameField).sendKeys(name);
 	}
 	
-	public void clickCreate(){
+	public void clickConfirm(){
 		confirmBtn.click();
 		WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
 	}
