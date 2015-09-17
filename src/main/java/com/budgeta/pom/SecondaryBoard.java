@@ -259,58 +259,6 @@ public class SecondaryBoard extends AbstractPOM{
 	}
 	
 	
-	
-	//////////////////////////////////////////////////////
-	
-	
-	
-	private void openBudgetLineTrigger(){
-		if(!wrapper.getAttribute("class").contains("tree-edit")){	
-			getSelectedBudget().findElement(lineSetting).click();
-			WebdriverUtils.waitForElementToBeFound(driver, lineSettingTriggerMenu);
-		}
-	}
-	
-	
-	private void selectBudgetLineTrigger(String option){
-		openBudgetLineTrigger();
-		for(WebElement el : driver.findElements(lineSettingTriggerMenu)){
-			if(el.getText().equals(option))
-				el.click();
-		}
-	}
-	
-	public void clickDuplicateBudgetLine(){
-		selectBudgetLineTrigger("Duplicate");
-		//WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
-		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
-	
-	}
-	
-	
-	public void clickFlagBudgetLine(){
-		selectBudgetLineTrigger("Flag");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("flagged")));
-		
-	}
-	
-	//should we add test to check the flag/unflag option???? 
-
-	public void clickUnFlagBudgetLine(){
-		selectBudgetLineTrigger("Unflag");
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("flagged")));
-	}
-	
-	public void clickShareBudgetLine(){
-		selectBudgetLineTrigger("Share");
-		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
-		
-	}
-	
-	
-	
-	
 	@Override
 	public boolean isDisplayed() {
 		return WebdriverUtils.isDisplayed(wrapper);
