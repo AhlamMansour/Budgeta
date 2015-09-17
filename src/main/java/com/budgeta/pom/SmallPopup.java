@@ -10,7 +10,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class SmallPopup extends AbstractPOM{
 
 	@FindBy(className = "modal-content")
-	private WebElement wrapper;
+	protected WebElement wrapper;
 
 	@FindBy(id = "cancel-btn")
 	private WebElement cancelBtn;

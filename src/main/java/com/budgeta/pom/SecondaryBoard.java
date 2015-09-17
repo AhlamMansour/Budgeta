@@ -178,6 +178,22 @@ public class SecondaryBoard extends AbstractPOM{
 		}
 	}
 	
+	
+	public BudgetLineSetting getLineSettings(String name){
+		return new BudgetLineSetting(getLineByName(name).findElement(lineSetting));
+	}
+	
+	
+	private WebElement getLineByName(String name){
+		List<WebElement> lines = getLines();
+		for(WebElement el : lines){
+			if(el.findElement(lineName).equals(name))
+					return el;
+		}
+		return null;
+	}
+	
+	
 	private boolean isBudgetDropDownOptionsOpen(){
 		try{
 			return driver.findElement(By.className("qtip-focus")).isDisplayed();
