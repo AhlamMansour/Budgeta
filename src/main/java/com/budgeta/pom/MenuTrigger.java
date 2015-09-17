@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.galilsoftware.AF.core.AbstractPOM;
+import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class MenuTrigger extends AbstractPOM {
@@ -63,7 +64,9 @@ public class MenuTrigger extends AbstractPOM {
 	}
 	
 	private void openLineSettings(){
-		wrapper.click();
+		WebElementUtils.hoverOverField(wrapper, driver, null);
+		wait.until(ExpectedConditions.visibilityOf(wrapper));
+		WebElementUtils.clickElementEvent(driver,wrapper);
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
 		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(lineSettingTriggerMenu));
 	}

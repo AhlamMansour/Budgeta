@@ -1,5 +1,6 @@
 package com.budgeta.pom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -52,7 +53,9 @@ public class SecondaryBoard extends AbstractPOM{
 	@FindBy(css = "ol.tree.nav")
 	private List<WebElement> selectedBudget;
 	
-	private By line = By.className("new-line");
+	private By newLine = By.className("new-line");
+	
+	private By line = By.cssSelector("li.budget-list-item");
 	
 	private By budgetName = By.className("budget-name");
 	
@@ -63,7 +66,6 @@ public class SecondaryBoard extends AbstractPOM{
 	private By lineName = By.className("inline-edit");
 	
 	private By lineSetting = By.className("budget-menu");
-	private By lineSettingTriggerMenu = By.cssSelector("div.qtip-focus ul.narrow li");
 	
 	public Scenarios openScenarios(){
 		if(driver.findElement(By.className("scenario-subnav")).getAttribute("class").contains("collapsed")){
@@ -164,8 +166,13 @@ public class SecondaryBoard extends AbstractPOM{
 			WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
 		}
 		List<WebElement> lines = getLines();
+		String name="";
 		for(WebElement el : lines){
-			if(el.findElement(lineName).getText().equals(lineTitle)){
+			if(el.getAttribute("class").contains("new-line"))
+				name = el.findElement(lineName).getText();
+			else
+				name = el.findElement(budgetName).getText();
+			if(name.equals(lineTitle) && el.getAttribute("class").contains("new-line")){
 				WebElement add = el.findElement(addLineBtn);
 				if(add.getAttribute("class").contains("enable")){
 					add.click();
@@ -208,12 +215,17 @@ public class SecondaryBoard extends AbstractPOM{
 	private WebElement getLineByName(String name){
 		List<WebElement> lines = getLines();
 		for(WebElement el : lines){
-			if(el.findElement(lineName).equals(name))
-					return el;
+			if(getLineName(el).contains(name))
+				return el;
 		}
 		return null;
 	}
 	
+	private String getLineName(WebElement el){
+		if(el.getAttribute("class").contains("new-line"))
+			return el.findElement(lineName).getText();
+		return el.findElement(budgetName).getText(); 
+	}
 	
 	private boolean isBudgetDropDownOptionsOpen(){
 		try{
@@ -237,7 +249,12 @@ public class SecondaryBoard extends AbstractPOM{
 	}
 	
 	private List<WebElement> getLines(){
-		return driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol")).findElements(line);
+		List<WebElement> list = new ArrayList<WebElement>();
+		for(WebElement el : driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol")).findElements(line)){
+			if(el.getAttribute("data-level").equals("1"))
+				list.add(el);
+		}
+		return list;
 	}
 	
 	private WebElement getNextLineToAdd(){
