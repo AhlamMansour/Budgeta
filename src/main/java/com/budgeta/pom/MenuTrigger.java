@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
-public class BudgetLineSetting extends AbstractPOM {
+public class MenuTrigger extends AbstractPOM {
 
 	
 	private WebElement wrapper;
@@ -15,7 +15,7 @@ public class BudgetLineSetting extends AbstractPOM {
 	private By lineSettingTriggerMenu = By.cssSelector("div.qtip-focus ul.narrow li");
 	
 	
-	public BudgetLineSetting(WebElement _wrapper){
+	public MenuTrigger(WebElement _wrapper){
 		wrapper = _wrapper;
 	}
 	

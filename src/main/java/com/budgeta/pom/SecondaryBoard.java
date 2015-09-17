@@ -43,6 +43,12 @@ public class SecondaryBoard extends AbstractPOM{
 	@FindBy(className = "search")
 	private WebElement searchBudget;
 	
+	@FindBy(className = "scenarios")
+	private WebElement scenarios;
+	
+	@FindBy(className = "versions")
+	private WebElement versions;
+	
 	@FindBy(css = "ol.tree.nav")
 	private List<WebElement> selectedBudget;
 	
@@ -59,6 +65,21 @@ public class SecondaryBoard extends AbstractPOM{
 	private By lineSetting = By.className("budget-menu");
 	private By lineSettingTriggerMenu = By.cssSelector("div.qtip-focus ul.narrow li");
 	
+	public Scenarios openScenarios(){
+		if(driver.findElement(By.className("scenario-subnav")).getAttribute("class").contains("collapsed")){
+			scenarios.click();
+			WebdriverUtils.elementToHaveClass(scenarios, "expanded");
+		}
+		return new Scenarios();
+	}
+	
+	public Versions openVersions(){
+		if(driver.findElement(By.className("version-subnav")).getAttribute("class").contains("collapsed")){
+			versions.click();
+			WebdriverUtils.elementToHaveClass(versions, "expanded");
+		}
+		return new Versions();
+	}
 	
 	public NewBudgetPopup addBudgeta(){
 		WebdriverUtils.waitUntilClickable(driver, addBudgetaBtn);
@@ -179,8 +200,8 @@ public class SecondaryBoard extends AbstractPOM{
 	}
 	
 	
-	public BudgetLineSetting getLineSettings(String name){
-		return new BudgetLineSetting(getLineByName(name).findElement(lineSetting));
+	public MenuTrigger getLineSettings(String name){
+		return new MenuTrigger(getLineByName(name).findElement(lineSetting));
 	}
 	
 	

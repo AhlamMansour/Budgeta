@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.galilsoftware.AF.core.AbstractPOM;
+import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class Scenarios extends AbstractPOM{
@@ -49,9 +50,9 @@ public class Scenarios extends AbstractPOM{
 		dropdown.selectValue(scenario);
 	}
 	
-	public CreateNewScenarioPopup clickRenameScenario(){
+	public SmallPopup clickRenameScenario(){
 		selectScenarioTrigger("Rename");
-		return new CreateNewScenarioPopup();
+		return new SmallPopup();
 	}
 	
 	public DeletePopup deleteScenario(){
@@ -61,6 +62,10 @@ public class Scenarios extends AbstractPOM{
 	
 	public boolean isScenarioTriggerDisplayed(){
 		return WebdriverUtils.isDisplayed(scenarioTrigger);
+	}
+	
+	public boolean isScenariosOpen(){
+		return wrapper.getAttribute("class").contains("expanded");
 	}
 /*************************************************************************************/
 	

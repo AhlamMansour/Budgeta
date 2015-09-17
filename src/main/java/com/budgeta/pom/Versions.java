@@ -57,6 +57,10 @@ public class Versions extends AbstractPOM{
 		return dropdown.getNumberOfOptions() - 1;
 	}
 	
+	public boolean isScenariosOpen(){
+		return wrapper.getAttribute("class").contains("expanded");
+	}
+	
 	@Override
 	public boolean isDisplayed() {
 		return WebdriverUtils.isDisplayed(wrapper) && wrapper.getAttribute("class").contains("expanded");
