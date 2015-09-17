@@ -43,6 +43,22 @@ public class SideDropDown extends AbstractPOM{
 	public int getNumberOfOptions(){
 		return dropdown.findElements(dropdownMenu).size();
 	}
+	
+	public void selectCheckBox(String value){
+		openDropDown();
+		for(WebElement el : dropdown.findElements(dropdownMenu)){
+			if(el.getAttribute("class").contains("keep-open")){
+				for(WebElement checkBox : el.findElements(By.tagName("input"))){
+					if(checkBox.getText().equals(value)){
+						checkBox.click();
+						closeDropDown();
+						return;
+					}
+				}
+			}
+		}
+		closeDropDown();
+	}
 /****************************************************************************/
 	private void openDropDown(){
 		if(dropdown.getAttribute("class").contains("open"))

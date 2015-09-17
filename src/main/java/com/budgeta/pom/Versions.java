@@ -49,7 +49,8 @@ public class Versions extends AbstractPOM{
 	}
 	
 	public void selectVersion(View view, String version){
-		
+		dropdown.selectCheckBox(view.getName());
+		dropdown.selectValue(version);
 	}
 	
 	public int numberOfVersions(){
