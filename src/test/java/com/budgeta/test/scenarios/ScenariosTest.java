@@ -53,7 +53,6 @@ public class ScenariosTest extends WrapperTest{
 		Assert.assertTrue(popup.isDisplayed(), "expected rename popup to be displayed");
 		popup.setName(scenarioReName);
 		popup.clickConfirm();
-		
 		Assert.assertTrue(scenarios.isScenarioTriggerDisplayed(), "expected scenario trigger to be displayed");
 		Assert.assertEquals(scenarios.getSelectedScenario().trim(), scenarioReName);
 		

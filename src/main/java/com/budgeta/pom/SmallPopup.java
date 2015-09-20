@@ -25,6 +25,10 @@ public class SmallPopup extends AbstractPOM{
 	private By closeBtn = By.className("close");
 	
 	
+	
+	
+	
+	
 	public String getTilte(){
 		return title.getText();
 	}
@@ -48,6 +52,10 @@ public class SmallPopup extends AbstractPOM{
 		wrapper.findElement(closeBtn).click();
 		WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
 	}
+	
+	
+	
+
 	
 	
 	@Override

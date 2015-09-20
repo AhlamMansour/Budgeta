@@ -42,16 +42,18 @@ public class MenuTrigger extends AbstractPOM {
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("flagged")));
 	}
 	
-	public void clickShare(){
+	public SharePopup clickShare(){
 		selectScenarioTrigger("Share");
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
+		return new SharePopup();
 	}
 	
-	public void clickDelete(){
+	public DeletePopup clickDelete(){
 		selectScenarioTrigger("Delete");
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
+		return new DeletePopup();
 	}
 	
 	
