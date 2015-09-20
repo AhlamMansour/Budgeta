@@ -8,16 +8,22 @@ import com.budgeta.test.WrapperTest;
 
 public class BudgetLineSettingsTest extends WrapperTest {
 	
-	@Test(enabled = true)
-	public void changeSettingTest(){
+	
+	
+	
+	
+	@Test(enabled = true, priority=1)
+	public void DuplicateBudgetLineTest(){
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		secondary.selectRandomBudgeta();
-	
 		secondary.addLine("Revenues");
 		secondary = new SecondaryBoard();
 		MenuTrigger trigger = secondary.getLineSettings("Revenues");
 		trigger.clickDuplicate();
+
 		
 	}
+	
+
 
 }

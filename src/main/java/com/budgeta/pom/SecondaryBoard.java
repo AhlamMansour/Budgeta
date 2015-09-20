@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -208,7 +210,11 @@ public class SecondaryBoard extends AbstractPOM{
 	
 	
 	public MenuTrigger getLineSettings(String name){
-		return new MenuTrigger(getLineByName(name).findElement(lineSetting));
+		WebElement line = getLineByName(name);
+		WebElementUtils.hoverOverField(line, driver, null);
+		Actions act = new Actions(driver);
+		act.moveToElement(line).build().perform();
+		return new MenuTrigger(line.findElement(lineSetting));
 	}
 	
 	

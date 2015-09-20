@@ -67,8 +67,15 @@ public class MenuTrigger extends AbstractPOM {
 		WebElementUtils.hoverOverField(wrapper, driver, null);
 		wait.until(ExpectedConditions.visibilityOf(wrapper));
 		WebElementUtils.clickElementEvent(driver,wrapper);
-		WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
-		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(lineSettingTriggerMenu));
+		try{
+			WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(lineSettingTriggerMenu));
+		}
+		catch(Exception e){
+			WebElementUtils.clickElementEvent(driver,wrapper);
+			WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(lineSettingTriggerMenu));
+		}
 	}
 
 	
