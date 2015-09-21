@@ -55,6 +55,9 @@ public class SecondaryBoard extends AbstractPOM{
 	@FindBy(css = "ol.tree.nav")
 	private List<WebElement> selectedBudget;
 	
+	@FindBy(css = "div.tree-edit-bar div.right")
+	private WebElement closeBtn;
+	
 	private By newLine = By.className("new-line");
 	
 	private By line = By.cssSelector("li.budget-list-item");
@@ -144,6 +147,15 @@ public class SecondaryBoard extends AbstractPOM{
 		
 	}
 	
+	public void addSubLine(String lineTitle){
+		if(WebdriverUtils.isDisplayed(closeBtn))
+			clickClose();
+		WebElement lineElm = getLineByName(lineTitle);
+		WebElementUtils.hoverOverField(lineElm, driver, null);
+		lineElm.findElement(addLineBtn).click();
+		WebdriverUtils.sleep(500);
+	}
+	
 	public void addAllLines(){
 		if(!wrapper.getAttribute("class").contains("tree-edit")){	
 			getSelectedBudget().findElement(addLinesBtn).click();
@@ -208,7 +220,6 @@ public class SecondaryBoard extends AbstractPOM{
 		}
 	}
 	
-	
 	public MenuTrigger getLineSettings(String name){
 		WebElement line = getLineByName(name);
 		WebElementUtils.hoverOverField(line, driver, null);
@@ -217,6 +228,33 @@ public class SecondaryBoard extends AbstractPOM{
 		return new MenuTrigger(line.findElement(lineSetting));
 	}
 	
+	public MenuTrigger getSubLinSettings(String lineTitle, String subLineTitle){
+		List<WebElement> subLines = getSubLinesForLine(lineTitle);
+		for(WebElement el : subLines){
+			if(el.findElement(budgetName).getText().replaceAll
+					(el.findElement(By.cssSelector("span.type")).getText(), "").equals(subLineTitle)){
+				WebElementUtils.hoverOverField(el, driver, null);
+				Actions act = new Actions(driver);
+				act.moveToElement(el).build().perform();
+				return new MenuTrigger(el.findElement(lineSetting));
+			}
+		}
+		return null;
+	}
+	
+	public void clickClose(){
+		closeBtn.click();
+		WebdriverUtils.waitForElementToDisappear(driver, By.cssSelector("div.tree-edit-bar div.right"));
+	}
+	
+	public boolean isSubLineExist(String lineTitle, String subLineTitle){
+		List<WebElement> subLines = getSubLinesForLine(lineTitle);
+		for(WebElement el : subLines){
+			if(el.findElement(budgetName).equals(subLineTitle))
+				return true;
+		}
+		return false;
+	}
 	
 	private WebElement getLineByName(String name){
 		List<WebElement> lines = getLines();
@@ -279,6 +317,11 @@ public class SecondaryBoard extends AbstractPOM{
 			}
 		}
 		return null;
+	}
+	
+	private List<WebElement> getSubLinesForLine(String lineTitle){
+		WebElement lineElm = getLineByName(lineTitle);
+		return lineElm.findElements(line);
 	}
 	
 	

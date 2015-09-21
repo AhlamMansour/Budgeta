@@ -31,6 +31,10 @@ public class Scenarios extends AbstractPOM{
 		dropdown = new SideDropDown(wrapper.findElement(dropdownField));
 	}
 	
+	public MenuTrigger getMEnuTrigger(){
+		return new MenuTrigger(scenarioTrigger);
+	}
+	
 	public CreateNewScenarioPopup createNewScenario(){
 		getCreateNewScenarioButton().click();
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
