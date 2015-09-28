@@ -52,6 +52,9 @@ public class Scenarios extends AbstractPOM{
 	
 	public void selectScenario(String scenario){
 		dropdown.selectValue(scenario);
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		
 	}
 	
 	public SmallPopup clickRenameScenario(){

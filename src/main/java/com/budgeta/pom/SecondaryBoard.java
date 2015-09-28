@@ -58,6 +58,9 @@ public class SecondaryBoard extends AbstractPOM{
 	@FindBy(css = "div.tree-edit-bar div.right")
 	private WebElement closeBtn;
 	
+	@FindBy(className = "scenario-added")
+	private List<WebElement> scenarioLine;
+	
 	private By newLine = By.className("new-line");
 	
 	private By line = By.cssSelector("li.budget-list-item");
@@ -73,10 +76,6 @@ public class SecondaryBoard extends AbstractPOM{
 	private By lineSetting = By.className("budget-menu");
 	
 	private By nameField = By.className("ember-text-field");
-	
-	
-	@FindBy(className = "actions-toggle")
-	private WebElement budgetLine;
 	
 	
 	public Scenarios openScenarios(){
@@ -136,7 +135,10 @@ public class SecondaryBoard extends AbstractPOM{
 		openBudgetsList();
 		int random = WebElementUtils.getRandomNumberByRange(0, getNumbreOfExistBudgets()-1);
 		WebElementUtils.hoverOverField(budgetsList.get(random), driver, null);
-		budgetsList.get(random).click();
+		if(budgetsList.get(random).findElement(budgetName).getText().equals(getSelectedBudget().findElement(budgetName).getText().replaceAll(getSelectedBudget().findElement(By.cssSelector("span.type")).getText(), "").trim()))
+			showBudgetsBtn.click();
+		else
+			budgetsList.get(random).click();
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("budget-list")));
 		WebdriverUtils.waitForElementToDisappear(driver, By.className("level-0"));
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("level-1"));
@@ -159,7 +161,9 @@ public class SecondaryBoard extends AbstractPOM{
 			clickClose();
 		WebElement lineElm = getLineByName(lineTitle);
 		WebElementUtils.hoverOverField(lineElm, driver, null);
-		lineElm.findElement(addLineBtn).click();
+		WebdriverUtils.sleep(300);
+		WebElementUtils.hoverOverField(lineElm.findElement(addLinesBtn), driver, null);
+		lineElm.findElement(addLinesBtn).click();
 		WebdriverUtils.sleep(500);
 	}
 	
@@ -239,7 +243,7 @@ public class SecondaryBoard extends AbstractPOM{
 		List<WebElement> subLines = getSubLinesForLine(lineTitle);
 		for(WebElement el : subLines){
 			if(el.findElement(budgetName).getText().replaceAll
-					(el.findElement(By.cssSelector("span.type")).getText(), "").equals(subLineTitle)){
+					(el.findElement(By.cssSelector("span.type")).getText(), "").trim().equals(subLineTitle)){
 				WebElementUtils.hoverOverField(el, driver, null);
 				Actions act = new Actions(driver);
 				act.moveToElement(el).build().perform();
@@ -269,8 +273,11 @@ public class SecondaryBoard extends AbstractPOM{
 	public boolean isSubLineExist(String lineTitle, String subLineTitle){
 		List<WebElement> subLines = getSubLinesForLine(lineTitle);
 		for(WebElement el : subLines){
-			if(el.findElement(budgetName).equals(subLineTitle))
+			try{
+				if(el.findElement(budgetName).getText().replaceAll(el.findElement(By.className("type")).getText(), "").trim().equals(subLineTitle))
 				return true;
+			}
+			catch(Exception e){}
 		}
 		return false;
 	}
@@ -299,6 +306,19 @@ public class SecondaryBoard extends AbstractPOM{
 			}
 		}
 	}
+	
+	public boolean isScenarioLineDisplayed(String name){
+	for(WebElement el : scenarioLine){
+		if(el.findElement(budgetName).getText().replaceAll(el.findElement(By.className("type")).getText(), "").trim().equals(name)){
+			return WebdriverUtils.isDisplayed(el);
+		}
+	}
+	return false;
+	}
+
+
+/*************************************************************************************************************/
+/*************************************************************************************************************/
 	
 	private WebElement getLineByName(String name){
 		List<WebElement> lines = getLines();
@@ -337,12 +357,15 @@ public class SecondaryBoard extends AbstractPOM{
 	}
 	
 	private List<WebElement> getLines(){
-		List<WebElement> list = new ArrayList<WebElement>();
+	List<WebElement> list = new ArrayList<WebElement>();
+	try{
 		for(WebElement el : driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol")).findElements(line)){
 			if(el.getAttribute("data-level").equals("1"))
 				list.add(el);
 		}
-		return list;
+	}
+	catch(Exception e){}
+	return list;
 	}
 	
 	private WebElement getNextLineToAdd(){

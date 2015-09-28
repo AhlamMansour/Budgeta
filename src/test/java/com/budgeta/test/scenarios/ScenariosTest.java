@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import com.budgeta.pom.CreateNewScenarioPopup;
 import com.budgeta.pom.DeletePopup;
+import com.budgeta.pom.MenuTrigger;
 import com.budgeta.pom.RevenuesAddSubLine;
 import com.budgeta.pom.Scenarios;
 import com.budgeta.pom.SecondaryBoard;
@@ -25,7 +26,7 @@ public class ScenariosTest extends WrapperTest{
 	public void createScenarioTest(){
 		secondary = board.getSecondaryBoard();
 		secondary.selectRandomBudgeta();
-		
+		secondary.addLine("Revenues");
 		scenarios = secondary.openScenarios();
 		scenarios = new Scenarios();
 		Assert.assertTrue(scenarios.isDisplayed(), "expected scenarios to be displayed");
@@ -41,17 +42,27 @@ public class ScenariosTest extends WrapperTest{
 	
 	@Test(enabled = true, priority = 1)
 	public void addLineToScenarioTest(){
-		secondary.addLine("Revenues");
 		secondary.addSubLine("Revenues");
 		RevenuesAddSubLine subLine = new RevenuesAddSubLine();
 		subLine.setName(subLineName);
 		subLine.clickAdd();
 		Assert.assertTrue(secondary.isSubLineExist("Revenues", subLineName), "expected to found the added sub line");
+		scenarios = new Scenarios();
+		scenarios.selectScenario("Base");
+		Assert.assertFalse(secondary.isScenarioLineDisplayed(subLineName), "expected the new line to be disappear in base scenario");
+		
+		scenarios.selectScenario(scenarioName);
+		secondary = new SecondaryBoard();
+		Assert.assertTrue(secondary.isScenarioLineDisplayed(subLineName), "expected the new line to be displayed in created scenario");
 	}
 	
 	@Test(enabled = true, priority = 2)
-	public void deleteLinefromScenarioTest(){
-		secondary.getSubLinSettings("Revenues", subLineName);
+	public void deleteLineFromScenarioTest(){
+		MenuTrigger trigger = secondary.getSubLinSettings("Revenues", subLineName);
+		DeletePopup popup = trigger.clickDelete();
+		Assert.assertTrue(popup.isDisplayed(), "expected the popup to be displayed");
+		popup.clickConfirm();
+		Assert.assertFalse(secondary.isScenarioLineDisplayed(subLineName), "expected the new line to be deleted");
 	}
 	
 	@Test(enabled = true, priority = 3)

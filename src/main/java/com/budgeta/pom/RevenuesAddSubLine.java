@@ -2,6 +2,7 @@ package com.budgeta.pom;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.galilsoftware.AF.core.AbstractPOM;
@@ -27,8 +28,12 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	
 	public void setName(String name){
 		WebElement field = wrapper.findElement(textField);
-		field.clear();
-		field.sendKeys(name);;
+		field.click();
+		WebdriverUtils.elementToHaveClass(field, "editing");
+		Actions act = new Actions(driver);
+		act.moveToElement(field).build().perform();
+		WebdriverUtils.sleep(200);
+		act.sendKeys(field,name).build().perform();
 	}
 	
 	public void selectDropDown(String option){
@@ -46,7 +51,8 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	public void clickAdd(){
 		WebdriverUtils.elementToHaveClass(wrapper.findElement(addBtn),"enable");
 		wrapper.findElement(addBtn).click();
-		WebdriverUtils.waitForElementToDisappear(driver, By.className("new-empty-line"));
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("new-empty-line"));
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
 	}
 	
 	@Override
