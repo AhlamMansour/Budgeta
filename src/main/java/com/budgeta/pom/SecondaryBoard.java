@@ -277,12 +277,14 @@ public class SecondaryBoard extends AbstractPOM{
 	
 		public boolean isLineFlag(String lineTitle){
 		clickClose();
-		List<WebElement> lines = getLines();
-		for(WebElement el : lines){
-			if(budgetLine.getAttribute("class").contains("flagged"))	
-				return true;
+		WebElement line = getLineByName(lineTitle);
+		try{
+			line.findElement(By.className("flagged")).isDisplayed();
+			return true;
 		}
-		return false;
+		catch(Exception e){
+			return false;
+		}
 	}
 	
 	

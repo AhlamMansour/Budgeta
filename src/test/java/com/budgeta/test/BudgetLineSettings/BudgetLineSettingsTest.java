@@ -57,7 +57,6 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	
 	@Test(enabled = true, priority=2)
 	public void FlagBudgetLineTest() throws InterruptedException{
-		Thread.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		MenuTrigger trigger = secondary.getLineSettings("Revenues");
 		trigger.clickFlag();
