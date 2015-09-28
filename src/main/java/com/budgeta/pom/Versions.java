@@ -53,11 +53,19 @@ public class Versions extends AbstractPOM{
 		dropdown.selectValue(version);
 	}
 	
-	public int numberOfVersions(){
+	public int getNumberOfVersions(){
 		return dropdown.getNumberOfOptions() - 1;
 	}
 	
-	public boolean isScenariosOpen(){
+	public int getNumberOfAutoSaveVersions(){
+		
+	}
+	
+	public int getNumberOfSnapshotsVersions(){
+		
+	}
+	
+	public boolean isVersionsOpen(){
 		return wrapper.getAttribute("class").contains("expanded");
 	}
 	
