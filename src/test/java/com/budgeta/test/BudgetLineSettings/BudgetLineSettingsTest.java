@@ -14,8 +14,10 @@ import com.budgeta.pom.SmallPopup;
 import com.budgeta.pom.SuccessPage;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.TestFirst;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 import com.thoughtworks.selenium.Selenium;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
 public class BudgetLineSettingsTest extends WrapperTest {
@@ -26,7 +28,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	SuccessPage successPage;
 	SmallPopup smallPopup;
 	String budgetLineName = "New Name";
-	
+	String currentLine = "Revenues";
 	
 	
 	@TestFirst
@@ -41,7 +43,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		
 	}
 	
-	
+	/*
 	@Test(enabled = true, priority=1)
 	public void DuplicateBudgetLineTest() throws InterruptedException{
 		Thread.sleep(1000);
@@ -50,6 +52,8 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		trigger.clickDuplicate();
 		
 	}
+	*/
+	
 	
 	@Test(enabled = true, priority=2)
 	public void FlagBudgetLineTest() throws InterruptedException{
@@ -58,29 +62,37 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		MenuTrigger trigger = secondary.getLineSettings("Revenues");
 		trigger.clickFlag();
 		
+		Assert.assertTrue(secondary.isLineFlag(currentLine), "Budget line is flaged");
+		
 	}
 	
 	
 	
-	
-	
+	/*
 	@Test(enabled = true, priority=3)
 	public void RenameBudgetLineTest() throws InterruptedException{
 		Thread.sleep(1000);
+		
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		MenuTrigger trigger = secondary.getLineSettings("Revenues");
 		trigger.clickRename();
 		
 		//smallPopup.setName(budgetLineName);
 		
+		secondary.RenameLine(budgetLineName);
+		Assert.assertTrue(secondary.isLineExist(budgetLineName), "expected to rename the line");
+		
+		
+
+		
 		
 		
 		
 	}
-	
-	
 
-	
+	*/
+
+	/*
 	@Test(enabled = true, priority=4)
 	public void ShareBudgetLineTest() throws InterruptedException{
 		Thread.sleep(1000);
@@ -93,7 +105,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		popup.setName(email);
 		popup.clickSend();
 		
-		Thread.sleep(1000);
+		successPage = new SuccessPage();
 		Assert.assertTrue(successPage.isDisplayed(), "Expected To Share Seccess page to be dispaly");
 		successPage.clickConfirm();
 	
@@ -103,11 +115,12 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		Assert.assertTrue(SuccessPage.isDisplayed(), "Expected To Share Seccess page to be dispaly");
 		SuccessPage.ConfirmSignUp();
 		*/
-		
-		
+	
+	/*
 	}
 	
-
+	
+	/*
 	@Test(enabled = true, priority=5)
 	public void DeleteBudgetLineTest() throws InterruptedException{
 		Thread.sleep(1000);
@@ -118,7 +131,10 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		Assert.assertTrue(popup.isDisplayed(), "expected delete popup to be displayed");
 		popup.clickConfirm();
 		
+		
+		Assert.assertFalse(secondary.isLineExist(budgetLineName), "Budget line is deleted");
+		
 	}
-	
+	*/
 
 }

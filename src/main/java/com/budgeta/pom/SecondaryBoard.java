@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -71,6 +71,13 @@ public class SecondaryBoard extends AbstractPOM{
 	private By lineName = By.className("inline-edit");
 	
 	private By lineSetting = By.className("budget-menu");
+	
+	private By nameField = By.className("ember-text-field");
+	
+	
+	@FindBy(className = "actions-toggle")
+	private WebElement budgetLine;
+	
 	
 	public Scenarios openScenarios(){
 		if(driver.findElement(By.className("scenario-subnav")).getAttribute("class").contains("collapsed")){
@@ -243,8 +250,20 @@ public class SecondaryBoard extends AbstractPOM{
 	}
 	
 	public void clickClose(){
-		closeBtn.click();
-		WebdriverUtils.waitForElementToDisappear(driver, By.cssSelector("div.tree-edit-bar div.right"));
+		if(WebdriverUtils.isDisplayed(closeBtn)){
+			closeBtn.click();
+			WebdriverUtils.waitForElementToDisappear(driver, By.cssSelector("div.tree-edit-bar div.right"));
+		}
+	}
+	
+	public boolean isLineExist(String lineTitle){
+		clickClose();
+		List<WebElement> lines = getLines();
+		for(WebElement el : lines){
+			if(el.findElement(budgetName).getText().replaceAll(el.findElement(By.className("type")).getText(), "").trim().equals(lineTitle))
+				return true;
+		}
+		return false;
 	}
 	
 	public boolean isSubLineExist(String lineTitle, String subLineTitle){
@@ -254,6 +273,29 @@ public class SecondaryBoard extends AbstractPOM{
 				return true;
 		}
 		return false;
+	}
+	
+		public boolean isLineFlag(String lineTitle){
+		clickClose();
+		List<WebElement> lines = getLines();
+		for(WebElement el : lines){
+			if(budgetLine.getAttribute("class").contains("flagged"))	
+				return true;
+		}
+		return false;
+	}
+	
+	
+	public void RenameLine(String newName){
+		List<WebElement> lines = getLines();
+		for(WebElement el : lines){
+			if(el.getAttribute("class").contains("active")){
+				el.findElement(nameField).clear();
+				el.findElement(nameField).sendKeys(newName);
+				el.findElement(nameField).sendKeys(Keys.ENTER);
+				WebdriverUtils.sleep(500);
+			}
+		}
 	}
 	
 	private WebElement getLineByName(String name){

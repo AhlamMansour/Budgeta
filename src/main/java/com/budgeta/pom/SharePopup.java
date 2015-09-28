@@ -15,7 +15,7 @@ public class SharePopup extends SmallPopup {
 	
 	public void clickSend(){
 		wrapper.findElement(sendBtn).click();
-		WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
+		WebdriverUtils.waitForElementToDisappear(driver, sendBtn);
 	}
 	
 	public void sendEmail(String _email){

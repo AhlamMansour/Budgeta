@@ -2,6 +2,7 @@ package com.budgeta.pom;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.galilsoftware.AF.core.AbstractPOM;
@@ -14,6 +15,13 @@ public class MenuTrigger extends AbstractPOM {
 	private WebElement wrapper;
 	
 	private By lineSettingTriggerMenu = By.cssSelector("div.qtip-focus ul.narrow li");
+	
+	@FindBy(className = "tree-edit-mode")
+	protected WebElement editwrapper;
+	
+	
+	
+	
 	
 	
 	public MenuTrigger(WebElement _wrapper){
@@ -60,8 +68,10 @@ public class MenuTrigger extends AbstractPOM {
 	private void selectScenarioTrigger(String option){
 		openLineSettings();
 		for(WebElement el : driver.findElements(lineSettingTriggerMenu)){
-			if(el.getText().equals(option))
+			if(el.getText().equals(option)){
 				el.click();
+				return;
+			}
 		}
 	}
 	
@@ -79,6 +89,8 @@ public class MenuTrigger extends AbstractPOM {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(lineSettingTriggerMenu));
 		}
 	}
+	
+	
 
 	
 

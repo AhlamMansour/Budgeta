@@ -24,6 +24,10 @@ public class SmallPopup extends AbstractPOM{
 	private By nameField = By.className("ember-text-field");
 	private By closeBtn = By.className("close");
 	
+
+	
+	
+	
 	
 	
 	
