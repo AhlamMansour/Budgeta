@@ -58,11 +58,11 @@ public class Versions extends AbstractPOM{
 	}
 	
 	public int getNumberOfAutoSaveVersions(){
-		
+		return 0;
 	}
 	
 	public int getNumberOfSnapshotsVersions(){
-		
+		return 0;
 	}
 	
 	public boolean isVersionsOpen(){

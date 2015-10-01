@@ -77,6 +77,8 @@ public class SecondaryBoard extends AbstractPOM{
 	
 	private By nameField = By.className("ember-text-field");
 	
+	private By shareIcon = By.cssSelector("div.actions-toggle span.budget-name  div.svg-icon");
+	
 	
 	public Scenarios openScenarios(){
 		if(driver.findElement(By.className("scenario-subnav")).getAttribute("class").contains("collapsed")){
@@ -193,15 +195,15 @@ public class SecondaryBoard extends AbstractPOM{
 		List<WebElement> lines = getLines();
 		String name="";
 		for(WebElement el : lines){
-			if(el.getAttribute("class").contains("new-line"))
-				name = el.findElement(lineName).getText();
-			else
-				name = el.findElement(budgetName).getText();
+			name = getLineName(el).replaceAll("\\d","").trim();
 			if(name.equals(lineTitle) && el.getAttribute("class").contains("new-line")){
 				WebElement add = el.findElement(addLineBtn);
 				if(add.getAttribute("class").contains("enable")){
 					add.click();
-					WebdriverUtils.elementToHaveClass(add,"enable");
+					WebdriverUtils.sleep(300);
+					WebdriverUtils.waitForBudgetaBusyBar(driver);
+					WebdriverUtils.waitForBudgetaLoadBar(driver);
+					return;
 				}
 			}
 		}			
@@ -292,8 +294,22 @@ public class SecondaryBoard extends AbstractPOM{
 		catch(Exception e){
 			return false;
 		}
+		
+		
 	}
 	
+		
+		public boolean isLineShared(String lineTitle){
+			clickClose();
+			WebElement line = getLineByName(lineTitle);
+			try{
+				line.findElement(By.cssSelector("div.actions-toggle span.budget-name  div.svg-icon")).isDisplayed();
+				return true;
+			}
+			catch(Exception e){
+				return false;
+			}
+		}		
 	
 	public void RenameLine(String newName){
 		List<WebElement> lines = getLines();
@@ -316,6 +332,50 @@ public class SecondaryBoard extends AbstractPOM{
 	return false;
 	}
 
+	public int getNumberOfSubLinesForLine(String lineTitle, String subLineTitle){
+		List<WebElement> subLines = getSubLinesForLine(lineTitle);
+		int num = 0;
+		for(WebElement el : subLines){
+			try{
+				if(el.findElement(budgetName).getText().indexOf("\n") == -1){
+					System.out.println("1."+el.findElement(budgetName).getText());
+					if(el.findElement(budgetName).getText().trim().contains(subLineTitle))
+						num++;
+				}
+				else if(el.findElement(budgetName).getText().substring(0, el.findElement(budgetName).getText().indexOf("\n")).trim().contains(subLineTitle)){
+					System.out.println("2."+el.findElement(budgetName).getText().substring(0, el.findElement(budgetName).getText().indexOf("\n")));
+					num++;
+				}
+			}
+			catch(Exception e){
+				continue;
+			}
+			
+		}
+		return num;
+	}
+	
+	public int getNumberOfLines(String lineTitle){
+		List<WebElement> Lines = getLines();
+		int num = 0;
+		for(WebElement el : Lines){
+			try{
+				if(el.findElement(budgetName).getText().indexOf("\n") == -1){
+					if(el.findElement(budgetName).getText().trim().contains(lineTitle))
+						num++;
+				}
+				else if(el.findElement(budgetName).getText().substring(0, el.findElement(budgetName).getText().indexOf("\n")).trim().contains(lineTitle)){
+					num++;
+				}
+			}
+			catch(Exception e){
+				continue;
+			}
+
+		}
+		return num;
+	}
+	
 
 /*************************************************************************************************************/
 /*************************************************************************************************************/
@@ -323,7 +383,7 @@ public class SecondaryBoard extends AbstractPOM{
 	private WebElement getLineByName(String name){
 		List<WebElement> lines = getLines();
 		for(WebElement el : lines){
-			if(getLineName(el).contains(name))
+			if(getLineName(el).replaceAll("\\d","").trim().equals(name))
 				return el;
 		}
 		return null;
@@ -332,7 +392,11 @@ public class SecondaryBoard extends AbstractPOM{
 	private String getLineName(WebElement el){
 		if(el.getAttribute("class").contains("new-line"))
 			return el.findElement(lineName).getText();
-		return el.findElement(budgetName).getText(); 
+		
+		if(el.findElement(budgetName).getText().indexOf("\n") == -1)
+			return el.findElement(budgetName).getText().trim();
+		return el.findElement(budgetName).getText().substring(0, el.findElement(budgetName).getText().indexOf("\n")).trim();
+			
 	}
 	
 	private boolean isBudgetDropDownOptionsOpen(){
@@ -388,6 +452,11 @@ public class SecondaryBoard extends AbstractPOM{
 	
 	private List<WebElement> getSubLinesForLine(String lineTitle){
 		WebElement lineElm = getLineByName(lineTitle);
+		if(lineElm.getAttribute("class").contains("collapsed")){
+			lineElm.findElement(By.tagName("i")).click();
+			WebdriverUtils.elementToHaveClass(lineElm, "expanded");
+			WebdriverUtils.sleep(200);
+		}
 		return lineElm.findElements(line);
 	}
 	

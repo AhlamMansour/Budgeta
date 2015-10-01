@@ -30,9 +30,15 @@ public class BudgetaBoard extends AbstractPOM{
 	
 	private GeneralSection generalSection;
 	
+	private CommentsSection commentsSection;
+	
+	
+	
 	
 	
 	public SecondaryBoard getSecondaryBoard(){
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		return new SecondaryBoard();
 	}
 	
@@ -64,6 +70,18 @@ public class BudgetaBoard extends AbstractPOM{
 			generalSection = new GeneralSection();
 		return generalSection;
 	}
+	
+	public GeneralSection clickCommentsSection(String section){
+		centerBar.findElement(By.id("section-Comments")).click();
+		return getGeneralSection();
+	}
+	
+	public CommentsSection getCommentsSection(){
+		if(commentsSection == null)
+			commentsSection = new CommentsSection();
+		return commentsSection;
+	}
+	
 	
 	@Override
 	public boolean isDisplayed() {

@@ -15,9 +15,12 @@ public class MenuTrigger extends AbstractPOM {
 	private WebElement wrapper;
 	
 	private By lineSettingTriggerMenu = By.cssSelector("div.qtip-focus ul.narrow li");
+	private By subLineSettingTriggerMenu = By.cssSelector("div.qtip-pos-ti.qtip-focus ul li");
 	
 	@FindBy(className = "tree-edit-mode")
 	protected WebElement editwrapper;
+	
+	
 	
 	
 	
@@ -31,6 +34,7 @@ public class MenuTrigger extends AbstractPOM {
 	
 	public void clickDuplicate(){
 		selectScenarioTrigger("Duplicate");
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		
 	}
 	
@@ -40,14 +44,36 @@ public class MenuTrigger extends AbstractPOM {
 	}
 
 	public void clickFlag(){
+		
 		selectScenarioTrigger("Flag");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("flagged")));
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		
 	}
 	
 	public void clickUnFlagBudgetLine(){
 		selectScenarioTrigger("Unflag");
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("flagged")));
+	}
+	
+	
+	
+	public void clickCopy(){
+		selectScenarioTrigger("Copy");
+		WebdriverUtils.waitForElementToBeFound(driver, By.cssSelector("div.qtip-pos-ti.qtip-focus"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.qtip-pos-ti.qtip-focus")));
+		selectCopyLocation("Other income and expenses");
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
+	
+	
+	public SecondaryBoard clickMove(){
+		selectScenarioTrigger("Move");
+		WebdriverUtils.waitForElementToBeFound(driver, By.cssSelector("div.qtip-pos-ti.qtip-focus"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.qtip-pos-ti.qtip-focus")));
+		selectCopyLocation("Other income and expenses");
+		return new SecondaryBoard();
 	}
 	
 	public SharePopup clickShare(){
@@ -65,6 +91,17 @@ public class MenuTrigger extends AbstractPOM {
 	}
 	
 	
+	private void selectCopyLocation(String option){
+		for(WebElement el : driver.findElements(subLineSettingTriggerMenu)){
+			if(el.getText().equals(option)){
+				el.click();
+				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+			}
+		}
+		
+	}
+	
 	private void selectScenarioTrigger(String option){
 		openLineSettings();
 		for(WebElement el : driver.findElements(lineSettingTriggerMenu)){
@@ -77,6 +114,7 @@ public class MenuTrigger extends AbstractPOM {
 	
 	private void openLineSettings(){
 		WebElementUtils.hoverOverField(wrapper, driver, null);
+		WebdriverUtils.sleep(1000);
 		wait.until(ExpectedConditions.visibilityOf(wrapper));
 		WebElementUtils.clickElementEvent(driver,wrapper);
 		try{
