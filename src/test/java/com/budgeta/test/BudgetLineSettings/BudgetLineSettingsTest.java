@@ -34,7 +34,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	}
 
 	//done
-	@Test(enabled = false, priority = 1)
+	@Test(enabled = true, priority = 1)
 	public void DuplicateBudgetLineTest() throws InterruptedException {
 		Thread.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -47,7 +47,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	}
 
 	//done
-	@Test(enabled = false, priority = 2)
+	@Test(enabled = true, priority = 2)
 	public void CopyBudgetLineTest() throws InterruptedException {
 		Thread.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -62,7 +62,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	}
 	
     //Done
-	@Test(enabled = false, priority = 3)
+	@Test(enabled = true, priority = 3)
 	public void MoveBudgetLineTest() throws InterruptedException {
 		Thread.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -96,8 +96,11 @@ public class BudgetLineSettingsTest extends WrapperTest {
 			secondary = new SecondaryBoard();
 			trigger = secondary.getLineSettings("Revenues");
 			trigger.clickFlag();
+			
 		}
 		secondary = new SecondaryBoard();
+		trigger = secondary.getLineSettings("Revenues");
+		
 		Assert.assertTrue(secondary.isLineFlag(currentLine),"Budget line is flaged");
 
 	}
@@ -106,7 +109,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 
 	
 	//Done
-	  @Test(enabled = false, priority=5)
+	  @Test(enabled = true, priority=5)
 	  public void RenameBudgetLineTest() throws InterruptedException{ 
 		  Thread.sleep(1000);
 	  
@@ -131,7 +134,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	  
 
 	
-	  @Test(enabled = false, priority=6) 
+	  @Test(enabled = true, priority=6) 
 	  public void ShareBudgetLineTest() throws InterruptedException{ Thread.sleep(1000);
 	  SecondaryBoard secondary = board.getSecondaryBoard(); 
 	  MenuTrigger trigger = secondary.getLineSettings("Revenues");
@@ -161,7 +164,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	  
 	  
 	 
-	  @Test(enabled = false, priority=7) 
+	  @Test(enabled = true, priority=7) 
 	  public void DeleteBudgetLineTest() throws InterruptedException{ 
 	  Thread.sleep(1000); 
 	  SecondaryBoard secondary = board.getSecondaryBoard(); MenuTrigger trigger =

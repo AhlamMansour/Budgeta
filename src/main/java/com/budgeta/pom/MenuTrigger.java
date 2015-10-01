@@ -46,7 +46,8 @@ public class MenuTrigger extends AbstractPOM {
 	public void clickFlag(){
 		
 		selectScenarioTrigger("Flag");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("flagged")));
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("flagged")));
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		
 	}
