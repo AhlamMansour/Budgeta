@@ -146,6 +146,26 @@ public class SecondaryBoard extends AbstractPOM{
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("level-1"));
 	}
 	
+	public void selectRandomBudgetWithPrefix(String prefix){
+		openBudgetsList();
+		List<WebElement> budgetsStartWithPrefix = new ArrayList<>();
+		for(WebElement el : budgetsList){
+			if(el.findElement(budgetName).getText().startsWith(prefix)){
+				budgetsStartWithPrefix.add(el);
+			}
+		}
+		int random = WebElementUtils.getRandomNumberByRange(0, budgetsStartWithPrefix.size());
+		WebElementUtils.hoverOverField(budgetsStartWithPrefix.get(random), driver, null);
+		if(budgetsStartWithPrefix.get(random).findElement(budgetName).equals(getSelectedBudget()))
+			showBudgetsBtn.click();
+		else
+			budgetsStartWithPrefix.get(random).click();		
+		
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("budget-list")));
+		WebdriverUtils.waitForElementToDisappear(driver, By.className("level-0"));
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("level-1"));
+	}
+	
 	public int getNumbreOfExistBudgets(){
 		return budgetsList.size();
 	}
@@ -376,6 +396,13 @@ public class SecondaryBoard extends AbstractPOM{
 		return num;
 	}
 	
+	public void clickOnLine(String name){
+		clickClose();
+		getLineByName(name).findElement(budgetName).click();
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
 
 /*************************************************************************************************************/
 /*************************************************************************************************************/
@@ -383,7 +410,7 @@ public class SecondaryBoard extends AbstractPOM{
 	private WebElement getLineByName(String name){
 		List<WebElement> lines = getLines();
 		for(WebElement el : lines){
-			if(getLineName(el).replaceAll("\\d","").trim().equals(name))
+			if(getLineName(el).contains(name))//if(getLineName(el).replaceAll("\\d","").trim().equals(name))
 				return el;
 		}
 		return null;

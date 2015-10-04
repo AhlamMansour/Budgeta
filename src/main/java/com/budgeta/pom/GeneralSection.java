@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.galilsoftware.AF.core.AbstractPOM;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class GeneralSection extends AbstractPOM{
 
@@ -22,21 +23,33 @@ public class GeneralSection extends AbstractPOM{
 	@FindBy(id = "attribute-currency")
 	private WebElement currency;
 		
-	@FindBy(className = "data-row")
+	@FindBy(className = "wide")
 	List<WebElement> accountNumbers;
 	
 	@FindBy(id = "attribute-region")
 	private WebElement geography;
 	
 	@FindBy(id = "attribute-product")
-	private WebElement product;	
+	private WebElement product;
+	
+	@FindBy(id = "attribute-notes")
+	private WebElement notes;
+	
+	@FindBy(className = "error")
+	List<WebElement> errors;
 	
 	
 	private By dropdown = By.className("select2-container");
+
 	
+	public void selectCurrency(String option){
+		DropDown curr = new DropDown(currency.findElement(dropdown));
+		curr.selsectOption(option);
+	}
 	
-	public DropDown getCurrencyDropDown(){
-		return new DropDown(currency.findElement(dropdown));
+	public String getSelectedCurrency(){
+		DropDown curr = new DropDown(currency.findElement(dropdown));
+		return curr.getSelectedValue();
 	}
 	
 	public String getDateRangeFrom(){
@@ -57,10 +70,10 @@ public class GeneralSection extends AbstractPOM{
 		return new DateRange("to");
 	}
 	
-	public void setAccountNumberInRowByIndex(int indexOfRow, int value){
-		WebElement row = accountNumbers.get(indexOfRow - 1).findElement(By.tagName("input"));
+	public void setAccountNumberInRowByIndex(int indexOfRow, String value){
+		WebElement row = getAccountNumber().findElements(By.tagName("input")).get(indexOfRow - 1);
 		row.clear();
-		row.sendKeys(value+"");
+		row.sendKeys(value);
 	}
 	
 	public String getAccountNumberInRowByIndex(int indexOfRow){
@@ -87,10 +100,31 @@ public class GeneralSection extends AbstractPOM{
 		return product.findElements(By.tagName("input")).get(1).getAttribute("value");
 	}
 	
+	public void setNotes(String note){
+		WebElement field = notes.findElement(By.className("ember-text-area"));
+		field.clear();
+		field.sendKeys(note);
+	}
+	
+	public boolean isGeneralHasError(){
+		for(WebElement el : errors){
+			if(!el.getText().isEmpty())
+				return true;
+		}
+		return false;
+	}
+	
+	private WebElement getAccountNumber(){
+		for(WebElement el : accountNumbers){
+			if(el.getText().equals("Account Number"))
+				return el.findElement(By.xpath(".."));
+		}
+		return null;
+	}
+	
 	@Override
 	public boolean isDisplayed() {
-		// TODO Auto-generated method stub
-		return false;
+		return WebdriverUtils.isDisplayed(wrapper);
 	}
 
 }

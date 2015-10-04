@@ -32,7 +32,7 @@ public class BudgetaBoard extends AbstractPOM{
 	
 	private CommentsSection commentsSection;
 	
-	
+	private PreviewBoard preview;
 	
 	
 	
@@ -82,6 +82,10 @@ public class BudgetaBoard extends AbstractPOM{
 		return commentsSection;
 	}
 	
+	public PreviewBoard getPreviewBoard(){
+		preview = new PreviewBoard();
+		return preview;
+	}
 	
 	@Override
 	public boolean isDisplayed() {
