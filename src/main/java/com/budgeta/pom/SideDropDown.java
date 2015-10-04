@@ -1,5 +1,8 @@
 package com.budgeta.pom;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -20,10 +23,14 @@ public class SideDropDown extends AbstractPOM{
 	public void selectValue(String value){
 		openDropDown();
 		for(WebElement el : dropdown.findElements(dropdownMenu)){
-			if(el.getText().equals(value)){
+			String str = el.getText();
+			if(str.contains("\n"))
+				str = str.substring(0, str.indexOf("\n"));
+			if(str.trim().equals(value)){
 				el.click();
 				WebdriverUtils.waitForElementToDisappear(driver, By.className("open"));
 				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				return;
 			}
 		}
@@ -36,7 +43,7 @@ public class SideDropDown extends AbstractPOM{
 	
 	public boolean isValueExist(String value){
 		for(WebElement el : dropdown.findElements(dropdownMenu)){
-			if(el.getText().equals(value))
+			if(el.isDisplayed())
 				return true;
 		}
 		return false;
@@ -46,11 +53,26 @@ public class SideDropDown extends AbstractPOM{
 		return dropdown.findElements(dropdownMenu).size();
 	}
 	
+	public List<String> getDisplayOptoins(){
+		List<String> res = new ArrayList<>();
+		openDropDown();
+		for(WebElement el : dropdown.findElements(dropdownMenu)){
+			if(el.getAttribute("class")!=null)
+				if(el.getAttribute("class").contains("header"))
+					continue;
+			if(el.isDisplayed())
+				res.add(el.getText());
+		}
+		closeDropDown();
+		
+		return res;
+	}
+	
 	public void selectCheckBox(String value){
 		openDropDown();
 		for(WebElement el : dropdown.findElements(dropdownMenu)){
 			if(el.getAttribute("class").contains("keep-open")){
-				for(WebElement checkBox : el.findElements(By.tagName("input"))){
+				for(WebElement checkBox : el.findElements(By.tagName("label"))){
 					if(checkBox.getText().equals(value)){
 						checkBox.click();
 						closeDropDown();
@@ -67,7 +89,7 @@ public class SideDropDown extends AbstractPOM{
 			return;
 		dropdown.click();
 		WebdriverUtils.elementToHaveClass(dropdown, "open");
-		WebdriverUtils.sleep(200);
+		WebdriverUtils.sleep(600);
 	}
 	
 	private void closeDropDown(){

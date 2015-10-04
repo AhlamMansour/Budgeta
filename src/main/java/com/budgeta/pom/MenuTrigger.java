@@ -91,6 +91,12 @@ public class MenuTrigger extends AbstractPOM {
 		return new DeletePopup();
 	}
 	
+	public SmallPopup clickRevert(){
+		selectScenarioTrigger("Revert");
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
+		return new SmallPopup();
+	}
 	
 	private void selectCopyLocation(String option){
 		for(WebElement el : driver.findElements(subLineSettingTriggerMenu)){

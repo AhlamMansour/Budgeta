@@ -1,6 +1,7 @@
 package com.budgeta.test.scenarios;
 
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.CreateNewScenarioPopup;
@@ -11,8 +12,11 @@ import com.budgeta.pom.Scenarios;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.SmallPopup;
 import com.budgeta.test.WrapperTest;
+import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
+import com.galilsoftware.AF.core.listeners.TestNGListener;
 
+@Listeners({ MethodListener.class, TestNGListener.class })
 public class ScenariosTest extends WrapperTest{
 
 	String scenarioName = "new scenario";
