@@ -61,6 +61,9 @@ public class SecondaryBoard extends AbstractPOM{
 	@FindBy(className = "scenario-added")
 	private List<WebElement> scenarioLine;
 	
+	@FindBy(id = "budget-settings")
+	private WebElement budgetSettings;
+	
 	private By newLine = By.className("new-line");
 	
 	private By line = By.cssSelector("li.budget-list-item");
@@ -154,9 +157,9 @@ public class SecondaryBoard extends AbstractPOM{
 				budgetsStartWithPrefix.add(el);
 			}
 		}
-		int random = WebElementUtils.getRandomNumberByRange(0, budgetsStartWithPrefix.size());
+		int random = WebElementUtils.getRandomNumberByRange(0, budgetsStartWithPrefix.size()-1);
 		WebElementUtils.hoverOverField(budgetsStartWithPrefix.get(random), driver, null);
-		if(budgetsStartWithPrefix.get(random).findElement(budgetName).equals(getSelectedBudget()))
+		if(budgetsStartWithPrefix.get(random).findElement(budgetName).getText().equals(getSelectedBudget().findElement(budgetName).getText().replaceAll(getSelectedBudget().findElement(By.cssSelector("span.type")).getText(), "").trim()))
 			showBudgetsBtn.click();
 		else
 			budgetsStartWithPrefix.get(random).click();		
@@ -403,7 +406,23 @@ public class SecondaryBoard extends AbstractPOM{
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
-
+	public void clickOnSubLine(String lineName, String subLineName){
+		List<WebElement> sublines = getSubLinesForLine(lineName);
+		for(WebElement el : sublines){
+			if(getLineName(el).equals(subLineName)){
+				el.findElement(budgetName).click();
+				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+			}
+		}
+	}
+	
+	public BudgetSettings openBudgetSettings(){
+		budgetSettings.click();
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		return new BudgetSettings();
+	}
 /*************************************************************************************************************/
 /*************************************************************************************************************/
 	

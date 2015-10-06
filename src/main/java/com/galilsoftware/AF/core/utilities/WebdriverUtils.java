@@ -1121,7 +1121,12 @@ public class WebdriverUtils {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0,0);");
 	}
-
+	
+	public static void ScrollToTheBottomJS(WebDriver driver) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0,document.body.scrollHeight);");
+	}
+	
 	public static void ScrollDownTo(WebDriver driver, int x, int y) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(" + x + "," + y + ");");

@@ -1,5 +1,7 @@
 package com.budgeta.pom;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -32,6 +34,20 @@ public class BillingsSection extends AbstractPOM{
 	@FindBy(name = "paymentAfter")
 	private WebElement paymentAfter;
 	
+	@FindBy(name = "growth")
+	private WebElement growth;
+	
+	@FindBy(name = "supportPercentage")
+	private WebElement supportPercentage;
+	
+	@FindBy(name = "subscriptionPeriod")
+	private WebElement supportPeriod;
+	
+	@FindBy(name = "churn")
+	private WebElement churn;
+	
+	@FindBy(className = "error")
+	List<WebElement> errors;
 	
 	private By dateRange = By.cssSelector("div.month-picker input");
 	private By textField = By.className("ember-text-field");
@@ -86,14 +102,43 @@ public class BillingsSection extends AbstractPOM{
 		amountDropDown.selsectOption(curr);
 	}
 	
-	public void setPaYmentAfter(String value){
-		paymentAfter.clear();
-		paymentAfter.sendKeys(value);
+	public void setPaymentAfter(String value){
+		setTextField(paymentAfter, value);
 	}
 	
 	public void selectAtDate(String option){
 		initializeAtDateDropdown();
 		atDateDropDown.selsectOption(option);
+	}
+	
+	public void setGrowth(String value){
+		setTextField(growth, value);
+	}
+	
+	public void setSupportPercentage(String value){
+		setTextField(supportPercentage, value);
+		if(!value.isEmpty()){
+			wait.until(ExpectedConditions.visibilityOf(supportPeriod));
+			WebdriverUtils.sleep(200);
+		}
+	}
+	
+	public void setSupportPeriod(String value){
+		setTextField(supportPeriod, value);
+	}
+	
+	public void setChurn(String value){
+		setTextField(churn, value);
+	}
+	
+	public boolean isBillingsHasError(){
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		for(WebElement el : errors){
+			if(!el.getText().isEmpty())
+				return true;
+		}
+		return false;
 	}
 	/*************************************************************************/
 	private void initializeRepeatDropdown(){
@@ -110,6 +155,11 @@ public class BillingsSection extends AbstractPOM{
 	
 	private void initializeAtDateDropdown(){
 		atDateDropDown = new DropDown(atDate.findElement(dropdown));
+	}
+	
+	private void setTextField(WebElement field, String text){
+		field.clear();
+		field.sendKeys(text);
 	}
 
 	@Override

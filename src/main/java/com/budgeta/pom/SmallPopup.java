@@ -65,6 +65,7 @@ public class SmallPopup extends AbstractPOM{
 	public void clickCancel(){
 		cancelBtn.click();
 		WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
 	public void clickClose(){

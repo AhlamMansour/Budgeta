@@ -12,7 +12,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class DateRange extends AbstractPOM{
 
-	@FindBy(className = "qtip")
+	@FindBy(className = "qtip-focus")
 	private List<WebElement> wrappers;
 	
 	private WebElement wrapper;
@@ -27,10 +27,12 @@ public class DateRange extends AbstractPOM{
 	
 	
 	public DateRange() {
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("qtip-focus")));
 		initWrapper();
 	}
 	
 	public DateRange(String header) {
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("qtip-focus")));
 		initWrapper(header);
 	}
 	
@@ -85,9 +87,14 @@ public class DateRange extends AbstractPOM{
 	private void initWrapper(String header){
 		WebdriverUtils.sleep(500);
 		for(WebElement el : wrappers){
-			if(el.findElement(By.className("header")).getText().equalsIgnoreCase(header)){
-				wait.until(ExpectedConditions.visibilityOf(el));
-				wrapper = el;
+			try{
+				if(el.findElement(By.className("header")).getText().equalsIgnoreCase(header)){
+					wait.until(ExpectedConditions.visibilityOf(el));
+					wrapper = el;
+				}
+			}
+			catch(Exception e){
+				continue;
 			}
 		}
 	}

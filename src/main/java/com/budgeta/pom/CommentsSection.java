@@ -1,9 +1,12 @@
 package com.budgeta.pom;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.galilsoftware.AF.core.AbstractPOM;
+import com.galilsoftware.AF.core.utilities.WebElementUtils;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class CommentsSection extends AbstractPOM{
 	
@@ -17,25 +20,31 @@ public class CommentsSection extends AbstractPOM{
 	
 	@FindBy(css = "div.comment-created div.svg-icon")
 	private WebElement deleteComment;
-	
-	
-	@FindBy(css = "div.comment-text textarea.ember-text-area")
-	private WebElement CommentTextArea;
 
+	private By add = By.className("add");
+	private By CommentsArea = By.cssSelector("textarea.ember-text-area");
 	
 	
 	public void setComments(String comment){
-		CommentTextArea.sendKeys(comment);
+		addComment();
+		WebElement area = getLastCommentsArea();
+		WebElementUtils.hoverOverField(area, driver, null);
+		area.clear();
+		area.sendKeys(comment);
 	}
 	
 	public void getComments()
 	{
-		CommentTextArea.getAttribute("value");
+		getLastCommentsArea().getAttribute("value");
 	}
 	
 	
-	public void AddComment(){
-		addComment.click();
+	public void addComment(){
+		WebElementUtils.hoverOverField(wrapper.findElement(add), driver, null);
+		WebElementUtils.clickElementEvent(driver, wrapper.findElement(add));
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("comment-text"));
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		WebdriverUtils.sleep(1000);
 	}
 	
 	
@@ -43,12 +52,13 @@ public class CommentsSection extends AbstractPOM{
 		deleteComment.click();
 	}
 	
-	
+	private WebElement getLastCommentsArea(){
+		return wrapper.findElements(CommentsArea).get(wrapper.findElements(CommentsArea).size()-1);
+	}
 	
 	@Override
 	public boolean isDisplayed() {
-		// TODO Auto-generated method stub
-		return false;
+		return WebdriverUtils.isDisplayed(wrapper);
 	}
 
 }

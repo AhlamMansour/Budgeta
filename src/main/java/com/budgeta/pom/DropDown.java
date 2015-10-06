@@ -22,7 +22,8 @@ public class DropDown extends AbstractPOM{
 	@FindBy(css = "ul.select2-results li")
 	List<WebElement> dropdownOptions;
 	
-	
+	@FindBy(className = "select2-input")
+	private List<WebElement> inputText;
 	
 	
 	//wrapper must be with class name = select2-container
@@ -65,13 +66,25 @@ public class DropDown extends AbstractPOM{
 		return dropdown.findElement(selectedDropdown).getText();
 	}
 	
+	public void sendKeysToDropDown(String value){
+		openDropDown();
+		WebElement el = returnVisibleElement(inputText);
+		el.clear();
+		el.sendKeys(value);
+		dropdownOptions.get(0).click();
+		WebdriverUtils.waitForElementToDisappear(driver ,By.className("select2-dropdown-open"));
+		WebdriverUtils.sleep(200);
+	}
 	
 	private void openDropDown(){
 		if(dropdown.getAttribute("class").contains(dropdownOpenString))
 			return;
 		dropdown.click();		
 		WebdriverUtils.elementToHaveClass(dropdown, dropdownOpenString);
-		wait.until(ExpectedConditions.visibilityOf(dropdownOptions.get(0)));
+		try{
+			wait.until(ExpectedConditions.visibilityOf(dropdownOptions.get(0)));
+		}
+		catch(Exception e){}
 	}
 	
 	private void closeDropDown(){
@@ -79,6 +92,14 @@ public class DropDown extends AbstractPOM{
 			return;
 		WebElementUtils.clickElementEvent(driver, dropdown);		
 		WebdriverUtils.waitForElementToDisappear(driver, By.className(dropdownOpenString));
+	}
+	
+	private WebElement returnVisibleElement(List<WebElement> elms){
+		for(WebElement el : elms){
+			if(el.isDisplayed())
+				return el;
+		}
+		return null;
 	}
 	
 	@Override

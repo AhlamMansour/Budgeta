@@ -70,7 +70,10 @@ public class BudgetaTest extends TearDown{
 		return months.get(month)+"/"+year;
 	}
 	
-	
+	public static Hashtable<String, String> getMonths(){
+		return months;
+	}
+
 	@BeforeMethod
 	public void clearFocus() {
 		try {

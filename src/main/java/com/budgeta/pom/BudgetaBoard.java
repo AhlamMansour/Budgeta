@@ -50,9 +50,18 @@ public class BudgetaBoard extends AbstractPOM{
 		for(WebElement el : bottomBar.findElements(By.tagName("button"))){
 			if(el.getAttribute("type").equalsIgnoreCase("submit")){
 				el.click();
-				WebdriverUtils.waitForElementToBeFound(driver, noty_message);
+				try{
+					WebdriverUtils.waitForElementToBeFound(driver, noty_message);
+					WebdriverUtils.waitForElementToDisappear(driver, By.className("changed"));
+					WebdriverUtils.waitForBudgetaBusyBar(driver);
+					WebdriverUtils.waitForBudgetaLoadBar(driver);
+					break;
+				}
+				catch(Exception e){}
 			}
 		}
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
 	public void clickUndoChanges(){

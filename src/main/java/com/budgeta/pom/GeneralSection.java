@@ -38,6 +38,8 @@ public class GeneralSection extends AbstractPOM{
 	@FindBy(className = "error")
 	List<WebElement> errors;
 	
+	@FindBy(className = "attribute-allocated")
+	private WebElement department;
 	
 	private By dropdown = By.className("select2-container");
 
@@ -53,11 +55,11 @@ public class GeneralSection extends AbstractPOM{
 	}
 	
 	public String getDateRangeFrom(){
-		return dateRange_from.getAttribute("value");
+		return dateRange_from.getAttribute("placeholder");
 	}
 	
 	public String getDateRangeTo(){
-		return dateRange_to.getAttribute("value");
+		return dateRange_to.getAttribute("placeholder");
 	}
 	
 	public DateRange openDateRangeFrom(){
@@ -113,6 +115,17 @@ public class GeneralSection extends AbstractPOM{
 		}
 		return false;
 	}
+	
+	public void setDepartment(String value){
+		DropDown dr = new DropDown(department.findElement(dropdown));
+		dr.sendKeysToDropDown(value);
+	}
+	
+	public String getDepartment(){
+		DropDown dr = new DropDown(department.findElement(dropdown));
+		return dr.getSelectedValue();
+	}
+	
 	
 	private WebElement getAccountNumber(){
 		for(WebElement el : accountNumbers){
