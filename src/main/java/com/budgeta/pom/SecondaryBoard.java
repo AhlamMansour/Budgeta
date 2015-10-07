@@ -417,11 +417,48 @@ public class SecondaryBoard extends AbstractPOM{
 		}
 	}
 	
+	public void clickOnSubLine(String lineName, String subLineName, String sub_subLine){
+		List<WebElement> sublines = getSubLinesForSubLine(lineName, subLineName);
+		for(WebElement el : sublines){
+			if(getLineName(el).equals(sub_subLine)){
+				el.findElement(budgetName).click();
+				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+			}
+		}
+	}
+	
 	public BudgetSettings openBudgetSettings(){
 		budgetSettings.click();
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
 		return new BudgetSettings();
+	}
+	
+	public void addSubLineForLine(String _lineName, String subLineName){
+		List<WebElement> sublines = getSubLinesForLine(_lineName);
+		for(WebElement el : sublines){
+			if(el.findElement(lineName).getText().equals(subLineName)){
+				el.findElement(addLineBtn).click();
+				WebdriverUtils.sleep(300);
+				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				return;
+			}
+		}
+	}
+	
+	public void addSubLinrForSubLine(String lineTitle, String subLineTitle, String subLineToAdd){
+		List<WebElement> subLines = getSubLinesForSubLine(lineTitle, subLineTitle);
+		for(WebElement el : subLines){
+			if(el.findElement(lineName).getText().equals(subLineToAdd)){
+				el.findElement(addLineBtn).click();
+				WebdriverUtils.sleep(300);
+				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				return;
+			}
+		}
 	}
 /*************************************************************************************************************/
 /*************************************************************************************************************/
@@ -504,6 +541,16 @@ public class SecondaryBoard extends AbstractPOM{
 			WebdriverUtils.sleep(200);
 		}
 		return lineElm.findElements(line);
+	}
+	
+	private List<WebElement> getSubLinesForSubLine(String lineTitle, String subLineTitle){
+		List<WebElement> sublines = getSubLinesForLine(lineTitle);
+		for(WebElement el : sublines){
+			if(el.findElement(lineName).getText().equals(subLineTitle)){
+				return el.findElements(line);
+			}
+		}
+		return null;
 	}
 	
 	

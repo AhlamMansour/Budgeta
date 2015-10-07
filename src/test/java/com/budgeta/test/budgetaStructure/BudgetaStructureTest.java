@@ -11,6 +11,7 @@ import com.budgeta.pom.BudgetSettings;
 import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.CommentsSection;
 import com.budgeta.pom.DateRange;
+import com.budgeta.pom.EmployeeAssumptions;
 import com.budgeta.pom.GeneralSection;
 import com.budgeta.pom.PreviewBoard;
 import com.budgeta.pom.RevenuesAddSubLine;
@@ -32,6 +33,7 @@ public class BudgetaStructureTest extends WrapperTest{
 	String revenues = "Revenues";
 	String cost_of_revenues = "Cost of Revenues";
 	String cost_of_revenues_subLine = "Professional Services";
+	String salary_and_wages = "Salary & wages";
 	
 	
 	@TestFirst
@@ -47,6 +49,10 @@ public class BudgetaStructureTest extends WrapperTest{
 		subLine.setName(revenuesSubLine);
 		subLine.selectDropDown("Perpetual License");
 		subLine.clickAdd();
+		secondaryBoard = new SecondaryBoard();
+		secondaryBoard.addSubLine(cost_of_revenues);
+		secondaryBoard = new SecondaryBoard();
+		secondaryBoard.addSubLineForLine(cost_of_revenues, cost_of_revenues_subLine);
 	}
 	
 	
@@ -260,7 +266,27 @@ public class BudgetaStructureTest extends WrapperTest{
 	}
 	
 	
-	
+	@Test(dataProvider = "ExcelFileLoader", enabled = true,priority = 4)
+	@DataProviderParams(sheet = "BudgetaForm" , area = "CostOfSale_Salary&wages")
+	public void CostOfSale_SalaryAndwages(Hashtable<String, String> data) {
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine,salary_and_wages);
+		secondaryBoard = new SecondaryBoard();
+		
+		EmployeeAssumptions emplyeeAssumption = new EmployeeAssumptions();
+		Assert.assertTrue(emplyeeAssumption.isDisplayed(), "expected employee assumption to be displayed");
+		
+		emplyeeAssumption.setGeography(data.get("Geography"));
+		emplyeeAssumption.setBenefits("BenefitsPercentage");
+		emplyeeAssumption.selectPayment(data.get("Payment"));
+		emplyeeAssumption.setYearlyVacatoinDays(data.get("YearlyVactaionDayes"));
+		emplyeeAssumption.setAvgAccruedVacation(data.get("AvgAccruedVacation_Percentage"));
+		emplyeeAssumption.setMaxAccruedVacation(data.get("MaxAccruedVacation_Percentage"));
+		emplyeeAssumption.setYearlyIncrease(data.get("YearlyIncrease_Percentage"));
+		
+		
+	}
 	
 	
 	

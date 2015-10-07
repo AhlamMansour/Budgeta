@@ -29,11 +29,10 @@ public class BudgetaBoard extends AbstractPOM{
 	private By noty_message = By.className("noty_message");
 	
 	private GeneralSection generalSection;
-	
 	private CommentsSection commentsSection;
-	
 	private PreviewBoard preview;
-	
+	private EmployeeAssumptions employeeAssumption;
+	private BillingsSection billings;
 	
 	
 	public SecondaryBoard getSecondaryBoard(){
@@ -94,6 +93,16 @@ public class BudgetaBoard extends AbstractPOM{
 	public PreviewBoard getPreviewBoard(){
 		preview = new PreviewBoard();
 		return preview;
+	}
+	
+	public BillingsSection getBillingsSection(){
+		billings = new BillingsSection();
+		return billings;
+	}
+	
+	public EmployeeAssumptions getEmployeeAssumptions(){
+		employeeAssumption = new EmployeeAssumptions();
+		return employeeAssumption;
 	}
 	
 	@Override
