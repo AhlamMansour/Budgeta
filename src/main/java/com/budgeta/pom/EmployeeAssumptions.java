@@ -31,6 +31,7 @@ public class EmployeeAssumptions extends AbstractPOM{
 	private WebElement yearlyIncrease;
 	
 	private By dropdown = By.className("select2-container");
+	private By error = By.className("input-error");
 	
 	public void setGeography(String value){
 		setText(getGeographyElement(), value);
@@ -90,7 +91,9 @@ public class EmployeeAssumptions extends AbstractPOM{
 		return yearlyIncrease.getAttribute("value");
 	}
 	
-	
+	public boolean employeeAssumptionHasError(){
+		return wrapper.findElements(error).size() > 0;
+	}
 	
 	
 	/***************************************************************************/

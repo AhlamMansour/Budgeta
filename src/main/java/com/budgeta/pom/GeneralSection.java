@@ -14,12 +14,6 @@ public class GeneralSection extends AbstractPOM{
 	@FindBy(id = "section-General")
 	private WebElement wrapper;
 	
-	@FindBy(css = "div.month-picker.from input")
-	private WebElement dateRange_from;
-	
-	@FindBy(css = "div.month-picker.to input")
-	private WebElement dateRange_to;
-	
 	@FindBy(id = "attribute-currency")
 	private WebElement currency;
 		
@@ -41,6 +35,8 @@ public class GeneralSection extends AbstractPOM{
 	@FindBy(className = "attribute-allocated")
 	private WebElement department;
 	
+	private By dateRange_from = By.cssSelector("div.month-picker.from input");
+	private By dateRange_to = By.cssSelector("div.month-picker.to input");
 	private By dropdown = By.className("select2-container");
 
 	
@@ -55,20 +51,20 @@ public class GeneralSection extends AbstractPOM{
 	}
 	
 	public String getDateRangeFrom(){
-		return dateRange_from.getAttribute("placeholder");
+		return wrapper.findElement(dateRange_from).getAttribute("placeholder");
 	}
 	
 	public String getDateRangeTo(){
-		return dateRange_to.getAttribute("placeholder");
+		return wrapper.findElement(dateRange_to).getAttribute("placeholder");
 	}
 	
 	public DateRange openDateRangeFrom(){
-		dateRange_from.click();
+		wrapper.findElement(dateRange_from).click();
 		return new DateRange("from");
 	}
 	
 	public DateRange openDateRangeTo(){
-		dateRange_to.click();
+		wrapper.findElement(dateRange_to).click();
 		return new DateRange("to");
 	}
 	

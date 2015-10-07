@@ -433,26 +433,32 @@ public class SecondaryBoard extends AbstractPOM{
 	public void addSubLineForLine(String _lineName, String subLineName){
 		List<WebElement> sublines = getSubLinesForLine(_lineName);
 		for(WebElement el : sublines){
-			if(el.findElement(lineName).getText().equals(subLineName)){
-				el.findElement(addLineBtn).click();
-				WebdriverUtils.sleep(300);
-				WebdriverUtils.waitForBudgetaBusyBar(driver);
-				WebdriverUtils.waitForBudgetaLoadBar(driver);
-				return;
+			try{
+				if(el.findElement(lineName).getText().equals(subLineName)){
+					el.findElement(addLineBtn).click();
+					WebdriverUtils.sleep(300);
+					WebdriverUtils.waitForBudgetaBusyBar(driver);
+					WebdriverUtils.waitForBudgetaLoadBar(driver);
+					return;
+				}
 			}
+			catch(Exception e){}
 		}
 	}
 	
 	public void addSubLinrForSubLine(String lineTitle, String subLineTitle, String subLineToAdd){
 		List<WebElement> subLines = getSubLinesForSubLine(lineTitle, subLineTitle);
 		for(WebElement el : subLines){
-			if(el.findElement(lineName).getText().equals(subLineToAdd)){
-				el.findElement(addLineBtn).click();
-				WebdriverUtils.sleep(300);
-				WebdriverUtils.waitForBudgetaBusyBar(driver);
-				WebdriverUtils.waitForBudgetaLoadBar(driver);
-				return;
+			try{
+				if(getLineName(el).equals(subLineToAdd)){
+					el.findElement(addLineBtn).click();
+					WebdriverUtils.sleep(300);
+					WebdriverUtils.waitForBudgetaBusyBar(driver);
+					WebdriverUtils.waitForBudgetaLoadBar(driver);
+					return;
+				}
 			}
+			catch(Exception e){}
 		}
 	}
 /*************************************************************************************************************/
@@ -541,7 +547,12 @@ public class SecondaryBoard extends AbstractPOM{
 	private List<WebElement> getSubLinesForSubLine(String lineTitle, String subLineTitle){
 		List<WebElement> sublines = getSubLinesForLine(lineTitle);
 		for(WebElement el : sublines){
-			if(el.findElement(lineName).getText().equals(subLineTitle)){
+			if(getLineName(el).equals(subLineTitle)){
+				if(el.getAttribute("class").contains("collapsed")){
+					el.findElement(By.tagName("i")).click();
+					WebdriverUtils.elementToHaveClass(el, "expanded");
+					WebdriverUtils.sleep(200);
+				}
 				return el.findElements(line);
 			}
 		}

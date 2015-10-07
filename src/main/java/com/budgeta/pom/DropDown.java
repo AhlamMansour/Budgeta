@@ -71,6 +71,7 @@ public class DropDown extends AbstractPOM{
 		WebElement el = returnVisibleElement(inputText);
 		el.clear();
 		el.sendKeys(value);
+		WebdriverUtils.sleep(300);
 		dropdownOptions.get(0).click();
 		WebdriverUtils.waitForElementToDisappear(driver ,By.className("select2-dropdown-open"));
 		WebdriverUtils.sleep(200);

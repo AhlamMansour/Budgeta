@@ -34,6 +34,7 @@ public class BudgetaStructureTest extends WrapperTest{
 	String cost_of_revenues = "Cost of Revenues";
 	String cost_of_revenues_subLine = "Professional Services";
 	String salary_and_wages = "Salary & wages";
+	String employee = "employee_";
 	
 	
 	@TestFirst
@@ -53,6 +54,11 @@ public class BudgetaStructureTest extends WrapperTest{
 		secondaryBoard.addSubLine(cost_of_revenues);
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLineForLine(cost_of_revenues, cost_of_revenues_subLine);
+		secondaryBoard = new SecondaryBoard();
+		secondaryBoard.addSubLinrForSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages);
+		subLine = new RevenuesAddSubLine();
+		subLine.setName(WebdriverUtils.getTimeStamp(employee));
+		subLine.clickAdd();
 	}
 	
 	
@@ -101,7 +107,7 @@ public class BudgetaStructureTest extends WrapperTest{
 	
 	
 	
-	@Test(dataProvider = "ExcelFileLoader", enabled = true,priority = 2)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false,priority = 2)
 	@DataProviderParams(sheet = "BudgetaForm" , area = "Revenues Form_Details")
 	public void revenuesFormDetailsTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -216,7 +222,7 @@ public class BudgetaStructureTest extends WrapperTest{
 	}
 	
 	
-	@Test(dataProvider = "ExcelFileLoader", enabled = true,priority = 3)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false,priority = 3)
 	@DataProviderParams(sheet = "BudgetaForm" , area = "CostOfSale")
 	public void CostOfSaleTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -278,14 +284,54 @@ public class BudgetaStructureTest extends WrapperTest{
 		Assert.assertTrue(emplyeeAssumption.isDisplayed(), "expected employee assumption to be displayed");
 		
 		emplyeeAssumption.setGeography(data.get("Geography"));
-		emplyeeAssumption.setBenefits("BenefitsPercentage");
+		emplyeeAssumption.setBenefits(data.get("BenefitsPercentage"));
 		emplyeeAssumption.selectPayment(data.get("Payment"));
 		emplyeeAssumption.setYearlyVacatoinDays(data.get("YearlyVactaionDayes"));
 		emplyeeAssumption.setAvgAccruedVacation(data.get("AvgAccruedVacation_Percentage"));
 		emplyeeAssumption.setMaxAccruedVacation(data.get("MaxAccruedVacation_Percentage"));
 		emplyeeAssumption.setYearlyIncrease(data.get("YearlyIncrease_Percentage"));
+
+
+		GeneralSection general = new GeneralSection();
+		Assert.assertTrue(general.isDisplayed(), "expected general section to be displayed");
 		
+		DateRange from = general.openDateRangeFrom();
+		from.setYear(data.get("DateRange_from_year"));
+		from.setMonth(data.get("DateRange_from_month"));
 		
+		DateRange to = general.openDateRangeTo();
+		to.setYear(data.get("DateRange_to_year"));
+		to.setMonth(data.get("DateRange_to_month"));
+		
+		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+		general.setDepartment(data.get("Department"));
+		general.setGeography(data.get("Geography"));
+		general.setProduct(data.get("Product"));
+		general.setNotes(data.get("Notes"));
+		
+		board = new BudgetaBoard();
+		board.clickSaveChanges();
+		
+		if(data.get("ShouldPass").equals("FALSE"))
+			Assert.assertTrue(emplyeeAssumption.employeeAssumptionHasError() || general.isGeneralHasError(), "expected to error in employee assumption sectcion or in general section");
+		else{
+		
+			general = new GeneralSection();
+			Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
+			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
+			Assert.assertEquals(general.getDepartment(), data.get("Department"));
+			Assert.assertEquals(general.getGeography(), data.get("Geography"));
+			Assert.assertEquals(general.getProduct(), data.get("Product"));
+			
+			Assert.assertEquals(emplyeeAssumption.getGeography(), data.get("Geography"));
+			Assert.assertEquals(emplyeeAssumption.getBenefits(), data.get("BenefitsPercentage"));
+			Assert.assertEquals(emplyeeAssumption.getPayment(), data.get("Payment"));
+			Assert.assertEquals(emplyeeAssumption.getYearlyVacatoinDays(), data.get("YearlyVactaionDayes"));
+			Assert.assertEquals(emplyeeAssumption.getAvgAccruedVacation(), data.get("AvgAccruedVacation_Percentage"));
+			Assert.assertEquals(emplyeeAssumption.getMaxAccruedVacation(), data.get("MaxAccruedVacation_Percentage"));
+			Assert.assertEquals(emplyeeAssumption.getYearlyIncrease(), data.get("YearlyIncrease_Percentage"));
+	
+		}
 	}
 	
 	
