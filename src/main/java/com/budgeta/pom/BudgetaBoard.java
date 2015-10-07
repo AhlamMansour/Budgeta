@@ -7,11 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
-/**
- * 
- * @author Rabia Manna
- *
- */
 
 public class BudgetaBoard extends AbstractPOM{
 

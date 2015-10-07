@@ -13,11 +13,6 @@ import com.galilsoftware.AF.core.logging.SelTestLog;
 import com.galilsoftware.AF.core.testConfig.TearDown;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
-/**
- * 
- * @author Rabia Manna
- *
- */
 public class BudgetaTest extends TearDown{
 	
 	protected BudgetaBoard board;

@@ -8,12 +8,6 @@ import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 
-/**
- * 
- * @author Rabia Manna
- *
- */
-
 public class WelcomeScreen extends AbstractPOM{
 
 	@FindBy(className = "tour-page")

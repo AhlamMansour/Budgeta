@@ -8,11 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
-/**
- * 
- * @author Rabia Manna
- *
- */
 
 public class LoginPage extends AbstractPOM{
 	
