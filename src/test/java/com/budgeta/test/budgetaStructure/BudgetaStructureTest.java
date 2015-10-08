@@ -12,7 +12,9 @@ import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.CommentsSection;
 import com.budgeta.pom.DateRange;
 import com.budgeta.pom.EmployeeAssumptions;
+import com.budgeta.pom.EmplyeeSection;
 import com.budgeta.pom.GeneralSection;
+import com.budgeta.pom.MainSection;
 import com.budgeta.pom.PreviewBoard;
 import com.budgeta.pom.RevenuesAddSubLine;
 import com.budgeta.pom.SecondaryBoard;
@@ -55,9 +57,12 @@ public class BudgetaStructureTest extends WrapperTest{
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLineForLine(cost_of_revenues, cost_of_revenues_subLine);
 		secondaryBoard = new SecondaryBoard();
-		secondaryBoard.addSubLinrForSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages);
+		secondaryBoard.addSubLineForSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages);
+		secondaryBoard = new SecondaryBoard();
+		secondaryBoard.openAddChild(salary_and_wages, 3);
 		subLine = new RevenuesAddSubLine();
-		subLine.setName(WebdriverUtils.getTimeStamp(employee));
+		employee = WebdriverUtils.getTimeStamp(employee);
+		subLine.setName(employee);
 		subLine.clickAdd();
 	}
 	
@@ -272,9 +277,9 @@ public class BudgetaStructureTest extends WrapperTest{
 	}
 	
 	
-	@Test(dataProvider = "ExcelFileLoader", enabled = true,priority = 4)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false,priority = 4)
 	@DataProviderParams(sheet = "BudgetaForm" , area = "CostOfSale_Salary&wages")
-	public void CostOfSale_SalaryAndwages(Hashtable<String, String> data) {
+	public void CostOfSale_SalaryAndwagesTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
 		secondaryBoard = board.getSecondaryBoard();
 		secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine,salary_and_wages);
@@ -335,8 +340,87 @@ public class BudgetaStructureTest extends WrapperTest{
 	}
 	
 	
+	@Test(dataProvider = "ExcelFileLoader", enabled = true,priority = 5)
+	@DataProviderParams(sheet = "BudgetaForm" , area = "CostOfSale_Salary&wages_EmployeeForm")
+	public void employeeFormTest(Hashtable<String, String> data) {
+		
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine,salary_and_wages,employee);
+		secondaryBoard = new SecondaryBoard();
+		
+		MainSection mainSection = new MainSection();
+		Assert.assertTrue(mainSection.isDisplayed(), "expected to main section to be displayed");
+		
+		EmplyeeSection employeeSection = mainSection.getEmplyeeSection();
+		
+		employeeSection.setRole(data.get("Role"));
+		employeeSection.setEmployeeId(data.get("EmployeeId"));
+		employeeSection.setBaseSalary(data.get("BaseSalary"));
+		employeeSection.selectCurrency(data.get("Currency"));
+		employeeSection.selectTerm(data.get("Term"));
+		employeeSection.setBonus(data.get("BonusPercentage"));
+		employeeSection.setBenefit(data.get("BenefitsPercentage"));
+		
+		EmployeeAssumptions emplyeeAssumption = new EmployeeAssumptions();
+		
+		emplyeeAssumption.selectPayment(data.get("Payment"));
+		emplyeeAssumption.setYearlyVacatoinDays(data.get("YearlyVactaionDays"));
+		emplyeeAssumption.setAvgAccruedVacation(data.get("AvgAccruedVactaion_Percentage"));
+		emplyeeAssumption.setMaxAccruedVacation(data.get("MaxAccruedVactaionDays"));
+		emplyeeAssumption.setYearlyIncrease(data.get("YeralyIncreasePercentage"));
+		
+		GeneralSection general = new GeneralSection();
+		Assert.assertTrue(general.isDisplayed(), "expected general section to be displayed");
+		if(!data.get("HireDate_from_year").isEmpty()){
+			DateRange from = general.openDateRangeFrom();
+			from.setYear(data.get("HireDate_from_year"));
+			from.setMonth(data.get("HireDate_from_month"));
+		}
+		if(!data.get("HireDate_to_year").isEmpty()){
+			DateRange to = general.openDateRangeTo();
+			to.setYear(data.get("HireDate_to_year"));
+			to.setMonth(data.get("HireDate_to_month"));
+		}
+		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+		general.setDepartment(data.get("Department"));
+		general.setGeography(data.get("Geography"));
+		general.setProduct(data.get("Product"));
+		general.setNotes(data.get("Notes"));
+		
+		board = new BudgetaBoard();
+		board.clickSaveChanges();
+		
+		if(data.get("ShouldPass").equals("FALSE"))
+			Assert.assertTrue(mainSection.isMainSectionHasError() || general.isGeneralHasError(), "expected to error in employee assumption sectcion or in general section");
+		else{
+		
+			general = new GeneralSection();
+			Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("HireDate_from_month"), data.get("HireDate_from_year")));
+			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("HireDate_to_month"), data.get("HireDate_to_year")));
+			Assert.assertEquals(general.getDepartment(), data.get("Department"));
+			Assert.assertEquals(general.getGeography(), data.get("Geography"));
+			Assert.assertEquals(general.getProduct(), data.get("Product"));
+			
+			
+			Assert.assertEquals(emplyeeAssumption.getPayment(), data.get("Payment"));
+			Assert.assertEquals(emplyeeAssumption.getYearlyVacatoinDays(), data.get("YearlyVactaionDays"));
+			Assert.assertEquals(emplyeeAssumption.getAvgAccruedVacation(), data.get("AvgAccruedVactaion_Percentage"));
+			Assert.assertEquals(emplyeeAssumption.getMaxAccruedVacation(), data.get("MaxAccruedVactaionDays"));
+			Assert.assertEquals(emplyeeAssumption.getYearlyIncrease(), data.get("YeralyIncreasePercentage"));
+			
+			Assert.assertEquals(employeeSection.getRole(), data.get("Role"));
+			Assert.assertEquals(employeeSection.getEmployeeId(), data.get("EmployeeId"));
+			Assert.assertEquals(employeeSection.getBaseSalaryField(), data.get("BaseSalary"));
+			Assert.assertEquals(employeeSection.getSelecredCurrency(), data.get("Currency"));
+			Assert.assertEquals(employeeSection.getSelecredTerm(), data.get("Term"));
+			Assert.assertEquals(employeeSection.getBonus(), data.get("BonusPercentage"));
+			Assert.assertEquals(employeeSection.getBenefits(), data.get("BenefitsPercentage"));
 	
-	
+		}
+
+		
+	}
 	
 	
 	

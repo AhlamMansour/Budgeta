@@ -402,23 +402,41 @@ public class SecondaryBoard extends AbstractPOM{
 	}
 	
 	public void clickOnSubLine(String lineName, String subLineName){
+		clickClose();
 		List<WebElement> sublines = getSubLinesForLine(lineName);
 		for(WebElement el : sublines){
 			if(getLineName(el).equals(subLineName)){
 				el.findElement(budgetName).click();
 				WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				return;
 			}
 		}
 	}
 	
 	public void clickOnSubLine(String lineName, String subLineName, String sub_subLine){
+		if(WebdriverUtils.isDisplayed(closeBtn))
+			clickClose();
 		List<WebElement> sublines = getSubLinesForSubLine(lineName, subLineName);
 		for(WebElement el : sublines){
 			if(getLineName(el).equals(sub_subLine)){
 				el.findElement(budgetName).click();
 				WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				return;
+			}
+		}
+	}
+	
+	public void clickOnSubLine(String lineName, String subLineName, String sub_subLine,String nextLevelLine){
+		clickClose();
+		List<WebElement> sublines = getSubLinesFourthLevel(lineName, subLineName,sub_subLine);
+		for(WebElement el : sublines){
+			if(getLineName(el).equals(nextLevelLine)){
+				el.findElement(budgetName).click();
+				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				return;
 			}
 		}
 	}
@@ -446,13 +464,16 @@ public class SecondaryBoard extends AbstractPOM{
 		}
 	}
 	
-	public void addSubLinrForSubLine(String lineTitle, String subLineTitle, String subLineToAdd){
+	public void addSubLineForSubLine(String lineTitle, String subLineTitle, String subLineToAdd){
 		List<WebElement> subLines = getSubLinesForSubLine(lineTitle, subLineTitle);
 		for(WebElement el : subLines){
 			try{
 				if(getLineName(el).equals(subLineToAdd)){
-					el.findElement(addLineBtn).click();
+					WebElementUtils.hoverOverField(el, driver, null);
 					WebdriverUtils.sleep(300);
+					WebElementUtils.hoverOverField(el.findElement(addLineBtn), driver, null);
+					el.findElement(addLineBtn).click();
+					WebdriverUtils.sleep(600);
 					WebdriverUtils.waitForBudgetaBusyBar(driver);
 					WebdriverUtils.waitForBudgetaLoadBar(driver);
 					return;
@@ -460,6 +481,23 @@ public class SecondaryBoard extends AbstractPOM{
 			}
 			catch(Exception e){}
 		}
+	}
+	
+	public void openAddChild(String lineTitle, int level){
+		clickClose();
+		List<WebElement> allLinesInLevel = driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol")).findElements(line);
+		for(WebElement el : allLinesInLevel){
+			if(getLineName(el).equals(lineTitle) && el.getAttribute("data-level").equals(level+"")){
+				WebElementUtils.hoverOverField(el, driver, null);
+				WebdriverUtils.sleep(300);
+				WebElementUtils.hoverOverField(el.findElement(addLinesBtn), driver, null);
+				el.findElement(addLinesBtn).click();
+				WebdriverUtils.sleep(600);
+				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				return;
+			}
+		} 
 	}
 /*************************************************************************************************************/
 /*************************************************************************************************************/
@@ -559,6 +597,20 @@ public class SecondaryBoard extends AbstractPOM{
 		return null;
 	}
 	
+	private List<WebElement> getSubLinesFourthLevel(String lineTitle, String subLineTitle, String sub_subLine){
+		List<WebElement> sublines = getSubLinesForSubLine(lineTitle,subLineTitle);
+		for(WebElement el : sublines){
+			if(getLineName(el).equals(sub_subLine)){
+				if(el.getAttribute("class").contains("collapsed")){
+					el.findElement(By.tagName("i")).click();
+					WebdriverUtils.elementToHaveClass(el, "expanded");
+					WebdriverUtils.sleep(200);
+				}
+				return el.findElements(line);
+			}
+		}
+		return null;
+	}
 	
 	@Override
 	public boolean isDisplayed() {
