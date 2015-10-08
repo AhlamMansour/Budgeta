@@ -81,6 +81,23 @@ public class BudgetaUtils {
 		return endOfQuaterly;
 	}
 	
+	public static int getNumOfMonthsBetweenTwoDate(String monthX, String yearX, String monthY, String yearY){
+		int year1 = Integer.parseInt(yearX);
+		int year2 = Integer.parseInt(yearY);
+		if(year1 < year2){
+			return getAllMonthsBetweenTwoMonths(monthX, yearX, monthY, yearY).size();
+		}
+		if(year1 == year2){
+			if(getIndexOfMonth(monthX) <= getIndexOfMonth(monthY))
+				return getAllMonthsBetweenTwoMonths(monthX, yearX, monthY, yearY).size();
+			else
+				return getAllMonthsBetweenTwoMonths(monthY, yearY, monthX, yearX).size() * -1;
+		}
+		else{
+			return getAllMonthsBetweenTwoMonths(monthY, yearY, monthX, yearX).size() * -1;
+		}
+	}
+	
 	public static String[] calculateValues_Once(String fromMonth, String fromYear, String toMonth, String toYear, String onDateMonth, String onDateYear, int amount, int payAfter, int supportPercent, int supportPeriod){
 		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth,fromYear,toMonth,toYear);
 		String[] res = new String[months.size()];
@@ -223,4 +240,93 @@ public class BudgetaUtils {
 		}
 		return res;
 	}
+	
+	
+	public static String[] calculateEmployeeValues_Monthly(String fromMonth, String fromYear, String toMonth, String toYear, String HireDateMonth, String HireDateYear, String EndDateMonth , String EndDateYear, int baseSalary, int benefits, int bonus){
+		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth,fromYear,toMonth,toYear);
+		String[] res = new String[months.size()];
+		int startIndex = 0 , endIndex = res.length;
+		int fromHireToView = getNumOfMonthsBetweenTwoDate(HireDateMonth, HireDateYear, fromMonth, fromYear);
+		int fromEndHireToEndView = getNumOfMonthsBetweenTwoDate(EndDateMonth, EndDateYear, toMonth, toYear);
+		if(getNumOfMonthsBetweenTwoDate(HireDateMonth, HireDateYear, toMonth, toYear) < 0 || getNumOfMonthsBetweenTwoDate(EndDateMonth, EndDateYear, fromMonth, fromYear) > 0){
+			for(int i = 0 ; i < res.length ; i++){
+				res[i] = "-";
+			}
+			return res;
+		}
+		int bonusMonths = 0;
+		int benefit = (int) Math.round(((double)benefits/100) * baseSalary);
+		
+		if(fromHireToView < 0){
+			for(int i = 0; i > fromHireToView + 1 ; i--){
+				res[-i] = "-";
+			}
+			startIndex = (-1 * fromHireToView) -1;
+		}
+		else{
+			bonusMonths += fromHireToView;
+		}
+		
+		if(fromEndHireToEndView > 0){
+			endIndex = res.length - fromEndHireToEndView +1; 
+		}
+		
+		int sum = baseSalary + benefit;
+		
+		for(int i = startIndex ; i < endIndex; i++){
+			bonusMonths++;
+			if(months.get(i).contains("Dec")){
+				res[i] = sum + ((int) Math.round(((double)bonus/100) * bonusMonths * baseSalary))+"";
+				bonusMonths = 0;
+			}
+			else{
+				res[i] = sum + "";
+			}
+		}
+		for(int i=endIndex; i<res.length; i++){
+			res[i] = "-";
+		}
+		return res;
+	}
+	
+	public static String[] calculateEmployeeValues_Yearly(String fromMonth, String fromYear, String toMonth, String toYear, String HireDateMonth, String HireDateYear, String EndDateMonth , String EndDateYear, int baseSalary, int benefits, int bonus){
+		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth,fromYear,toMonth,toYear);
+		String[] res = new String[months.size()];
+		int startIndex = 0 , endIndex = res.length;
+		int fromHireToView = getNumOfMonthsBetweenTwoDate(HireDateMonth, HireDateYear, fromMonth, fromYear);
+		int fromEndHireToEndView = getNumOfMonthsBetweenTwoDate(EndDateMonth, EndDateYear, toMonth, toYear);
+		int bonusMonths = 0;
+		int sum = baseSalary /12;
+		int benefit = (int) Math.round(((double)benefits/100) * sum);
+		
+		if(fromHireToView < 0){
+			for(int i = 0; i > fromHireToView + 1 ; i--){
+				res[-i] = "-";
+			}
+			startIndex = (-1 * fromHireToView) -1;
+		}
+		else{
+			bonusMonths += fromHireToView;
+		}
+		
+		if(fromEndHireToEndView > 0){
+			endIndex = res.length - fromEndHireToEndView +1; 
+		}
+		
+		
+		
+		for(int i = startIndex ; i < endIndex; i++){
+			bonusMonths++;
+			if(months.get(i).contains("Dec")){
+				res[i] = sum + ((int) Math.round(((double)bonus/100) * bonusMonths * sum))+"";
+				bonusMonths = 0;
+			}
+			else{
+				res[i] = sum + "";
+			}
+		}
+		return res;
+	}
+	
+	
 }

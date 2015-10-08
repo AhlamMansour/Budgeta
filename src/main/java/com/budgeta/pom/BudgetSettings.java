@@ -14,6 +14,8 @@ public class BudgetSettings extends SmallPopup{
 	private List<WebElement> fields;
 	
 	private By dropdownOptions = By.cssSelector("ul.dropdown-menu li");
+	private By dateRangeTo = By.cssSelector("div.month-picker.to");
+	private By dateRangeFrom = By.cssSelector("div.month-picker.from");
 	
 	private WebElement currency;
 	
@@ -30,6 +32,14 @@ public class BudgetSettings extends SmallPopup{
 	
 	public String getSelectedFiscal(){
 		return getSelectedValue(Fiscalstart);
+	}
+	
+	public String getDateRangeFrom(){
+		return wrapper.findElement(dateRangeFrom).findElement(By.tagName("input")).getAttribute("value");
+	}
+	
+	public String getDateRangeTo(){
+		return wrapper.findElement(dateRangeTo).findElement(By.tagName("input")).getAttribute("value");
 	}
 	/***********************************************************************************/	
 	private void openDropDown(WebElement dropdown){

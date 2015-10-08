@@ -12,7 +12,6 @@ public class BudgetaBoard extends AbstractPOM{
 
 	@FindBy(className = "main-content")
 	private WebElement wrapper;
-
 	
 	@FindBy(className = "bottom-bar")
 	private WebElement bottomBar;
@@ -28,6 +27,7 @@ public class BudgetaBoard extends AbstractPOM{
 	private PreviewBoard preview;
 	private EmployeeAssumptions employeeAssumption;
 	private BillingsSection billings;
+	private InnerBar innerBar;
 	
 	
 	public SecondaryBoard getSecondaryBoard(){
@@ -98,6 +98,11 @@ public class BudgetaBoard extends AbstractPOM{
 	public EmployeeAssumptions getEmployeeAssumptions(){
 		employeeAssumption = new EmployeeAssumptions();
 		return employeeAssumption;
+	}
+	
+	public InnerBar getInnerBar(){
+		innerBar = new InnerBar();
+		return innerBar;
 	}
 	
 	@Override

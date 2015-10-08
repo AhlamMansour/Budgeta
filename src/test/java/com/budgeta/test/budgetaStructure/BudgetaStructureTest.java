@@ -394,29 +394,56 @@ public class BudgetaStructureTest extends WrapperTest{
 		if(data.get("ShouldPass").equals("FALSE"))
 			Assert.assertTrue(mainSection.isMainSectionHasError() || general.isGeneralHasError(), "expected to error in employee assumption sectcion or in general section");
 		else{
-		
+			board.clickSaveChanges();
+			secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine,salary_and_wages);
 			general = new GeneralSection();
-			Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("HireDate_from_month"), data.get("HireDate_from_year")));
-			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("HireDate_to_month"), data.get("HireDate_to_year")));
-			Assert.assertEquals(general.getDepartment(), data.get("Department"));
-			Assert.assertEquals(general.getGeography(), data.get("Geography"));
-			Assert.assertEquals(general.getProduct(), data.get("Product"));
+			String dateFrom = general.getDateRangeFrom();
+			String dateTo = general.getDateRangeTo();
+			String yearFrom = dateFrom.split("/")[1];
+			String yearTo = dateTo.split("/")[1];
+			secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine,salary_and_wages,employee);
+			
+			int baseSalary=0,benefits=0,bonus=0;
+			String monthFrom = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom.split("/")[0]));
+			String monthTo = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo.split("/")[0]));
+			general = new GeneralSection();
+			String hireDate = general.getDateRangeFrom(), endDate = general.getDateRangeTo(),hireMonth,endMonth,hireYear,endYear;
+			if(general.getDateRangeFrom().equals("MM/YYYY")){
+				hireDate = dateFrom;
+				hireMonth = monthFrom;
+				hireYear = yearFrom;
+			}
+			else{
+				hireMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(hireDate.split("/")[0]));
+				hireYear = hireDate.split("/")[1];
+			}
+			
+			if(general.getDateRangeTo().equals("MM/YYYY")){
+				endDate = dateTo;
+				endMonth = monthTo;
+				endYear = yearTo;
+			}
+			else{
+				endMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(endDate.split("/")[0]));
+				endYear = endDate.split("/")[1];
+			}
+			if(!employeeSection.getBaseSalaryField().isEmpty())
+				baseSalary = Integer.parseInt(employeeSection.getBaseSalaryField());
+			if(!employeeSection.getBenefits().isEmpty())
+				benefits = Integer.parseInt(employeeSection.getBenefits());
+			if(!employeeSection.getBonus().isEmpty())
+				bonus = Integer.parseInt(employeeSection.getBonus());
 			
 			
-			Assert.assertEquals(emplyeeAssumption.getPayment(), data.get("Payment"));
-			Assert.assertEquals(emplyeeAssumption.getYearlyVacatoinDays(), data.get("YearlyVactaionDays"));
-			Assert.assertEquals(emplyeeAssumption.getAvgAccruedVacation(), data.get("AvgAccruedVactaion_Percentage"));
-			Assert.assertEquals(emplyeeAssumption.getMaxAccruedVacation(), data.get("MaxAccruedVactaionDays"));
-			Assert.assertEquals(emplyeeAssumption.getYearlyIncrease(), data.get("YeralyIncreasePercentage"));
+			if(employeeSection.getSelecredTerm().equals("Monthly")){
+				String[] expectedValues = BudgetaUtils.calculateEmployeeValues_Monthly(monthFrom, yearFrom, monthTo, yearTo, hireMonth, hireYear, endMonth, endYear, baseSalary, benefits, bonus);
+				compareExpectedResults(expectedValues);
+			}
+			if(employeeSection.getSelecredTerm().equals("Yearly")){
+				String[] expectedValues = BudgetaUtils.calculateEmployeeValues_Yearly(monthFrom, yearFrom, monthTo, yearTo, hireMonth, hireYear, endMonth, endYear, baseSalary, benefits, bonus);	
+				compareExpectedResults(expectedValues);
+			}
 			
-			Assert.assertEquals(employeeSection.getRole(), data.get("Role"));
-			Assert.assertEquals(employeeSection.getEmployeeId(), data.get("EmployeeId"));
-			Assert.assertEquals(employeeSection.getBaseSalaryField(), data.get("BaseSalary"));
-			Assert.assertEquals(employeeSection.getSelecredCurrency(), data.get("Currency"));
-			Assert.assertEquals(employeeSection.getSelecredTerm(), data.get("Term"));
-			Assert.assertEquals(employeeSection.getBonus(), data.get("BonusPercentage"));
-			Assert.assertEquals(employeeSection.getBenefits(), data.get("BenefitsPercentage"));
-	
 		}
 
 		

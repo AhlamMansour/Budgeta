@@ -432,7 +432,7 @@ public class SecondaryBoard extends AbstractPOM{
 		clickClose();
 		List<WebElement> sublines = getSubLinesFourthLevel(lineName, subLineName,sub_subLine);
 		for(WebElement el : sublines){
-			if(getLineName(el).equals(nextLevelLine)){
+			if(getLineName(el).contains(nextLevelLine)){
 				el.findElement(budgetName).click();
 				WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
@@ -558,7 +558,7 @@ public class SecondaryBoard extends AbstractPOM{
 		List<WebElement> lines = getLines();
 		for(WebElement el : lines){
 			if(el.getAttribute("data-level").equals("1") && el.getAttribute("class").contains("new-line")){
-				if(el.findElement(lineName).getText().equals("Model 1"))
+				if(el.findElement(lineName).getText().contains("Model") && isLineExist("Model"))
 					return null;
 				try{
 					if(el.findElement(addLineBtn).getAttribute("class").contains("enable"))
