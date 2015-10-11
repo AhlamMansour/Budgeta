@@ -60,9 +60,9 @@
 		</classes>
 	</test>
 
-	<test name="RestoreBudgetTest">
+	<test name="Restore Budget Test">
 		<classes>
-			<class name="com.budgeta.test.restore.RestoreTest"></class>
+			<class name="com.budgeta.test.restore.RestoreBudgetTest"></class>
 		</classes>
 	</test>
 
