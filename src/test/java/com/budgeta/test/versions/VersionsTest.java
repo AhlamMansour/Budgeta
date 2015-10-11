@@ -14,12 +14,13 @@ import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class VersionsTest extends WrapperTest{
 
-	String snapshotName = "snapshot test";
+	String snapshotName = "snapshot test_";
 	String newSnapshotName = "rename test";
 	Versions versions;
 	SecondaryBoard secondary;
@@ -33,6 +34,7 @@ public class VersionsTest extends WrapperTest{
 		versions = secondary.openVersions();
 		CreateNewSnapshotPopup popup = versions.createNewSnapshot();
 		Assert.assertTrue(popup.isDisplayed(), "expected create new version to be displayed");
+		snapshotName = WebdriverUtils.getTimeStamp(snapshotName);
 		popup.setName(snapshotName);
 		popup.clickConfirm(true);
 		versions = new Versions();
@@ -79,8 +81,8 @@ public class VersionsTest extends WrapperTest{
 		popup.clickConfirm(true);
 		secondary = new SecondaryBoard();
 		secondary.openVersions();
-		
-		//...
+		versions = versions.selectVersion(View.ONLY_SNAPSHOTS, snapshotName);
+		Assert.assertTrue(secondary.getNumberOfVersionChanges() == 0, "expected to remove version changes");
 	}
 	
 	@Test(enabled = true,priority = 3)

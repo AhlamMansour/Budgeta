@@ -79,12 +79,13 @@ public class LoginPage extends AbstractPOM{
 			return;
 		}
 		WebdriverUtils.waitForElementToDisappear(driver, By.className("login-page"));
-		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
 		try{
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
 			WebdriverUtils.waitForElementToBeFound(driver, By.className("tour-page"));
 		}
 		catch(Exception e){
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
 			WebdriverUtils.waitForElementToBeFound(driver, By.className("tour-page"));
 		}
 	}

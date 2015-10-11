@@ -62,6 +62,9 @@ public class SecondaryBoard extends AbstractPOM{
 	@FindBy(css = "li.selected-root li.active")
 	private WebElement selectedLine;
 	
+	@FindBy(className = "scenario-changed")
+	private List<WebElement> versionChanges;;
+	
 	private By newLine = By.className("new-line");
 	
 	private By line = By.cssSelector("li.budget-list-item");
@@ -511,6 +514,10 @@ public class SecondaryBoard extends AbstractPOM{
 	public String getSelectedBudgetName(){
 		return getLineName(getSelectedBudget());
 	}
+	
+	public int getNumberOfVersionChanges(){
+		return versionChanges.size();
+	}
 /*************************************************************************************************************/
 /*************************************************************************************************************/
 	
@@ -623,7 +630,7 @@ public class SecondaryBoard extends AbstractPOM{
 		}
 		return null;
 	}
-	
+
 	
 	@Override
 	public boolean isDisplayed() {

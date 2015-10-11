@@ -12,7 +12,7 @@
 			<class name="com.budgeta.test.login.LoginTest"></class>
 		</classes>
 	</test>
-	
+
 	<test name="Scenarios Test">
 		<classes>
 			<class name="com.budgeta.test.scenarios.ScenariosTest"></class>
@@ -55,15 +55,15 @@
 		</classes>
 	</test>
 
-	<test name="Restore Test">
-		<classes>
-			<class name="com.budgeta.test.restore.RestoreTest"></class>
-		</classes>
-	</test>
-
 	<test name="Budgeta Structure Test">
 		<classes>
 			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest"></class>
+		</classes>
+	</test>
+
+	<test name="Restore Test">
+		<classes>
+			<class name="com.budgeta.test.restore.RestoreTest"></class>
 		</classes>
 	</test>
 

@@ -57,7 +57,14 @@ public class BudgetaTest extends TearDown{
 		loginPage.isDisplayed();
 		loginPage.setEmail(username);
 		loginPage.setPassword(password);
-		loginPage.clickLogin(true);
+		try{
+			loginPage.clickLogin(true);
+		}
+		catch(Exception e){
+			loginPage.setEmail(username);
+			loginPage.setPassword(newPassword);
+			loginPage.clickLogin(true);
+		}
 		board = new BudgetaBoard();
 	}
 	

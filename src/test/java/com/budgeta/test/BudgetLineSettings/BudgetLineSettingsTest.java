@@ -43,7 +43,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		trigger.clickDuplicate();
 		secondary = new SecondaryBoard();
 		int num2 = secondary.getNumberOfLines("Revenues");
-		Assert.assertTrue(num2 == (num+1), "the line is duplicated, number of lines was: "+num+"and now is: "+num2);
+		Assert.assertTrue(num2 == (num+1), "the line is duplicated, number of lines was: "+num+" and now is: "+num2);
 	}
 
 	//done
