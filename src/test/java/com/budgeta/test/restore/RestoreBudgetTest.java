@@ -1,5 +1,6 @@
 package com.budgeta.test.restore;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.MenuTrigger;
@@ -11,7 +12,7 @@ public class RestoreBudgetTest extends WrapperTest{
 	
 	
 	@TestFirst
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void CreateSettingTest() {
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		secondary.selectRandomBudgetWithPrefix("_");
@@ -30,11 +31,13 @@ public class RestoreBudgetTest extends WrapperTest{
 		
 		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
 		
-		trigger.clickRestoreBudget("C:\\RestoreTest.bdg");
 		
-		
+		int num = secondary.getNumberOfBudget("new test budget");
+		trigger.clickRestoreBudget("C:\\new test budget.bdg");
 		secondary = board.getSecondaryBoard();
-	
+		int num2 = secondary.getNumberOfBudget("new test budget");
+		
+		Assert.assertTrue(num2 == (num+1), "The budget was successfully restored, number of budget was:" + num + "now is:" + num2);
 		
 	}
 	

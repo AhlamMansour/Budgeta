@@ -67,6 +67,8 @@ public class MenuTrigger extends AbstractPOM {
 		for(WebElement el : driver.findElements(lineSettingTriggerMenu)){
 			if(el.getText().equals("Restore")){
 				el.findElement(By.tagName("input")).sendKeys(path);
+				WebdriverUtils.sleep(2000);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				WebdriverUtils.waitForBudgetaBusyBar(driver);
 				return;
 			}

@@ -60,7 +60,7 @@
 		</classes>
 	</test>
 
-	<test name="Restore Test">
+	<test name="RestoreBudgetTest">
 		<classes>
 			<class name="com.budgeta.test.restore.RestoreTest"></class>
 		</classes>

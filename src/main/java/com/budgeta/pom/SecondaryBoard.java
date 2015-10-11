@@ -185,6 +185,23 @@ public class SecondaryBoard extends AbstractPOM{
 		return sum;
 	}
 	
+	
+	
+	//ahlam
+	public int getNumberOfBudget(String budgetaName){
+		
+		openBudgetsList();
+		int num = 0;
+		for(WebElement budget : budgetsList){
+			if(budget.findElement(By.className("budget-name")).getText().equals(budgetaName)){
+				num ++;
+			}
+		}
+		return num;
+	}
+	
+	
+	
 	public int getNumbreOfExistBudgets(){
 		return budgetsList.size();
 	}
