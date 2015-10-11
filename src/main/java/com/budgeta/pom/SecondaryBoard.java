@@ -59,6 +59,9 @@ public class SecondaryBoard extends AbstractPOM{
 	@FindBy(id = "budget-settings")
 	private WebElement budgetSettings;
 	
+	@FindBy(css = "li.selected-root li.active")
+	private WebElement selectedLine;
+	
 	private By newLine = By.className("new-line");
 	
 	private By line = By.cssSelector("li.budget-list-item");
@@ -434,6 +437,7 @@ public class SecondaryBoard extends AbstractPOM{
 		for(WebElement el : sublines){
 			if(getLineName(el).contains(nextLevelLine)){
 				el.findElement(budgetName).click();
+				WebdriverUtils.elementToHaveClass(el, "active");
 				WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				return;
@@ -498,6 +502,14 @@ public class SecondaryBoard extends AbstractPOM{
 				return;
 			}
 		} 
+	}
+	
+	public String getSelectedLine(){
+		return getLineName(selectedLine);
+	}
+	
+	public String getSelectedBudgetName(){
+		return getLineName(getSelectedBudget());
 	}
 /*************************************************************************************************************/
 /*************************************************************************************************************/
@@ -611,6 +623,7 @@ public class SecondaryBoard extends AbstractPOM{
 		}
 		return null;
 	}
+	
 	
 	@Override
 	public boolean isDisplayed() {

@@ -61,6 +61,8 @@ public class NewBudgetPopup extends AbstractPOM{
 	
 	private By dropdownOptions = By.cssSelector("ul.dropdown-menu li");
 	
+	private By restore = By.id("upload");
+	
 	public enum BudgetaType {
 		COMPANY_BUDGET("Company Budget"), DEPARTMENT_BUDGET("Department Budget"), REVENUES("Revenues");
 		
@@ -208,6 +210,19 @@ public class NewBudgetPopup extends AbstractPOM{
 				return error.getText();
 		}
 		return "";
+	}
+	
+	public void clockRestoreAndUpload(String path){
+		wrapper.findElement(restore).sendKeys("C:\\NewTest.bdg");
+		WebdriverUtils.sleep(5000);
+		
+		try{
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
+			WebdriverUtils.waitForBudgetaBusyBar(driver);
+		}catch(Exception e){
+			WebdriverUtils.waitForBudgetaBusyBar(driver);
+		}
+		
 	}
 /***********************************************************************************/	
 	private void openDropDown(WebElement dropdown){

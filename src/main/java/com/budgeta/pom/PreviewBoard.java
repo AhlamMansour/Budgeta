@@ -26,6 +26,9 @@ public class PreviewBoard extends AbstractPOM{
 	@FindBy(css = "div.forecast-footer div.scroll-columns div.forecast-row")
 	private List<WebElement> valuesWrapper;
 	
+	@FindBy(css = "div.forecast-header div.scroll-columns div.column")
+	private List<WebElement> dateHeader;
+	
 	private By column = By.className("column");
 	
 	
@@ -55,6 +58,15 @@ public class PreviewBoard extends AbstractPOM{
 		return res.replaceAll("[^0-9]","").trim();
 	}
 
+	public int getIndexOfHeaderDate(String date){
+		int i = 0;
+		for(WebElement el : dateHeader){
+			if(el.getText().equals(date))
+				return i;
+			i++;
+		}
+		return -1;
+	}
 	
 	private List<WebElement> getAllValues(){
 		return returnVisibleElement(valuesWrapper).findElements(column);
@@ -67,6 +79,7 @@ public class PreviewBoard extends AbstractPOM{
 		}
 		return null;
 	}
+	
 	
 	@Override
 	public boolean isDisplayed() {
