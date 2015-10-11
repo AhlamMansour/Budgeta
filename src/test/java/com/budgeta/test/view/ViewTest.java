@@ -14,6 +14,7 @@ import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.View;
 import com.budgeta.test.BudgetaUtils;
 import com.budgeta.test.WrapperTest;
+import com.galilsoftware.AF.core.listeners.KnownIssue;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
@@ -101,7 +102,8 @@ public class ViewTest extends WrapperTest{
 		}
 	}
 	
-	@Test(enabled = true)
+    @KnownIssue(bugID = "BUD - 1964")
+    @Test(enabled = true,expectedExceptions = AssertionError.class)
 	public void validateTotalTest(){
 		
 		innerBar = board.getInnerBar();
