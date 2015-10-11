@@ -14,7 +14,6 @@ import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
-import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 
 @Listeners({ MethodListener.class, TestNGListener.class })

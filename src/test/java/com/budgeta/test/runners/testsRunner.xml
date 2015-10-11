@@ -7,6 +7,35 @@
 		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
 	</listeners>
 
+	<test name="Login Test">
+		<classes>
+			<class name="com.budgeta.test.login.LoginTest"></class>
+		</classes>
+	</test>
+	
+	<test name="Scenarios Test">
+		<classes>
+			<class name="com.budgeta.test.scenarios.ScenariosTest"></class>
+		</classes>
+	</test>
+
+	<test name="Versions Test">
+		<classes>
+			<class name="com.budgeta.test.versions.VersionsTest"></class>
+		</classes>
+	</test>
+
+	<test name="SignUp Test">
+		<classes>
+			<class name="com.budgeta.test.SignUp.SignUpTest"></class>
+		</classes>
+	</test>
+
+	<test name="View Test">
+		<classes>
+			<class name="com.budgeta.test.view.ViewTest"></class>
+		</classes>
+	</test>
 
 	<test name="Account Settings Test">
 		<classes>
@@ -17,6 +46,24 @@
 	<test name="Create Budget Test">
 		<classes>
 			<class name="com.budgeta.test.createBudget.CreateBudgetTest"></class>
+		</classes>
+	</test>
+
+	<test name="Budget Line Settings Test">
+		<classes>
+			<class name="com.budgeta.test.BudgetLineSettings.BudgetLineSettingsTest"></class>
+		</classes>
+	</test>
+
+	<test name="Restore Test">
+		<classes>
+			<class name="com.budgeta.test.restore.RestoreTest"></class>
+		</classes>
+	</test>
+
+	<test name="Budgeta Structure Test">
+		<classes>
+			<class name="com.budgeta.test.budgetaStructur.BudgetaStructureTest"></class>
 		</classes>
 	</test>
 

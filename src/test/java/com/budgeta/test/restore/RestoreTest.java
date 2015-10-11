@@ -12,7 +12,7 @@ import com.galilsoftware.AF.core.listeners.TestNGListener;
 
 
 @Listeners({ MethodListener.class, TestNGListener.class })
-public class Restore extends WrapperTest{
+public class RestoreTest extends WrapperTest{
 
 	SecondaryBoard secondaryBoard;
 	

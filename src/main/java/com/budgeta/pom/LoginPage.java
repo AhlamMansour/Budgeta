@@ -47,10 +47,12 @@ public class LoginPage extends AbstractPOM{
 	}
 	
 	public void setEmail(String e_mail){
+		email.clear();
 		email.sendKeys(e_mail);
 	}
 	
 	public void setPassword(String pass){
+		password.clear();
 		password.sendKeys(pass);
 	}
 	
