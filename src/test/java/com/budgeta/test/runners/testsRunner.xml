@@ -63,7 +63,7 @@
 
 	<test name="Budgeta Structure Test">
 		<classes>
-			<class name="com.budgeta.test.budgetaStructur.BudgetaStructureTest"></class>
+			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest"></class>
 		</classes>
 	</test>
 

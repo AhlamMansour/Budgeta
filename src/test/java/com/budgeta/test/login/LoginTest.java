@@ -28,7 +28,9 @@ public class LoginTest extends BudgetaTest{
 		
 		
 		//error email
-		loginPage.setEmail(WebdriverUtils.getTimeStamp(username));
+		String prefix = username.split("@")[0];
+		String suffix = username.split("@")[1];
+		loginPage.setEmail(WebdriverUtils.getTimeStamp(prefix)+"@"+suffix);
 		loginPage.setPassword(password);
 		loginPage.clickLogin(false);
 		Assert.assertTrue(loginPage.isGeneralErrorAppear(), "expected error message to be displayed");
