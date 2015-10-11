@@ -1,11 +1,14 @@
 package com.galilsoftware.AF.core.testConfig;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 
 import com.galilsoftware.AF.core.TestParamsThreadPool;
 import com.galilsoftware.AF.core.logging.SelTestLog;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 
 
@@ -28,6 +31,23 @@ public class TearDown extends BaseSeleniumTest {
 //		
 //		SelTestLog.info("The Test Suite has finished Executing.");
 //	}
+	
+	private String timeConversion(long miliSecs) {
+		long hours = TimeUnit.MILLISECONDS.toHours(miliSecs);
+		miliSecs = miliSecs - TimeUnit.HOURS.toMillis(hours);
+		long mins = TimeUnit.MILLISECONDS.toMinutes(miliSecs);
+		miliSecs = miliSecs - TimeUnit.MINUTES.toMillis(mins);
+		long secs = TimeUnit.MILLISECONDS.toSeconds(miliSecs);
+		String time = norma(hours) + " : " + norma(mins) + " : " + norma(secs);
+		return time;
+	}
+	
+	private String norma(long value){
+		if(value < 10){
+			return "0" + value;
+		}else
+			return "" + value;
+	}
 
 	protected void closeDriver() {
 		if (!chrome && !ie) {
@@ -41,5 +61,16 @@ public class TearDown extends BaseSeleniumTest {
 		TestParamsThreadPool.clear();
 	}
 
+	@AfterSuite
+	public void cleanChromeDrivers() throws IOException{
+		killBrowserInstances();
+		endTime = Double.parseDouble(WebdriverUtils.getTimeStamp(""));
+		
+		System.out.println(" ###########-- Execution Time Took:"+(double)((endTime-startTime)/3600000)+"  --###########");
+		System.out.println();
+		System.out.println(" ###########==-- Execution Time Took:\t"+ timeConversion((long) (endTime-startTime)) +"\t --==###########");
+		
+		//openReport();
+	}
 
 }

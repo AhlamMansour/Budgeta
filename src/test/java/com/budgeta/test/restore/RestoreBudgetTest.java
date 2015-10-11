@@ -33,7 +33,7 @@ public class RestoreBudgetTest extends WrapperTest{
 		
 		
 		int num = secondary.getNumberOfBudget("new test budget");
-		trigger.clickRestoreBudget("C:\\new test budget.bdg");
+		trigger.clickRestoreBudget(System.getProperty("user.dir")+"\\new test budget.bdg");
 		secondary = board.getSecondaryBoard();
 		int num2 = secondary.getNumberOfBudget("new test budget");
 		

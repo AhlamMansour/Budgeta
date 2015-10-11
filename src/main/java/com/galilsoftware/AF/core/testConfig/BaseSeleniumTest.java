@@ -44,6 +44,8 @@ public class BaseSeleniumTest {
 	protected boolean chrome;
 	protected boolean ie;
 	protected boolean retry;
+	public static double startTime = -1;
+	public static double endTime = -1;
 	public static boolean local;
 	protected static final String OUTPUT_PATH = "test-output/screenshots/";
 	private static String testHost = System
@@ -378,6 +380,21 @@ public class BaseSeleniumTest {
 			return ExcelUtils.getExcelData(area, xls, sheet);
 		} else {
 			throw new RuntimeException("Couldn't find the annotation");
+		}
+	}
+	
+	protected void killBrowserInstances() {
+		if(!local){
+			Runtime rt = Runtime.getRuntime();
+			try {
+				System.out.println("Killing all chrome and chromedriver instances ...");
+				rt.exec("taskkill /IM chrome.exe /f");
+				rt.exec("taskkill /IM chromedriver.exe /f");
+			} catch (IOException e) {
+				System.err.println("Warning - Could not kill chrome and chromeDriver instances");
+				return;
+			}
+			System.out.println("chrome and chromedriver instances have been killed ...");
 		}
 	}
 
