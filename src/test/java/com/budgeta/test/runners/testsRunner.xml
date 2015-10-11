@@ -1,6 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Budgeta Tests" parallel="tests" thread-count="1"
-	time-out="2000000" verbose="3">
+<suite name="Budgeta Tests" parallel="tests" thread-count="1" verbose="3">
 
 	<listeners>
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />

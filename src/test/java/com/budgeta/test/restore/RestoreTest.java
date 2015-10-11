@@ -20,13 +20,15 @@ public class RestoreTest extends WrapperTest{
 	public void restoreBudgetTest(){
 		
 		secondaryBoard = board.getSecondaryBoard();
-		secondaryBoard.selectRandomBudgetWithPrefix("_");
+		int num = secondaryBoard.getNumberOfBudgetsWithName("RestoreTest");
+		secondaryBoard.selectRandomBudgetWithPrefix("RestoreTest");
 		NewBudgetPopup popup = secondaryBoard.addBudgeta();
 		
 		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");
-		popup.clockRestoreAndUpload("C:\\RestoreTest.bdg");
+		popup.clickRestoreAndUpload("C:\\RestoreTest.bdg");
 		secondaryBoard = board.getSecondaryBoard();
-		Assert.assertEquals(secondaryBoard.getSelectedBudgetName(), "RestoreTest");
+		int num2 = secondaryBoard.getNumberOfBudgetsWithName("RestoreTest");
+		Assert.assertEquals(num + 1 , num2);
 	}
 	
 }

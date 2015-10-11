@@ -212,7 +212,7 @@ public class NewBudgetPopup extends AbstractPOM{
 		return "";
 	}
 	
-	public void clockRestoreAndUpload(String path){
+	public void clickRestoreAndUpload(String path){
 		wrapper.findElement(restore).sendKeys("C:\\NewTest.bdg");
 		WebdriverUtils.sleep(5000);
 		

@@ -81,6 +81,7 @@ public class VersionsTest extends WrapperTest{
 		popup.clickConfirm(true);
 		secondary = new SecondaryBoard();
 		secondary.openVersions();
+		versions = new Versions();
 		versions = versions.selectVersion(View.ONLY_SNAPSHOTS, snapshotName);
 		Assert.assertTrue(secondary.getNumberOfVersionChanges() == 0, "expected to remove version changes");
 	}

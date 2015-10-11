@@ -173,6 +173,18 @@ public class SecondaryBoard extends AbstractPOM{
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("level-1"));
 	}
 	
+	public int getNumberOfBudgetsWithName(String name){
+		int sum = 0;
+		openBudgetsList();
+		for(WebElement el : budgetsList){
+			if(el.findElement(budgetName).getText().equals(name)){
+				sum++;
+			}
+		}
+		showBudgetsBtn.click();
+		return sum;
+	}
+	
 	public int getNumbreOfExistBudgets(){
 		return budgetsList.size();
 	}
