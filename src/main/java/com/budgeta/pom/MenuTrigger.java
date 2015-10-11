@@ -22,11 +22,6 @@ public class MenuTrigger extends AbstractPOM {
 	
 	
 	
-	
-	
-	
-	
-	
 	public MenuTrigger(WebElement _wrapper){
 		wrapper = _wrapper;
 	}
@@ -67,7 +62,16 @@ public class MenuTrigger extends AbstractPOM {
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
-	
+	public void clickRestoreBudget(String path){
+		openLineSettings();
+		for(WebElement el : driver.findElements(lineSettingTriggerMenu)){
+			if(el.getText().equals("Restore")){
+				el.findElement(By.tagName("input")).sendKeys(path);
+				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				return;
+			}
+		}
+	}
 	
 	public SecondaryBoard clickMove(){
 		selectScenarioTrigger("Move");
@@ -118,6 +122,9 @@ public class MenuTrigger extends AbstractPOM {
 			}
 		}
 	}
+	
+	
+	
 	
 	private void openLineSettings(){
 		WebElementUtils.hoverOverField(wrapper, driver, null);

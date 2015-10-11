@@ -38,6 +38,10 @@ public class BudgetaStructureTest extends WrapperTest{
 	String salary_and_wages = "Salary & wages";
 	String employee = "employee_";
 	
+	String OtherIncomeAndExpensesLine = "Other income and expenses";
+	String OtherIncomeAndExpensesSubLine = "Other income";
+	String OtherIncomeAndExpensesSub_SubLine = "Simple_";
+	
 	
 	@TestFirst
 	@Test(enabled = true)
@@ -64,6 +68,26 @@ public class BudgetaStructureTest extends WrapperTest{
 		employee = WebdriverUtils.getTimeStamp(employee);
 		subLine.setName(employee);
 		subLine.clickAdd();
+		
+		
+		
+		secondaryBoard = new SecondaryBoard();
+		secondaryBoard.addSubLine(OtherIncomeAndExpensesLine);
+		secondaryBoard = new SecondaryBoard();
+		secondaryBoard.addSubLineForLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine);
+		secondaryBoard = new SecondaryBoard();
+		//secondaryBoard.addSubLinrForSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
+		secondaryBoard.addSubLineForSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
+		secondaryBoard = new SecondaryBoard();
+		secondaryBoard.openAddChild(OtherIncomeAndExpensesSubLine, 2);
+		subLine = new RevenuesAddSubLine();
+		OtherIncomeAndExpensesSub_SubLine = WebdriverUtils.getTimeStamp(OtherIncomeAndExpensesSub_SubLine);
+		subLine.setName(OtherIncomeAndExpensesSub_SubLine);
+		subLine.clickAdd();
+		
+		
+		
+		
 	}
 	
 	
@@ -447,6 +471,276 @@ public class BudgetaStructureTest extends WrapperTest{
 		}
 
 		
+	}
+	
+	
+	
+	
+	
+	
+	@Test(dataProvider = "ExcelFileLoader", enabled = false,priority = 6)
+	@DataProviderParams(sheet = "BudgetaForm" , area = "NetIncome")
+	public void NetIncomTest(Hashtable<String, String> data){
+		
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		
+		secondaryBoard.clickOnLine("Net income");
+		GeneralSection general = new GeneralSection();
+		
+		
+		Assert.assertTrue(general.isDisplayed(), "expected general section to be displayed");
+		
+		DateRange from = general.openDateRangeFrom();
+		from.setYear(data.get("DateRange_from_year"));
+		from.setMonth(data.get("DateRange_from_month"));
+		
+		DateRange to = general.openDateRangeTo();
+		to.setYear(data.get("DateRange_to_year"));
+		to.setMonth(data.get("DateRange_to_month"));
+		
+		general.selectCurrency(data.get("Currency"));
+		
+		general.setAccountNumberInRowByIndex(1, data.get("AccountNumbar"));
+		general.setGeography(data.get("Geography"));
+		general.setProduct(data.get("Product"));
+		general.setNotes(data.get("Notes"));
+		
+		
+		if(data.get("ShouldPass").equals("FALSE"))
+			Assert.assertTrue(general.isGeneralHasError(), "expected to error in general section");
+		else{
+			board.clickSaveChanges();
+			CommentsSection comments = new CommentsSection();
+			Assert.assertTrue(comments.isDisplayed(), "expected comments section to be displayed");
+			comments.setComments(data.get("Comments"));
+		
+			board = new BudgetaBoard();
+			board.clickSaveChanges();
+			
+			general = new GeneralSection();
+			Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
+			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
+			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));			
+		}
+		
+		
+		
+	}
+	
+	
+	@Test(dataProvider = "ExcelFileLoader", enabled = false,priority = 7)
+	@DataProviderParams(sheet = "BudgetaForm" , area = "Operating profit/loss")
+	public void OperatingProfitLossTest(Hashtable<String, String> data){
+		
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		
+		secondaryBoard.clickOnLine("Operating profit/loss");
+		GeneralSection general = new GeneralSection();
+		
+		
+		Assert.assertTrue(general.isDisplayed(), "expected general section to be displayed");
+		
+		DateRange from = general.openDateRangeFrom();
+		from.setYear(data.get("DateRange_from_year"));
+		from.setMonth(data.get("DateRange_from_month"));
+		
+		DateRange to = general.openDateRangeTo();
+		to.setYear(data.get("DateRange_to_year"));
+		to.setMonth(data.get("DateRange_to_month"));
+		
+		general.selectCurrency(data.get("Currency"));
+		
+		general.setAccountNumberInRowByIndex(1, data.get("AccountNumbar"));
+		general.setGeography(data.get("Geography"));
+		general.setProduct(data.get("Product"));
+		general.setNotes(data.get("Notes"));
+		
+		
+		if(data.get("ShouldPass").equals("FALSE"))
+			Assert.assertTrue(general.isGeneralHasError(), "expected to error in general section");
+		else{
+			board.clickSaveChanges();
+			CommentsSection comments = new CommentsSection();
+			Assert.assertTrue(comments.isDisplayed(), "expected comments section to be displayed");
+			comments.setComments(data.get("Comments"));
+		
+			board = new BudgetaBoard();
+			board.clickSaveChanges();
+			
+			general = new GeneralSection();
+			Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
+			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
+			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));			
+		}
+		
+		
+		
+	}
+	
+	@Test(dataProvider = "ExcelFileLoader", enabled = true,priority = 8)
+	@DataProviderParams(sheet = "BudgetaForm" , area = "OtherIncomeAndExpenses")
+	public void OtherIncomeAndExpensesTest(Hashtable<String, String> data){
+		
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		
+		secondaryBoard.clickOnLine("Other income and expenses");
+		GeneralSection general = new GeneralSection();
+		
+		
+		Assert.assertTrue(general.isDisplayed(), "expected general section to be displayed");
+		
+		DateRange from = general.openDateRangeFrom();
+		from.setYear(data.get("DateRange_from_year"));
+		from.setMonth(data.get("DateRange_from_month"));
+		
+		DateRange to = general.openDateRangeTo();
+		to.setYear(data.get("DateRange_to_year"));
+		to.setMonth(data.get("DateRange_to_month"));
+		
+		general.selectCurrency(data.get("Currency"));
+		
+		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+		general.setGeography(data.get("Geography"));
+		general.setProduct(data.get("Product"));
+		general.setNotes(data.get("Notes"));
+		
+		
+		if(data.get("ShouldPass").equals("FALSE"))
+			Assert.assertTrue(general.isGeneralHasError(), "expected to error in general section");
+		else{
+			board.clickSaveChanges();
+			CommentsSection comments = new CommentsSection();
+			Assert.assertTrue(comments.isDisplayed(), "expected comments section to be displayed");
+			comments.setComments(data.get("Comments"));
+		
+			board = new BudgetaBoard();
+			board.clickSaveChanges();
+			
+			general = new GeneralSection();
+			Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
+			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
+			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));			
+		}
+		
+		
+		
+	}
+	
+	
+	@Test(dataProvider = "ExcelFileLoader", enabled = true,priority = 9)
+	@DataProviderParams(sheet = "BudgetaForm" , area = "OtherIncomeAndExpenses_SubLines")
+	public void OtherIncomeAndExpenses_OtherIncome(Hashtable<String, String> data) {
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
+		secondaryBoard = new SecondaryBoard();
+		
+		BillingsSection billings = new BillingsSection();
+		Assert.assertTrue(billings.isDisplayed(), "expected billings section to be displayed");
+		
+		billings.selectRepeat(data.get("Occurs"));
+		if(data.get("Occurs").equals("Once"))
+			billings.selectOnDate(data.get("OnDate_Month"), data.get("OnDate_Year"));
+		else
+			billings.selectSpred(data.get("Spread"));
+		if(data.get("Occurs").equals("Quarterly") || data.get("Occurs").equals("Yearly"))
+			billings.selectAtDate(data.get("AtDate"));
+		if(data.get("Spread").equals("Growth"))
+			billings.setGrowth(data.get("GrowthPercentage"));
+		billings.setAmount(data.get("Amount"));
+		billings.setPaymentAfter(data.get("PaymentAfter"));
+		
+		//////////////////////////////////////////
+		GeneralSection general = new GeneralSection();
+		
+			
+		Assert.assertTrue(general.isDisplayed(), "expected general section to be displayed");
+		
+		DateRange from = general.openDateRangeFrom();
+		if(!data.get("DateRange_from_year").isEmpty()){
+			from.setYear(data.get("DateRange_from_year"));
+			from.setMonth(data.get("DateRange_from_month"));
+		}
+		DateRange to = general.openDateRangeTo();
+		if(!data.get("DateRange_to_year").isEmpty()){
+			to.setYear(data.get("DateRange_to_year"));
+			to.setMonth(data.get("DateRange_to_month"));
+		}
+			
+			
+		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+		general.setGeography(data.get("Geography"));
+		general.setProduct(data.get("Product"));
+		general.setNotes(data.get("Notes"));
+		board.clickSaveChanges();
+		
+			
+		if(data.get("ShouldPass").equals("FALSE")){
+			Assert.assertTrue(billings.isBillingsHasError() || general.isGeneralHasError(), "expected to error in billings section");
+		}
+		else{	
+			////////////////////////////////////////////////////////////////////
+			board.clickSaveChanges();	
+			
+			//start validation
+			int payAfter,growth;
+			String monthX,yearX,monthY,yearY;
+			
+			secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine);
+			general = new GeneralSection();
+			String dateFrom = general.getDateRangeFrom();
+			String dateTo = general.getDateRangeTo();
+			yearX = dateFrom.split("/")[1];
+			yearY = dateTo.split("/")[1];
+			secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine,OtherIncomeAndExpensesSub_SubLine);
+
+			monthX = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom.split("/")[0]));
+			monthY = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo.split("/")[0]));
+			
+			if(data.get("PaymentAfter").isEmpty())
+				payAfter = 0;
+			else
+				payAfter = Integer.parseInt(data.get("PaymentAfter"));
+			
+			
+			if(data.get("GrowthPercentage").isEmpty())
+				growth = 0;
+			else
+				growth = Integer.parseInt(data.get("GrowthPercentage"));
+				
+//			monthX = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getDateRangeFrom().split("/")[0]));
+//			yearX = general.getDateRangeFrom().split("/")[1];
+//			monthY = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getDateRangeTo().split("/")[0]));
+//			yearY = general.getDateRangeTo().split("/")[1];
+				
+			board.clickSaveChanges();
+				
+			if(data.get("Occurs").equals("Once")){
+				String[] expectedValues = BudgetaUtils.calculateValues_Once(monthX, yearX, monthY, yearY, data.get("OnDate_Month"), data.get("OnDate_Year"), Integer.parseInt(data.get("Amount")), payAfter,0,0);
+				compareExpectedResults(expectedValues);
+			}
+			
+			if(data.get("Occurs").equals("Monthly")){
+				String[] expectedValues = BudgetaUtils.calculateValues_Monthly(monthX, yearX,  monthY, yearY, Integer.parseInt(data.get("Amount")), payAfter,0,0, growth);
+				compareExpectedResults(expectedValues);
+			}
+			
+			if(data.get("Occurs").equals("Quarterly")){
+				String[] expectedValues = BudgetaUtils.calculateValues_Quaterly(monthX, yearX, monthY, yearY, Integer.parseInt(data.get("Amount")), payAfter, growth, data.get("AtDate"));
+				compareExpectedResults(expectedValues);
+			}
+			
+			if(data.get("Occurs").equals("Yearly")){
+				BudgetSettings settings = secondaryBoard.openBudgetSettings();
+				String fiscal = settings.getSelectedFiscal().substring(0, 3);
+				settings.clickCancel();
+				String[] expectedValues = BudgetaUtils.calculateValues_Yearly(monthX, yearX, monthY, yearY, Integer.parseInt(data.get("Amount")), payAfter, growth, data.get("AtDate"),fiscal);
+				compareExpectedResults(expectedValues);
+			}
+		}
 	}
 	
 	

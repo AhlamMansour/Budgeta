@@ -47,6 +47,9 @@ public class SecondaryBoard extends AbstractPOM{
 	@FindBy(className = "versions")
 	private WebElement versions;
 	
+	@FindBy (id = "selected-root-menu")
+	private WebElement settingBudgetIcon;
+	
 	@FindBy(css = "ol.tree.nav")
 	private List<WebElement> selectedBudget;
 	
@@ -237,6 +240,10 @@ public class SecondaryBoard extends AbstractPOM{
 		return getSelectedBudget().findElement(budgetName).getText().split("\n")[0];
 	}
 	
+	public MenuTrigger getBudgetMenuTrigger(){
+		return new MenuTrigger(settingBudgetIcon);
+	}
+	
 	public void openBudgetDropDownOptionsMenu(){
 		if(isBudgetDropDownOptionsOpen()){
 			budgetOptionsMenuBtn.click();
@@ -420,19 +427,20 @@ public class SecondaryBoard extends AbstractPOM{
 		}
 	}
 	
-	public void clickOnSubLine(String lineName, String subLineName, String sub_subLine){
-		if(WebdriverUtils.isDisplayed(closeBtn))
-			clickClose();
-		List<WebElement> sublines = getSubLinesForSubLine(lineName, subLineName);
-		for(WebElement el : sublines){
-			if(getLineName(el).equals(sub_subLine)){
+	 public void clickOnSubLine(String lineName, String subLineName, String sub_subLine){
+		 if(WebdriverUtils.isDisplayed(closeBtn))
+			 clickClose();
+		 List<WebElement> sublines = getSubLinesForSubLine(lineName, subLineName);
+		 for(WebElement el : sublines){
+			if(getLineName(el).contains(sub_subLine)){
 				el.findElement(budgetName).click();
 				WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				return;
 			}
-		}
-	}
+		 }
+	 }
+
 	
 	public void clickOnSubLine(String lineName, String subLineName, String sub_subLine,String nextLevelLine){
 		clickClose();
