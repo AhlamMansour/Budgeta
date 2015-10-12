@@ -424,6 +424,9 @@ public class BudgetaStructureTest extends WrapperTest {
 	    int baseSalary = 0, benefits = 0, bonus = 0;
 	    String monthFrom = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom.split("/")[0]));
 	    String monthTo = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo.split("/")[0]));
+	    String payment = data.get("Payment");
+	    if (payment.isEmpty())
+		payment = "Same month";
 	    general = new GeneralSection();
 	    String hireDate = general.getDateRangeFrom(), endDate = general.getDateRangeTo(), hireMonth, endMonth, hireYear, endYear;
 	    if (general.getDateRangeFrom().equals("MM/YYYY")) {
@@ -452,12 +455,12 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	    if (employeeSection.getSelecredTerm().equals("Monthly")) {
 		String[] expectedValues = BudgetaUtils.calculateEmployeeValues_Monthly(monthFrom, yearFrom, monthTo, yearTo, hireMonth, hireYear, endMonth,
-			endYear, baseSalary, benefits, bonus);
+			endYear, baseSalary, benefits, bonus, payment);
 		compareExpectedResults(expectedValues);
 	    }
 	    if (employeeSection.getSelecredTerm().equals("Yearly")) {
 		String[] expectedValues = BudgetaUtils.calculateEmployeeValues_Yearly(monthFrom, yearFrom, monthTo, yearTo, hireMonth, hireYear, endMonth,
-			endYear, baseSalary, benefits, bonus);
+			endYear, baseSalary, benefits, bonus, payment);
 		compareExpectedResults(expectedValues);
 	    }
 
@@ -487,7 +490,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	general.selectCurrency(data.get("Currency"));
 
-	general.setAccountNumberInRowByIndex(1, data.get("AccountNumbar"));
+	general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
 	general.setGeography(data.get("Geography"));
 	general.setProduct(data.get("Product"));
 	general.setNotes(data.get("Notes"));
@@ -534,7 +537,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	general.selectCurrency(data.get("Currency"));
 
-	general.setAccountNumberInRowByIndex(1, data.get("AccountNumbar"));
+	general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
 	general.setGeography(data.get("Geography"));
 	general.setProduct(data.get("Product"));
 	general.setNotes(data.get("Notes"));

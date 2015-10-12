@@ -1,0 +1,25 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Budgeta Tests" parallel="tests" thread-count="1"
+	verbose="3">
+
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	</listeners>
+
+
+	<test name="Versions Test">
+		<classes>
+			<class name="com.budgeta.test.versions.VersionsTest"></class>
+		</classes>
+	</test>
+	
+	<test name="Scenarios Test">
+		<classes>
+			<class name="com.budgeta.test.scenarios.ScenariosTest"></class>
+		</classes>
+	</test>
+
+
+</suite>
+	
