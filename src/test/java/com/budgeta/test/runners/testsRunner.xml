@@ -1,5 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Budgeta Tests" parallel="tests" thread-count="1" verbose="3">
+<suite name="Budgeta Tests" parallel="tests" thread-count="1"
+	verbose="3">
 
 	<listeners>
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
@@ -23,6 +24,13 @@
 			<class name="com.budgeta.test.versions.VersionsTest"></class>
 		</classes>
 	</test>
+
+	<test name="Restore Budget Test">
+		<classes>
+			<class name="com.budgeta.test.restore.RestoreBudgetTest"></class>
+		</classes>
+	</test>
+
 
 	<test name="SignUp Test">
 		<classes>
@@ -59,13 +67,6 @@
 			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest"></class>
 		</classes>
 	</test>
-
-	<test name="Restore Budget Test">
-		<classes>
-			<class name="com.budgeta.test.restore.RestoreBudgetTest"></class>
-		</classes>
-	</test>
-
 
 </suite>
 

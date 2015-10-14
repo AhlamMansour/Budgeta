@@ -75,10 +75,13 @@ public class ViewTest extends WrapperTest {
 	int numberOfRows = view.getNumbreOfRows();
 	for (int row = 0; row < numberOfRows; row++) {
 	    String rowTitle = view.getRowTitleByIndex(row);
-	    if (rowTitle.contains(","))
-		rowTitle = rowTitle.split(",")[1].trim();
 	    view.clickOnLineByIndex(row);
-	    Assert.assertTrue(secondaryBoard.getSelectedLine().contains(rowTitle));
+	    if (rowTitle.contains(",")) {
+		rowTitle = rowTitle.split(",")[1].trim();
+		Assert.assertTrue(secondaryBoard.getSelectedLine().contains(rowTitle));
+	    } else {
+		Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLine()));
+	    }
 	    PreviewBoard previewBoard = new PreviewBoard();
 	    List<String> lineValues = new ArrayList<>();
 	    int startIndex = previewBoard.getIndexOfHeaderDate(fromMonth + " " + fromYear);

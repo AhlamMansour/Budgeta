@@ -8,15 +8,15 @@
 	</listeners>
 
 
-	<test name="Versions Test">
+	<test name="view Test">
 		<classes>
-			<class name="com.budgeta.test.versions.VersionsTest"></class>
+			<class name="com.budgeta.test.view.ViewTest"></class>
 		</classes>
 	</test>
 	
-	<test name="Scenarios Test">
+	<test name="Budget Structure Test">
 		<classes>
-			<class name="com.budgeta.test.scenarios.ScenariosTest"></class>
+			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest"></class>
 		</classes>
 	</test>
 

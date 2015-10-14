@@ -557,7 +557,7 @@ public class SecondaryBoard extends AbstractPOM {
     private WebElement getLineByName(String name) {
 	List<WebElement> lines = getLines();
 	for (WebElement el : lines) {
-	    if (getLineName(el).contains(name))// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
+	    if (getLineName(el).startsWith(name))// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
 		return el;
 	}
 	return null;
