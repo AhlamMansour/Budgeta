@@ -84,7 +84,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 1)
+    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 1)
     @DataProviderParams(sheet = "BudgetaForm", area = "GeneralRevenues")
     public void GeneralRevenuesTest(Hashtable<String, String> data) {
 	board = new BudgetaBoard();
@@ -128,7 +128,7 @@ public class BudgetaStructureTest extends WrapperTest {
 	}
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 2)
+    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 2)
     @DataProviderParams(sheet = "BudgetaForm", area = "Revenues Form_Details")
     public void revenuesFormDetailsTest(Hashtable<String, String> data) {
 	board = new BudgetaBoard();
@@ -226,8 +226,11 @@ public class BudgetaStructureTest extends WrapperTest {
 	    }
 
 	    if (data.get("Repeat").equals("Quarterly")) {
+	    	BudgetSettings settings = secondaryBoard.openBudgetSettings();
+			String fiscal = settings.getSelectedFiscal().substring(0, 3);
+			settings.clickCancel();
 		String[] expectedValues = BudgetaUtils.calculateValues_Quaterly(monthX, yearX, monthY, yearY, Integer.parseInt(data.get("Amount")), payAfter,
-			growth, data.get("AtDate"));
+			growth, data.get("AtDate"), fiscal);
 		compareExpectedResults(expectedValues);
 	    }
 
@@ -244,7 +247,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 3)
+    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 3)
     @DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale")
     public void CostOfSaleTest(Hashtable<String, String> data) {
 	board = new BudgetaBoard();
@@ -294,7 +297,7 @@ public class BudgetaStructureTest extends WrapperTest {
 	}
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 4)
+    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 4)
     @DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages")
     public void CostOfSale_SalaryAndwagesTest(Hashtable<String, String> data) {
 	board = new BudgetaBoard();
@@ -357,7 +360,7 @@ public class BudgetaStructureTest extends WrapperTest {
 	}
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 5)
+    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 5)
     @DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages_EmployeeForm")
     public void employeeFormTest(Hashtable<String, String> data) {
 
@@ -468,7 +471,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 6)
+    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 6)
     @DataProviderParams(sheet = "BudgetaForm", area = "NetIncome")
     public void NetIncomTest(Hashtable<String, String> data) {
 
@@ -515,7 +518,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 7)
+    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 7)
     @DataProviderParams(sheet = "BudgetaForm", area = "Operating profit/loss")
     public void OperatingProfitLossTest(Hashtable<String, String> data) {
 
@@ -705,9 +708,12 @@ public class BudgetaStructureTest extends WrapperTest {
 	    }
 
 	    if (data.get("Occurs").equals("Quarterly")) {
-		String[] expectedValues = BudgetaUtils.calculateValues_Quaterly(monthX, yearX, monthY, yearY, Integer.parseInt(data.get("Amount")), payAfter,
-			growth, data.get("AtDate"));
-		compareExpectedResults(expectedValues);
+	    	BudgetSettings settings = secondaryBoard.openBudgetSettings();
+			String fiscal = settings.getSelectedFiscal().substring(0, 3);
+			settings.clickCancel();	
+			String[] expectedValues = BudgetaUtils.calculateValues_Quaterly(monthX, yearX, monthY, yearY, Integer.parseInt(data.get("Amount")), payAfter,
+			growth, data.get("AtDate"),fiscal);
+			compareExpectedResults(expectedValues);
 	    }
 
 	    if (data.get("Occurs").equals("Yearly")) {

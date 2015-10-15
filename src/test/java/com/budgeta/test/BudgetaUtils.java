@@ -70,21 +70,29 @@ public class BudgetaUtils {
 	return Month[index - 1];
     }
 
-    public static List<String> getBeginningOfQuaterlyMonths() {
+    public static List<String> getBeginningOfQuaterlyMonths(String fiscal) {
 	List<String> beginningOfQuaterly = new ArrayList<>();
-	beginningOfQuaterly.add("Feb");
-	beginningOfQuaterly.add("May");
-	beginningOfQuaterly.add("Aug");
-	beginningOfQuaterly.add("Nov");
+	int index = getIndexOfMonth(fiscal);
+	
+	for(int i = 1 ; i <= 4 ; i++){
+		beginningOfQuaterly.add(Month[index]);
+		index += 3;
+		if(index > 11)
+			index -= 12;
+	}
 	return beginningOfQuaterly;
     }
 
-    public static List<String> getEndOfQuaterlyMonths() {
+    public static List<String> getEndOfQuaterlyMonths(String fiscal) {
 	List<String> endOfQuaterly = new ArrayList<>();
-	endOfQuaterly.add("Jan");
-	endOfQuaterly.add("Apr");
-	endOfQuaterly.add("Jul");
-	endOfQuaterly.add("Oct");
+	int index = getIndexOfMonth(getPreviousMonth(fiscal));
+	
+	for(int i = 1 ; i <= 4 ; i++){
+		endOfQuaterly.add(Month[index]);
+		index += 3;
+		if(index > 11)
+			index -= 12;
+	}
 	return endOfQuaterly;
     }
 
@@ -157,17 +165,18 @@ public class BudgetaUtils {
     }
 
     public static String[] calculateValues_Quaterly(String fromMonth, String fromYear, String toMonth, String toYear, int amount, int payAfter, int growth,
-	    String AtDate) {
+	    String AtDate,String fiscal) {
 	List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear);
-	String[] res = new String[months.size()];
+	String[] res = new String[months.size()], finalRes =new String[months.size()];
 	List<String> quaterly = new ArrayList<>();
 
-	int startIndex = payAfter;
+	int startIndex = 0;
 	int sum = amount;
-	for (int i = 0; i < startIndex; i++) {
-	    res[i] = "-";
-	}
+
 	if (AtDate.equals("spread evenly")) {
+		for (int i = 0; i < payAfter; i++) {
+		    res[i] = "-";
+		}
 	    sum = sum / 3;
 	    growth = growth / 3;
 	    for (int i = startIndex; i < res.length; i++) {
@@ -177,9 +186,9 @@ public class BudgetaUtils {
 	} else {
 	    int quater = 3;
 	    if (AtDate.equals("at the beginning"))
-		quaterly = getBeginningOfQuaterlyMonths();
+		quaterly = getBeginningOfQuaterlyMonths(fiscal);
 	    if (AtDate.equals("at the end"))
-		quaterly = getEndOfQuaterlyMonths();
+		quaterly = getEndOfQuaterlyMonths(fiscal);
 	    while (!quaterly.contains(months.get(startIndex).split(" ")[0].trim())) {
 		res[startIndex] = "-";
 		startIndex++;
@@ -197,13 +206,22 @@ public class BudgetaUtils {
 		}
 	    }
 	}
-	return res;
+	startIndex = 0;
+	while(res[startIndex].equals("-")){
+		finalRes[startIndex] = "-";
+		startIndex++;
+	}
+	
+	for(int i = startIndex ; i < res.length - payAfter ; i++){
+		finalRes[i] = res[i - payAfter];
+	}
+	return finalRes;
     }
 
     public static String[] calculateValues_Yearly(String fromMonth, String fromYear, String toMonth, String toYear, int amount, int payAfter, int growth,
 	    String AtDate, String fiscal) {
 	List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear);
-	String[] res = new String[months.size()];
+	String[] res = new String[months.size()], finalRes =new String[months.size()];
 	String startMonth = "";
 	int startIndex = payAfter;
 	int sum = amount;
@@ -240,7 +258,16 @@ public class BudgetaUtils {
 		}
 	    }
 	}
-	return res;
+	startIndex = 0;
+	while(res[startIndex].equals("-")){
+		finalRes[startIndex] = "-";
+		startIndex++;
+	}
+	
+	for(int i = startIndex ; i < res.length - payAfter ; i++){
+		finalRes[i] = res[i - payAfter];
+	}
+	return finalRes;
     }
 
     public static String[] calculateEmployeeValues_Monthly(String fromMonth, String fromYear, String toMonth, String toYear, String HireDateMonth,
