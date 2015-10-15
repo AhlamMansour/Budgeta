@@ -3,6 +3,7 @@ package com.galilsoftware.AF.core;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Dimension;
@@ -135,7 +136,12 @@ public class SeleniumDriver {
 
 				if(!file.canExecute())
 					System.err.println("could not find chrome driver");
-
+				HashMap<String, Object> myPrefs = new HashMap<String, Object>();
+				myPrefs.put("profile.default_content_settings.popups", 0);
+				File downloaDir = new File(dummyFile.getAbsolutePath()+"/browserDownloads");
+				myPrefs.put("download.default_directory", downloaDir.getAbsolutePath());
+				options.setExperimentalOption("prefs", myPrefs);
+				
 				driver = new ChromeDriver(options);
 			}
 

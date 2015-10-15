@@ -67,6 +67,7 @@ public class BudgetaStructureTest extends WrapperTest {
 	employee = WebdriverUtils.getTimeStamp(employee);
 	subLine.setName(employee);
 	subLine.clickAdd();
+	secondaryBoard.selectDropDownInLine("Select Grouping", "No Grouping");
 
 	secondaryBoard = new SecondaryBoard();
 	secondaryBoard.addSubLine(OtherIncomeAndExpensesLine);
@@ -470,8 +471,54 @@ public class BudgetaStructureTest extends WrapperTest {
 	}
 
     }
+    
+	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 6)
+	@DataProviderParams(sheet = "BudgetaForm" , area = "GrossProfit")
+	public void fillGeneralAndValidate(Hashtable<String, String> data) {
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		
+		secondaryBoard.clickOnLine("Gross Profit");
+		GeneralSection general = new GeneralSection();
+		
+		Assert.assertTrue(general.isDisplayed(), "expected general section to be displayed");
+		
+		String year = data.get("DateRange_from_year");
+		String month = data.get("DateRange_from_month");
+		
+		DateRange from = general.openDateRangeFrom();
+		from.setYear(year);
+		from.setMonth(month);
+		
+		DateRange to = general.openDateRangeTo();
+		to.setYear(data.get("DateRange_to_year"));
+		to.setMonth(data.get("DateRange_to_month"));
+		
+		general.selectCurrency(data.get("Currency"));
+		
+		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+		general.setProduct(data.get("Product"));
+		general.setNotes(data.get("Notes"));
+		
+		if(data.get("ShouldPass").equals("FALSE"))
+			Assert.assertTrue(general.isGeneralHasError(), "expected to error in general section");
+		else{
+			board.clickSaveChanges();
+			CommentsSection comments = new CommentsSection();
+			Assert.assertTrue(comments.isDisplayed(), "expected comments section to be displayed");
+			comments.setComments(data.get("Comments"));
+		
+			board = new BudgetaBoard();
+			board.clickSaveChanges();
+			
+			general = new GeneralSection();
+			Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
+			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
+			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));			
+		}
+	}
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 6)
+    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority =7)
     @DataProviderParams(sheet = "BudgetaForm", area = "NetIncome")
     public void NetIncomTest(Hashtable<String, String> data) {
 
@@ -518,7 +565,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 7)
+    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 8)
     @DataProviderParams(sheet = "BudgetaForm", area = "Operating profit/loss")
     public void OperatingProfitLossTest(Hashtable<String, String> data) {
 
@@ -565,7 +612,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 8)
+    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 9)
     @DataProviderParams(sheet = "BudgetaForm", area = "OtherIncomeAndExpenses")
     public void OtherIncomeAndExpensesTest(Hashtable<String, String> data) {
 
@@ -612,7 +659,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 9)
+    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 10)
     @DataProviderParams(sheet = "BudgetaForm", area = "OtherIncomeAndExpenses_SubLines")
     public void OtherIncomeAndExpenses_OtherIncome(Hashtable<String, String> data) {
 	board = new BudgetaBoard();

@@ -65,7 +65,10 @@ public class SecondaryBoard extends AbstractPOM {
     private WebElement selectedLine;
 
     @FindBy(className = "scenario-changed")
-    private List<WebElement> versionChanges;;
+    private List<WebElement> versionChanges;
+    
+	@FindBy(id = "sidebar-reports")
+	private WebElement reportsBtn;
 
     private final By newLine = By.className("new-line");
 
@@ -551,8 +554,22 @@ public class SecondaryBoard extends AbstractPOM {
 	return versionChanges.size();
     }
 
-    /*************************************************************************************************************/
-    /*************************************************************************************************************/
+	public ReportsPopup clickReports(){
+		reportsBtn.click();
+		return new ReportsPopup();
+	}
+	
+	public void selectDropDownInLine(String dropdown, String textToSelect){
+		final By secondaryBarDDNLocator = By.cssSelector("ol.tree.nav");
+		WebdriverUtils.sleep(1100);
+		List<WebElement> list = driver.findElements(secondaryBarDDNLocator);
+		for( WebElement listMember : list){
+			if(WebdriverUtils.isDisplayed(listMember) && listMember.findElement(By.className("select2-chosen")).getText().equalsIgnoreCase(dropdown))
+				selectDropDown(listMember.findElement(By.className("select2-chosen")), textToSelect);
+		}
+	}
+/*************************************************************************************************************/
+/*************************************************************************************************************/
 
     private WebElement getLineByName(String name) {
 	List<WebElement> lines = getLines();
@@ -667,6 +684,17 @@ public class SecondaryBoard extends AbstractPOM {
 	}
 	return null;
     }
+    
+	private void selectDropDown(WebElement dropdown, String textToSelect){
+		dropdown.click();
+		wait.until(WebdriverUtils.elementToHaveAttribute( dropdown.findElement(By.xpath("./..")).findElement(By.xpath("./..")), "select2-dropdown-open"));
+		for(WebElement elm: driver.findElements(By.cssSelector("ul.select2-results li")))
+			if(elm.getText().equalsIgnoreCase(textToSelect)){
+				elm.click();
+				break;
+			}
+		WebdriverUtils.sleep(1000);
+	}
 
     @Override
     public boolean isDisplayed() {
