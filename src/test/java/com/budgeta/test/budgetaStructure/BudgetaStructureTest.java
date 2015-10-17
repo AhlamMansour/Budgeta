@@ -129,7 +129,7 @@ public class BudgetaStructureTest extends WrapperTest {
 	}
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 2)
+    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 2)
     @DataProviderParams(sheet = "BudgetaForm", area = "Revenues Form_Details")
     public void revenuesFormDetailsTest(Hashtable<String, String> data) {
 	board = new BudgetaBoard();
@@ -248,7 +248,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 3)
+    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 3)
     @DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale")
     public void CostOfSaleTest(Hashtable<String, String> data) {
 	board = new BudgetaBoard();
@@ -298,7 +298,7 @@ public class BudgetaStructureTest extends WrapperTest {
 	}
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 4)
+    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 4)
     @DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages")
     public void CostOfSale_SalaryAndwagesTest(Hashtable<String, String> data) {
 	board = new BudgetaBoard();
@@ -361,7 +361,7 @@ public class BudgetaStructureTest extends WrapperTest {
 	}
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 5)
+    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 5)
     @DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages_EmployeeForm")
     public void employeeFormTest(Hashtable<String, String> data) {
 
@@ -518,7 +518,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		}
 	}
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority =7)
+    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority =7)
     @DataProviderParams(sheet = "BudgetaForm", area = "NetIncome")
     public void NetIncomTest(Hashtable<String, String> data) {
 
@@ -565,7 +565,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
     }
 
-    @Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 8)
+    @Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 8)
     @DataProviderParams(sheet = "BudgetaForm", area = "Operating profit/loss")
     public void OperatingProfitLossTest(Hashtable<String, String> data) {
 
