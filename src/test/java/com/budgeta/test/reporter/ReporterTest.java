@@ -30,6 +30,7 @@ public class ReporterTest extends WrapperTest{
 	@Test(enabled = true)
 	public void setBudgetTest(){		
 		secondaryBoard = board.getSecondaryBoard();
+		secondaryBoard.selectRandomBudgeta();
 		openReports();
 	}
 
@@ -40,6 +41,8 @@ public class ReporterTest extends WrapperTest{
 
 	@Test(dataProvider = "reportsTypeProvider", enabled = true)
 	public void fillGeneralAndValidate(String boxToCheck) {
+		secondaryBoard = board.getSecondaryBoard();
+		String budgetName = secondaryBoard.getNameOfSelectedBudgeta();
 		if(!reports.isDisplayed())
 			openReports();
 		reports.checkBox(boxToCheck);
@@ -47,12 +50,13 @@ public class ReporterTest extends WrapperTest{
 		reports.clickCreate();
 		File f = null;
 		try{
-			f = new File(new File("").getAbsolutePath()+"/browserDownloads/Dev Test.xlsx");
-			Assert.assertTrue(f.exists(),"Expected the file [Dev Test.xlsx] to exist");
-			Assert.assertTrue(f.canExecute(),"Expected the file [Dev Test.xlsx] to be able to execute");
-			Assert.assertTrue(f.canRead(),"Expected the file [Dev Test.xlsx] to be readable");
+			System.out.println(new File("").getAbsolutePath()+"/browserDownloads/"+budgetName+".xlsx");
+			f = new File(new File("").getAbsolutePath()+"/browserDownloads/"+budgetName+".xlsx");
+			Assert.assertTrue(f.exists(),"Expected the file ["+budgetName+".xlsx] to exist");
+			Assert.assertTrue(f.canExecute(),"Expected the file ["+budgetName+".xlsx] to be able to execute");
+			Assert.assertTrue(f.canRead(),"Expected the file ["+budgetName+".xlsx] to be readable");
 			long fileSize = f.getTotalSpace();
-			Assert.assertTrue(fileSize > 10 ,"Expected the file [Dev Test.xlsx] size to be at least 11 bytes or more but found: "+fileSize);
+			Assert.assertTrue(fileSize > 10 ,"Expected the file ["+budgetName+".xlsx] size to be at least 11 bytes or more but found: "+fileSize);
 			f.delete();
 		}catch(Throwable e){
 			if(f!= null)

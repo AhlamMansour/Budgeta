@@ -273,7 +273,7 @@ public class SecondaryBoard extends AbstractPOM {
     }
 
     public String getNameOfSelectedBudgeta() {
-	return getSelectedBudget().findElement(budgetName).getText().split("\n")[0];
+	return getLineName(getSelectedBudget());
     }
 
     public MenuTrigger getBudgetMenuTrigger() {

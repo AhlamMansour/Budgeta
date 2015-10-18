@@ -34,6 +34,7 @@ import com.galilsoftware.AF.core.listeners.DataProviderParams;
 import com.galilsoftware.AF.core.listeners.KnownIssue;
 import com.galilsoftware.AF.core.logging.SelTestLog;
 import com.galilsoftware.AF.core.utilities.ExcelUtils;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 import com.galilsoftware.AF.core.utilities.Xls_Reader;
 
 import flexjson.JSONException;
@@ -47,7 +48,7 @@ public class BaseSeleniumTest {
     public static double startTime = -1;
     public static double endTime = -1;
     public static boolean local;
-    protected static final String OUTPUT_PATH = "test-output/";
+    protected static final String OUTPUT_PATH = "target/surefire-reports/";
     private static String testHost = System.getProperty("webdriver.test.testHost");
     protected WebDriverWait wait;
     public String myBrowser;
@@ -79,7 +80,8 @@ public class BaseSeleniumTest {
 	    SelTestProps.setFileName(testPropertiesFileName);
 	}
 	SelTestProps.instance();
-
+	//killBrowserInstances();
+	startTime = startTime == -1 ? Double.parseDouble(WebdriverUtils.getTimeStamp("")) : startTime;
     }
 
     @BeforeClass
