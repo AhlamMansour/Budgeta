@@ -1,5 +1,7 @@
 package com.galilsoftware.AF.core.testConfig;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -21,6 +23,7 @@ public class TearDown extends BaseSeleniumTest {
 		}catch(Exception e){
 			SelTestLog.warn("driver instance threw an exception when trying to close", e);
 		}
+		TestParamsThreadPool.clear();
 	}
 	
 //	@AfterSuite
@@ -31,6 +34,14 @@ public class TearDown extends BaseSeleniumTest {
 //		
 //		SelTestLog.info("The Test Suite has finished Executing.");
 //	}
+	
+	public void openReport() throws IOException{
+		File dummyFile = new File("");
+		File htmlFile = new File(dummyFile.getAbsolutePath()+"/test-output/html/index.html");
+		Desktop.getDesktop().browse(htmlFile.toURI());
+		
+		SelTestLog.info("The Test Suite has finished Executing.");
+	}
 	
 	private String timeConversion(long miliSecs) {
 		long hours = TimeUnit.MILLISECONDS.toHours(miliSecs);
@@ -58,7 +69,6 @@ public class TearDown extends BaseSeleniumTest {
 			}
 		}
 		driver.quit();
-		TestParamsThreadPool.clear();
 	}
 
 	@AfterSuite
