@@ -3,6 +3,7 @@ package com.budgeta.pom;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
@@ -18,7 +19,7 @@ public class BudgetaBoard extends AbstractPOM {
     @FindBy(className = "center")
     private WebElement centerBar;
 
-    private final By noty_message = By.className("noty_message");
+    private final By noty_message = By.className("noty_text");
 
     private GeneralSection generalSection;
     private CommentsSection commentsSection;
@@ -38,22 +39,23 @@ public class BudgetaBoard extends AbstractPOM {
     }
 
     public void clickSaveChanges() {
-	for (WebElement el : bottomBar.findElements(By.tagName("button"))) {
-	    if (el.getAttribute("type").equalsIgnoreCase("submit")) {
-		el.click();
-		try {
-		    WebdriverUtils.sleep(5000);
-		    // WebdriverUtils.waitForElementToBeFound(driver, noty_message);
-		    // WebdriverUtils.waitForElementToDisappear(driver, By.className("changed"));
-		    WebdriverUtils.waitForBudgetaBusyBar(driver);
-		    WebdriverUtils.waitForBudgetaLoadBar(driver);
-		    break;
-		} catch (Exception e) {
-		}
-	    }
-	}
-	WebdriverUtils.waitForBudgetaBusyBar(driver);
-	WebdriverUtils.waitForBudgetaLoadBar(driver);
+    	String saveMessage = "";
+    	for (WebElement el : bottomBar.findElements(By.tagName("button"))) {
+    		if (el.getAttribute("type").equalsIgnoreCase("submit")) {
+    			el.click();
+    			try {
+    				WebdriverUtils.waitForElementToBeFound(driver, noty_message);
+    				saveMessage = driver.findElement(noty_message).getText();
+    				WebdriverUtils.waitForElementToDisappear(driver, noty_message);
+    				WebdriverUtils.waitForBudgetaBusyBar(driver);
+    				WebdriverUtils.waitForBudgetaLoadBar(driver);
+    				break;
+    			} catch (Exception e) {}
+    		}
+    	}
+    	WebdriverUtils.waitForBudgetaBusyBar(driver);
+    	WebdriverUtils.waitForBudgetaLoadBar(driver);
+    	Assert.assertFalse(saveMessage.contains("unexpected error"), "BUG Happedned , unexpected error found");
     }
 
     public void clickUndoChanges() {
