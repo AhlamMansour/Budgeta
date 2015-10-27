@@ -61,7 +61,7 @@ public class View extends AbstractPOM{
 			if(value.equals("-"))
 				res.add(value);
 			else
-				res.add(value.replaceAll("[^0-9]","").trim());
+				res.add(value.replaceAll("[^0-9 .]","").trim());
 		}
 		return res;
 	}
@@ -71,7 +71,7 @@ public class View extends AbstractPOM{
 		if(total.equals("-"))
 			return total;
 		else
-			return total.replaceAll("[^0-9]","").trim();
+			return total.replaceAll("[^0-9 .]","").trim();
 	}
 	public int getNumbreOfRows(){
 		return rows.size();

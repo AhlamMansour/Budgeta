@@ -48,6 +48,8 @@ public class PreviewBoard extends AbstractPOM{
 		String res = getAllValues().get(index).getText();
 		if(res.equals("-"))
 			return res;
+		if(res.contains("."))
+			return res.replaceAll("[^0-9 .]","").trim();
 		return res.replaceAll("[^0-9]","").trim();
 	}
 	
@@ -55,6 +57,8 @@ public class PreviewBoard extends AbstractPOM{
 		String res = totalValue.getText();
 		if(res.equals("-"))
 			return res;
+		if(res.contains("."))
+			return res.replaceAll("[^0-9 .]","").trim();
 		return res.replaceAll("[^0-9]","").trim();
 	}
 

@@ -354,7 +354,7 @@ public class BaseSeleniumTest {
 	Runtime rt = Runtime.getRuntime();
 	try {
 	    System.out.println("Killing all chrome and chromedriver instances ...");
-	    rt.exec("taskkill /IM chrome.exe /f");
+	   // rt.exec("taskkill /IM chrome.exe /f");
 	    rt.exec("taskkill /IM chromedriver.exe /f");
 	} catch (IOException e) {
 	    System.err.println("Warning - Could not kill chrome and chromeDriver instances");

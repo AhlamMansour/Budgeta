@@ -42,8 +42,18 @@ public class LoginPage extends AbstractPOM{
 	
 	
 	public LoginPage(){
-		WebdriverUtils.waitForElementToBeFound(driver, By.className("login-page"));
-		wait.until(ExpectedConditions.visibilityOf(loginBtn));
+		try{
+			WebdriverUtils.waitForElementToBeFound(driver, By.className("login-page"));
+			WebdriverUtils.waitForElementToBeFound(driver, By.id("login-btn"));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login-btn")));
+		}
+		catch(Exception e){
+			driver.get(driver.getCurrentUrl());
+			WebdriverUtils.waitForElementToBeFound(driver, By.className("login-page"));
+			WebdriverUtils.waitForElementToBeFound(driver, By.id("login-btn"));
+			WebdriverUtils.sleep(10000);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login-btn")));
+		}
 	}
 	
 	public void setEmail(String e_mail){

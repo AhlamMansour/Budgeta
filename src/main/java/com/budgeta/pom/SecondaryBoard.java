@@ -40,7 +40,7 @@ public class SecondaryBoard extends AbstractPOM {
     @FindBy(className = "search")
     private WebElement searchBudget;
 
-    @FindBy(className = "scenarios")
+    @FindBy(css = "div.subnav-main-icons div.scenarios")
     private WebElement scenarios;
 
     @FindBy(className = "versions")
