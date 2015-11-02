@@ -7,6 +7,7 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebElementUtils;
@@ -34,16 +35,19 @@ public class PreviewBoard extends AbstractPOM{
 	
 	public PreviewBoard(){
 		List<WebElement> header = wrapper.findElements(By.cssSelector("div.forecast-header div.scroll-columns div.column"));
-		try{
-			WebElementUtils.hoverOverField(header.get(header.size()-1), driver, null);
+	//	WebElementUtils.hoverOverField(header.get(header.size()-1), driver, null);
+		for(int i = 0 ; i < header.size()-1 ; i++){
+			WebElementUtils.hoverOverField(header.get(i), driver, null);
+			Actions act = new Actions(driver);
+			act.moveToElement(header.get(i)).build().perform();
 		}
-		catch(Exception e){}
 	}
 	
 	public int getValuesSize(){
 		return getAllValues().size();
 	}
 	
+/*
 	public String getValueByIndex(int index){
 		String res = getAllValues().get(index).getText();
 		if(res.equals("-"))
@@ -53,12 +57,31 @@ public class PreviewBoard extends AbstractPOM{
 		return res.replaceAll("[^0-9]","").trim();
 	}
 	
+	*/
+	
+	public String getValueByIndex(int index){
+		String res = getAllValues().get(index).getText();
+		if(res.equals("-"))
+			return res;
+		return res.replaceAll("[^0-9]","").trim();
+	}
+	
+	
+	/*
 	public String getTotalValue(){
 		String res = totalValue.getText();
 		if(res.equals("-"))
 			return res;
 		if(res.contains("."))
 			return res.replaceAll("[^0-9 .]","").trim();
+		return res.replaceAll("[^0-9]","").trim();
+	}
+	*/
+	
+	public String getTotalValue(){
+		String res = totalValue.getText();
+		if(res.equals("-"))
+			return res;
 		return res.replaceAll("[^0-9]","").trim();
 	}
 

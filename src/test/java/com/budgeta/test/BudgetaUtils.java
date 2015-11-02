@@ -116,8 +116,8 @@ public class BudgetaUtils {
 	    int amount, int payAfter, int supportPercent, int supportPeriod) {
 	List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear);
 	String[] res = new String[months.size()];
-	//int support = (int) Math.round(((double) supportPercent / 100) * amount);
-	float support = (float) (((double) supportPercent / 100) * amount);
+	int support = (int) Math.round(((double) supportPercent / 100) * amount);
+	//float support = (float) (((double) supportPercent / 100) * amount);
 	int period = supportPeriod;
 	int startIndex = 0;
 	if (!onDateMonth.isEmpty()) {
@@ -144,27 +144,26 @@ public class BudgetaUtils {
 	    int supportPercent, int supportPeriod, int growth) {
 	List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear);
 	String[] res = new String[months.size()];
-	//int support = (int) Math.round(((double) supportPercent / 100) * amount);
-	float support = (float) (((double) supportPercent / 100) * amount);
+	int support = (int) Math.round(((double) supportPercent / 100) * amount);
+
 	int period = supportPeriod;
 	int startIndex = payAfter;
-	//int sum = amount + support;
-	float sum = amount ;
+	float sum = amount + support;
+	
 	for (int i = 0; i < startIndex; i++) {
 	    res[i] = "-";
 	}
-	res[startIndex] = sum + "";
+	res[startIndex] = (int)Math.round(sum)+ "";
 	for (int i = startIndex + 1; i < res.length; i++) {
 	    period--;
 	    if (period == 0) {
-		//sum = sum + support + (int) Math.round(((double) growth / 100) * sum);
-	    sum = sum + support + (float) (((double) growth / 100) * sum);
+		sum = (float)  (sum + support +((double) growth / 100) * sum);
 		period = supportPeriod;
 	    } else {
-//		sum = sum + (int) Math.round(((double) growth / 100) * sum);
-	    sum = sum + (float) (((double) growth / 100) * sum);
+		sum = (float) (sum +  ((double) growth / 100) * sum);
+	  
 	    }
-	    res[i] = sum + "";
+	    res[i] = (int)Math.round(sum)+ "";
 	}
 	return res;
     }
@@ -176,51 +175,40 @@ public class BudgetaUtils {
 	List<String> quaterly = new ArrayList<>();
 
 	int startIndex = 0;
-//	int sum = amount;
+	//int sum = amount;
 	float sum = amount;
 
 	if (AtDate.equals("spread evenly")) {
-		for (int i = 0; i < payAfter; i++) {
-		    res[i] = "-";
-		}
 	    sum = sum / 3;
-	    growth = growth / 3;
-	    for (int i = startIndex; i < res.length; i++) {
+	    int quater = 3;
+	    for (int i = 0; i < res.length; i++) {
 		//sum = sum + (int) Math.round(((double) growth / 100) * sum);
-	    	if(months.get(i).contains("Dec")){
-	    		res[i] = sum + "";
-	    		sum = sum + (float) (((double) growth / 100) * sum);
-	    		continue;
-	    	}
-		res[i] = sum + "";
+	    	res[i] = (int)Math.round(sum)+ "";
+	    	quater--;
+			if (quater == 0) {	
+	    		sum = (float) (sum + ((double) growth / 100) * sum);
+	    		quater = 3;
+			}
 	    }
 	} else {
-	    int quater = 3;
 	    if (AtDate.equals("at the beginning"))
 		quaterly = getBeginningOfQuaterlyMonths(fiscal);
 	    if (AtDate.equals("at the end"))
 		quaterly = getEndOfQuaterlyMonths(fiscal);
-	    while (!quaterly.contains(months.get(startIndex).split(" ")[0].trim())) {
-		res[startIndex] = "-";
-		startIndex++;
+	    
+	    for(int i = 0 ; i < res.length; i++){
+	    	if(quaterly.contains(months.get(i).split(" ")[0].trim())){
+	    		 res[i] = (int)Math.round(sum)+ "";
+	    		 sum = (float) (sum + ((double) growth / 100) * sum);
+	    	}
+	    	else{
+	    		res[i] = "-";
+	    	}
 	    }
-	    //sum = sum + (int) Math.round(((double) growth / 100) * sum);
-	    //sum = sum + (float) (((double) growth / 100) * sum);
-	    res[startIndex] = sum + "";
-	    for (int i = startIndex + 1; i < res.length; i++) {
-		quater--;
-		if (quater == 0) {
-		    //sum = sum + (int) Math.round(((double) growth / 100) * sum);
-			sum = sum + (float) (((double) growth / 100) * sum);
-		    res[i] = sum + "";
-		    quater = 3;
-		} else {
-		    res[i] = "-";
-		}
-	    }
+	    
 	}
 	startIndex = 0;
-	while(res[startIndex].equals("-")){
+	while(res[startIndex].equals("-") && startIndex < res.length){
 		finalRes[startIndex] = "-";
 		startIndex++;
 	}
@@ -240,49 +228,41 @@ public class BudgetaUtils {
 	String[] res = new String[months.size()], finalRes =new String[months.size()];
 	String startMonth = "";
 	int startIndex = payAfter;
-	//int sum = amount;
 	float sum = amount;
+	//int sum = amount;
 	for (int i = 0; i < startIndex; i++) {
 	    res[i] = "-";
 	}
 	if (AtDate.equals("spread evenly")) {
+		int yearly = 13;
 	    sum = sum / 12;
 	    for (int i = startIndex; i < res.length; i++) {
-		//sum = sum + (int) Math.round(((double) growth / 100) * sum);	    
-	    	if(months.get(i).contains("Dec")){
-	    		res[i] = sum + "";
-	    		sum = sum + (float) (((double) growth / 100) * sum);
-	    		continue;
+		//sum = sum + (int) Math.round(((double) growth / 100) * sum);	
+	    	yearly--;
+	    	if(yearly == 0){
+	    		sum = (float) (sum + ((double) growth / 100) * sum);
+	    		yearly = 12;
 	    	}
-			res[i] = sum + "";
+	    	res[i] = (int)Math.round(sum)+ "";
 	    }
 	} else {
-	    int yearly = 12;
 	    if (AtDate.equals("at the beginning"))
 		startMonth = fiscal;
 	    if (AtDate.equals("at the end"))
 		startMonth = getPreviousMonth(fiscal);
-	    while (!months.get(startIndex).contains(startMonth)) {
-		res[startIndex] = "-";
-		startIndex++;
-	    }
-	    //sum = sum + (int) Math.round(((double) growth / 100) * sum);
-	   // sum = sum + (float) (((double) growth / 100) * sum);
-	    res[startIndex] = sum + "";
-	    for (int i = startIndex + 1; i < res.length; i++) {
-		yearly--;
-		if (yearly == 0) {
-		    //sum = sum + (int) Math.round(((double) growth / 100) * sum);
-			sum = sum + (float) (((double) growth / 100) * sum);
-		    res[i] = sum + "";
-		    yearly = 12;
-		} else {
-		    res[i] = "-";
-		}
+	    
+	    for (int i = 0 ; i < res.length; i++) {
+	    	if(months.get(i).contains(startMonth)){
+	    		res[i] =  (int)Math.round(sum)+ "";
+	    		sum = (float) (sum + ((double) growth / 100) * sum);
+	    	}
+	    	else{
+	    		res[i] = "-";
+	    	}
 	    }
 	}
 	startIndex = 0;
-	while(res[startIndex].equals("-")){
+	while(res[startIndex].equals("-") && startIndex < res.length){
 		finalRes[startIndex] = "-";
 		startIndex++;
 	}
@@ -311,8 +291,8 @@ public class BudgetaUtils {
 	    return res;
 	}
 	int bonusMonths = 0;
-	//int benefit = (int) Math.round(((double) benefits / 100) * baseSalary);
-	float benefit =  (float) (((double) benefits / 100) * baseSalary);
+	int benefit = (int) Math.round(((double) benefits / 100) * baseSalary);
+	//float benefit =  (float) (((double) benefits / 100) * baseSalary);
 
 	if (fromHireToView < 0) {
 	    for (int i = 0; i > fromHireToView + 1; i--) {
@@ -327,14 +307,14 @@ public class BudgetaUtils {
 	    endIndex = res.length - fromEndHireToEndView + 1;
 	}
 
-	//int sum = baseSalary + benefit;
-	float sum = baseSalary + benefit;
+	int sum = baseSalary + benefit;
+	//float sum = baseSalary + benefit;
 
 	for (int i = startIndex; i < endIndex; i++) {
 	    bonusMonths++;
 	    if (months.get(i).contains("Dec")) {
-		//res[i] = sum + ((int) Math.round(((double) bonus / 100) * bonusMonths * baseSalary)) + "";
-	    res[i] = sum + ((float)(((double) bonus / 100) * bonusMonths * baseSalary)) + "";
+		res[i] = sum + ((int) Math.round(((double) bonus / 100) * bonusMonths * baseSalary)) + "";
+	    //res[i] = sum + ((float)(((double) bonus / 100) * bonusMonths * baseSalary)) + "";
 		bonusMonths = 0;
 	    } else {
 		res[i] = sum + "";
@@ -364,7 +344,7 @@ public class BudgetaUtils {
 	int bonusMonths = 0;
 	int sum = baseSalary / 12;
 	//int benefit = (int) Math.round(((double) benefits / 100) * sum);
-	float benefit = (float) (((double) benefits / 100) * sum);
+	//float benefit = (float) (((double) benefits / 100) * sum);
 
 	if (fromHireToView < 0) {
 	    for (int i = 0; i > fromHireToView + 1; i--) {
@@ -382,8 +362,8 @@ public class BudgetaUtils {
 	for (int i = startIndex; i < endIndex; i++) {
 	    bonusMonths++;
 	    if (months.get(i).contains("Dec")) {
-	//	res[i] = sum + ((int) Math.round(((double) bonus / 100) * bonusMonths * sum)) + "";
-	    res[i] = sum + ((float)(((double) bonus / 100) * bonusMonths * sum)) + "";
+		res[i] = sum + ((int) Math.round(((double) bonus / 100) * bonusMonths * sum)) + "";
+	   // res[i] = sum + ((float)(((double) bonus / 100) * bonusMonths * sum)) + "";
 		bonusMonths = 0;
 	    } else {
 		res[i] = sum + "";

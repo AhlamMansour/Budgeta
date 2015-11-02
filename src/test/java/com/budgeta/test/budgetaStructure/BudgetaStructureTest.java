@@ -94,7 +94,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 1)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 1)
 	@DataProviderParams(sheet = "BudgetaForm", area = "GeneralRevenues")
 	public void GeneralRevenuesTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -937,33 +937,33 @@ public class BudgetaStructureTest extends WrapperTest {
 	}
 
 	private void compareExpectedResults(String[] expectedValues) {
-		float total = 0;
-		for (int i = 0; i < expectedValues.length; i++) {
+		int total = 0;
+		/*for (int i = 0; i < expectedValues.length; i++) {
 			if (!expectedValues[i].equals("-")) {
 
 				// expectedValues[i] = String.format("%.2f", expectedValues[i]);
 
 				expectedValues[i] = String.valueOf(round(Double.parseDouble(expectedValues[i]), 2));
 			}
-		}
+		}*/
+		
 		PreviewBoard preview = new PreviewBoard();
 		for (int i = 0; i < preview.getValuesSize(); i++) {
-			Assert.assertEquals(Float.parseFloat(preview.getValueByIndex(i)), Float.parseFloat(expectedValues[i]),0.01,
-					"error in calculation budgets in index: " + i);
+			Assert.assertEquals(preview.getValueByIndex(i), expectedValues[i],	"error in calculation budgets in index: " + i);
 			if (!expectedValues[i].equals("-"))
-				// total += Integer.parseInt(expectedValues[i]);
-				total += Float.parseFloat(expectedValues[i]);
+				total += Integer.parseInt(expectedValues[i]);
+				//total += Float.parseFloat(expectedValues[i]);
 		}
 		if (total == 0)
 			Assert.assertEquals(preview.getTotalValue(), "-");
 		else
-			Assert.assertEquals(preview.getTotalValue(), total + "");
+			Assert.assertEquals(Integer.parseInt(preview.getTotalValue()), total ,(int)(0.5*preview.getValuesSize()));
 	}
 
-	public double round(double value, int numberOfDigitsAfterDecimalPoint) {
-		BigDecimal bigDecimal = new BigDecimal(value);
-		bigDecimal = bigDecimal.setScale(numberOfDigitsAfterDecimalPoint,
-				BigDecimal.ROUND_HALF_UP);
-		return bigDecimal.doubleValue();
-	}
+//	public double round(double value, int numberOfDigitsAfterDecimalPoint) {
+//		BigDecimal bigDecimal = new BigDecimal(value);
+//		bigDecimal = bigDecimal.setScale(numberOfDigitsAfterDecimalPoint,
+//				BigDecimal.ROUND_HALF_UP);
+//		return bigDecimal.doubleValue();
+//	}
 }

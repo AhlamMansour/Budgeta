@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.galilsoftware.AF.core.AbstractPOM;
+import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class DateRange extends AbstractPOM{
@@ -27,12 +28,17 @@ public class DateRange extends AbstractPOM{
 	
 	
 	public DateRange() {
-		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("qtip-focus")));
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("qtip-focus")));
+		//wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("qtip-focus")));
 		initWrapper();
 	}
 	
 	public DateRange(String header) {
-		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("qtip-focus")));
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
+		WebElementUtils.hoverOverField(driver.findElement(By.className("qtip-focus")), driver, null);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("qtip-focus")));
+		//wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("qtip-focus")));
 		initWrapper(header);
 	}
 	
@@ -89,6 +95,7 @@ public class DateRange extends AbstractPOM{
 		for(WebElement el : wrappers){
 			try{
 				if(el.findElement(By.className("header")).getText().equalsIgnoreCase(header)){
+					WebElementUtils.hoverOverField(el, driver, null);
 					wait.until(ExpectedConditions.visibilityOf(el));
 					wrapper = el;
 				}
