@@ -72,6 +72,8 @@ public class SignUpTest extends BudgetaTest{
 			Assert.assertTrue(signUpPage.isGeneralErrorAppear(),"Passwords don't match");
 		if(errorField.equals("SignUpErrorUser"))
 			Assert.assertTrue(signUpPage.isGeneralErrorAppear(),"An account with this email address already exists");
+		if(errorField.equals("InvalidPass"))
+			Assert.assertFalse(signUpPage.passHasDigitsAndLetters(data.get("password")), "Password must contain at least one letter and one number and Password length must be at least 8 characters");
 		
 	
 		if (data.get("ShouldPass").equals("TRUE")){

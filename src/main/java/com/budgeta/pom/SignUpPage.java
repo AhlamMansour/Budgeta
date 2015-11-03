@@ -187,7 +187,7 @@ public class SignUpPage extends AbstractPOM {
 	
 	public String getPasswordMessage(){
 		
-		if(EmailHasError())
+		if(PasswordHasError())
 			return  password.findElement(By.xpath("..")).findElement(fieldError).getText();
 		return "";
 	}
@@ -207,6 +207,25 @@ public String getPassworVerifydMessage(){
 	public boolean isGeneralErrorAppear(){
 		return !generalError.getText().equals("");
 	}
+	
+	
+	public boolean passHasDigitsAndLetters(String pass)
+	{
+		if(pass.length() < 8)
+			return false;
+		for (int i = 0; i<pass.length(); i++){
+			if(!Character.isLetterOrDigit(pass.charAt(i))){
+				return false;
+			}
+		}
+		String tmp = pass;
+		tmp = tmp.replaceAll("[^0-9]","");
+		return (tmp.length() < pass.length()) && !tmp.isEmpty();
+		
+	}
+	
+	
+	
 
 	@Override
 	public boolean isDisplayed() {

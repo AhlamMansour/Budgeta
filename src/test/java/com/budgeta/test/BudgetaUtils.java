@@ -174,7 +174,6 @@ public class BudgetaUtils {
 	String[] res = new String[months.size()], finalRes =new String[months.size()];
 	List<String> quaterly = new ArrayList<>();
 
-	int startIndex = 0;
 	//int sum = amount;
 	float sum = amount;
 
@@ -207,13 +206,7 @@ public class BudgetaUtils {
 	    }
 	    
 	}
-	startIndex = 0;
-	while(res[startIndex].equals("-") && startIndex < res.length){
-		finalRes[startIndex] = "-";
-		startIndex++;
-	}
-	
-	for(int i = startIndex ; i < res.length ; i++){
+	for(int i = 0 ; i < res.length ; i++){
 		if (i - payAfter < 0 )
 			finalRes[i] = "-";
 		else 
@@ -261,13 +254,8 @@ public class BudgetaUtils {
 	    	}
 	    }
 	}
-	startIndex = 0;
-	while(res[startIndex].equals("-") && startIndex < res.length){
-		finalRes[startIndex] = "-";
-		startIndex++;
-	}
 	
-	for(int i = startIndex ; i < res.length ; i++){
+	for(int i = 0 ; i < res.length ; i++){
 		if (i - payAfter < 0 )
 			finalRes[i] = "-";
 		else 
