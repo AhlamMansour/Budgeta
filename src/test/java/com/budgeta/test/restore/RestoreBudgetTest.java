@@ -12,7 +12,7 @@ public class RestoreBudgetTest extends WrapperTest{
 	
 	
 	@TestFirst
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void CreateSettingTest() {
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		secondary.selectRandomBudgetWithPrefix("_");

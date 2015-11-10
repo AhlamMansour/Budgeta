@@ -14,6 +14,9 @@ public class MenuTrigger extends AbstractPOM {
 	
 	private WebElement wrapper;
 	
+	private SecondaryBoard secondaryBoard;
+	protected BudgetaBoard board;
+	
 	private By lineSettingTriggerMenu = By.cssSelector("div.qtip-focus ul.narrow li");
 	private By subLineSettingTriggerMenu = By.cssSelector("div.qtip-pos-ti.qtip-focus ul li");
 	
@@ -74,6 +77,55 @@ public class MenuTrigger extends AbstractPOM {
 			}
 		}
 	}
+	
+	public void clickDuplicateBudget(){
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		secondaryBoard.openBudgetsList();
+		selectScenarioTrigger("Duplicate");
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
+	
+	public void clickRenameBudget(){
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		secondaryBoard.openBudgetsList();
+		selectScenarioTrigger("Rename");
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
+	public CreateNewSnapshotPopup snapshotBudget(){
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		secondaryBoard.openBudgetsList();
+		selectScenarioTrigger("Snapshot");
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
+		return new CreateNewSnapshotPopup();
+
+	}
+	
+	public SharePopup clickShareBudget(){
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		secondaryBoard.openBudgetsList();
+		selectScenarioTrigger("Share");
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
+		return new SharePopup();
+	}
+	
+	public DeletePopup clickDeleteBudget(){
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		secondaryBoard.openBudgetsList();
+		selectScenarioTrigger("Delete");
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
+		return new DeletePopup();
+	}
+	
 	
 	public SecondaryBoard clickMove(){
 		selectScenarioTrigger("Move");

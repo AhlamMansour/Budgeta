@@ -15,6 +15,11 @@ import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class SecondaryBoard extends AbstractPOM {
+	
+	
+	private SecondaryBoard secondaryBoard;
+	protected BudgetaBoard board;
+	
 
     @FindBy(className = "secondary")
     private WebElement wrapper;
@@ -43,7 +48,7 @@ public class SecondaryBoard extends AbstractPOM {
     @FindBy(css = "div.subnav-main-icons div.scenarios")
     private WebElement scenarios;
 
-    @FindBy(className = "versions")
+    @FindBy(id = "sidebar-versions")
     private WebElement versions;
 
     @FindBy(id = "selected-root-menu")
@@ -69,8 +74,14 @@ public class SecondaryBoard extends AbstractPOM {
     
 	@FindBy(id = "sidebar-reports")
 	private WebElement reportsBtn;
+	
+	@FindBy(css = "aside.secondary h2 a.active")
+	private WebElement budgetTitle;
+	
+	
 
     private final By newLine = By.className("new-line");
+    private final By selectBudget = By.cssSelector("aside.secondary h2 input");
 
     private final By line = By.cssSelector("li.budget-list-item");
 
@@ -98,8 +109,8 @@ public class SecondaryBoard extends AbstractPOM {
 
     public Versions openVersions() {
 	if (driver.findElement(By.className("version-subnav")).getAttribute("class").contains("collapsed")) {
-	    versions.click();
-	    WebdriverUtils.elementToHaveClass(versions, "expanded");
+	    versions.findElement(By.xpath("..")).click();
+	    WebdriverUtils.elementToHaveClass(driver.findElement(By.className("version-subnav")), "expanded");
 	}
 	return new Versions();
     }
@@ -125,6 +136,21 @@ public class SecondaryBoard extends AbstractPOM {
 	WebdriverUtils.sleep(300);
 	return found;
     }
+    
+    
+    public boolean isShareIconExist(String budgetName){
+    	openBudgetsList();
+    	for (WebElement budget : budgetsList) {
+    	    if (budget.findElement(By.className("budget-name")).getText().equals(budgetName)) {
+    	    	budget.findElement(By.cssSelector("div.actions-toggle span.budget-name  div.svg-icon")).isDisplayed();
+    	    	return true;
+    	    	
+    	    }
+    	    }  	
+    	
+    	return false;
+    }
+    
 
     public void selectBudgeta(String budgetaName) {
 	openBudgetsList();
@@ -145,12 +171,7 @@ public class SecondaryBoard extends AbstractPOM {
 	openBudgetsList();
 	int random = WebElementUtils.getRandomNumberByRange(0, getNumbreOfExistBudgets() - 1);
 	WebElementUtils.hoverOverField(budgetsList.get(random), driver, null);
-	if (budgetsList
-		.get(random)
-		.findElement(budgetName)
-		.getText()
-		.equals(getSelectedBudget().findElement(budgetName).getText()
-			.replaceAll(getSelectedBudget().findElement(By.cssSelector("span.type")).getText(), "").trim()))
+	if (budgetsList.get(random).findElement(budgetName).getText().equals(getSelectedBudget().findElement(budgetName).getText().replaceAll(getSelectedBudget().findElement(By.cssSelector("span.type")).getText(), "").trim()))
 	    showBudgetsBtn.click();
 	else
 	    budgetsList.get(random).click();
@@ -372,6 +393,10 @@ public class SecondaryBoard extends AbstractPOM {
 	    return false;
 	}
     }
+    
+    
+    
+    
 
     public void RenameLine(String newName) {
 	List<WebElement> lines = getLines();
@@ -384,6 +409,20 @@ public class SecondaryBoard extends AbstractPOM {
 	    }
 	}
     }
+    
+    
+    
+    public void RenameBudget(String newName) {
+    	List<WebElement> lines = getBudgets();
+    	for (WebElement el : lines) {
+    	    if (el.getAttribute("class").contains("active")) {
+    		el.findElement(nameField).clear();
+    		el.findElement(nameField).sendKeys(newName);
+    		el.findElement(nameField).sendKeys(Keys.ENTER);
+    		WebdriverUtils.sleep(500);
+    	    }
+    	}
+        }
 
     public boolean isScenarioLineDisplayed(String name) {
 	for (WebElement el : scenarioLine) {
@@ -568,6 +607,18 @@ public class SecondaryBoard extends AbstractPOM {
 				selectDropDown(listMember.findElement(By.className("select2-chosen")), textToSelect);
 		}
 	}
+	
+	public String getBudgetTitle(){
+		return budgetTitle.getText().trim();
+	}
+	
+	public void setBudgetTitle(String value){
+		WebElement el = driver.findElements(By.cssSelector("aside.secondary h2 input")).get(0);
+		el.clear();
+		el.sendKeys(value);
+		el.sendKeys(Keys.ENTER);
+		
+	}
 /*************************************************************************************************************/
 /*************************************************************************************************************/
 
@@ -603,7 +654,7 @@ public class SecondaryBoard extends AbstractPOM {
 	}
     }
 
-    private void openBudgetsList() {
+    public void openBudgetsList() {
 	if (!WebdriverUtils.isDisplayed(budgetsListWrapper)) {
 	    showBudgetsBtn.click();
 	    wait.until(ExpectedConditions.visibilityOf(budgetsListWrapper));
@@ -627,6 +678,20 @@ public class SecondaryBoard extends AbstractPOM {
 	}
 	return list;
     }
+    
+    
+    private List<WebElement> getBudgets() {
+    	List<WebElement> list = new ArrayList<WebElement>();
+    	try {
+    	    for (WebElement el : driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root"))
+    		    .findElement(By.tagName("ol")).findElements(line)) {
+    		if (el.getAttribute("data-level").equals("0"))
+    		    list.add(el);
+    	    }
+    	} catch (Exception e) {
+    	}
+    	return list;
+        }
 
     private WebElement getNextLineToAdd() {
 	List<WebElement> lines = getLines();

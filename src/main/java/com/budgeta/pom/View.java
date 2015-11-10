@@ -16,6 +16,11 @@ public class View extends AbstractPOM{
 	@FindBy(className = "forecast-view")
 	private WebElement wrapper;
 	
+	
+	private SideDropDown reporterDropDown; 
+	private SideDropDown subReporterDropDown; 
+	
+	
 	@FindBy(css = "div.forecast-header div.scroll-columns div.column")
 	private List<WebElement> dateHeader;
 	
@@ -25,6 +30,13 @@ public class View extends AbstractPOM{
 	private By rowTitle = By.className("fixed-columns");
 	private By rowValues = By.cssSelector("div.scroll-columns div.column");
 	private By rowTotal = By.className("total-column");
+	
+//	private By reportType = By.cssSelector("div.subnav div.report-view-wrapper div.reportType");
+	private By subReportType = By.cssSelector("div.dropdown a.add-border");
+	
+	
+	
+	
 	
 	public View(){
 		WebdriverUtils.elementToHaveClass(wrapper, "active");
@@ -84,7 +96,38 @@ public class View extends AbstractPOM{
 		}
 		return res;
 	}
+	
+	public void selectReportType(String option){
+		getReporterDropDown().selectValue(option);
+	}
+	
+	public void selectSubReportType(String option){
+		getSubReporterDropDown().selectValue(option);
+	}
+	
+	
+	
+	
+	private SideDropDown getReporterDropDown(){
+		if(reporterDropDown == null){
+			reporterDropDown = new SideDropDown(wrapper.findElement(By.cssSelector("div.subnav div.report-view-wrapper div.reportType")));
+		}
+		return reporterDropDown;
+	}
 
+	
+	private SideDropDown getSubReporterDropDown(){
+		
+		if(subReporterDropDown == null){
+			for(WebElement el : wrapper.findElements(subReportType)){
+				if(el.getText().trim().equals("Budget"))
+					subReporterDropDown = new SideDropDown(el.findElement(By.xpath("..")));
+		}
+		}
+		return subReporterDropDown;
+	}
+	
+	
 	
 	@Override
 	public boolean isDisplayed() {
