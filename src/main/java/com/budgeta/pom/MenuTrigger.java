@@ -71,7 +71,7 @@ public class MenuTrigger extends AbstractPOM {
 			if(el.getText().equals("Restore")){
 				el.findElement(By.tagName("input")).sendKeys(path);
 				WebdriverUtils.sleep(2000);
-				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				//WebdriverUtils.waitForBudgetaLoadBar(driver);
 				WebdriverUtils.waitForBudgetaBusyBar(driver);
 				return;
 			}
@@ -92,6 +92,14 @@ public class MenuTrigger extends AbstractPOM {
 		secondaryBoard = board.getSecondaryBoard();
 		secondaryBoard.openBudgetsList();
 		selectScenarioTrigger("Rename");
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
+	public void clickBackupBudget(){
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		secondaryBoard.openBudgetsList();
+		selectScenarioTrigger("Backup");
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	

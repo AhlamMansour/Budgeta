@@ -218,7 +218,7 @@ public class WebdriverUtils {
 
 
 	public static void waitForBudgetaBusyBar(WebDriver driver) {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 240);
 		sleep(600);
 
 		wait.until(new Function<WebDriver, Boolean>() {
