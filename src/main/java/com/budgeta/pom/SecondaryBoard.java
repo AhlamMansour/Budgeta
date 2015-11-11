@@ -217,7 +217,7 @@ public class SecondaryBoard extends AbstractPOM {
 	return sum;
     }
 
-    // ahlam
+  
     public int getNumberOfBudget(String budgetaName) {
 
 	openBudgetsList();

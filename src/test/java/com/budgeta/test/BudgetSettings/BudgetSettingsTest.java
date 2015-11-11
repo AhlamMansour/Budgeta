@@ -38,7 +38,7 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false, priority = 1)
+	@Test(enabled = true, priority = 1)
 	public void duplicateBudget() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -46,14 +46,14 @@ public class BudgetSettingsTest extends WrapperTest {
 		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
 		String CurrentBudgetName = secondary.getSelectedBudgetName();
 		trigger.clickDuplicateBudget();
-		WebdriverUtils.sleep(1000);
+		WebdriverUtils.sleep(2000);
 		String BudgetName = secondary.getSelectedBudgetName();
 		
 		Assert.assertEquals(BudgetName, "Copy of " + CurrentBudgetName);
 		}
 	
 	
-	@Test(enabled = false, priority = 2)
+	@Test(enabled = true, priority = 2)
 	public void RenameBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 
@@ -72,7 +72,7 @@ public class BudgetSettingsTest extends WrapperTest {
 	
 	
 	
-    @Test(enabled = false, priority = 3)
+    @Test(enabled = true, priority = 3)
     public void createSnapshot() {
     WebdriverUtils.sleep(1000);
 
@@ -93,7 +93,7 @@ public class BudgetSettingsTest extends WrapperTest {
     
     
     
-    @Test(enabled = true)
+    @Test(enabled = true, priority = 4)
 	public void backupBudgetTest(){
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -111,17 +111,15 @@ public class BudgetSettingsTest extends WrapperTest {
 			Assert.assertTrue(f.canRead(),"Expected the file ["+budgetName+".bdg] to be readable");
 			long fileSize = f.getTotalSpace();
 			Assert.assertTrue(fileSize > 10 ,"Expected the file ["+budgetName+".bdg] size to be at least 11 bytes or more but found: "+fileSize);
-			f.delete();
-		}catch(Throwable e){/*
-			if(f!= null)
-				f.delete();*/
+			
+		}catch(Throwable e){
 			throw e;
 		}
 
 
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = true, priority = 5)
 	public void restoreBudgetTest(){
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -133,18 +131,16 @@ public class BudgetSettingsTest extends WrapperTest {
 		File f = null;
 		f = new File(new File("").getAbsolutePath()+"/browserDownloads/");
 		
-		trigger.clickRestoreBudget(f + budgetName +".bdg");
+		trigger.clickRestoreBudget(f + "\\" + budgetName +".bdg");
 		secondary = board.getSecondaryBoard();
-		int num2 = secondary.getNumberOfBudget("budgetName");
+		int num2 = secondary.getNumberOfBudget(budgetName);
 
-		Assert.assertTrue(num2 == (num + 1),
-				"The budget was successfully restored, number of budget was:"
-						+ num + "now is:" + num2);
+		Assert.assertTrue(num2 == (num + 1),"The budget was successfully restored, number of budget was:"+ num + " now is:" + num2);
 
 	}
 	
 	
-	@Test(enabled = false, priority = 4)
+	@Test(enabled = true, priority = 6)
 	public void ShareBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -174,20 +170,21 @@ public class BudgetSettingsTest extends WrapperTest {
 	}
 	
 	
-	@Test(enabled = false, priority = 5)
+	@Test(enabled = true, priority = 7)
 	public void DeleteBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
-		//int num = secondary.getNumberOfLines("Revenues");
+		
 		String BudgetName = secondary.getSelectedBudgetName();
+		int num = secondary.getNumberOfBudget(BudgetName);
 		DeletePopup popup = trigger.clickDeleteBudget();
 		Assert.assertTrue(popup.isDisplayed(),
 				"expected delete popup to be displayed");
 		popup.clickConfirm();
 		
-		
-		Assert.assertFalse(secondary.isBudgetExist(BudgetName), "The budget  was deleted");
+		int num2 = secondary.getNumberOfBudget(BudgetName);
+		Assert.assertFalse(num == (num-1), "The budget was successfully deleted, number of budget was:"+ num + " now is:" + num2);
 
 
 	}
