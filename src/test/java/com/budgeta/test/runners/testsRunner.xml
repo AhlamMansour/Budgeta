@@ -74,6 +74,11 @@
 		</classes>
 	</test>
 
+	<test name="Budgeta Settings">
+		<classes>
+			<class name="com.budgeta.test.BudgetSettings.BudgetSettingsTest"></class>
+		</classes>
+	</test>
 </suite>
 
 

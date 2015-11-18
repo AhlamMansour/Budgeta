@@ -27,6 +27,15 @@ public class View extends AbstractPOM{
 	@FindBy(className = "ember-list-item-view")
 	private List<WebElement> rows;
 	
+	@FindBy(css="div.column-wrapper div.header div.column")
+	private List<WebElement> columns;
+	
+	
+	@FindBy(css="div.header div.column div.sub-header div.sub-header-text-wrapper")
+	private List<WebElement> columnTitle;
+	
+	
+	
 	private By rowTitle = By.className("fixed-columns");
 	private By rowValues = By.cssSelector("div.scroll-columns div.column");
 	private By rowTotal = By.className("total-column");
@@ -77,6 +86,28 @@ public class View extends AbstractPOM{
 		}
 		return res;
 	}
+	
+	public List<String> getAllValuesOfRowByTitle(int rowIndex, String title){
+		List<String> rowValues = getAllValuesOfRow(rowIndex);
+		int titleIndex = getIndexOfTitle(title);
+		List<String> res = new ArrayList<>();
+		
+		for(int i=titleIndex ; i< rowValues.size(); i+=getNumberOfSubColumns()){
+			res.add(rowValues.get(i));
+		}
+		return res;
+	}
+	
+	private int getIndexOfTitle(String title){
+		return columnTitle.indexOf(title);
+		
+		
+	}
+	
+	private int getNumberOfSubColumns(){
+		return columnTitle.size();
+		
+	}	
 	
 	public String getTotalOfRow(int rowIndex){
 		String total = rows.get(rowIndex).findElement(rowTotal).getText();

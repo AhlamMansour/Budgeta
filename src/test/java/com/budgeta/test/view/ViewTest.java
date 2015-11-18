@@ -81,7 +81,7 @@ public class ViewTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void validateTableDataTest() {
 
 		innerBar = board.getInnerBar();
@@ -129,7 +129,7 @@ public class ViewTest extends WrapperTest {
 	}
 
 	@KnownIssue(bugID = "BUD - 1964")
-	@Test(enabled = false, expectedExceptions = AssertionError.class)
+	@Test(enabled = true, expectedExceptions = AssertionError.class)
 	public void validateTotalTest() {
 
 		innerBar = board.getInnerBar();

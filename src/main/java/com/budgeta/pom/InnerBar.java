@@ -39,11 +39,14 @@ public class InnerBar extends AbstractPOM{
 	
 	public void openActualsTab(){
 		clickOnTab(actuals);
+		//return wrapper.findElement(By.className("actuals-tab")).getText();
 	}
 	
 	public String getOpenTab(){
 		return wrapper.findElement(By.className("active")).getText();
 	}
+	
+	
 	
 	private void clickOnTab(WebElement el){
 		if(el.getAttribute("class").contains("active"))

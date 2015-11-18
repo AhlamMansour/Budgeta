@@ -41,19 +41,19 @@ public class VersionsTest extends WrapperTest {
 	Assert.assertTrue(versions.isSnapshotExist(snapshotName, View.ONLY_SNAPSHOTS), "expected to add the new snapshot to Only Snapshots");
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void seeingAllSavedVersionsTest() {
 	versions = new Versions();
 	Assert.assertTrue(versions.getNumberOfAutoSaveVersions() > 0, "expected number of auto saved to be bigger than 0");
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void seeingSnapshotsTest() {
 	versions = new Versions();
 	Assert.assertFalse(versions.isSnapshotExist("Auto Saved", View.ONLY_SNAPSHOTS), "expected Auto Saved not included into only snapshots");
     }
 
-    @Test(enabled = false, priority = 1)
+    @Test(enabled = true, priority = 1)
     public void renameVersionTest() {
 	versions = new Versions();
 	versions = versions.selectVersion(View.ONLY_SNAPSHOTS, snapshotName);
@@ -70,7 +70,7 @@ public class VersionsTest extends WrapperTest {
 	Assert.assertEquals(versions.getSelectedVersion(), snapshotName);
     }
 
-    @Test(enabled = false, priority = 2)
+    @Test(enabled = true, priority = 2)
     public void revertVersionTest() {
 	versions = new Versions();
 	versions = versions.selectVersion(View.ONLY_SNAPSHOTS, snapshotName);
@@ -84,7 +84,7 @@ public class VersionsTest extends WrapperTest {
 	Assert.assertTrue(secondary.getNumberOfVersionChanges() == 0, "expected to remove version changes");
     }
 
-    @Test(enabled = false, priority = 3)
+    @Test(enabled = true, priority = 3)
     public void deleteVersionTest() {
 	secondary = new SecondaryBoard();
 	secondary.openVersions();
