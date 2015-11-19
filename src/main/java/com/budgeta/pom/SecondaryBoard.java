@@ -98,6 +98,8 @@ public class SecondaryBoard extends AbstractPOM {
     private final By nameField = By.className("ember-text-field");
 
     private final By shareIcon = By.cssSelector("div.actions-toggle span.budget-name  div.svg-icon");
+    
+    private By lineType = By.className("type");
 
     public Scenarios openScenarios() {
 	if (driver.findElement(By.className("scenario-subnav")).getAttribute("class").contains("collapsed")) {
@@ -619,6 +621,19 @@ public class SecondaryBoard extends AbstractPOM {
 		el.sendKeys(Keys.ENTER);
 		
 	}
+	
+	public boolean checkIfLineTypeIsModel(String lineTitle){
+		List<WebElement> lines = getAllLines();
+		for (WebElement el : lines) {
+		    if (getLineName(el).startsWith(lineTitle)){
+				WebElementUtils.hoverOverField(el, driver, null);
+				if(el.findElement(lineType).getText().contains("Model"))
+					return true;
+				return false;
+		    }
+		}
+		return false;
+	}
 /*************************************************************************************************************/
 /*************************************************************************************************************/
 
@@ -626,7 +641,7 @@ public class SecondaryBoard extends AbstractPOM {
 	List<WebElement> lines = getLines();
 	for (WebElement el : lines) {
 	    if (getLineName(el).startsWith(name))// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
-		return el;
+	    	return el;
 	}
 	return null;
     }
@@ -679,6 +694,9 @@ public class SecondaryBoard extends AbstractPOM {
 	return list;
     }
     
+    private List<WebElement> getAllLines(){
+    	return driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol")).findElements(line) ;
+    }
     
     private List<WebElement> getBudgets() {
     	List<WebElement> list = new ArrayList<WebElement>();

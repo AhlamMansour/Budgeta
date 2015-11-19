@@ -18,7 +18,8 @@ public class View extends AbstractPOM{
 	
 	
 	private SideDropDown reporterDropDown; 
-	private SideDropDown subReporterDropDown; 
+	private SideDropDown subReporterDropDown;
+	private SideDropDown subActualReporterDropDown; 
 	
 	
 	@FindBy(css = "div.forecast-header div.scroll-columns div.column")
@@ -30,15 +31,12 @@ public class View extends AbstractPOM{
 	@FindBy(css="div.column-wrapper div.header div.column")
 	private List<WebElement> columns;
 	
-	
-	@FindBy(css="div.header div.column div.sub-header div.sub-header-text-wrapper")
-	private List<WebElement> columnTitle;
-	
-	
-	
+
+	private By columnTitle = By.className("sub-header-text-wrapper");	
 	private By rowTitle = By.className("fixed-columns");
-	private By rowValues = By.cssSelector("div.scroll-columns div.column");
+	private By rowValues = By.cssSelector("div.scroll-columns div.column span span");
 	private By rowTotal = By.className("total-column");
+	
 	
 //	private By reportType = By.cssSelector("div.subnav div.report-view-wrapper div.reportType");
 	private By subReportType = By.cssSelector("div.dropdown a.add-border");
@@ -66,6 +64,8 @@ public class View extends AbstractPOM{
 		return rows.get(index).findElement(rowTitle).getText();
 	}
 	
+
+	
 	public void clickOnLineByIndex(int index){
 		rows.get(index).findElement(rowTitle).findElement(By.className("name")).click();
 		WebdriverUtils.elementToHaveClass(driver.findElement(By.className("input-tab")), "active");
@@ -91,7 +91,6 @@ public class View extends AbstractPOM{
 		List<String> rowValues = getAllValuesOfRow(rowIndex);
 		int titleIndex = getIndexOfTitle(title);
 		List<String> res = new ArrayList<>();
-		
 		for(int i=titleIndex ; i< rowValues.size(); i+=getNumberOfSubColumns()){
 			res.add(rowValues.get(i));
 		}
@@ -99,13 +98,20 @@ public class View extends AbstractPOM{
 	}
 	
 	private int getIndexOfTitle(String title){
-		return columnTitle.indexOf(title);
-		
-		
+		int i = 0;
+		List<WebElement> elms = columns.get(0).findElements(columnTitle);
+		WebElementUtils.hoverOverField(elms.get(0), driver, null);
+		WebdriverUtils.sleep(200);
+		for(WebElement el : elms){
+			if(el.getText().equalsIgnoreCase(title))
+				return i;
+			i++;
+		}
+		return -1;
 	}
 	
 	private int getNumberOfSubColumns(){
-		return columnTitle.size();
+		return columns.get(0).findElements(columnTitle).size();
 		
 	}	
 	
@@ -136,6 +142,9 @@ public class View extends AbstractPOM{
 		getSubReporterDropDown().selectValue(option);
 	}
 	
+	public void selectSubActualReportType(String option){
+		getSubActualReporterDropDown().selectValue(option);
+	}
 	
 	
 	
@@ -158,6 +167,18 @@ public class View extends AbstractPOM{
 		return subReporterDropDown;
 	}
 	
+	
+	private SideDropDown getSubActualReporterDropDown(){
+		if(subActualReporterDropDown == null){
+			for(WebElement el : wrapper.findElements(subReportType)){
+				if(el.getText().trim().equals("Budget vs. actuals"))
+					subActualReporterDropDown = new SideDropDown(el.findElement(By.xpath("..")));
+		}
+			
+		}
+	
+		return subActualReporterDropDown;
+	}
 	
 	
 	@Override

@@ -36,7 +36,7 @@ public class ViewTest extends WrapperTest {
 	public void setBudgetTest() {
 
 		secondaryBoard = board.getSecondaryBoard();
-		secondaryBoard.selectRandomBudgetWithPrefix("budget7_");
+		secondaryBoard.selectRandomBudgetWithPrefix("budget7_144215547406");
 
 		innerBar = board.getInnerBar();
 		Assert.assertTrue(innerBar.isDisplayed(),
@@ -70,7 +70,7 @@ public class ViewTest extends WrapperTest {
 	}
 	
 	
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void selectReportType(){
 		innerBar = board.getInnerBar();
 		secondaryBoard = board.getSecondaryBoard();
@@ -81,7 +81,7 @@ public class ViewTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void validateTableDataTest() {
 
 		innerBar = board.getInnerBar();
@@ -129,7 +129,7 @@ public class ViewTest extends WrapperTest {
 	}
 
 	@KnownIssue(bugID = "BUD - 1964")
-	@Test(enabled = true, expectedExceptions = AssertionError.class)
+	@Test(enabled = false, expectedExceptions = AssertionError.class)
 	public void validateTotalTest() {
 
 		innerBar = board.getInnerBar();
@@ -153,5 +153,56 @@ public class ViewTest extends WrapperTest {
 
 		}
 	}
+	
+	@Test(enabled = true)
+	public void validateBudgetVsActuals(){
+		innerBar = board.getInnerBar();
+		secondaryBoard = board.getSecondaryBoard();
+		innerBar.openViewTab();
+		view = new View();
+		view.selectReportType("Cash Flow");
+		view.selectSubReportType("Budget");
+		
+		int numberOfRows = view.getNumbreOfRows();
+		List<String> baseValues = new ArrayList<>();
+		
+		for (int rows = 0; rows < numberOfRows; rows++){
+			String rowTitle = view.getRowTitleByIndex(rows);
+			if(secondaryBoard.checkIfLineTypeIsModel(rowTitle) == false){
+				baseValues = view.getAllValuesOfRow(rows);
+			}
+			else 
+				rows++;
+		 
+		}
+		
+		for (int row = 0; row < numberOfRows; row++) {
+		
+		
+		view.selectReportType("Cash Flow");
+		view.selectSubReportType("Actual");
+		view.selectSubActualReportType("Budget vs. actuals");
+	
+		List<String> actualeValues = view.getAllValuesOfRowByTitle(row, "Budget");
+		
+		//view.selectReportType("Cash Flow");
+		//view.selectSubReportType("Budget");
+		
+		for(int i = 0; i < baseValues.size(); i++){
+			Assert.assertEquals(baseValues.get(i), actualeValues.get(i), " ... Base value is" + baseValues.get(i) + " and Actual value is: " + actualeValues.get(i));
+		}
+		
+		
+		
+		}
+		
+		
+		
+		
+		
+		
+	}
+	
+	
 
 }
