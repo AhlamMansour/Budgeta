@@ -54,7 +54,6 @@ public class ScenariosTest extends WrapperTest{
 	@Test(enabled = true, priority = 1)
 	public void createScenarioTest(){
 		secondary = board.getSecondaryBoard();
-		
 		scenarios = secondary.openScenarios();
 		scenarios = new Scenarios();
 		Assert.assertTrue(scenarios.isDisplayed(), "expected scenarios to be displayed");
@@ -68,7 +67,7 @@ public class ScenariosTest extends WrapperTest{
 		Assert.assertEquals(scenarios.getSelectedScenario().trim(), scenarioName);
 	}
 	
-	@Test(enabled = true, priority = 1)
+	@Test(enabled = true, priority = 2)
 	public void addLineToScenarioTest(){
 		secondary.addSubLine("Revenues");
 		RevenuesAddSubLine subLine = new RevenuesAddSubLine();
@@ -84,7 +83,7 @@ public class ScenariosTest extends WrapperTest{
 		Assert.assertTrue(secondary.isScenarioLineDisplayed(subLineName), "expected the new line to be displayed in created scenario");
 	}
 	
-	@Test(enabled = true, priority = 2)
+	@Test(enabled = true, priority = 3)
 	public void deleteLineFromScenarioTest(){
 		MenuTrigger trigger = secondary.getSubLinSettings("Revenues", subLineName);
 		DeletePopup popup = trigger.clickDelete();
@@ -93,7 +92,7 @@ public class ScenariosTest extends WrapperTest{
 		Assert.assertFalse(secondary.isScenarioLineDisplayed(subLineName), "expected the new line to be deleted");
 	}
 	
-	@Test(enabled = true, priority = 3)
+	@Test(enabled = true, priority = 4)
 	public void renameScenarioTest(){
 		SmallPopup popup = scenarios.clickRenameScenario();
 		Assert.assertTrue(popup.isDisplayed(), "expected rename popup to be displayed");
@@ -106,7 +105,7 @@ public class ScenariosTest extends WrapperTest{
 		
 	}
 	
-	@Test(enabled = true, priority = 4)
+	@Test(enabled = true, priority = 5)
 	public void deleteScenarioTest(){
 		DeletePopup popup = scenarios.deleteScenario();
 		Assert.assertTrue(popup.isDisplayed(), "expected delete popup to be displayed");

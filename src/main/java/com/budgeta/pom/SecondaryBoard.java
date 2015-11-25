@@ -45,7 +45,8 @@ public class SecondaryBoard extends AbstractPOM {
     @FindBy(className = "search")
     private WebElement searchBudget;
 
-    @FindBy(css = "div.subnav-main-icons div.scenarios")
+   //@FindBy(css = "div.subnav-main-icons div.scenarios")
+    @FindBy(id = "sidebar-scenarios")
     private WebElement scenarios;
 
     @FindBy(id = "sidebar-versions")
@@ -102,8 +103,8 @@ public class SecondaryBoard extends AbstractPOM {
     private By lineType = By.className("type");
 
     public Scenarios openScenarios() {
-	if (driver.findElement(By.className("scenario-subnav")).getAttribute("class").contains("collapsed")) {
-	    scenarios.click();
+	if (driver.findElement(By.id("sidebar-scenarios")).getAttribute("title").equals("Scenarios")) {
+	    scenarios.findElement(By.xpath("..")).click();
 	    WebdriverUtils.elementToHaveClass(scenarios, "expanded");
 	}
 	return new Scenarios();
@@ -334,7 +335,8 @@ public class SecondaryBoard extends AbstractPOM {
     public MenuTrigger getSubLinSettings(String lineTitle, String subLineTitle) {
 	List<WebElement> subLines = getSubLinesForLine(lineTitle);
 	for (WebElement el : subLines) {
-	    if (el.findElement(budgetName).getText().replaceAll(el.findElement(By.cssSelector("span.type")).getText(), "").trim().equals(subLineTitle)) {
+	    //if (el.findElement(budgetName).getText().replaceAll(el.findElement(By.cssSelector("span.type")).getText(), "").trim().equals(subLineTitle))
+	    if (el.findElement(By.className("budget-name-text")).getText().contains(subLineTitle)){
 		WebElementUtils.hoverOverField(el, driver, null);
 		Actions act = new Actions(driver);
 		act.moveToElement(el).build().perform();
@@ -365,7 +367,8 @@ public class SecondaryBoard extends AbstractPOM {
 	List<WebElement> subLines = getSubLinesForLine(lineTitle);
 	for (WebElement el : subLines) {
 	    try {
-		if (el.findElement(budgetName).getText().replaceAll(el.findElement(By.className("type")).getText(), "").trim().equals(subLineTitle))
+		//if (el.findElement(budgetName).getText().replaceAll(el.findElement(By.className("type")).getText(), "").trim().equals(subLineTitle))
+		if (el.findElement(By.className("budget-name-text")).getText().contains(subLineTitle))
 		    return true;
 	    } catch (Exception e) {
 	    }
@@ -428,7 +431,8 @@ public class SecondaryBoard extends AbstractPOM {
 
     public boolean isScenarioLineDisplayed(String name) {
 	for (WebElement el : scenarioLine) {
-	    if (el.findElement(budgetName).getText().replaceAll(el.findElement(By.className("type")).getText(), "").trim().equals(name)) {
+	   // if (el.findElement(budgetName).getText().replaceAll(el.findElement(By.className("type")).getText(), "").trim().equals(name))
+	    if (el.findElement(By.className("budget-name-text")).getText().contains(name)){
 		return WebdriverUtils.isDisplayed(el);
 	    }
 	}
