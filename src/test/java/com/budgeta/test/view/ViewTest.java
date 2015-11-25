@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.Actuals;
 import com.budgeta.pom.BudgetSettings;
 import com.budgeta.pom.InnerBar;
 import com.budgeta.pom.PreviewBoard;
@@ -25,6 +26,7 @@ public class ViewTest extends WrapperTest {
 	SecondaryBoard secondaryBoard;
 	InnerBar innerBar;
 	View view;
+	Actuals actuals;
 	String fromMonth;
 	String fromYear;
 	String toMonth;
@@ -68,10 +70,9 @@ public class ViewTest extends WrapperTest {
 			Assert.assertEquals(dates.get(i), expectedDates.get(i));
 		}
 	}
-	
-	
+
 	@Test(enabled = false)
-	public void selectReportType(){
+	public void selectReportType() {
 		innerBar = board.getInnerBar();
 		secondaryBoard = board.getSecondaryBoard();
 		innerBar.openViewTab();
@@ -153,56 +154,81 @@ public class ViewTest extends WrapperTest {
 
 		}
 	}
-	
+
 	@Test(enabled = true)
-	public void validateBudgetVsActuals(){
+	public void validateBudgetVsActuals() {
 		innerBar = board.getInnerBar();
 		secondaryBoard = board.getSecondaryBoard();
 		innerBar.openViewTab();
 		view = new View();
 		view.selectReportType("Cash Flow");
 		view.selectSubReportType("Budget");
-		
+
 		int numberOfRows = view.getNumbreOfRows();
-		List<String> baseValues = new ArrayList<>();
+//		List<String> baseValues = new ArrayList<>();
+		List<List<String>> baseValues = new ArrayList<List<String>>();
 		
-		for (int rows = 0; rows < numberOfRows; rows++){
+		int index = 0;
+		for (int rows = 0; rows < numberOfRows; rows++) {
 			String rowTitle = view.getRowTitleByIndex(rows);
-			if(secondaryBoard.checkIfLineTypeIsModel(rowTitle) == false){
-				baseValues = view.getAllValuesOfRow(rows);
+			if (secondaryBoard.checkIfLineTypeIsModel(rowTitle) == false) {
+				baseValues.add(index,view.getAllValuesOfRow(rows));
+				index++;
+			} 
+		}
+		int checkedRow = 0 ; 
+		for (int row = 0; row < index; row++) {
+
+			view.selectReportType("Cash Flow");
+			view.selectSubReportType("Actual");
+			view.selectSubActualReportType("Budget vs. actuals");
+			
+			if(view.getRowTitleByIndex(row).contains("Uncategorized")){
+				continue;
 			}
-			else 
-				rows++;
-		 
+
+			List<String> actualeValues = view.getAllValuesOfRowByTitle(row,"Budget");
+
+			// view.selectReportType("Cash Flow");
+			// view.selectSubReportType("Budget");
+			List<String> baseRowValues = baseValues.get(checkedRow);
+			checkedRow++;
+			System.out.println(actualeValues.size() +" , "+ baseRowValues.size());
+			for (int i = 0; i < actualeValues.size(); i++) {
+				Assert.assertEquals(baseRowValues.get(i),actualeValues.get(i)," line number " + row + "in index: " + i + "... Base value is" + baseRowValues.get(i)+ " and Actual value is: "+ actualeValues.get(i));
+			}
+
 		}
-		
-		for (int row = 0; row < numberOfRows; row++) {
-		
-		
-		view.selectReportType("Cash Flow");
-		view.selectSubReportType("Actual");
-		view.selectSubActualReportType("Budget vs. actuals");
-	
-		List<String> actualeValues = view.getAllValuesOfRowByTitle(row, "Budget");
-		
-		//view.selectReportType("Cash Flow");
-		//view.selectSubReportType("Budget");
-		
-		for(int i = 0; i < baseValues.size(); i++){
-			Assert.assertEquals(baseValues.get(i), actualeValues.get(i), " ... Base value is" + baseValues.get(i) + " and Actual value is: " + actualeValues.get(i));
-		}
-		
-		
-		
-		}
-		
-		
-		
-		
-		
-		
+
 	}
-	
-	
+
+	@Test(enabled = false)
+	public void validateActulsVsActualsTab() {
+		innerBar = board.getInnerBar();
+		secondaryBoard = board.getSecondaryBoard();
+		actuals = new Actuals();
+		innerBar.openActualsTab();
+		view = new View();
+
+		int numberOfRows = view.getNumbreOfRows();
+		for (int row = 0; row < numberOfRows; row++) {
+			
+			List<String> tabValues = actuals.getAllValuesOfRow(row);
+
+			innerBar.openViewTab();
+			view.selectReportType("Cash Flow");
+			view.selectSubReportType("Actual");
+			view.selectSubActualReportType("Budget vs. actuals");
+
+			List<String> actualeValues = view.getAllValuesOfRowByTitle(row,"Actual");
+
+			for (int i = 0; i < numberOfRows; i++) {
+				String val= tabValues.get(i);
+				if(!val.equals("-"))
+					val = (int) Math.round((Double.parseDouble(tabValues.get(i)))) +"";
+				Assert.assertEquals(actualeValues.get(i), val," ... actuals value is" + actualeValues.get(i)+ " and Actual TAb value is: " + tabValues.get(i));
+			}
+		}
+	}
 
 }

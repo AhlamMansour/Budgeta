@@ -140,10 +140,12 @@ public class View extends AbstractPOM{
 	
 	public void selectSubReportType(String option){
 		getSubReporterDropDown().selectValue(option);
+		WebdriverUtils.sleep(200);
 	}
 	
 	public void selectSubActualReportType(String option){
 		getSubActualReporterDropDown().selectValue(option);
+		
 	}
 	
 	
@@ -159,10 +161,10 @@ public class View extends AbstractPOM{
 	private SideDropDown getSubReporterDropDown(){
 		
 		if(subReporterDropDown == null){
-			for(WebElement el : wrapper.findElements(subReportType)){
-				if(el.getText().trim().equals("Budget"))
-					subReporterDropDown = new SideDropDown(el.findElement(By.xpath("..")));
-		}
+//			for(WebElement el : wrapper.findElements(subReportType)){
+//				if(el.getText().trim().equals("Budget"))
+					subReporterDropDown = new SideDropDown(wrapper.findElements(subReportType).get(1).findElement(By.xpath("..")));
+//		}
 		}
 		return subReporterDropDown;
 	}
