@@ -104,6 +104,24 @@ public class ChangePassword extends AbstractPOM{
 		return null;
 	}
 	
+	
+	
+	public boolean passHasDigitsAndLetters(String pass)
+	{
+		if(pass.length() < 8)
+			return false;
+		for (int i = 0; i<pass.length(); i++){
+			if(!Character.isLetterOrDigit(pass.charAt(i))){
+				return false;
+			}
+		}
+		String tmp = pass;
+		tmp = tmp.replaceAll("[^0-9]","");
+		return (tmp.length() < pass.length()) && !tmp.isEmpty();
+		
+	}
+	
+	
 	@Override
 	public boolean isDisplayed() {
 		return WebdriverUtils .isDisplayed(wrapper);

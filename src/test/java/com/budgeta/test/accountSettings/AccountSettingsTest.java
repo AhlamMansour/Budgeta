@@ -9,14 +9,16 @@ import com.budgeta.pom.AccountSettings;
 import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.ChangePassword;
 import com.budgeta.pom.LoginPage;
+import com.budgeta.pom.SignUpPage;
 import com.budgeta.pom.TopBar;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
-import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class AccountSettingsTest extends WrapperTest{
+	
+	
 	
 	@Test(enabled = true)
 	public void changeAccountSettingsTest(){
@@ -57,6 +59,7 @@ public class AccountSettingsTest extends WrapperTest{
 		Assert.assertTrue(changePassword.isDisplayed(), "expected change password page to be displayed");
 		Assert.assertEquals(changePassword.getTitle(), "CHANGE PASSWORD");
 		
+		/*
 		//error current password
 		changePassword.setCurrentPassword(WebdriverUtils.getTimeStamp(""));
 		changePassword.setNewPassword(newPassword);
@@ -70,35 +73,47 @@ public class AccountSettingsTest extends WrapperTest{
 		changePassword.setVerifyPassword(newPassword+WebdriverUtils.getTimeStamp(""));
 		changePassword.clickSave(false);
 		Assert.assertTrue(changePassword.isErrorDisplayed(), "expected to error");
+		*/
 		
+		 
 		//success change password
 		changePassword.setCurrentPassword(password);
 		changePassword.setNewPassword(newPassword);
 		changePassword.setVerifyPassword(newPassword);
-		changePassword.clickSave(true);
 		
-		topBar.clickLogout();
+		if(changePassword.passHasDigitsAndLetters(newPassword) == false){
+			changePassword.clickSave(false);
+			Assert.assertFalse(changePassword.passHasDigitsAndLetters(newPassword), "Password must contain at least one letter and one number and Password length must be at least 8 characters");
+		}else{
+			changePassword.clickSave(true);
+			topBar.clickLogout();
+			
+			LoginPage login = new LoginPage();
+			login.setEmail(username);
+			login.setPassword(password);
+			login.clickLogin(false);
+			
+			Assert.assertTrue(login.isGeneralErrorAppear(), "expected to get error with the old password");
+			
+			login.setPassword(newPassword);
+			login.clickLogin(true);
+			
+			BudgetaBoard board = new BudgetaBoard();
+			Assert.assertTrue(board.isDisplayed(), "expected to login and budgeta board to be displayed");
+			
+			topBar = new TopBar();
+			topBar.clickChangePassword();
+			
+			changePassword.setCurrentPassword(newPassword);
+			changePassword.setNewPassword(password);
+			changePassword.setVerifyPassword(password);
+			changePassword.clickSave(true);
+			
+		}
+			
 		
-		LoginPage login = new LoginPage();
-		login.setEmail(username);
-		login.setPassword(password);
-		login.clickLogin(false);
 		
-		Assert.assertTrue(login.isGeneralErrorAppear(), "expected to get error with the old password");
 		
-		login.setPassword(newPassword);
-		login.clickLogin(true);
-		
-		BudgetaBoard board = new BudgetaBoard();
-		Assert.assertTrue(board.isDisplayed(), "expected to login and budgeta board to be displayed");
-		
-		topBar = new TopBar();
-		topBar.clickChangePassword();
-		
-		changePassword.setCurrentPassword(newPassword);
-		changePassword.setNewPassword(password);
-		changePassword.setVerifyPassword(password);
-		changePassword.clickSave(true);
 		
 	}
 }
