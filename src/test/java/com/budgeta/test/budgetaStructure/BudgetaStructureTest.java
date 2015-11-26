@@ -1,9 +1,7 @@
 package com.budgeta.test.budgetaStructure;
 
-import java.math.BigDecimal;
 import java.util.Hashtable;
 
-import org.glassfish.jersey.message.internal.StringBuilderUtils;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -93,8 +91,10 @@ public class BudgetaStructureTest extends WrapperTest {
 		subLine.clickAdd();
 
 	}
+	
+	
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 1)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 1)
 	@DataProviderParams(sheet = "BudgetaForm", area = "GeneralRevenues")
 	public void GeneralRevenuesTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -149,11 +149,19 @@ public class BudgetaStructureTest extends WrapperTest {
 		}
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 2)
+	
+	
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 2)
 	@DataProviderParams(sheet = "BudgetaForm", area = "Revenues Form_Details")
 	public void revenuesFormDetailsTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
 		secondaryBoard = board.getSecondaryBoard();
+		secondaryBoard.clickOnLine("Revenues");
+		GeneralSection general = new GeneralSection();
+		String monthY = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general
+				.getDateRangeTo().split("/")[0]));
+		String yearY = general.getDateRangeTo().split("/")[1];
+		
 		secondaryBoard.clickOnSubLine(revenues, revenuesSubLine);
 
 		BillingsSection billings = new BillingsSection();
@@ -185,7 +193,7 @@ public class BudgetaStructureTest extends WrapperTest {
 					"expected to error in billings section");
 		} else {
 
-			GeneralSection general = new GeneralSection();
+			general = new GeneralSection();
 			Assert.assertTrue(general.isDisplayed(),
 					"expected general section to be displayed");
 
@@ -213,7 +221,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 			// start validation
 			int payAfter, supportPercent, supportPeriod, growth;
-			String monthX, yearX, monthY, yearY;
+			String monthX, yearX;
 			if (data.get("PaymentAfter").isEmpty())
 				payAfter = 0;
 			else
@@ -237,9 +245,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			monthX = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general
 					.getDateRangeFrom().split("/")[0]));
 			yearX = general.getDateRangeFrom().split("/")[1];
-			monthY = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general
-					.getDateRangeTo().split("/")[0]));
-			yearY = general.getDateRangeTo().split("/")[1];
+
 
 			board.clickSaveChanges();
 
@@ -285,8 +291,11 @@ public class BudgetaStructureTest extends WrapperTest {
 		}
 
 	}
+	
+	
+	
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 3)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 3)
 	@DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale")
 	public void CostOfSaleTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -348,7 +357,10 @@ public class BudgetaStructureTest extends WrapperTest {
 		}
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 4)
+	
+	
+	
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 4)
 	@DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages")
 	public void CostOfSale_SalaryAndwagesTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -433,7 +445,10 @@ public class BudgetaStructureTest extends WrapperTest {
 		}
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 5)
+	
+	
+	
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 5)
 	@DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages_EmployeeForm")
 	public void employeeFormTest(Hashtable<String, String> data) {
 
@@ -564,7 +579,10 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 6)
+	
+	
+	
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 6)
 	@DataProviderParams(sheet = "BudgetaForm", area = "GrossProfit")
 	public void fillGeneralAndValidate(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -621,8 +639,10 @@ public class BudgetaStructureTest extends WrapperTest {
 					data.get("Currency"));
 		}
 	}
+	
+	
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 7)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 7)
 	@DataProviderParams(sheet = "BudgetaForm", area = "NetIncome")
 	public void NetIncomTest(Hashtable<String, String> data) {
 
@@ -680,7 +700,10 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 8)
+	
+	
+	
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 8)
 	@DataProviderParams(sheet = "BudgetaForm", area = "Operating profit/loss")
 	public void OperatingProfitLossTest(Hashtable<String, String> data) {
 
@@ -738,6 +761,8 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	}
 
+	
+	
 	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 9)
 	@DataProviderParams(sheet = "BudgetaForm", area = "OtherIncomeAndExpenses")
 	public void OtherIncomeAndExpensesTest(Hashtable<String, String> data) {
@@ -795,6 +820,9 @@ public class BudgetaStructureTest extends WrapperTest {
 		}
 
 	}
+	
+	
+	
 
 	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 10)
 	@DataProviderParams(sheet = "BudgetaForm", area = "OtherIncomeAndExpenses_SubLines")
@@ -802,6 +830,13 @@ public class BudgetaStructureTest extends WrapperTest {
 			Hashtable<String, String> data) {
 		board = new BudgetaBoard();
 		secondaryBoard = board.getSecondaryBoard();
+		secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine);
+		
+		GeneralSection general = new GeneralSection();
+		String monthY = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general
+				.getDateRangeTo().split("/")[0]));
+		String yearY = general.getDateRangeTo().split("/")[1];
+		
 		secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine,
 				OtherIncomeAndExpensesSubLine,
 				OtherIncomeAndExpensesSub_SubLine);
@@ -826,7 +861,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		billings.setPaymentAfter(data.get("PaymentAfter"));
 
 		// ////////////////////////////////////////
-		GeneralSection general = new GeneralSection();
+		
 
 		Assert.assertTrue(general.isDisplayed(),
 				"expected general section to be displayed");
@@ -859,23 +894,23 @@ public class BudgetaStructureTest extends WrapperTest {
 
 			// start validation
 			int payAfter, growth;
-			String monthX, yearX, monthY, yearY;
+			String monthX, yearX;
 
+			
 			secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine,
 					OtherIncomeAndExpensesSubLine);
 			general = new GeneralSection();
 			String dateFrom = general.getDateRangeFrom();
 			String dateTo = general.getDateRangeTo();
 			yearX = dateFrom.split("/")[1];
-			yearY = dateTo.split("/")[1];
+			//yearY = dateTo.split("/")[1];
 			secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine,
 					OtherIncomeAndExpensesSubLine,
 					OtherIncomeAndExpensesSub_SubLine);
 
 			monthX = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom
 					.split("/")[0]));
-			monthY = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo
-					.split("/")[0]));
+			//monthY = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo.split("/")[0]));
 
 			if (data.get("PaymentAfter").isEmpty())
 				payAfter = 0;
@@ -935,6 +970,8 @@ public class BudgetaStructureTest extends WrapperTest {
 			}
 		}
 	}
+	
+	
 
 	private void compareExpectedResults(String[] expectedValues) {
 		int total = 0;

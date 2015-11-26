@@ -653,16 +653,17 @@ public class SecondaryBoard extends AbstractPOM {
     private String getLineName(WebElement el) {
 	if (el.getAttribute("class").contains("new-line"))
 	    return el.findElement(lineName).getText();
-	String accountId = "";
-	try {
-	    accountId = el.findElement(budgetName).findElement(By.className("account-id")).getText();
-	} catch (Exception e) {
-	}
-	int startIndex = accountId.length();
-	if (el.findElement(budgetName).getText().indexOf("\n") == -1)
-	    return el.findElement(budgetName).getText().substring(startIndex).trim();
-	return el.findElement(budgetName).getText().substring(startIndex, el.findElement(budgetName).getText().indexOf("\n")).trim();
-
+	return el.findElement(budgetName).findElement(By.className("budget-name-text")).getText();
+//	String accountId = "";
+//	try {
+//	    accountId = el.findElement(budgetName).findElement(By.className("account-id")).getText();
+//	} catch (Exception e) {
+//	}
+//	int startIndex = accountId.length();
+//	if (el.findElement(budgetName).getText().indexOf("\n") == -1)
+//	    return el.findElement(budgetName).getText().substring(startIndex).trim();
+//	return el.findElement(budgetName).getText().substring(startIndex, el.findElement(budgetName).getText().indexOf("\n")).trim();
+//
     }
 
     private boolean isBudgetDropDownOptionsOpen() {
