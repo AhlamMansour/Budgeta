@@ -51,6 +51,10 @@ public class GeneralSection extends AbstractPOM{
 	}
 	
 	public String getDateRangeFrom(){
+		if(wrapper.findElement(dateRange_from).getAttribute("value").isEmpty()){
+			return wrapper.findElement(dateRange_from).getAttribute("placeholder");
+			
+		}
 		return wrapper.findElement(dateRange_from).getAttribute("value");
 	}
 	

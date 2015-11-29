@@ -763,7 +763,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	
 	
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 9)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 9)
 	@DataProviderParams(sheet = "BudgetaForm", area = "OtherIncomeAndExpenses")
 	public void OtherIncomeAndExpensesTest(Hashtable<String, String> data) {
 

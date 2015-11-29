@@ -19,7 +19,8 @@ public class View extends AbstractPOM{
 	
 	private SideDropDown reporterDropDown; 
 	private SideDropDown subReporterDropDown;
-	private SideDropDown subActualReporterDropDown; 
+	private SideDropDown subActualReporterDropDown;
+	private SideDropDown currencyTypeDropDown; 
 	
 	
 	@FindBy(css = "div.forecast-header div.scroll-columns div.column")
@@ -31,7 +32,9 @@ public class View extends AbstractPOM{
 	@FindBy(css="div.column-wrapper div.header div.column")
 	private List<WebElement> columns;
 	
-
+	@FindBy(className = "filter-view-wrapper")
+	private WebElement fillterViewWrapper;
+	
 	private By columnTitle = By.className("sub-header-text-wrapper");	
 	private By rowTitle = By.className("fixed-columns");
 	private By rowValues = By.cssSelector("div.scroll-columns div.column span span");
@@ -41,6 +44,8 @@ public class View extends AbstractPOM{
 //	private By reportType = By.cssSelector("div.subnav div.report-view-wrapper div.reportType");
 	private By subReportType = By.cssSelector("div.dropdown a.add-border");
 	
+	private By fillterView = By.className("dropdown");
+
 	
 	
 	
@@ -182,6 +187,31 @@ public class View extends AbstractPOM{
 		return subActualReporterDropDown;
 	}
 	
+	
+	
+	public void selectCurrencyType(String option){
+		getCurrencyTypeDropDown().selectValue(option);
+		
+	}
+	
+	private SideDropDown getCurrencyTypeDropDown(){
+		if(currencyTypeDropDown == null){
+			for(WebElement el : fillterViewWrapper.findElements(fillterView)){
+				el.click();
+				WebdriverUtils.elementToHaveClass(el, "open");
+				if(el.getText().contains("By currency")){
+					el.click();
+					currencyTypeDropDown = new SideDropDown(el);
+					break;
+				}
+				el.click();
+				WebdriverUtils.sleep(200);
+		}
+			
+		}
+	
+		return currencyTypeDropDown;
+	}
 	
 	@Override
 	public boolean isDisplayed() {

@@ -155,7 +155,7 @@ public class ViewTest extends WrapperTest {
 		}
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void validateBudgetVsActuals() {
 		innerBar = board.getInnerBar();
 		secondaryBoard = board.getSecondaryBoard();
@@ -206,9 +206,9 @@ public class ViewTest extends WrapperTest {
 	public void validateActulsVsActualsTab() {
 		innerBar = board.getInnerBar();
 		secondaryBoard = board.getSecondaryBoard();
+		view = new View();
 		actuals = new Actuals();
 		innerBar.openActualsTab();
-		view = new View();
 
 		int numberOfRows = view.getNumbreOfRows();
 		for (int row = 0; row < numberOfRows; row++) {
@@ -222,7 +222,7 @@ public class ViewTest extends WrapperTest {
 
 			List<String> actualeValues = view.getAllValuesOfRowByTitle(row,"Actual");
 
-			for (int i = 0; i < numberOfRows; i++) {
+			for (int i = 0; i < actualeValues.size(); i++) {
 				String val= tabValues.get(i);
 				if(!val.equals("-"))
 					val = (int) Math.round((Double.parseDouble(tabValues.get(i)))) +"";
@@ -230,5 +230,96 @@ public class ViewTest extends WrapperTest {
 			}
 		}
 	}
+	
+	
+	
+	
+	
+	@Test(enabled = false)
+	public void calculateDifferences() {
+		innerBar = board.getInnerBar();
+		secondaryBoard = board.getSecondaryBoard();
+		innerBar.openViewTab();
+		view = new View();
+		view.selectReportType("Cash Flow");
+		view.selectSubReportType("Actual");
+		view.selectSubActualReportType("Budget vs. actuals");
+
+		int numberOfRows = view.getNumbreOfRows();
+//		List<String> baseValues = new ArrayList<>();
+		
+		
+		
+		 
+		for (int row = 0; row < numberOfRows; row++) {
+			List<String> DifValues = view.getAllValuesOfRowByTitle(row,"Differrence");
+			String val= DifValues.get(row);
+			List<String> BudgetValues = view.getAllValuesOfRowByTitle(row,"Budget");
+
+			List<String> actualValues = view.getAllValuesOfRowByTitle(row,"Actual");
+			
+			
+			if(DifValues.get(row).equals("-")){
+				val = "0";
+			}
+			
+			String budgetValue="", actualValue="";
+			System.out.println(actualValues.size() +" , "+ BudgetValues.size());
+			for (int i = 0; i < actualValues.size(); i++) {
+				actualValue = actualValues.get(i);
+				budgetValue = BudgetValues.get(i);
+				if(BudgetValues.get(i).equals("-"))
+					budgetValue = "0";
+				if(actualValues.get(i).equals("-"))
+					actualValue = "0";
+				Assert.assertEquals((Integer.parseInt(budgetValue)) - (Integer.parseInt(actualValue))+"",val," line number " + row + "in index: " + i + "... Budget value is" + BudgetValues.get(i)+ " and Actual value is: "+ actualValues.get(i));
+			
+			}
+
+		}
+
+	}
+
+	@Test(enabled = false)
+	public void viewRollingForecast() {
+		innerBar = board.getInnerBar();
+		secondaryBoard = board.getSecondaryBoard();
+		view = new View();
+		actuals = new Actuals();
+		
+		innerBar.openViewTab();
+		view.selectCurrencyType("By currency");
+		
+		innerBar.openActualsTab();
+		
+		int numberOfRows = view.getNumbreOfRows();
+		List<List<String>> tabValues = new ArrayList<List<String>>();
+		
+	
+		for (int rows = 0; rows < numberOfRows; rows++) {
+			tabValues.add(rows,actuals.getAllValuesOfRow(rows));
+					 
+		}
+		innerBar.openViewTab();
+		view.selectReportType("Cash Flow");
+		view.selectSubReportType("Actual");
+		view.selectSubActualReportType("Rolling forecast");
+		
+		for (int row = 0; row < numberOfRows; row++) {
+
+			List<String> actualeValues = view.getAllValuesOfRow(row);
+			List<String> baseRowValues = tabValues.get(row);
+
+			for (int i = 0; i < actualeValues.size(); i++) {
+				String val= baseRowValues.get(i);
+				if(!val.equals("-"))
+					val = (int) Math.round((Double.parseDouble(baseRowValues.get(i)))) +"";
+				Assert.assertEquals(actualeValues.get(i), val," line number " + row + " Index: " + i + " ... actuals value is" + actualeValues.get(i)+ " and Actual TAb value is: " + baseRowValues.get(i));
+			}
+		}
+		
+		
+	}
+	
 
 }
