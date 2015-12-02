@@ -5,6 +5,7 @@ import java.io.File;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.CreateNewSnapshotPopup;
 import com.budgeta.pom.DeletePopup;
 import com.budgeta.pom.MenuTrigger;
@@ -32,13 +33,13 @@ public class BudgetSettingsTest extends WrapperTest {
 	@TestFirst
 	@Test(enabled = true)
 	public void CreateSettingTest() {
-		SecondaryBoard secondary = board.getSecondaryBoard();
-		secondary.selectRandomBudgetWithPrefix("budget7_");
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgetWithPrefix("budget7_");
 		secondary = new SecondaryBoard();
 
 	}
 
-	@Test(enabled = true, priority = 1)
+	@Test(enabled = false, priority = 1)
 	public void duplicateBudget() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -58,13 +59,13 @@ public class BudgetSettingsTest extends WrapperTest {
 		WebdriverUtils.sleep(1000);
 
 		SecondaryBoard secondary = board.getSecondaryBoard();
-
+		BudgetNavigator navigator = new BudgetNavigator();
 		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
 		String BeforeRenameBudget = secondary.getSelectedBudgetName();
 		trigger.clickRenameBudget();
 		newBudgetName = WebdriverUtils.getTimeStamp(newBudgetName);
 		secondary.setBudgetTitle(newBudgetName);
-		Assert.assertTrue(secondary.isBudgetExist(newBudgetName),
+		Assert.assertTrue(navigator.isBudgetExist(newBudgetName),
 				"expected to rename the line");
 		String AfterRenameBudget = secondary.getSelectedBudgetName();	
 		Assert.assertNotEquals(BeforeRenameBudget, AfterRenameBudget);
@@ -72,7 +73,7 @@ public class BudgetSettingsTest extends WrapperTest {
 	
 	
 	
-    @Test(enabled = true, priority = 3)
+    @Test(enabled = false, priority = 3)
     public void createSnapshot() {
     WebdriverUtils.sleep(1000);
 
@@ -93,7 +94,7 @@ public class BudgetSettingsTest extends WrapperTest {
     
     
     
-    @Test(enabled = true, priority = 4)
+    @Test(enabled = false, priority = 4)
 	public void backupBudgetTest(){
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -119,32 +120,34 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true, priority = 5)
+	@Test(enabled = false, priority = 5)
 	public void restoreBudgetTest(){
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
+		BudgetNavigator navigator = new BudgetNavigator();
 		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
 		String budgetName = secondary.getSelectedBudgetName();
 		
-		int num = secondary.getNumberOfBudget(budgetName);
+		int num = navigator.getNumberOfBudget(budgetName);
 		
 		File f = null;
 		f = new File(new File("").getAbsolutePath()+"/browserDownloads/");
 		
 		trigger.clickRestoreBudget(f + "\\" + budgetName +".bdg");
 		secondary = board.getSecondaryBoard();
-		int num2 = secondary.getNumberOfBudget(budgetName);
+		int num2 = navigator.getNumberOfBudget(budgetName);
 
 		Assert.assertTrue(num2 == (num + 1),"The budget was successfully restored, number of budget was:"+ num + " now is:" + num2);
 
 	}
 	
 	
-	@Test(enabled = true, priority = 6)
+	@Test(enabled = false, priority = 6)
 	public void ShareBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
+		BudgetNavigator navigator = new BudgetNavigator();
 
 		SharePopup popup = trigger.clickShareBudget();
 		Assert.assertTrue(popup.isDisplayed(),
@@ -165,25 +168,26 @@ public class BudgetSettingsTest extends WrapperTest {
 		
 		String BudgetName = secondary.getSelectedBudgetName();
 
-		Assert.assertTrue(secondary.isShareIconExist(BudgetName),"The budget  was shared");
+		Assert.assertTrue(navigator.isShareIconExist(BudgetName),"The budget  was shared");
 
 	}
 	
 	
-	@Test(enabled = true, priority = 7)
+	@Test(enabled = false, priority = 7)
 	public void DeleteBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
+		BudgetNavigator navigator = new BudgetNavigator();
 		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
 		
 		String BudgetName = secondary.getSelectedBudgetName();
-		int num = secondary.getNumberOfBudget(BudgetName);
+		int num = navigator.getNumberOfBudget(BudgetName);
 		DeletePopup popup = trigger.clickDeleteBudget();
 		Assert.assertTrue(popup.isDisplayed(),
 				"expected delete popup to be displayed");
 		popup.clickConfirm();
 		
-		int num2 = secondary.getNumberOfBudget(BudgetName);
+		int num2 = navigator.getNumberOfBudget(BudgetName);
 		Assert.assertFalse(num == (num-1), "The budget was successfully deleted, number of budget was:"+ num + " now is:" + num2);
 
 

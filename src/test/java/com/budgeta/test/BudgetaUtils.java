@@ -8,7 +8,8 @@ public class BudgetaUtils {
     static final String[] Month = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
     public static List<String> getAllMonthsBetweenTwoMonths(String monthX, String yearX, String monthY, String yearY) {
-	int indexX = 0;
+	System.out.println("get range from: "+monthX+"_"+yearX+" to: "+monthY+"_"+yearY);
+    int indexX = 0;
 	for (int i = 0; i < Month.length; i++) {
 	    if (Month[i].equalsIgnoreCase(monthX.trim())) {
 		indexX = i;
@@ -16,6 +17,14 @@ public class BudgetaUtils {
 	    }
 	}
 	List<String> res = new ArrayList<String>();
+	int year1 = Integer.parseInt(yearX);
+	int year2 = Integer.parseInt(yearY);
+	if(year1 > year2)
+		return res;
+	if(year1 == year2){
+		if(getIndexOfMonth(monthX) > getIndexOfMonth(monthY))
+			return res;
+	}
 	while (!(Month[indexX].equalsIgnoreCase(monthY.trim()) && yearX.trim().equalsIgnoreCase(yearY.trim()))) {
 	    res.add(Month[indexX] + " " + yearX.trim());
 	    indexX++;

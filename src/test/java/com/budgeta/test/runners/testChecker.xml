@@ -8,18 +8,11 @@
 	</listeners>
 
 
-	<test name="view Test">
+	<test name="Account Settings Test">
 		<classes>
-			<class name="com.budgeta.test.view.ViewTest"></class>
+			<class name="com.budgeta.test.accountSettings.AccountSettingsTest"></class>
 		</classes>
 	</test>
-	
-	<test name="Budget Structure Test">
-		<classes>
-			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest"></class>
-		</classes>
-	</test>
-
 
 </suite>
 	

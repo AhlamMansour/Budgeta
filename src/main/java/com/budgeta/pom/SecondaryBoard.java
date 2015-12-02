@@ -24,14 +24,10 @@ public class SecondaryBoard extends AbstractPOM {
     @FindBy(className = "secondary")
     private WebElement wrapper;
 
-    @FindBy(css = "ol.has-search li.budget-list-item")
-    private List<WebElement> budgetsList;
-
     @FindBy(className = "add-root-budget")
     private WebElement addBudgetaBtn;
 
-    @FindBy(className = "select-root")
-    private WebElement showBudgetsBtn;
+
 
     @FindBy(id = "selected-root-menu")
     private WebElement budgetOptionsMenuBtn;
@@ -40,9 +36,11 @@ public class SecondaryBoard extends AbstractPOM {
     private List<WebElement> budgetDropDownOptions;
 
     @FindBy(className = "budget-list")
-    private WebElement budgetsListWrapper;
+    private WebElement budgetsLineWrapper;
+    
 
-    @FindBy(className = "search")
+
+    @FindBy(className = "search-wrapper")
     private WebElement searchBudget;
 
    //@FindBy(css = "div.subnav-main-icons div.scenarios")
@@ -52,11 +50,10 @@ public class SecondaryBoard extends AbstractPOM {
     @FindBy(id = "sidebar-versions")
     private WebElement versions;
 
-    @FindBy(id = "selected-root-menu")
+    @FindBy(css = "div.root-budget div.budget-menu")
     private WebElement settingBudgetIcon;
 
-    @FindBy(css = "ol.tree.nav")
-    private List<WebElement> selectedBudget;
+
 
     @FindBy(css = "div.tree-edit-bar div.right")
     private WebElement closeBtn;
@@ -79,6 +76,8 @@ public class SecondaryBoard extends AbstractPOM {
 	@FindBy(css = "aside.secondary h2 a.active")
 	private WebElement budgetTitle;
 	
+	@FindBy(className = "root-budget")
+	private WebElement selectedBudget;
 	
 
     private final By newLine = By.className("new-line");
@@ -125,125 +124,7 @@ public class SecondaryBoard extends AbstractPOM {
 	return new NewBudgetPopup();
 
     }
-
-    public boolean isBudgetExist(String budgetaName) {
-	openBudgetsList();
-	boolean found = false;
-	for (WebElement budget : budgetsList) {
-	    if (budget.findElement(By.className("budget-name")).getText().equals(budgetaName)) {
-		found = true;
-		break;
-	    }
-	}
-	showBudgetsBtn.click();
-	WebdriverUtils.sleep(300);
-	return found;
-    }
-    
-    
-    public boolean isShareIconExist(String budgetName){
-    	openBudgetsList();
-    	for (WebElement budget : budgetsList) {
-    	    if (budget.findElement(By.className("budget-name")).getText().equals(budgetName)) {
-    	    	budget.findElement(By.cssSelector("div.actions-toggle span.budget-name  div.svg-icon")).isDisplayed();
-    	    	return true;
-    	    	
-    	    }
-    	    }  	
-    	
-    	return false;
-    }
-    
-
-    public void selectBudgeta(String budgetaName) {
-	openBudgetsList();
-	for (WebElement budget : budgetsList) {
-	    if (budget.findElement(By.className("budget-name")).getText().equals(budgetaName)) {
-		budget.click();
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("budget-list")));
-		WebdriverUtils.waitForElementToDisappear(driver, By.className("level-0"));
-		WebdriverUtils.waitForElementToBeFound(driver, By.className("level-1"));
-		break;
-	    }
-	}
-	getSelectedBudget().findElement(budgetName).click();
-	WebdriverUtils.waitForElementToBeFound(driver, By.id("section-General"));
-    }
-
-    public void selectRandomBudgeta() {
-	openBudgetsList();
-	int random = WebElementUtils.getRandomNumberByRange(0, getNumbreOfExistBudgets() - 1);
-	WebElementUtils.hoverOverField(budgetsList.get(random), driver, null);
-	if (budgetsList.get(random).findElement(budgetName).getText().equals(getSelectedBudget().findElement(budgetName).getText().replaceAll(getSelectedBudget().findElement(By.cssSelector("span.type")).getText(), "").trim()))
-	    showBudgetsBtn.click();
-	else
-	    budgetsList.get(random).click();
-	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("budget-list")));
-	WebdriverUtils.waitForElementToDisappear(driver, By.className("level-0"));
-	WebdriverUtils.waitForElementToBeFound(driver, By.className("level-1"));
-    }
-
-    public void selectRandomBudgetWithPrefix(String prefix) {
-	openBudgetsList();
-	List<WebElement> budgetsStartWithPrefix = new ArrayList<>();
-	for (WebElement el : budgetsList) {
-	    if (el.findElement(budgetName).getText().startsWith(prefix)) {
-		budgetsStartWithPrefix.add(el);
-	    }
-	}
-	int random = WebElementUtils.getRandomNumberByRange(0, budgetsStartWithPrefix.size() - 1);
-	WebElementUtils.hoverOverField(budgetsStartWithPrefix.get(random), driver, null);
-	if (budgetsStartWithPrefix
-		.get(random)
-		.findElement(budgetName)
-		.getText()
-		.equals(getSelectedBudget().findElement(budgetName).getText()
-			.replaceAll(getSelectedBudget().findElement(By.cssSelector("span.type")).getText(), "").trim()))
-	    showBudgetsBtn.click();
-	else
-	    budgetsStartWithPrefix.get(random).click();
-
-	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("budget-list")));
-	WebdriverUtils.waitForElementToDisappear(driver, By.className("level-0"));
-	WebdriverUtils.waitForElementToBeFound(driver, By.className("level-1"));
-    }
-
-    public int getNumberOfBudgetsWithName(String name) {
-	int sum = 0;
-	openBudgetsList();
-	for (WebElement el : budgetsList) {
-	    if (el.findElement(budgetName).getText().equals(name)) {
-		sum++;
-	    }
-	}
-	showBudgetsBtn.click();
-	return sum;
-    }
-
-  
-    public int getNumberOfBudget(String budgetaName) {
-
-	openBudgetsList();
-	int num = 0;
-	for (WebElement budget : budgetsList) {
-	    if (budget.findElement(By.className("budget-name")).getText().equals(budgetaName)) {
-		num++;
-	    }
-	}
-	return num;
-    }
-
-    public int getNumbreOfExistBudgets() {
-	return budgetsList.size();
-    }
-
-    public void addLine() {
-	if (!wrapper.getAttribute("class").contains("tree-edit")) {
-	    getSelectedBudget().findElement(addLinesBtn).click();
-	    WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
-	}
-
-    }
+   
 
     public void addSubLine(String lineTitle) {
 	if (WebdriverUtils.isDisplayed(closeBtn))
@@ -256,49 +137,55 @@ public class SecondaryBoard extends AbstractPOM {
 	WebdriverUtils.sleep(500);
     }
 
-    public void addAllLines() {
-	if (!wrapper.getAttribute("class").contains("tree-edit")) {
-	    getSelectedBudget().findElement(addLinesBtn).click();
-	    WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
-	}
-	WebElement line = null;
-	while (getNextLineToAdd() != null) {
-	    line = getNextLineToAdd();
-	    WebElement add = line.findElement(addLineBtn);
-	    if (add.getAttribute("class").contains("enable")) {
-		add.click();
-		WebdriverUtils.waitForBudgetaBusyBar(driver);
-		WebdriverUtils.waitForBudgetaLoadBar(driver);
-		WebdriverUtils.sleep(1500);
-	    }
-	}
-    }
+    public void addLine() {
+    	if (!wrapper.getAttribute("class").contains("tree-edit")) {
+    	    selectedBudget.findElement(addLinesBtn).click();
+    	    WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
+    	}
 
-    public void addLine(String lineTitle) {
-	if (!wrapper.getAttribute("class").contains("tree-edit")) {
-	    getSelectedBudget().findElement(addLinesBtn).click();
-	    WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
-	}
-	List<WebElement> lines = getLines();
-	String name = "";
-	for (WebElement el : lines) {
-	    name = getLineName(el).replaceAll("\\d", "").trim();
-	    if (name.equals(lineTitle) && el.getAttribute("class").contains("new-line")) {
-		WebElement add = el.findElement(addLineBtn);
-		if (add.getAttribute("class").contains("enable")) {
-		    add.click();
-		    WebdriverUtils.sleep(300);
-		    WebdriverUtils.waitForBudgetaBusyBar(driver);
-		    WebdriverUtils.waitForBudgetaLoadBar(driver);
-		    return;
-		}
-	    }
-	}
-    }
+        }
+        
+    
+        
+        public void addAllLines() {
+        	if (!wrapper.getAttribute("class").contains("tree-edit")) {
+        	    selectedBudget.findElement(addLinesBtn).click();
+        	    WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
+        	}
+        	WebElement line = null;
+        	while (getNextLineToAdd() != null) {
+        	    line = getNextLineToAdd();
+        	    WebElement add = line.findElement(addLineBtn);
+        	    if (add.getAttribute("class").contains("enable")) {
+        		add.click();
+        		WebdriverUtils.waitForBudgetaBusyBar(driver);
+        		WebdriverUtils.waitForBudgetaLoadBar(driver);
+        		WebdriverUtils.sleep(1500);
+        	    }
+        	}
+            }
 
-    public String getNameOfSelectedBudgeta() {
-	return getLineName(getSelectedBudget());
-    }
+            public void addLine(String lineTitle) {
+        	if (!wrapper.getAttribute("class").contains("tree-edit")) {
+        	    selectedBudget.findElement(addLinesBtn).click();
+        	    WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
+        	}
+        	List<WebElement> lines = getLines();
+        	String name = "";
+        	for (WebElement el : lines) {
+        	    name = getLineName(el).replaceAll("\\d", "").trim();
+        	    if (name.equals(lineTitle) && el.getAttribute("class").contains("new-line")) {
+        		WebElement add = el.findElement(addLineBtn);
+        		if (add.getAttribute("class").contains("enable")) {
+        		    add.click();
+        		    WebdriverUtils.sleep(300);
+        		    WebdriverUtils.waitForBudgetaBusyBar(driver);
+        		    WebdriverUtils.waitForBudgetaLoadBar(driver);
+        		    return;
+        		}
+        	    }
+        	}
+            }
 
     public MenuTrigger getBudgetMenuTrigger() {
 	return new MenuTrigger(settingBudgetIcon);
@@ -418,16 +305,11 @@ public class SecondaryBoard extends AbstractPOM {
     
     
     public void RenameBudget(String newName) {
-    	List<WebElement> lines = getBudgets();
-    	for (WebElement el : lines) {
-    	    if (el.getAttribute("class").contains("active")) {
-    		el.findElement(nameField).clear();
-    		el.findElement(nameField).sendKeys(newName);
-    		el.findElement(nameField).sendKeys(Keys.ENTER);
-    		WebdriverUtils.sleep(500);
-    	    }
-    	}
-        }
+    	selectedBudget.findElement(nameField).clear();
+    	selectedBudget.findElement(nameField).sendKeys(newName);
+    	selectedBudget.findElement(nameField).sendKeys(Keys.ENTER);
+    	WebdriverUtils.sleep(500);
+    }
 
     public boolean isScenarioLineDisplayed(String name) {
 	for (WebElement el : scenarioLine) {
@@ -592,8 +474,12 @@ public class SecondaryBoard extends AbstractPOM {
     }
 
     public String getSelectedBudgetName() {
-	return getLineName(getSelectedBudget());
+	return getLineName(selectedBudget);
     }
+    
+    
+    
+  
 
     public int getNumberOfVersionChanges() {
 	return versionChanges.size();
@@ -674,23 +560,10 @@ public class SecondaryBoard extends AbstractPOM {
 	}
     }
 
-    public void openBudgetsList() {
-	if (!WebdriverUtils.isDisplayed(budgetsListWrapper)) {
-	    showBudgetsBtn.click();
-	    wait.until(ExpectedConditions.visibilityOf(budgetsListWrapper));
-	    WebdriverUtils.sleep(300);
-	}
-    }
-
-    private WebElement getSelectedBudget() {
-	return selectedBudget.get(1).findElement(By.className("selected-root")).findElements(By.className("actions-toggle")).get(0);
-    }
-
     private List<WebElement> getLines() {
 	List<WebElement> list = new ArrayList<WebElement>();
 	try {
-	    for (WebElement el : driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root"))
-		    .findElement(By.tagName("ol")).findElements(line)) {
+	    for (WebElement el : driver.findElement(By.cssSelector("ol.tree")).findElement(By.className("selected-root")).findElement(By.tagName("ol")).findElements(line)) {
 		if (el.getAttribute("data-level").equals("1"))
 		    list.add(el);
 	    }
@@ -702,19 +575,6 @@ public class SecondaryBoard extends AbstractPOM {
     private List<WebElement> getAllLines(){
     	return driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol")).findElements(line) ;
     }
-    
-    private List<WebElement> getBudgets() {
-    	List<WebElement> list = new ArrayList<WebElement>();
-    	try {
-    	    for (WebElement el : driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root"))
-    		    .findElement(By.tagName("ol")).findElements(line)) {
-    		if (el.getAttribute("data-level").equals("0"))
-    		    list.add(el);
-    	    }
-    	} catch (Exception e) {
-    	}
-    	return list;
-        }
 
     private WebElement getNextLineToAdd() {
 	List<WebElement> lines = getLines();

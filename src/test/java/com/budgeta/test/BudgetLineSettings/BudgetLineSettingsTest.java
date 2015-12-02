@@ -3,6 +3,7 @@ package com.budgeta.test.BudgetLineSettings;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.DeletePopup;
 import com.budgeta.pom.MenuTrigger;
 import com.budgeta.pom.SecondaryBoard;
@@ -16,6 +17,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class BudgetLineSettingsTest extends WrapperTest {
 
 	MenuTrigger menuTrigger;
+	BudgetNavigator budgetNavigator;
 	String email = "ahlam_mns@hotmail.com";
 	SuccessPage successPage;
 	SmallPopup smallPopup;
@@ -27,7 +29,12 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	@Test(enabled = true)
 	public void CreateSettingTest() {
 		SecondaryBoard secondary = board.getSecondaryBoard();
-		secondary.selectRandomBudgeta();
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgeta();
+		
+		budgetNavigator = new BudgetNavigator();
+		budgetNavigator.openInputTab();
+		
 		secondary.addLine("Revenues");
 		secondary = new SecondaryBoard();
 
@@ -38,6 +45,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	public void DuplicateBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
+		//secondary.selectRandomBudgetWithPrefix("budget7_144215547406");
 		MenuTrigger trigger = secondary.getLineSettings("Revenues");
 		int num = secondary.getNumberOfLines("Revenues");
 		trigger.clickDuplicate();
