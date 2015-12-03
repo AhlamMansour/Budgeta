@@ -53,7 +53,8 @@ public class SecondaryBoard extends AbstractPOM {
     @FindBy(css = "div.root-budget div.budget-menu")
     private WebElement settingBudgetIcon;
 
-
+    @FindBy(name = "name")
+	private WebElement editLineName;
 
     @FindBy(css = "div.tree-edit-bar div.right")
     private WebElement closeBtn;
@@ -79,16 +80,15 @@ public class SecondaryBoard extends AbstractPOM {
 	@FindBy(className = "root-budget")
 	private WebElement selectedBudget;
 	
-
-    private final By newLine = By.className("new-line");
-    private final By selectBudget = By.cssSelector("aside.secondary h2 input");
+	
+    //private final By newLine = By.className("new-line");
+  //  private final By selectBudget = By.cssSelector("aside.secondary h2 input");
 
     private final By line = By.cssSelector("li.budget-list-item");
 
-    private final By budgetName = By.className("budget-name");
-
     private final By addLinesBtn = By.className("add-child-budget");
-
+    
+    private final By budgetName = By.className("budget-name-text");
     private final By addLineBtn = By.cssSelector("a.add.add-line");
 
     private final By lineName = By.className("inline-edit");
@@ -97,7 +97,7 @@ public class SecondaryBoard extends AbstractPOM {
 
     private final By nameField = By.className("ember-text-field");
 
-    private final By shareIcon = By.cssSelector("div.actions-toggle span.budget-name  div.svg-icon");
+   // private final By shareIcon = By.cssSelector("div.actions-toggle span.budget-name  div.svg-icon");
     
     private By lineType = By.className("type");
 
@@ -244,7 +244,7 @@ public class SecondaryBoard extends AbstractPOM {
 	clickClose();
 	List<WebElement> lines = getLines();
 	for (WebElement el : lines) {
-	    if (el.findElement(budgetName).getText().replaceAll(el.findElement(By.className("type")).getText(), "").trim().equals(lineTitle))
+	    if (el.findElement(budgetName).getText().trim().equals(lineTitle))
 		return true;
 	}
 	return false;
@@ -274,6 +274,18 @@ public class SecondaryBoard extends AbstractPOM {
 	}
 
     }
+    
+    public boolean isBudgetFlag(String budget_Name) {
+    	//String name = selectedBudget.findElement(budgetName).getText();
+    	try {
+    		selectedBudget.findElement(By.xpath("..")).findElement(By.className("flagged")).isDisplayed();
+    	    return true;
+    	} catch (Exception e) {
+    	    return false;
+    	}
+
+        } 
+  
 
     public boolean isLineShared(String lineTitle) {
 	clickClose();
@@ -325,19 +337,8 @@ public class SecondaryBoard extends AbstractPOM {
 	List<WebElement> subLines = getSubLinesForLine(lineTitle);
 	int num = 0;
 	for (WebElement el : subLines) {
-	    try {
-		if (el.findElement(budgetName).getText().indexOf("\n") == -1) {
-		    System.out.println("1." + el.findElement(budgetName).getText());
-		    if (el.findElement(budgetName).getText().trim().contains(subLineTitle))
+		if(el.findElement(budgetName).getText().equals(subLineTitle))
 			num++;
-		} else if (el.findElement(budgetName).getText().substring(0, el.findElement(budgetName).getText().indexOf("\n")).trim().contains(subLineTitle)) {
-		    System.out.println("2." + el.findElement(budgetName).getText().substring(0, el.findElement(budgetName).getText().indexOf("\n")));
-		    num++;
-		}
-	    } catch (Exception e) {
-		continue;
-	    }
-
 	}
 	return num;
     }
@@ -347,12 +348,8 @@ public class SecondaryBoard extends AbstractPOM {
 	int num = 0;
 	for (WebElement el : Lines) {
 	    try {
-		if (el.findElement(budgetName).getText().indexOf("\n") == -1) {
-		    if (el.findElement(budgetName).getText().trim().contains(lineTitle))
-			num++;
-		} else if (el.findElement(budgetName).getText().substring(0, el.findElement(budgetName).getText().indexOf("\n")).trim().contains(lineTitle)) {
-		    num++;
-		}
+	    	if (el.findElement(budgetName).getText().equals(lineTitle))
+	    			num++;
 	    } catch (Exception e) {
 		continue;
 	    }
@@ -505,12 +502,23 @@ public class SecondaryBoard extends AbstractPOM {
 	}
 	
 	public void setBudgetTitle(String value){
-		WebElement el = driver.findElements(By.cssSelector("aside.secondary h2 input")).get(0);
-		el.clear();
-		el.sendKeys(value);
-		el.sendKeys(Keys.ENTER);
+		editLineName.clear();
+		editLineName.sendKeys(value);
+		editLineName.sendKeys(Keys.ENTER);
 		
 	}
+	
+	public boolean isShareIconExist(String budget_Name){
+		String name = selectedBudget.findElement(budgetName).getText();
+    	    if (name.equals(budget_Name)) {
+    	    	selectedBudget.findElement(By.cssSelector("div.root-budget span.budget-name svg.icon")).isDisplayed();
+    	    	return true;
+    	    	
+    	    }
+    	 	
+    	
+    	return false;
+    }
 	
 	public boolean checkIfLineTypeIsModel(String lineTitle){
 		List<WebElement> lines = getAllLines();
@@ -539,7 +547,7 @@ public class SecondaryBoard extends AbstractPOM {
     private String getLineName(WebElement el) {
 	if (el.getAttribute("class").contains("new-line"))
 	    return el.findElement(lineName).getText();
-	return el.findElement(budgetName).findElement(By.className("budget-name-text")).getText();
+	return el.findElement(budgetName).getText();
 //	String accountId = "";
 //	try {
 //	    accountId = el.findElement(budgetName).findElement(By.className("account-id")).getText();

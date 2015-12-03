@@ -1,5 +1,7 @@
 package com.budgeta.pom;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,6 +17,9 @@ public class SharePopup extends SmallPopup {
 	
 	@FindBy(className = "input-error")
 	private WebElement fieldError;
+	
+	@FindBy(css = "div.table-wrapper ul.table li")
+    private List<WebElement> table ;
 //	private By moreInfoBtn = By.cssSelector("div.modal-body span.help-iq");
 	
 	

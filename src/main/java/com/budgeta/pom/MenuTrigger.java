@@ -22,8 +22,13 @@ public class MenuTrigger extends AbstractPOM {
 	private By lineSettingTriggerMenu = By.cssSelector("div.qtip-focus ul.narrow li");
 	private By subLineSettingTriggerMenu = By.cssSelector("div.qtip-pos-ti.qtip-focus ul li");
 	
+	private By budgetSettingTriggerMenu = By.cssSelector("div.qtip-focus ul.budgeta-dropdown-list li");
+	
 	@FindBy(className = "tree-edit-mode")
 	protected WebElement editwrapper;
+	
+	@FindBy(className = "root-budget")
+	private WebElement selectedBudget;
 	
 	
 	
@@ -95,6 +100,13 @@ public class MenuTrigger extends AbstractPOM {
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
+	public void clickFlagBudget(){
+		board = new BudgetaBoard();
+		secondaryBoard = board.getSecondaryBoard();
+		selectScenarioTrigger("Flag");
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
 	public void clickBackupBudget(){
 		board = new BudgetaBoard();
 		secondaryBoard = board.getSecondaryBoard();
@@ -128,7 +140,7 @@ public class MenuTrigger extends AbstractPOM {
 	
 		selectScenarioTrigger("Delete");
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
+		WebdriverUtils.sleep(1000);
 		return new DeletePopup();
 	}
 	
@@ -174,8 +186,10 @@ public class MenuTrigger extends AbstractPOM {
 	}
 	
 	private void selectScenarioTrigger(String option){
-		openLineSettings();
-		for(WebElement el : driver.findElements(lineSettingTriggerMenu)){
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.openMoreBudgetList();
+		
+		for(WebElement el : driver.findElements(budgetSettingTriggerMenu)){
 			if(el.getText().equals(option)){
 				el.click();
 				return;
