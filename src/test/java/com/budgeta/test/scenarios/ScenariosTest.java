@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.CreateNewScenarioPopup;
 import com.budgeta.pom.DeletePopup;
 import com.budgeta.pom.MenuTrigger;
@@ -40,7 +41,8 @@ public class ScenariosTest extends WrapperTest{
     public void setBudgetTest() {
 
 	secondaryBoard = board.getSecondaryBoard();
-	secondaryBoard.selectRandomBudgetWithPrefix("budget7_");
+	BudgetNavigator navigator = new BudgetNavigator();
+	navigator.selectRandomBudgetWithPrefix("budget7_");
 	secondaryBoard.addAllLines();
 	secondaryBoard = new SecondaryBoard();
 	secondaryBoard.addSubLine("Revenues");

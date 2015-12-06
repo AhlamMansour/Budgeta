@@ -7,6 +7,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.ReportsPopup;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.test.WrapperTest;
@@ -30,7 +31,8 @@ public class ReporterTest extends WrapperTest{
 	@Test(enabled = true)
 	public void setBudgetTest(){		
 		secondaryBoard = board.getSecondaryBoard();
-		secondaryBoard.selectRandomBudgeta();
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgeta();
 		openReports();
 	}
 
@@ -42,7 +44,7 @@ public class ReporterTest extends WrapperTest{
 	@Test(dataProvider = "reportsTypeProvider", enabled = true)
 	public void fillGeneralAndValidate(String boxToCheck) {
 		secondaryBoard = board.getSecondaryBoard();
-		String budgetName = secondaryBoard.getNameOfSelectedBudgeta();
+		String budgetName = secondaryBoard.getSelectedBudgetName();
 		if(!reports.isDisplayed())
 			openReports();
 		reports.checkBox(boxToCheck);

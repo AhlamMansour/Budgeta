@@ -7,6 +7,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BillingsSection;
+import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetSettings;
 import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.CommentsSection;
@@ -47,7 +48,8 @@ public class BudgetaStructureTest extends WrapperTest {
 	public void setBudgetTest() {
 
 		secondaryBoard = board.getSecondaryBoard();
-		secondaryBoard.selectRandomBudgetWithPrefix("budget7_");
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgetWithPrefix("budget7_");
 		secondaryBoard.addAllLines();
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLine("Revenues");

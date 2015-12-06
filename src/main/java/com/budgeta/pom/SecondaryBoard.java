@@ -88,7 +88,7 @@ public class SecondaryBoard extends AbstractPOM {
 
     private final By addLinesBtn = By.className("add-child-budget");
     
-    private final By budgetName = By.className("budget-name-text");
+	private final By budgetName = By.className("budget-name-text");
     private final By addLineBtn = By.cssSelector("a.add.add-line");
 
     private final By lineName = By.className("inline-edit");

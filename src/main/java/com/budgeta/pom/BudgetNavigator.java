@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -26,7 +27,7 @@ public class BudgetNavigator extends AbstractPOM{
 	@FindBy(css = "div.navigator-headers div.sheets")
 	private WebElement Sheets;
 	
-    @FindBy(css = "div.qtip-content div.no-padding div.ember-view ul.budgeta-dropdown-list")
+    @FindBy(css = "div.qtip-focus div.no-padding div.ember-view ul.budgeta-dropdown-list")
     private WebElement budgetsListWrapper;
     
     @FindBy(id = "selected-root-menu")
@@ -41,11 +42,21 @@ public class BudgetNavigator extends AbstractPOM{
     private WebElement moreBtn;
     
     
-    @FindBy(css = "div.budget-title a")
+    @FindBy(className = "ember-transitioning-in")
     private WebElement selectedBudget;
     
     @FindBy(id = "more-budget-actions")
     private WebElement budgetSetting;
+    
+    
+    private final By budgetTitle = By.className("budget-title");
+    
+    @FindBy(css = "div.budget-title input.ember-text-field")
+	private WebElement editBudgetName;
+    
+    @FindBy(css = "div.qtip-focus div.add-option")
+	private WebElement addNewBudget;
+    
     
 	public void openDashboardTab(){
 		clickOnTab(dashBoard);
@@ -204,11 +215,29 @@ public class BudgetNavigator extends AbstractPOM{
         }
 
         
+        public String getSelectedBudgetName() {
+        	return getLineName(selectedBudget);
+            }
+        
+        private String getLineName(WebElement el) {
+        	return el.findElement(budgetTitle).getText();
 
+            }
             
             
+        public void setBudgetTitle(String value){
+        	editBudgetName.clear();
+        	editBudgetName.sendKeys(value);
+        	editBudgetName.sendKeys(Keys.ENTER);
+    		
+    	}
             
-            
+        public NewBudgetPopup addNewBudget(){
+        	openBudgetsList();
+        	addNewBudget.click();
+        	WebdriverUtils.waitForBudgetaLoadBar(driver);
+        	return new NewBudgetPopup();
+        }
 	
 	@Override
 	public boolean isDisplayed() {

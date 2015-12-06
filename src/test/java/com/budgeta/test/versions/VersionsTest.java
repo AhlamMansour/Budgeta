@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.CreateNewSnapshotPopup;
 import com.budgeta.pom.DeletePopup;
 import com.budgeta.pom.SecondaryBoard;
@@ -28,7 +29,8 @@ public class VersionsTest extends WrapperTest {
     @Test(enabled = true)
     public void createSnapshot() {
 	secondary = board.getSecondaryBoard();
-	secondary.selectRandomBudgeta();
+	BudgetNavigator navigator = new BudgetNavigator();
+	navigator.selectRandomBudgeta();
 	versions = new Versions();
 	versions = secondary.openVersions();
 	CreateNewSnapshotPopup popup = versions.createNewSnapshot();

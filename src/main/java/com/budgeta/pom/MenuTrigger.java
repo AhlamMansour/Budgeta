@@ -86,9 +86,8 @@ public class MenuTrigger extends AbstractPOM {
 	}
 	
 	public void clickDuplicateBudget(){
-		board = new BudgetaBoard();
-		secondaryBoard = board.getSecondaryBoard();
-		selectScenarioTrigger("Duplicate");
+		
+		selectBudgetMenuTrigger("Duplicate");
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
@@ -100,6 +99,11 @@ public class MenuTrigger extends AbstractPOM {
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
+	public void clickRenameBudgetFromNav(){
+		selectBudgetMenuTrigger("Rename");
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
 	public void clickFlagBudget(){
 		board = new BudgetaBoard();
 		secondaryBoard = board.getSecondaryBoard();
@@ -108,9 +112,7 @@ public class MenuTrigger extends AbstractPOM {
 	}
 	
 	public void clickBackupBudget(){
-		board = new BudgetaBoard();
-		secondaryBoard = board.getSecondaryBoard();
-		selectScenarioTrigger("Backup");
+		selectBudgetMenuTrigger("Backup");
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
@@ -135,10 +137,8 @@ public class MenuTrigger extends AbstractPOM {
 	}
 	
 	public DeletePopup clickDeleteBudget(){
-		board = new BudgetaBoard();
-		secondaryBoard = board.getSecondaryBoard();
 	
-		selectScenarioTrigger("Delete");
+		selectBudgetMenuTrigger("Delete");
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
 		WebdriverUtils.sleep(1000);
 		return new DeletePopup();
@@ -186,10 +186,8 @@ public class MenuTrigger extends AbstractPOM {
 	}
 	
 	private void selectScenarioTrigger(String option){
-		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.openMoreBudgetList();
-		
-		for(WebElement el : driver.findElements(budgetSettingTriggerMenu)){
+		openLineSettings();
+		for(WebElement el : driver.findElements(lineSettingTriggerMenu)){
 			if(el.getText().equals(option)){
 				el.click();
 				return;
@@ -197,7 +195,16 @@ public class MenuTrigger extends AbstractPOM {
 		}
 	}
 	
-	
+private void selectBudgetMenuTrigger(String option){
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.openMoreBudgetList();
+		for(WebElement el : driver.findElements(budgetSettingTriggerMenu)){
+			if(el.getText().equals(option)){
+				el.click();
+				return;
+			}
+		}
+	}
 	
 	
 	private void openLineSettings(){

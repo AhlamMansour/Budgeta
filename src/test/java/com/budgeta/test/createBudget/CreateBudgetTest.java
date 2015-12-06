@@ -69,8 +69,10 @@ public class CreateBudgetTest extends WrapperTest{
 				popup.selectGeographyField();
 		
 			popup.clickCreate();
+			
+			
 		
-			Assert.assertEquals(secondaryBoard.getNameOfSelectedBudgeta(), budgetaName);
+			Assert.assertEquals(secondaryBoard.getSelectedBudgetName(), budgetaName);
 		
 			GeneralSection general = new GeneralSection();
 		

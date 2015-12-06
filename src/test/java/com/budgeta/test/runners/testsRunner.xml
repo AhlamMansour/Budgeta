@@ -38,11 +38,6 @@
 		</classes>
 	</test>
 
-	<test name="ReporterTest">
-		<classes>
-			<class name="com.budgeta.test.reporter.ReporterTest"></class>
-		</classes>
-	</test>
 
 	<test name="View Test">
 		<classes>

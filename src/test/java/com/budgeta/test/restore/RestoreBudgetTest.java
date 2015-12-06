@@ -3,20 +3,24 @@ package com.budgeta.test.restore;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.budgeta.pom.MenuTrigger;
+import com.budgeta.pom.BudgetNavigator;
+import com.budgeta.pom.NewBudgetPopup;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.TestFirst;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class RestoreBudgetTest extends WrapperTest{
 	
+	SecondaryBoard secondaryBoard;
 	
 	@TestFirst
 	@Test(enabled = true)
 	public void CreateSettingTest() {
-		SecondaryBoard secondary = board.getSecondaryBoard();
-		secondary.selectRandomBudgetWithPrefix("_");
-		secondary = new SecondaryBoard();
+		
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgetWithPrefix("_");
+		
 
 	}
 	
@@ -25,21 +29,41 @@ public class RestoreBudgetTest extends WrapperTest{
 	
 	
 	@Test(enabled = true)
-	public void restoreBudgetTest() throws InterruptedException {
-		Thread.sleep(1000);
-		SecondaryBoard secondary = board.getSecondaryBoard();
+	public void restoreBudgetTest(){
+		WebdriverUtils.sleep(1000);
+		secondaryBoard = board.getSecondaryBoard();
+		BudgetNavigator navigator = new BudgetNavigator();
+		int num = navigator.getNumberOfBudget("new test budget");
 		
-		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
+		NewBudgetPopup popup = navigator.addNewBudget();
+		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");
+		popup.clickRestoreAndUpload(System.getProperty("user.dir")+"C:\\new test budget.bdg");
 		
+		navigator = new BudgetNavigator();
+		int num2 = navigator.getNumberOfBudget("new test budget");
+		Assert.assertEquals(num + 1 , num2);
 		
-		int num = secondary.getNumberOfBudget("new test budget");
-		trigger.clickRestoreBudget(System.getProperty("user.dir")+"\\new test budget.bdg");
-		secondary = board.getSecondaryBoard();
-		int num2 = secondary.getNumberOfBudget("new test budget");
-		
-		Assert.assertTrue(num2 == (num+1), "The budget was successfully restored, number of budget was:" + num + "now is:" + num2);
 		
 	}
 	
-
+	
+	
+/*	
+	@Test(enabled = true)
+	public void restoreBudgetTest(){
+		
+		secondaryBoard = board.getSecondaryBoard();
+		BudgetNavigator navigator = new BudgetNavigator();
+		int num = navigator.getNumberOfBudgetsWithName("RestoreTest");
+		navigator.selectRandomBudgetWithPrefix("RestoreTest");
+		NewBudgetPopup popup = secondaryBoard.addBudgeta();
+		
+		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");
+		popup.clickRestoreAndUpload("C:\\RestoreTest.bdg");
+		secondaryBoard = board.getSecondaryBoard();
+		int num2 = navigator.getNumberOfBudgetsWithName("RestoreTest");
+		Assert.assertEquals(num + 1 , num2);
+	}
+	
+*/
 }

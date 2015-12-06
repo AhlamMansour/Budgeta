@@ -8,6 +8,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.Actuals;
+import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetSettings;
 import com.budgeta.pom.InnerBar;
 import com.budgeta.pom.PreviewBoard;
@@ -38,7 +39,8 @@ public class ViewTest extends WrapperTest {
 	public void setBudgetTest() {
 
 		secondaryBoard = board.getSecondaryBoard();
-		secondaryBoard.selectRandomBudgetWithPrefix("budget7_144215547406");
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgetWithPrefix("budget7_144215547406");
 
 		innerBar = board.getInnerBar();
 		Assert.assertTrue(innerBar.isDisplayed(),
