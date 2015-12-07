@@ -57,6 +57,8 @@ public class BudgetNavigator extends AbstractPOM{
     @FindBy(css = "div.qtip-focus div.add-option")
 	private WebElement addNewBudget;
     
+    @FindBy(css = "div.search-wrapper input")
+	private WebElement searchBudget;
     
 	public void openDashboardTab(){
 		clickOnTab(dashBoard);
@@ -122,6 +124,20 @@ public class BudgetNavigator extends AbstractPOM{
 	WebdriverUtils.sleep(300);
 	return found;
     }
+    
+    
+    public boolean isScenarioExist(String budgetaName) {
+    	boolean found = false;
+    	for (WebElement budget : budgetsList) {
+    	    if (budget.getText().equals(budgetaName)) {
+    		found = true;
+    		break;
+    	    }
+    	}
+    	WebElementUtils.hoverOverField(inputs, driver, null);
+    	WebdriverUtils.sleep(300);
+    	return found;
+        }
 	
     
     public boolean isShareIconExist(String budgetName){
@@ -199,14 +215,16 @@ public class BudgetNavigator extends AbstractPOM{
 
       
         public int getNumberOfBudget(String budgetaName) {
-
     	openBudgetsList();
+    	searchBudget(budgetaName);
     	int num = 0;
     	for (WebElement budget : budgetsList) {
-    	    if (budget.getText().equals(budgetaName)) {
+    	    System.out.println(budget.getText().trim());
+    		if (budget.getText().equals(budgetaName)) {
     		num++;
     	    }
     	}
+    	clearSearch();
     	return num;
         }
 
@@ -237,6 +255,16 @@ public class BudgetNavigator extends AbstractPOM{
         	addNewBudget.click();
         	WebdriverUtils.waitForBudgetaLoadBar(driver);
         	return new NewBudgetPopup();
+        }
+        
+        public void searchBudget(String budget){
+        	wait.until(ExpectedConditions.visibilityOf(searchBudget));
+        	searchBudget.clear();
+        	searchBudget.sendKeys(budget);
+        }
+        
+        public void clearSearch(){
+        	searchBudget.clear();
         }
 	
 	@Override

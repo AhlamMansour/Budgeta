@@ -6,9 +6,11 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetNavigator;
+import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.CreateNewSnapshotPopup;
 import com.budgeta.pom.DeletePopup;
 import com.budgeta.pom.MenuTrigger;
+import com.budgeta.pom.NewBudgetPopup;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.SharePopup;
 import com.budgeta.pom.SmallPopup;
@@ -134,8 +136,32 @@ public class BudgetSettingsTest extends WrapperTest {
 		}
 
 	}
-
+	
+	
 	@Test(enabled = true, priority = 6)
+	public void restoreBudgetTest(){
+		WebdriverUtils.sleep(1000);
+		secondary = board.getSecondaryBoard();
+		BudgetNavigator navigator = new BudgetNavigator();
+		String budgetName = secondary.getSelectedBudgetName();
+		int num = navigator.getNumberOfBudget(budgetName);
+		
+		NewBudgetPopup popup = navigator.addNewBudget();
+		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");
+		popup.clickRestoreAndUpload(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
+		board = new BudgetaBoard();
+		String message = board.getNotyMessage();
+		Assert.assertEquals(message, "Budget restored successfully.");
+		navigator = new BudgetNavigator();
+		int num2 = navigator.getNumberOfBudget(budgetName);
+		Assert.assertEquals(num2,num + 1 );
+		
+		
+	}
+	
+	
+
+	@Test(enabled = true, priority = 7)
 	public void DeleteBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -153,7 +179,7 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true, priority = 7)
+	@Test(enabled = true, priority = 8)
 	public void RenameBudgetLineFromNavTest() {
 		WebdriverUtils.sleep(1000);
 

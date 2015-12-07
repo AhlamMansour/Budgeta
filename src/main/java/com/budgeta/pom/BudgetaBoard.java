@@ -37,6 +37,18 @@ public class BudgetaBoard extends AbstractPOM {
     public boolean isBottomBarDisplayed() {
 	return bottomBar.getAttribute("class").contains("changed");
     }
+    
+    public String getNotyMessage(){
+    	String notyMessage = "";
+    	try {
+			WebdriverUtils.waitForElementToBeFound(driver, noty_message);
+			notyMessage = driver.findElement(noty_message).getText().trim();
+			WebdriverUtils.waitForElementToDisappear(driver, noty_message);
+			WebdriverUtils.waitForBudgetaBusyBar(driver);
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
+		} catch (Exception e) {}
+    	return notyMessage;
+    }
 
     public void clickSaveChanges() {
     	String saveMessage = "";

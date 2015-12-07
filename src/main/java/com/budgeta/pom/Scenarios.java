@@ -12,11 +12,24 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class Scenarios extends AbstractPOM{
 	
-	@FindBy(className = "scenario-subnav")
+	TopHeaderBar topHeaderBar;
+	
+	//@FindBy(className = "scenario-subnav")
+	//private WebElement wrapper;
+	
+	@FindBy(className = "qtip-focus")
 	private WebElement wrapper;
 	
+    @FindBy(css = "div.qtip-focus div.add-option")
+	private WebElement addNewScenario;
+	
 	@FindBy(id = "scenarioMenuTrigger")
+	private WebElement BudgetTrigger;
+	
+	
+	@FindBy(id = "more-scenarios-actions")
 	private WebElement scenarioTrigger;
+	
 	
 	private By dropdownField = By.className("dropdown");
 	
@@ -24,10 +37,18 @@ public class Scenarios extends AbstractPOM{
 	private By actions = By.cssSelector("div.actions div.ember-view");
 	private By scenarioTriggerMenu = By.cssSelector("div.qtip-focus ul.narrow li");
 	
+	
+	private By budgetTriggerMenu = By.cssSelector("div.qtip-focus ul.budgeta-dropdown-list li");
 	private SideDropDown dropdown;
 	
+	
+	
 	public Scenarios(){
-		dropdown = new SideDropDown(wrapper.findElement(dropdownField));
+		//dropdown = new SideDropDown(wrapper.findElement(dropdownField));
+		try{
+			wait.until(WebdriverUtils.visibilityOfWebElement(wrapper));
+		}catch(Exception e){
+		}
 	}
 	
 	public MenuTrigger getMEnuTrigger(){
@@ -35,7 +56,7 @@ public class Scenarios extends AbstractPOM{
 	}
 	
 	public CreateNewScenarioPopup createNewScenario(){
-		getCreateNewScenarioButton().click();
+		addNewScenario.click();
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
 		return new CreateNewScenarioPopup();
@@ -57,12 +78,12 @@ public class Scenarios extends AbstractPOM{
 	}
 	
 	public SmallPopup clickRenameScenario(){
-		selectScenarioTrigger("Rename");
+		selectBudgetTrigger("Rename");
 		return new SmallPopup();
 	}
 	
 	public DeletePopup deleteScenario(){
-		selectScenarioTrigger("Delete");
+		selectBudgetTrigger("Delete");
 		return new DeletePopup();
 	}
 	
@@ -73,6 +94,10 @@ public class Scenarios extends AbstractPOM{
 	public boolean isScenariosOpen(){
 		return wrapper.getAttribute("class").contains("expanded");
 	}
+	
+	
+	
+	
 /*************************************************************************************/
 	
 	private WebElement getCreateNewScenarioButton(){
@@ -85,7 +110,7 @@ public class Scenarios extends AbstractPOM{
 	}
 	
 	private void openScenarioTrigger(){
-		scenarioTrigger.click();
+		BudgetTrigger.click();
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
 		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(scenarioTriggerMenu));
 	}
@@ -100,9 +125,26 @@ public class Scenarios extends AbstractPOM{
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
 	}
 	
+	private void openBudgetTrigger(){
+		scenarioTrigger.click();
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(budgetTriggerMenu));
+	}
+	
+	private void selectBudgetTrigger(String option){
+		openBudgetTrigger();
+		for(WebElement el : driver.findElements(budgetTriggerMenu)){
+			if(el.getText().equals(option))
+				el.click();
+		}
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
+	}
+
+	
 	@Override
 	public boolean isDisplayed() {
-		return WebdriverUtils.isDisplayed(wrapper) && wrapper.getAttribute("class").contains("expanded");
+		return WebdriverUtils.isDisplayed(wrapper);
 	}
 
 }
