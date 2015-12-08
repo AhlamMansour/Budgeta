@@ -12,11 +12,21 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class Versions extends AbstractPOM{
 	
-	@FindBy(className = "version-subnav")
+	//@FindBy(className = "version-subnav")
+	//private WebElement wrapper;
+	
+	@FindBy(className = "qtip-focus")
 	private WebElement wrapper;
 	
-	@FindBy(id = "versionMenuTrigger")
+	//@FindBy(id = "versionMenuTrigger")
+	//private WebElement versionTrigger;
+	
+	@FindBy(id = "more-versions-actions")
 	private WebElement versionTrigger;
+	
+	@FindBy(css = "div.qtip-focus div.add-option")
+	private WebElement addNewRevisions;
+	
 	
 	
 	private By dropdownField = By.className("dropdown");
@@ -24,12 +34,15 @@ public class Versions extends AbstractPOM{
 	private By actions = By.cssSelector("div.actions div.ember-view");
 	private By versionTriggerMenu = By.cssSelector("div.qtip-focus ul li");
 	private By autoSave = By.className("auto-version");
+	private By budgetTriggerMenu = By.cssSelector("div.qtip-focus ul.budgeta-dropdown-list li");
+	
+	
 	
 	
 	private SideDropDown dropdown;
 	
 	public enum View{
-		VIEW_ALL("View all"), ONLY_SNAPSHOTS("Only snapshots");
+		VIEW_ALL("All"), SAVED("Saved");
 		
 		private String name;
 		
@@ -43,11 +56,13 @@ public class Versions extends AbstractPOM{
 			return name;
 		}
 		
-	}
-	
-	
+	}	
 	public Versions(){
-		dropdown = new SideDropDown(wrapper.findElement(dropdownField));
+		//dropdown = new SideDropDown(wrapper.findElement(dropdownField));
+		try{
+			wait.until(WebdriverUtils.visibilityOfWebElement(wrapper));
+		}catch(Exception e){
+		}
 	}
 	
 	public MenuTrigger getMenuTrigger(){
@@ -55,7 +70,7 @@ public class Versions extends AbstractPOM{
 	}
 	
 	public CreateNewSnapshotPopup createNewSnapshot(){
-		getCreateNewVersionButton().click();
+		addNewRevisions.click();
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
 		return new CreateNewSnapshotPopup();
@@ -67,7 +82,7 @@ public class Versions extends AbstractPOM{
 			str = str.substring(0, str.indexOf("/")-2);
 		return str.trim();	
 	}
-	
+
 	public Versions selectVersion(View view, String version){
 		if(!getSelectedVersion().equals(version)){
 			dropdown.selectCheckBox(view.getName());
@@ -76,6 +91,9 @@ public class Versions extends AbstractPOM{
 		return new Versions();
 			
 	}
+	
+	
+	
 	
 	public int getNumberOfVersions(){
 		return dropdown.getNumberOfOptions() - 1;//-1 because of checkbox
@@ -101,12 +119,12 @@ public class Versions extends AbstractPOM{
 	}	
 	
 	public SmallPopup clickRenameVersion(){
-		selectScenarioTrigger("Rename");
+		selectBudgetTrigger("Rename");
 		return new SmallPopup();
 	}
 	
 	public DeletePopup clickDeleteVersion(){
-		selectScenarioTrigger("Delete");
+		selectBudgetTrigger("Delete Version");
 		return new DeletePopup();
 	}
 	
@@ -121,6 +139,22 @@ public class Versions extends AbstractPOM{
 		return false;
 	}
 	
+	
+	private void openBudgetTrigger(){
+		versionTrigger.click();
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(budgetTriggerMenu));
+	}
+	
+	private void selectBudgetTrigger(String option){
+		openBudgetTrigger();
+		for(WebElement el : driver.findElements(budgetTriggerMenu)){
+			if(el.getText().equals(option))
+				el.click();
+		}
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("modal-content")));
+	}
 	
 	@Override
 	public boolean isDisplayed() {

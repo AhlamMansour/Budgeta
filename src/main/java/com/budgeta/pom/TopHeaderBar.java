@@ -17,8 +17,12 @@ public class TopHeaderBar extends AbstractPOM{
 	@FindBy(className = "top-bar-header-line")
 	private WebElement wrapper;
 	
-	@FindBy(className = "qtip-content")
-	private WebElement scenarioWrapper;
+	//@FindBy(className = "qtip-content")
+	//private WebElement scenarioWrapper;
+	
+	
+	@FindBy(className = "qtip-focus")
+	private WebElement listWrapper;
 	
 	@FindBy(id = "select-revisions")
 	private WebElement revisions;
@@ -28,13 +32,26 @@ public class TopHeaderBar extends AbstractPOM{
 	
 	
 	@FindBy(className = "version-scenario-header")
-	private WebElement newScenario;
+	private WebElement newScenarioVersion;
+	
+	@FindBy(css = "div.active div.select-revision")
+	private WebElement selectedVersion;
+	
+	
+	@FindBy(className = "select-type-versions")
+	private List<WebElement> versionsSelectors;
 	
 	@FindBy(css = "div.top-bar-scenario-header div.svg-icon")
 	private List<WebElement> icons;
 	
+	@FindBy(css = "div.top-bar-version-header div.svg-icon")
+	private List<WebElement> versionIcons; 
+	
 	 @FindBy(css = "div.qtip-focus div.qtip-content ul.budgeta-dropdown-list li")
-	    private List<WebElement> scenariosList;
+	    private List<WebElement> list;
+	 
+
+	 
 	
 	
 	public void openScenariowindow(){
@@ -42,12 +59,17 @@ public class TopHeaderBar extends AbstractPOM{
 		//wait.until(ExpectedConditions.visibilityOf(scenarioWrapper));
 	}
 	
+	public void openRevisionswindow(){
+		revisions.click();
+		//wait.until(ExpectedConditions.visibilityOf(scenarioWrapper));
+	}
+	
 	public boolean isScenarioAdded(){
-		return WebdriverUtils.isDisplayed(newScenario);
+		return WebdriverUtils.isDisplayed(newScenarioVersion);
 	}
 	
 	public String newScenatrioText(){
-		return newScenario.getText();
+		return newScenarioVersion.getText();
 	}
 	
 	public void clearScenario(){
@@ -65,12 +87,23 @@ public class TopHeaderBar extends AbstractPOM{
 	}
 	
 	
-	
-	
+	public void clearVersion(){
+		List<WebElement> Icons = versionIcons;
+		
+		for(WebElement el : Icons){
+			if(el.getAttribute("title").equals("Clear"))
+			{
+				el.click();
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("div.active div.select-revision")));
+				break;
+			}
+		}
+		
+	}
 
 	public boolean isScenarioExist(String scenarioName) {
     	boolean found = false;
-    	for (WebElement scenario : scenariosList) {
+    	for (WebElement scenario : list) {
     	    if (scenario.getText().equals(scenarioName)) {
     		found = true;
     		break;
@@ -83,17 +116,85 @@ public class TopHeaderBar extends AbstractPOM{
 	
 	
 	 public void selectScenario(String prefix) {
-	    	List<WebElement> budgetsStartWithPrefix = new ArrayList<>();
-	    	for (WebElement el : scenariosList) {
+	    	List<WebElement> scenarios = new ArrayList<>();
+	    	for (WebElement el : list) {
 	    	    if (el.getText().startsWith(prefix)) {
-	    		budgetsStartWithPrefix.add(el);
+	    	    	scenarios.add(el);
 	    	    }
 	    	}
-	    	int random = WebElementUtils.getRandomNumberByRange(0, budgetsStartWithPrefix.size() - 1);
-	    	WebElementUtils.hoverOverField(budgetsStartWithPrefix.get(random), driver, null);
-	    	budgetsStartWithPrefix.get(random).click();
+	    	int random = WebElementUtils.getRandomNumberByRange(0, scenarios.size() - 1);
+	    	WebElementUtils.hoverOverField(scenarios.get(random), driver, null);
+	    	scenarios.get(random).click();
 	    	WebdriverUtils.sleep(300);
 	 }
+	 
+	 
+	 
+	 
+	 public void selectVersion(String name){
+		 List<WebElement> versions = new ArrayList<>();
+	    	for (WebElement el : list) {
+	    		if(el.findElement(By.className("text-tag")).getText().equals(name)){
+	    			versions.add(el);
+	    		}
+	    	}
+	    	int random = WebElementUtils.getRandomNumberByRange(0, versions.size() - 1);
+	    	WebElementUtils.hoverOverField(versions.get(random), driver, null);
+	    	versions.get(random).click();
+	    	WebdriverUtils.waitForBudgetaBusyBar(driver);
+	    	WebdriverUtils.sleep(300);
+	    	isScenarioAdded();
+	    	
+	 }
+	 
+	 
+	 
+	 
+	 public boolean isVersionExist(String versionName) {
+	    	boolean found = false;
+	    	for (WebElement version : list) {
+	    	    if (version.findElement(By.className("text-tag")).getText().equals(versionName)) {
+	    		found = true;
+	    		break;
+	    	    }
+	    	}
+	    //	WebElementUtils.hoverOverField(inputs, driver, null);
+	    	WebdriverUtils.sleep(300);
+	    	return found;
+	        }
+	 
+	 public void selectAllRevisions(){
+	
+		 selectTab("ALL");
+		 
+	 }
+	 
+	 private void selectTab(String tab){
+		 List<WebElement> versions = versionsSelectors;
+			
+			for(WebElement el : versions){
+				if(el.getText().equals(tab))
+				{
+					el.click();
+					//wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.drop-down ul.versions")));
+					break;
+				}
+			}
+	 }
+ public void selectSavedRevisions(){
+	
+	 selectTab("Saved");
+	 }
+ 
+ 
+ public String selectedVesrionName(){
+	 return newScenarioVersion.getText();
+ }
+ 
+ 
+ public boolean selectedVersionDisplay(){
+	 return WebdriverUtils.isDisplayed(selectedVersion);
+ }
 	
 	@Override
 	public boolean isDisplayed() {
