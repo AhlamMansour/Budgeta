@@ -14,8 +14,6 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class DateRange extends AbstractPOM{
 
 	@FindBy(className = "qtip-focus")
-	private List<WebElement> wrappers;
-	
 	private WebElement wrapper;
 	
 	private By prevYear = By.className("fa-chevron-left");
@@ -30,16 +28,7 @@ public class DateRange extends AbstractPOM{
 	public DateRange() {
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("qtip-focus")));
-		//wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("qtip-focus")));
-		initWrapper();
-	}
-	
-	public DateRange(String header) {
-		WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
 		WebElementUtils.hoverOverField(driver.findElement(By.className("qtip-focus")), driver, null);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("qtip-focus")));
-		//wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("qtip-focus")));
-		initWrapper(header);
 	}
 	
 	
@@ -82,29 +71,7 @@ public class DateRange extends AbstractPOM{
 		return wrapper.findElement(By.className("ember-text-field")).getAttribute("value");
 	}
 	
-/*****************************************************************************************/	
-	private void initWrapper(){
-		for(WebElement el : wrappers){
-			if(el.isDisplayed())
-				wrapper = el;
-		}
-	}
-	
-	private void initWrapper(String header){
-		WebdriverUtils.sleep(500);
-		for(WebElement el : wrappers){
-			try{
-				if(el.findElement(By.className("header")).getText().equalsIgnoreCase(header)){
-					WebElementUtils.hoverOverField(el, driver, null);
-					wait.until(ExpectedConditions.visibilityOf(el));
-					wrapper = el;
-				}
-			}
-			catch(Exception e){
-				continue;
-			}
-		}
-	}
+/*****************************************************************************************/
 	
 	
 	

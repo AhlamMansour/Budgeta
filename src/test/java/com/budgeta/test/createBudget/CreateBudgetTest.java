@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.DateRange;
 import com.budgeta.pom.GeneralSection;
@@ -31,8 +32,10 @@ public class CreateBudgetTest extends WrapperTest{
 		
 		BudgetaBoard board = new BudgetaBoard();
 		SecondaryBoard secondaryBoard = board.getSecondaryBoard();
+		BudgetNavigator navigator = new BudgetNavigator();
 		
-		NewBudgetPopup popup = secondaryBoard.addBudgeta();
+		navigator.openInputTab();
+		NewBudgetPopup popup = navigator.addNewBudget();
 		String budgetaName = data.get("name");
 		if(!budgetaName.isEmpty())
 			budgetaName = WebdriverUtils.getTimeStamp(budgetaName+"_");

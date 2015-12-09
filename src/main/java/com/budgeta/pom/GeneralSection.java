@@ -67,12 +67,12 @@ public class GeneralSection extends AbstractPOM{
 	
 	public DateRange openDateRangeFrom(){
 		wrapper.findElement(dateRange_from).click();
-		return new DateRange("from");
+		return new DateRange();
 	}
 	
 	public DateRange openDateRangeTo(){
 		wrapper.findElement(dateRange_to).click();
-		return new DateRange("to");
+		return new DateRange();
 	}
 	
 	public void setAccountNumberInRowByIndex(int indexOfRow, String value){

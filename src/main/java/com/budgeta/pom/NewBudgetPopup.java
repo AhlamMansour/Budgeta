@@ -194,12 +194,12 @@ public class NewBudgetPopup extends AbstractPOM{
 	
 	public DateRange openDateRangeFrom(){
 		dateRange_from.click();
-		return new DateRange("from");
+		return new DateRange();
 	}
 	
 	public DateRange openDateRangeTo(){
 		dateRange_to.click();
-		return new DateRange("to");
+		return new DateRange();
 	}
 	
 	public boolean pageHasError(){
