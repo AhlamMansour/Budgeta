@@ -60,6 +60,11 @@ public class BudgetNavigator extends AbstractPOM{
     @FindBy(css = "div.search-wrapper input")
 	private WebElement searchBudget;
     
+    public BudgetNavigator(){
+    WebdriverUtils.waitForBudgetaBusyBar(driver);
+    WebdriverUtils.waitForBudgetaLoadBar(driver);
+    }
+    
 	public void openDashboardTab(){
 		clickOnTab(dashBoard);
 	}

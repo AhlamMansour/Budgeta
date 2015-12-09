@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetSettings;
 import com.budgeta.pom.InnerBar;
 import com.budgeta.pom.PreviewBoard;
@@ -35,8 +36,8 @@ public class ActualsTest extends WrapperTest {
 	@Test(enabled = false)
 	public void setBudgetTest() {
 
-		secondaryBoard = board.getSecondaryBoard();
-		secondaryBoard.selectRandomBudgetWithPrefix("budget7_");
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgetWithPrefix("budget7_");
 
 		innerBar = board.getInnerBar();
 		Assert.assertTrue(innerBar.isDisplayed(),

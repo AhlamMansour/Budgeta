@@ -33,7 +33,7 @@ public class CreateBudgetTest extends WrapperTest{
 		BudgetaBoard board = new BudgetaBoard();
 		SecondaryBoard secondaryBoard = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
-		
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		navigator.openInputTab();
 		NewBudgetPopup popup = navigator.addNewBudget();
 		String budgetaName = data.get("name");

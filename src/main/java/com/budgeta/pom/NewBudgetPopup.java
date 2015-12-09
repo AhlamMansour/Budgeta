@@ -20,10 +20,10 @@ public class NewBudgetPopup extends AbstractPOM{
 	@FindBy(id = "budget-type-dropdown")
 	private WebElement type;
 	
-	@FindBy(css = "div.month-picker.from")
+	@FindBy(css = ".modal-content div.month-picker.from")
 	private WebElement dateRange_from;
 	
-	@FindBy(css = "div.month-picker.to")
+	@FindBy(css = ".modal-content div.month-picker.to")
 	private WebElement dateRange_to;
 	
 	@FindBy(id = "cancel-btn")

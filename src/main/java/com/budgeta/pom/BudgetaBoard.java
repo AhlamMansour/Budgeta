@@ -28,6 +28,10 @@ public class BudgetaBoard extends AbstractPOM {
     private BillingsSection billings;
     private InnerBar innerBar;
 
+    public BudgetaBoard(){
+    	WebdriverUtils.waitForVisibilityofElement(driver, wrapper,60);
+    }
+    
     public SecondaryBoard getSecondaryBoard() {
 	WebdriverUtils.waitForBudgetaBusyBar(driver);
 	WebdriverUtils.waitForBudgetaLoadBar(driver);

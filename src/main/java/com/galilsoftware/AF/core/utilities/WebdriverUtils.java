@@ -200,7 +200,7 @@ public class WebdriverUtils {
 	}
 
 	public static void waitForBudgetaLoadBar(WebDriver driver) {
-		WebDriverWait wait = new WebDriverWait(driver, 45);
+		WebDriverWait wait = new WebDriverWait(driver,240);
 		sleep(600);
 
 		wait.until(new Function<WebDriver, Boolean>() {

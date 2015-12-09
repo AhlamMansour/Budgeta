@@ -16,9 +16,9 @@ public class DateRange extends AbstractPOM{
 	@FindBy(className = "qtip-focus")
 	private WebElement wrapper;
 	
-	private By prevYear = By.className("fa-chevron-left");
+	private By prevYear = By.className("left-arrow");
 	
-	private By nextYear = By.className("fa-chevron-right");
+	private By nextYear = By.className("right-arrow");
 	
 	private By year = By.className("year");
 	
