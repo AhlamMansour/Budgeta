@@ -12,7 +12,7 @@ import com.budgeta.pom.BudgetSettings;
 import com.budgeta.pom.InnerBar;
 import com.budgeta.pom.PreviewBoard;
 import com.budgeta.pom.SecondaryBoard;
-import com.budgeta.pom.View;
+import com.budgeta.pom.Sheets;
 import com.budgeta.test.BudgetaUtils;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.KnownIssue;
@@ -25,7 +25,7 @@ public class ActualsTest extends WrapperTest {
 	
 	SecondaryBoard secondaryBoard;
 	InnerBar innerBar;
-	View view;
+	Sheets sheets;
 	String fromMonth;
 	String fromYear;
 	String toMonth;
@@ -60,10 +60,10 @@ public class ActualsTest extends WrapperTest {
 
 		innerBar.openActualsTab();
 		Assert.assertEquals(innerBar.getOpenTab(), "Actuals");
-		view = new View();
-		Assert.assertTrue(view.isDisplayed(),
+		sheets = new Sheets();
+		Assert.assertTrue(sheets.isDisplayed(),
 				"expected to View to be displayed");
-		dates = view.getAllDates();
+		dates = sheets.getAllDates();
 		Assert.assertEquals(dates.size(), expectedDates.size());
 		for (int i = 0; i < expectedDates.size(); i++) {
 			Assert.assertEquals(dates.get(i), expectedDates.get(i));
@@ -78,12 +78,12 @@ public class ActualsTest extends WrapperTest {
 		innerBar = board.getInnerBar();
 		secondaryBoard = board.getSecondaryBoard();
 		innerBar.openActualsTab();
-		view = new View();
+		sheets = new Sheets();
 
-		int numberOfRows = view.getNumbreOfRows();
+		int numberOfRows = sheets.getNumbreOfRows();
 		for (int row = 0; row < numberOfRows; row++) {
-			String rowTitle = view.getRowTitleByIndex(row);
-			view.clickOnLineByIndex(row);
+			String rowTitle = sheets.getRowTitleByIndex(row);
+			sheets.clickOnLineByIndex(row);
 			if (rowTitle.contains(",")) {
 				rowTitle = rowTitle.split(",")[1].trim();
 				Assert.assertTrue(secondaryBoard.getSelectedLine().contains(
@@ -108,8 +108,8 @@ public class ActualsTest extends WrapperTest {
 			}
 
 			innerBar.openActualsTab();
-			view = new View();
-			List<String> values = view.getAllValuesOfRow(row);
+			sheets = new Sheets();
+			List<String> values = sheets.getAllValuesOfRow(row);
 
 			for (int i = 0; i < lineValues.size(); i++) {
 				Assert.assertEquals(lineValues.get(i), values.get(i),
@@ -125,22 +125,22 @@ public class ActualsTest extends WrapperTest {
 
 		innerBar = board.getInnerBar();
 		innerBar.openActualsTab();
-		view = new View();
+		sheets = new Sheets();
 
-		int numberOfRows = view.getNumbreOfRows();
+		int numberOfRows = sheets.getNumbreOfRows();
 		for (int row = 0; row < numberOfRows; row++) {
 			int total = 0;
-			List<String> values = view.getAllValuesOfRow(row);
+			List<String> values = sheets.getAllValuesOfRow(row);
 			for (String str : values) {
 				if (!str.equals("-"))
 					total += Integer.parseInt(str);
 			}
 			if (total == 0)
-				Assert.assertEquals(view.getTotalOfRow(row), "-",
-						"... Row title is: " + view.getRowTitleByIndex(row));
+				Assert.assertEquals(sheets.getTotalOfRow(row), "-",
+						"... Row title is: " + sheets.getRowTitleByIndex(row));
 			else
-				Assert.assertEquals(view.getTotalOfRow(row), total + "",
-						"... Row title is: " + view.getRowTitleByIndex(row));
+				Assert.assertEquals(sheets.getTotalOfRow(row), total + "",
+						"... Row title is: " + sheets.getRowTitleByIndex(row));
 
 		}
 	}

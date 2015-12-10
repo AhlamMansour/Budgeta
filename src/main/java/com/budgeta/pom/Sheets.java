@@ -11,11 +11,13 @@ import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
-public class View extends AbstractPOM{
+public class Sheets extends AbstractPOM{
 
 	@FindBy(className = "forecast-view")
 	private WebElement wrapper;
 	
+	private By dateRangeTo = By.cssSelector("div.month-picker.to");
+	private By dateRangeFrom = By.cssSelector("div.month-picker.from");
 	
 	private SideDropDown reporterDropDown; 
 	private SideDropDown subReporterDropDown;
@@ -50,7 +52,7 @@ public class View extends AbstractPOM{
 	
 	
 	
-	public View(){
+	public Sheets(){
 		WebdriverUtils.elementToHaveClass(wrapper, "active");
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
 		WebElementUtils.hoverOverField(dateHeader.get(dateHeader.size()-1), driver, null);
@@ -211,6 +213,14 @@ public class View extends AbstractPOM{
 		}
 	
 		return currencyTypeDropDown;
+	}
+	
+	public String getDateRangeFrom(){
+		return wrapper.findElement(dateRangeFrom).findElement(By.tagName("input")).getAttribute("placeholder");
+	}
+	
+	public String getDateRangeTo(){
+		return wrapper.findElement(dateRangeTo).findElement(By.tagName("input")).getAttribute("placeholder");
 	}
 	
 	@Override

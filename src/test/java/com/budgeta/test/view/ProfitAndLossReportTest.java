@@ -11,7 +11,7 @@ import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetSettings;
 import com.budgeta.pom.InnerBar;
 import com.budgeta.pom.SecondaryBoard;
-import com.budgeta.pom.View;
+import com.budgeta.pom.Sheets;
 import com.budgeta.test.BudgetaUtils;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
@@ -23,7 +23,7 @@ public class ProfitAndLossReportTest extends WrapperTest{
 	
 	SecondaryBoard secondaryBoard;
 	InnerBar innerBar;
-	View view;
+	Sheets sheets;
 	Actuals actuals;
 	String fromMonth;
 	String fromYear;
@@ -60,10 +60,10 @@ public class ProfitAndLossReportTest extends WrapperTest{
 
 		innerBar.openViewTab();
 		Assert.assertEquals(innerBar.getOpenTab(), "View");
-		view = new View();
-		Assert.assertTrue(view.isDisplayed(),
+		sheets = new Sheets();
+		Assert.assertTrue(sheets.isDisplayed(),
 				"expected to View to be displayed");
-		dates = view.getAllDates();
+		dates = sheets.getAllDates();
 		Assert.assertEquals(dates.size(), expectedDates.size());
 		for (int i = 0; i < expectedDates.size(); i++) {
 			Assert.assertEquals(dates.get(i), expectedDates.get(i));
@@ -76,9 +76,9 @@ public class ProfitAndLossReportTest extends WrapperTest{
 		innerBar = board.getInnerBar();
 		secondaryBoard = board.getSecondaryBoard();
 		innerBar.openViewTab();
-		view = new View();
-		view.selectReportType("P & L");
-		view.selectSubReportType("Budget");
+		sheets = new Sheets();
+		sheets.selectReportType("P & L");
+		sheets.selectSubReportType("Budget");
 		
 	}
 	
