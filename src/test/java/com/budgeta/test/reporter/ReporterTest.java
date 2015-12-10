@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.ReportsPopup;
 import com.budgeta.pom.SecondaryBoard;
+import com.budgeta.pom.TopHeaderBar;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
@@ -30,21 +31,25 @@ public class ReporterTest extends WrapperTest{
 	@TestFirst
 	@Test(enabled = true)
 	public void setBudgetTest(){		
-		secondaryBoard = board.getSecondaryBoard();
+		
 		BudgetNavigator navigator = new BudgetNavigator();
 		navigator.selectRandomBudgeta();
 		openReports();
 	}
 
 	private void openReports() {
-		reports = secondaryBoard.clickReports();
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.openSheetTab();
+		TopHeaderBar headerBar = new TopHeaderBar();
+		reports = headerBar.clickCreateReport();
 		Assert.assertTrue(reports.isDisplayed(),"Expected the reports popup to be Displayed");
 	}
 
 	@Test(dataProvider = "reportsTypeProvider", enabled = true)
 	public void fillGeneralAndValidate(String boxToCheck) {
 		secondaryBoard = board.getSecondaryBoard();
-		String budgetName = secondaryBoard.getSelectedBudgetName();
+		BudgetNavigator navigator = new BudgetNavigator();
+		String budgetName = navigator.getSelectedBudgetName();
 		if(!reports.isDisplayed())
 			openReports();
 		reports.checkBox(boxToCheck);

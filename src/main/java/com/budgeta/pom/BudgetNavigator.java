@@ -42,7 +42,7 @@ public class BudgetNavigator extends AbstractPOM{
     private WebElement moreBtn;
     
     
-    @FindBy(className = "ember-transitioning-in")
+    @FindBy(css = "div.budget-title a.active")
     private WebElement selectedBudget;
     
     @FindBy(id = "more-budget-actions")
@@ -239,7 +239,8 @@ public class BudgetNavigator extends AbstractPOM{
 
         
         public String getSelectedBudgetName() {
-        	return getLineName(selectedBudget);
+        //	return getLineName(selectedBudget);
+        	return selectedBudget.getText();
             }
         
         private String getLineName(WebElement el) {

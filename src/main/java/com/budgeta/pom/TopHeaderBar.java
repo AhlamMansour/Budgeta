@@ -50,6 +50,10 @@ public class TopHeaderBar extends AbstractPOM{
 	 @FindBy(css = "div.qtip-focus div.qtip-content ul.budgeta-dropdown-list li")
 	    private List<WebElement> list;
 	 
+	
+	 @FindBy(className = "create-report")
+	 private WebElement createReportBtn;
+	 
 
 	 
 	
@@ -195,7 +199,15 @@ public class TopHeaderBar extends AbstractPOM{
  public boolean selectedVersionDisplay(){
 	 return WebdriverUtils.isDisplayed(selectedVersion);
  }
+ 
+ 
 	
+ public ReportsPopup clickCreateReport(){
+	 createReportBtn.click();
+		return new ReportsPopup();
+}
+ 
+ 
 	@Override
 	public boolean isDisplayed() {
 		return WebdriverUtils.isDisplayed(wrapper);
