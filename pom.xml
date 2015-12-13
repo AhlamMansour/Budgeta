@@ -15,6 +15,7 @@
 		<thucydides.version>0.9.268</thucydides.version>
 		<thucydides.jbehave.version>0.9.268</thucydides.jbehave.version>
 		<webdriver.driver>firefox</webdriver.driver>
+		<SuiteName>testsRunner</SuiteName>
 	</properties>
 
 	<repositories>
@@ -143,7 +144,7 @@
 							<testPropertiesFileName>TestProps.properties</testPropertiesFileName>
 						</systemPropertyVariables>
 						<suiteXmlFiles>
-							<suiteXmlFile>src/test/java/com/budgeta/test/runners/testsRunner.xml</suiteXmlFile>
+							<suiteXmlFile>src/test/java/com/budgeta/test/runners/${SuiteName}.xml</suiteXmlFile>
 						</suiteXmlFiles>
 						<properties>
 							<property>
