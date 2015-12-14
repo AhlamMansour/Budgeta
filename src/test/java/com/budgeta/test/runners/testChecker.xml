@@ -10,7 +10,7 @@
 
 	<test name="Account Settings Test">
 		<classes>
-			<class name="com.budgeta.test.createBudget.CreateBudgetTest"></class>
+			<class name="com.budgeta.test.login.LoginTest"></class>
 		</classes>
 	</test>
 

@@ -25,6 +25,7 @@ public class AccountSettingsTest extends WrapperTest{
 		
 		TopBar topBar = new TopBar();
 		topBar.clickAccountSettings();
+
 		
 		AccountSettings account = new AccountSettings();
 		
