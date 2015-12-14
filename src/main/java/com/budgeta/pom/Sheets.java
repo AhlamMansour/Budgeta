@@ -25,6 +25,9 @@ public class Sheets extends AbstractPOM{
 	private SideDropDown currencyTypeDropDown; 
 	
 	
+	@FindBy(css = ".select2-choice")
+	private List<WebElement> choiceList;
+
 	@FindBy(css = "div.forecast-header div.scroll-columns div.column")
 	private List<WebElement> dateHeader;
 	
@@ -44,7 +47,7 @@ public class Sheets extends AbstractPOM{
 	
 	
 //	private By reportType = By.cssSelector("div.subnav div.report-view-wrapper div.reportType");
-	private By subReportType = By.cssSelector("div.dropdown a.add-border");
+	private By subReportType = By.cssSelector(".select2-choice");
 	
 	private By fillterView = By.className("dropdown");
 
@@ -75,7 +78,8 @@ public class Sheets extends AbstractPOM{
 	
 	public void clickOnLineByIndex(int index){
 		rows.get(index).findElement(rowTitle).findElement(By.className("name")).click();
-		WebdriverUtils.elementToHaveClass(driver.findElement(By.className("input-tab")), "active");
+		WebdriverUtils.elementToHaveClass(driver.findElement(By.cssSelector(".navigator-header-text.inputs")),
+				"active");
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		
@@ -170,7 +174,8 @@ public class Sheets extends AbstractPOM{
 		if(subReporterDropDown == null){
 //			for(WebElement el : wrapper.findElements(subReportType)){
 //				if(el.getText().trim().equals("Budget"))
-					subReporterDropDown = new SideDropDown(wrapper.findElements(subReportType).get(1).findElement(By.xpath("..")));
+			subReporterDropDown = new SideDropDown(
+					driver.findElements(subReportType).get(0).findElement(By.xpath("..")));
 //		}
 		}
 		return subReporterDropDown;
@@ -179,7 +184,7 @@ public class Sheets extends AbstractPOM{
 	
 	private SideDropDown getSubActualReporterDropDown(){
 		if(subActualReporterDropDown == null){
-			for(WebElement el : wrapper.findElements(subReportType)){
+			for (WebElement el : driver.findElements(subReportType)) {
 				if(el.getText().trim().equals("Budget vs. actuals"))
 					subActualReporterDropDown = new SideDropDown(el.findElement(By.xpath("..")));
 		}

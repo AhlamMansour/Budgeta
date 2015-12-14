@@ -14,6 +14,8 @@ import com.budgeta.pom.InnerBar;
 import com.budgeta.pom.PreviewBoard;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.Sheets;
+import com.budgeta.pom.TopHeaderBar;
+import com.budgeta.pom.Enum.ReportEnum;
 import com.budgeta.test.BudgetaUtils;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.KnownIssue;
@@ -35,12 +37,12 @@ public class ViewTest extends WrapperTest {
 	String toYear;
 	List<String> dates;
 	GeneralSection generalSection;
+	TopHeaderBar topHeaderBar;
 
 	@TestFirst
 	@Test(enabled = true)
 	public void setBudgetTest() {
 
-		secondaryBoard = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
 		Assert.assertTrue(navigator.isDisplayed(), "expected to inner bar to be dislayed");
 		navigator.selectRandomBudgetWithPrefix("budget7_144215547406");
@@ -56,9 +58,8 @@ public class ViewTest extends WrapperTest {
 		List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear);
 
 		navigator.openSheetTab();
-		// innerBar.openViewTab();
-		// Assert.assertEquals(innerBar.getOpenTab(), "View");
-		// view = new View();
+		Assert.assertEquals(navigator.getOpenTab(), "Sheets");
+
 		sheets = new Sheets();
 		Assert.assertTrue(sheets.isDisplayed(), "expected to Sheets to be displayed");
 		dates = sheets.getAllDates();
@@ -70,21 +71,22 @@ public class ViewTest extends WrapperTest {
 
 	@Test(enabled = true)
 	public void selectReportType() {
-		innerBar = board.getInnerBar();
+		navigator = board.getBudgetNavigator();
 		secondaryBoard = board.getSecondaryBoard();
-		innerBar.openViewTab();
+		navigator.openSheetTab();
 		sheets = new Sheets();
-		sheets.selectReportType("Cash Flow");
+		topHeaderBar = new TopHeaderBar();
+		topHeaderBar.openHeaderTab(ReportEnum.CASH_FLOW.name());
 		sheets.selectSubReportType("Budget");
-
+		Assert.assertTrue(sheets.isDisplayed(), "expected to view page to be dislayed");
 		}
 
 	@Test(enabled = true)
 	public void validateTableDataTest() {
 
-		innerBar = board.getInnerBar();
+		navigator = board.getBudgetNavigator();
 		secondaryBoard = board.getSecondaryBoard();
-			innerBar.openViewTab();
+		navigator.openSheetTab();
 		sheets = new Sheets();
 
 		int numberOfRows = sheets.getNumbreOfRows();
@@ -110,7 +112,7 @@ public class ViewTest extends WrapperTest {
 				lineValues.add(previewBoard.getValueByIndex(i));
 			}
 
-			innerBar.openViewTab();
+			navigator.openSheetTab();
 			sheets = new Sheets();
 			List<String> values = sheets.getAllValuesOfRow(row);
 
@@ -125,8 +127,8 @@ public class ViewTest extends WrapperTest {
 	@Test(enabled = true, expectedExceptions = AssertionError.class)
 	public void validateTotalTest() {
 
-		innerBar = board.getInnerBar();
-		innerBar.openViewTab();
+		navigator = board.getBudgetNavigator();
+		navigator.openSheetTab();
 		sheets = new Sheets();
 
 		int numberOfRows = sheets.getNumbreOfRows();
@@ -149,11 +151,12 @@ public class ViewTest extends WrapperTest {
 
 	@Test(enabled = false)
 	public void validateBudgetVsActuals() {
-		innerBar = board.getInnerBar();
+		navigator = board.getBudgetNavigator();
 		secondaryBoard = board.getSecondaryBoard();
-		innerBar.openViewTab();
+		navigator.openSheetTab();
 		sheets = new Sheets();
-		sheets.selectReportType("Cash Flow");
+		topHeaderBar = new TopHeaderBar();
+		topHeaderBar.openHeaderTab(ReportEnum.CASH_FLOW.name());
 		sheets.selectSubReportType("Budget");
 
 		int numberOfRows = sheets.getNumbreOfRows();
@@ -197,10 +200,11 @@ public class ViewTest extends WrapperTest {
 
 	@Test(enabled = false)
 	public void validateActulsVsActualsTab() {
-		innerBar = board.getInnerBar();
+		navigator = board.getBudgetNavigator();
 		secondaryBoard = board.getSecondaryBoard();
 		sheets = new Sheets();
 		actuals = new Actuals();
+
 		innerBar.openActualsTab();
 
 		int numberOfRows = sheets.getNumbreOfRows();
@@ -208,7 +212,7 @@ public class ViewTest extends WrapperTest {
 
 			List<String> tabValues = actuals.getAllValuesOfRow(row);
 
-			innerBar.openViewTab();
+			navigator.openSheetTab();
 			sheets.selectReportType("Cash Flow");
 			sheets.selectSubReportType("Actual");
 			sheets.selectSubActualReportType("Budget vs. actuals");
@@ -227,11 +231,12 @@ public class ViewTest extends WrapperTest {
 
 	@Test(enabled = true)
 	public void calculateDifferences() {
-		innerBar = board.getInnerBar();
+		navigator = board.getBudgetNavigator();
 		secondaryBoard = board.getSecondaryBoard();
-			innerBar.openViewTab();
+		navigator.openSheetTab();
 		sheets = new Sheets();
-		sheets.selectReportType("Cash Flow");
+		topHeaderBar = new TopHeaderBar();
+		topHeaderBar.openHeaderTab(ReportEnum.CASH_FLOW.name());
 		sheets.selectSubReportType("Actual");
 		sheets.selectSubActualReportType("Budget vs. actuals");
 	
@@ -240,27 +245,32 @@ public class ViewTest extends WrapperTest {
 
 		for (int row = 0; row < numberOfRows; row++) {
 			List<String> DifValues = sheets.getAllValuesOfRowByTitle(row, "Differrence");
-			String val = DifValues.get(row);
+			// String val = DifValues.get(row);
 			List<String> BudgetValues = sheets.getAllValuesOfRowByTitle(row, "Budget");
 	
-			List<String> actualValues = sheets.getAllValuesOfRowByTitle(row, "Actual");
+			List<String> actualValues = sheets.getAllValuesOfRowByTitle(row, "Actuals");
 
-			if (DifValues.get(row).equals("-")) {
-				val = "0";
-			}
+			// if (DifValues.get(row).equals("-")) {
+			// val = "0";
+			// }
 
-			String budgetValue = "", actualValue = "";
+			String budgetValue = "", actualValue = "", val = "";
 			System.out.println(actualValues.size() + " , " + BudgetValues.size());
 			for (int i = 0; i < actualValues.size(); i++) {
 				actualValue = actualValues.get(i);
 				budgetValue = BudgetValues.get(i);
+				val = DifValues.get(i);
 				if (BudgetValues.get(i).equals("-"))
 					budgetValue = "0";
 				if (actualValues.get(i).equals("-"))
 					actualValue = "0";
-				Assert.assertEquals((Integer.parseInt(budgetValue)) - (Integer.parseInt(actualValue)) + "", val,
-						" line number " + row + "in index: " + i + "... Budget value is" + BudgetValues.get(i)
-								+ " and Actual value is: " + actualValues.get(i));
+				if (DifValues.get(i).equals("-")) {
+					val = "0";
+				}
+				Assert.assertEquals((Integer.parseInt(budgetValue)) - (Integer.parseInt(actualValue)),
+						Integer.parseInt(val),
+						" line number " + row + "in index: " + i + "... Budget value is" + budgetValue
+								+ " and Actual value is: " + actualValue);
 
 			}
 	

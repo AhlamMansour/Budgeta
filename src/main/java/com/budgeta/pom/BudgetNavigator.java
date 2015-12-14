@@ -80,7 +80,7 @@ public class BudgetNavigator extends AbstractPOM{
 	
 	
 	public String getOpenTab(){
-		return wrapper.findElement(By.className("active")).getText();
+		return wrapper.findElement(By.cssSelector(".navigator-header-text.active")).getText();
 	}
 	
 	

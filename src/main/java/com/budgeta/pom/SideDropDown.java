@@ -12,7 +12,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class SideDropDown extends AbstractPOM{
 
 	private WebElement dropdown;
-	private By dropdownMenu = By.cssSelector("ul.dropdown-menu li");
+	private By dropdownMenu = By.cssSelector("ul.select2-results li ");
 	
 	
 	public SideDropDown(WebElement wrapper){
@@ -21,7 +21,7 @@ public class SideDropDown extends AbstractPOM{
 	
 	public void selectValue(String value){
 		openDropDown();
-		for(WebElement el : dropdown.findElements(dropdownMenu)){
+		for (WebElement el : driver.findElements(dropdownMenu)) {
 			String str = el.getText();
 			if(str.contains("\n"))
 				str = str.substring(0, str.indexOf("\n"));

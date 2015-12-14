@@ -31,6 +31,12 @@ public class TopHeaderBar extends AbstractPOM{
 	private WebElement scenario;
 	
 	
+	@FindBy(css = ".top-bar-header-line span")
+	private List<WebElement> reportList;
+
+	@FindBy(css = ".top-bar-header-line span.active")
+	private WebElement activereport;
+
 	@FindBy(className = "version-scenario-header")
 	private WebElement newScenarioVersion;
 	
@@ -56,7 +62,26 @@ public class TopHeaderBar extends AbstractPOM{
 	 
 
 	 
-	
+	public void openHeaderTab(String reportName) {
+		if (activereport.getText().replaceAll("[^\\d\\p{IsLetter}]+", "_").equalsIgnoreCase(reportName)) {
+			return;
+		}
+		clickElementFromListByText(reportList, reportName);
+		WebdriverUtils.sleep(1000);
+	}
+
+	public boolean clickElementFromListByText(List<WebElement> elements, String name) {
+		for (WebElement element : elements) {
+			String text = element.getText().replaceAll("[^\\d\\p{IsLetter}]+", "_");
+
+			if (text.equalsIgnoreCase(name)) {
+					element.click();
+					return true;
+				}
+			}
+
+		return false;
+	}
 	
 	public void openScenariowindow(){
 		scenario.click();

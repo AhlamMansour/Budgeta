@@ -116,6 +116,10 @@ public class BudgetaBoard extends AbstractPOM {
 	return employeeAssumption;
     }
 
+	public BudgetNavigator getBudgetNavigator() {
+		return new BudgetNavigator();
+	}
+
     public InnerBar getInnerBar() {
 	innerBar = new InnerBar();
 	return innerBar;
