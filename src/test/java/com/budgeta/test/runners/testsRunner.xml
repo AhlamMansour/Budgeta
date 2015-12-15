@@ -27,7 +27,7 @@
 
 	<test name="Restore Budget Test">
 		<classes>
-			<class name="com.budgeta.test.restore.RestoreBudgetTest"></class>
+			<class name="com.budgeta.test.reporter.ReporterTest"></class>
 		</classes>
 	</test>
 

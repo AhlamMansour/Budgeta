@@ -3,6 +3,7 @@ package com.budgeta.pom;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebElementUtils;
@@ -13,13 +14,15 @@ public class TopBar extends AbstractPOM{
 	@FindBy(tagName = "header")
 	private WebElement wrapper;
 	
-	@FindBy(className = "user-menu")
+	@FindBy(className = "user-name")
 	private WebElement userMenu;
 	
 	@FindBy(className = "help-menu")
 	private WebElement helpMenu;
 	
 	private By dropDownOptions = By.cssSelector("ul.dropdown-menu li");
+	
+	private By userenuTriggerMenu = By.cssSelector("div.qtip-focus ul.budgeta-dropdown-list li");
 	
 	private boolean isdropdownOpened(WebElement el){
 		return el.getAttribute("class").contains("open");
@@ -55,7 +58,7 @@ public class TopBar extends AbstractPOM{
 	}
 	
 	public String getUserName(){
-		return userMenu.findElement(By.className("user-name")).getText();
+		return userMenu.getText();
 	}
 	
 	public boolean isUserMenuOpened(){
@@ -70,9 +73,9 @@ public class TopBar extends AbstractPOM{
 		clickDropDownOption(userMenu, "Account Settings");
 	}
 	
-	public void clickChangePassword(){
+	/*public void clickChangePassword(){
 		clickDropDownOption(userMenu, "Change Password");
-	}
+	}*/
 	
 	public void clickLogout(){
 		clickDropDownOption(userMenu, "Logout");
@@ -101,6 +104,36 @@ public class TopBar extends AbstractPOM{
 	public void clickActuals(){
 		clickHelpDropDownOption("Actuals");
 	}
+	
+	
+	private void selectUserMenuTrigger(String option){
+		openUserMenue();
+		for(WebElement el : driver.findElements(userenuTriggerMenu)){
+			if(el.getText().equals(option)){
+				el.click();
+				return;
+			}
+		}
+	}
+	
+	private void openUserMenue(){
+		userMenu.click();
+		WebdriverUtils.waitForElementToBeFound(driver,By.className("qtip-focus"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("qtip-focus")));
+		
+	}
+	
+public void clickAccountSetting(){
+		
+		selectUserMenuTrigger("Account Settings");
+		//WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+
+public void clickChangePassword(){
+	
+	selectUserMenuTrigger("Change Password");
+	//WebdriverUtils.waitForBudgetaLoadBar(driver);
+}
 	
 	@Override
 	public boolean isDisplayed() {
