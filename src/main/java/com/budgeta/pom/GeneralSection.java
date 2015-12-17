@@ -3,7 +3,9 @@ package com.budgeta.pom;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.galilsoftware.AF.core.AbstractPOM;
@@ -14,10 +16,13 @@ public class GeneralSection extends AbstractPOM{
 	@FindBy(id = "section-General")
 	private WebElement wrapper;
 	
+	@FindBy(css = ".inline-edit")
+	private WebElement title;
+
 	@FindBy(id = "attribute-currency")
 	private WebElement currency;
 		
-	@FindBy(className = "wide")
+	@FindBy(css = ".budgeta-type-value label")
 	List<WebElement> accountNumbers;
 	
 	@FindBy(id = "attribute-region")
@@ -39,6 +44,14 @@ public class GeneralSection extends AbstractPOM{
 	private By dateRange_to = By.cssSelector("div.month-picker.to input");
 	private By dropdown = By.className("select2-container");
 
+	public TestModal openBugetaErrorModal() {
+		title.click();
+		Actions action = new Actions(driver);
+		String selectAll = Keys.chord(Keys.CONTROL, Keys.ALT, "t");
+		action.sendKeys(selectAll).perform();
+		return new TestModal();
+		
+	}
 	
 	public void selectCurrency(String option){
 		DropDown curr = new DropDown(currency.findElement(dropdown));
@@ -132,7 +145,7 @@ public class GeneralSection extends AbstractPOM{
 	
 	private WebElement getAccountNumber(){
 		for(WebElement el : accountNumbers){
-			if(el.getText().equals("Account Number"))
+			if (el.getText().equals("Account #"))
 				return el.findElement(By.xpath(".."));
 		}
 		return null;
