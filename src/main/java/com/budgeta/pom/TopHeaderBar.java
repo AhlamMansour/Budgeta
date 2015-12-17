@@ -53,14 +53,14 @@ public class TopHeaderBar extends AbstractPOM{
 	@FindBy(css = "div.top-bar-version-header div.svg-icon")
 	private List<WebElement> versionIcons; 
 	
-	 @FindBy(css = "div.qtip-focus div.qtip-content ul.budgeta-dropdown-list li")
-	    private List<WebElement> list;
+	@FindBy(css = "div.qtip-focus div.qtip-content ul.budgeta-dropdown-list li")
+	private List<WebElement> list;
 	 
-	
-	 @FindBy(className = "create-report")
-	 private WebElement createReportBtn;
+	@FindBy(className = "create-report")
+	private WebElement createReportBtn;
 	 
-
+	@FindBy(className = "settings")
+	private WebElement budgetSettings;
 	 
 	public void openHeaderTab(String reportName) {
 		if (activereport.getText().replaceAll("[^\\d\\p{IsLetter}]+", "_").equalsIgnoreCase(reportName)) {
@@ -232,6 +232,12 @@ public class TopHeaderBar extends AbstractPOM{
 		return new ReportsPopup();
 }
  
+	public BudgetSettings openBudgetSettings() {
+		budgetSettings.click();
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		return new BudgetSettings();
+	}
  
 	@Override
 	public boolean isDisplayed() {

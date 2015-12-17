@@ -56,7 +56,7 @@ public class ActualsTest extends WrapperTest {
 				.split("/")[0]));
 		toYear = dateTo.split("/")[1];
 		List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(
-				fromMonth, fromYear, toMonth, toYear);
+fromMonth, fromYear, toMonth, toYear, 0);
 
 		innerBar.openActualsTab();
 		Assert.assertEquals(innerBar.getOpenTab(), "Actuals");

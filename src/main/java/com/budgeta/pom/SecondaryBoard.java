@@ -89,7 +89,7 @@ public class SecondaryBoard extends AbstractPOM {
     private final By addLinesBtn = By.className("add-child-budget");
     
 	private final By budgetName = By.className("budget-name-text");
-    private final By addLineBtn = By.cssSelector("a.add.add-line");
+	private final By addLineBtn = By.cssSelector(".add.add-line");
 
     private final By lineName = By.className("inline-edit");
 
@@ -157,7 +157,7 @@ public class SecondaryBoard extends AbstractPOM {
         	    line = getNextLineToAdd();
         	    WebElement add = line.findElement(addLineBtn);
         	    if (add.getAttribute("class").contains("enable")) {
-        		add.click();
+				add.findElement(By.cssSelector(".add-budget-line")).click();
         		WebdriverUtils.waitForBudgetaBusyBar(driver);
         		WebdriverUtils.waitForBudgetaLoadBar(driver);
         		WebdriverUtils.sleep(1500);
@@ -450,7 +450,8 @@ public class SecondaryBoard extends AbstractPOM {
 
     public void openAddChild(String lineTitle, int level) {
 	clickClose();
-	List<WebElement> allLinesInLevel = driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root"))
+		List<WebElement> allLinesInLevel = driver.findElements(By.cssSelector("ol.tree.nav")).get(0)
+				.findElement(By.className("selected-root"))
 		.findElement(By.tagName("ol")).findElements(line);
 	for (WebElement el : allLinesInLevel) {
 	    if (getLineName(el).equals(lineTitle) && el.getAttribute("data-level").equals(level + "")) {
@@ -616,7 +617,7 @@ public class SecondaryBoard extends AbstractPOM {
 	for (WebElement el : sublines) {
 	    if (getLineName(el).equals(subLineTitle)) {
 		if (el.getAttribute("class").contains("collapsed")) {
-		    el.findElement(By.tagName("i")).click();
+					el.findElement(By.cssSelector(".svg-icon.collapse-tree ")).click();
 		    WebdriverUtils.elementToHaveClass(el, "expanded");
 		    WebdriverUtils.sleep(200);
 		}

@@ -55,7 +55,7 @@ public class ViewTest extends WrapperTest {
 		fromYear = dateFrom.split("/")[1];
 		toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo.split("/")[0]));
 		toYear = dateTo.split("/")[1];
-		List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear);
+		List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0);
 
 		navigator.openSheetTab();
 		Assert.assertEquals(navigator.getOpenTab(), "Sheets");

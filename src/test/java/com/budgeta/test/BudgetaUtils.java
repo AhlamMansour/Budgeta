@@ -7,7 +7,8 @@ public class BudgetaUtils {
 
 	static final String[] Month = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV","DEC" };
 
-    public static List<String> getAllMonthsBetweenTwoMonths(String monthX, String yearX, String monthY, String yearY) {
+	public static List<String> getAllMonthsBetweenTwoMonths(String monthX, String yearX, String monthY, String yearY,
+			int payAfter) {
 	System.out.println("get range from: "+monthX+"_"+yearX+" to: "+monthY+"_"+yearY);
     int indexX = 0;
 	for (int i = 0; i < Month.length; i++) {
@@ -34,6 +35,17 @@ public class BudgetaUtils {
 	    }
 	}
 	res.add(Month[indexX] + " " + yearX.trim());
+	
+		while (payAfter != 0) {
+	    indexX++;
+	    if (indexX >= Month.length) {
+		indexX = 0;
+		yearX = (Integer.parseInt(yearX.trim()) + 1) + "";
+	    }
+			res.add(Month[indexX] + " " + yearX.trim());
+			payAfter--;
+		}
+	
 	return res;
     }
 
@@ -109,28 +121,29 @@ public class BudgetaUtils {
 	int year1 = Integer.parseInt(yearX);
 	int year2 = Integer.parseInt(yearY);
 	if (year1 < year2) {
-	    return getAllMonthsBetweenTwoMonths(monthX, yearX, monthY, yearY).size();
+			return getAllMonthsBetweenTwoMonths(monthX, yearX, monthY, yearY, 0).size();
 	}
 	if (year1 == year2) {
 	    if (getIndexOfMonth(monthX) <= getIndexOfMonth(monthY))
-		return getAllMonthsBetweenTwoMonths(monthX, yearX, monthY, yearY).size();
+				return getAllMonthsBetweenTwoMonths(monthX, yearX, monthY, yearY, 0).size();
 	    else
-		return getAllMonthsBetweenTwoMonths(monthY, yearY, monthX, yearX).size() * -1;
+				return getAllMonthsBetweenTwoMonths(monthY, yearY, monthX, yearX, 0).size() * -1;
 	} else {
-	    return getAllMonthsBetweenTwoMonths(monthY, yearY, monthX, yearX).size() * -1;
+			return getAllMonthsBetweenTwoMonths(monthY, yearY, monthX, yearX, 0).size() * -1;
 	}
     }
 
     public static String[] calculateValues_Once(String fromMonth, String fromYear, String toMonth, String toYear, String onDateMonth, String onDateYear,
 	    int amount, int payAfter, int supportPercent, int supportPeriod) {
-	List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear);
+		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, payAfter);
 	String[] res = new String[months.size()];
 	int support = (int) Math.round(((double) supportPercent / 100) * amount);
 	//float support = (float) (((double) supportPercent / 100) * amount);
 	int period = supportPeriod;
 	int startIndex = 0;
 	if (!onDateMonth.isEmpty()) {
-	    startIndex = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, onDateMonth, onDateYear).size() - 1;
+			startIndex = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, onDateMonth, onDateYear, payAfter).size()
+					- 1;
 	}
 	startIndex += payAfter;
 	for (int i = 0; i < startIndex; i++) {
@@ -151,7 +164,7 @@ public class BudgetaUtils {
 
     public static String[] calculateValues_Monthly(String fromMonth, String fromYear, String toMonth, String toYear, int amount, int payAfter,
 	    int supportPercent, int supportPeriod, int growth) {
-	List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear);
+		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, payAfter);
 	String[] res = new String[months.size()];
 	int support = (int) Math.round(((double) supportPercent / 100) * amount);
 
@@ -179,7 +192,7 @@ public class BudgetaUtils {
 
     public static String[] calculateValues_Quaterly(String fromMonth, String fromYear, String toMonth, String toYear, int amount, int payAfter, int growth,
 	    String AtDate,String fiscal) {
-	List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear);
+		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, payAfter);
 	String[] res = new String[months.size()], finalRes =new String[months.size()];
 	List<String> quaterly = new ArrayList<>();
 
@@ -225,8 +238,12 @@ public class BudgetaUtils {
     }
 
     public static String[] calculateValues_Yearly(String fromMonth, String fromYear, String toMonth, String toYear, int amount, int payAfter, int growth,
-	    String AtDate, String fiscal) {
-	List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear);
+ String AtDate, String fiscal, String toExactMonth,
+			String toExactYear) {
+		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, payAfter);
+		List<String> speceficMonth = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toExactMonth, toExactYear,
+				payAfter);
+
 	String[] res = new String[months.size()], finalRes =new String[months.size()];
 	String startMonth = "";
 	int startIndex = payAfter;
@@ -264,6 +281,10 @@ public class BudgetaUtils {
 	    }
 	}
 	
+		for (int i = speceficMonth.size(); i < months.size(); i++) {
+			res[i] = "-";
+		}
+
 	for(int i = 0 ; i < res.length ; i++){
 		if (i - payAfter < 0 )
 			finalRes[i] = "-";
@@ -275,7 +296,7 @@ public class BudgetaUtils {
 
     public static String[] calculateEmployeeValues_Monthly(String fromMonth, String fromYear, String toMonth, String toYear, String HireDateMonth,
 	    String HireDateYear, String EndDateMonth, String EndDateYear, int baseSalary, int benefits, int bonus, String payment) {
-	List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear);
+		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0);
 	String[] res = new String[months.size()];
 	int startIndex = 0, endIndex = res.length;
 	int fromHireToView = getNumOfMonthsBetweenTwoDate(HireDateMonth, HireDateYear, fromMonth, fromYear);
@@ -333,11 +354,11 @@ public class BudgetaUtils {
 
     public static String[] calculateEmployeeValues_Yearly(String fromMonth, String fromYear, String toMonth, String toYear, String HireDateMonth,
 	    String HireDateYear, String EndDateMonth, String EndDateYear, int baseSalary, int benefits, int bonus, String payment) {
-	List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear);
+		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0);
 	String[] res = new String[months.size()];
 	int startIndex = 0, endIndex = res.length;
-	int fromHireToView = getNumOfMonthsBetweenTwoDate(HireDateMonth, HireDateYear, fromMonth, fromYear);
-	int fromEndHireToEndView = getNumOfMonthsBetweenTwoDate(EndDateMonth, EndDateYear, toMonth, toYear);
+		int fromHireToView = getNumOfMonthsBetweenTwoDate(HireDateMonth, HireDateYear, fromMonth, fromYear);
+		int fromEndHireToEndView = getNumOfMonthsBetweenTwoDate(EndDateMonth, EndDateYear, toMonth, toYear);
 	int bonusMonths = 0;
 	int sum = baseSalary / 12;
 	//int benefit = (int) Math.round(((double) benefits / 100) * sum);

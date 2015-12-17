@@ -17,7 +17,7 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	private DropDown dropdown ;
 	
 	private By textField = By.className("inline-edit");
-	private By addBtn = By.cssSelector("div.tree-edit-mode div.add-line");
+	private By addBtn = By.cssSelector("div.tree-edit-mode div.add-line .add-budget-line");
 
 	
 	public RevenuesAddSubLine() {
