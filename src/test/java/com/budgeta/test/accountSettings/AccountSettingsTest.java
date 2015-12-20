@@ -24,12 +24,14 @@ public class AccountSettingsTest extends WrapperTest{
 	public void changeAccountSettingsTest(){
 		
 		TopBar topBar = new TopBar();
-		topBar.clickAccountSettings();
+		//topBar.clickAccountSettings();
+		topBar.clickAccountSetting();
+
 		
 		AccountSettings account = new AccountSettings();
 		
 		Assert.assertTrue(account.isDisplayed(), "expected account settings page to be displayed");
-		Assert.assertEquals(account.getTitle(), "YOUR ACCOUNT");
+		Assert.assertEquals(account.getTitle(), "Your Account");
 			
 		account.setFirstName("Dema");
 		account.setLastName("Ma");
@@ -37,7 +39,7 @@ public class AccountSettingsTest extends WrapperTest{
 		
 		Assert.assertEquals(topBar.getUserName(), "Dema Ma");
 		
-		topBar.clickAccountSettings();
+		topBar.clickAccountSetting();
 		account = new AccountSettings();
 		
 		Assert.assertEquals(account.getFirstName(), "Dema");
@@ -57,7 +59,7 @@ public class AccountSettingsTest extends WrapperTest{
 		ChangePassword changePassword = new ChangePassword();
 		
 		Assert.assertTrue(changePassword.isDisplayed(), "expected change password page to be displayed");
-		Assert.assertEquals(changePassword.getTitle(), "CHANGE PASSWORD");
+		Assert.assertEquals(changePassword.getTitle(), "Change Password");
 		
 		/*
 		//error current password

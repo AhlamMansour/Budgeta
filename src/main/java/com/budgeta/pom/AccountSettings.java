@@ -14,8 +14,8 @@ public class AccountSettings extends AbstractPOM{
 	@FindBy(className = "login-page")
 	private WebElement wrapper;
 	
-	@FindBy(className = "ember-text-field")
-	private List<WebElement> textFields;
+	@FindBy(className = "user-input")
+	private List<WebElement> userInput;
 	
 	@FindBy(className = "cancel")
 	private WebElement cancelBtn;
@@ -50,7 +50,7 @@ public class AccountSettings extends AbstractPOM{
 	}
 	
 	public String getTitle(){
-		return wrapper.findElement(By.tagName("h1")).getText();
+		return wrapper.findElement(By.className("page-header")).getText();
 	}
 	
 	public BudgetaBoard clickCancel(){
@@ -75,17 +75,17 @@ public class AccountSettings extends AbstractPOM{
 	}
 
 	private WebElement getFirstNameField(){
-		for(WebElement el : textFields){
-			if(el.getAttribute("placeholder").equals("First Name"))
-				return el;
+		for(WebElement el : userInput){
+			if(el.findElement(By.tagName("label")).getText().trim().equals("First Name"))
+				return el.findElement(By.tagName("input"));
 		}
 		return null;
 	}
 	
 	private WebElement getLastNameField(){
-		for(WebElement el : textFields){
-			if(el.getAttribute("placeholder").equals("Last Name"))
-				return el;
+		for(WebElement el : userInput){
+			if(el.findElement(By.tagName("label")).getText().trim().equals("Last Name"))
+				return el.findElement(By.tagName("input"));;
 		}
 		return null;
 	}

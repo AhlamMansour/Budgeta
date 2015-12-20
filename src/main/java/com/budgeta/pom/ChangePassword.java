@@ -20,7 +20,7 @@ public class ChangePassword extends AbstractPOM{
 	@FindBy(css = "div.center button")
 	private List<WebElement> footerButtons;
 	
-	@FindBy(className = "ember-text-field")
+	@FindBy(className = "user-input")
 	private List<WebElement> textFields;
 	
 	@FindBy(className = "alert-danger")
@@ -34,7 +34,8 @@ public class ChangePassword extends AbstractPOM{
 	}
 	
 	public String getTitle(){
-		return wrapper.findElement(By.tagName("h1")).getText();
+		//return wrapper.findElement(By.tagName("h1")).getText();
+		return wrapper.findElement(By.className("page-header")).getText();
 	}
 	
 	public void setCurrentPassword(String pass){
@@ -90,8 +91,8 @@ public class ChangePassword extends AbstractPOM{
 	
 	private WebElement getField(String field){
 		for(WebElement el : textFields){
-			if(el.getAttribute("placeholder").equals(field))
-				return el;
+			if(el.findElement(By.tagName("label")).getText().trim().equals(field))
+				return el.findElement(By.tagName("input"));
 		}
 		return null;
 	}

@@ -348,7 +348,7 @@ public class SecondaryBoard extends AbstractPOM {
 	int num = 0;
 	for (WebElement el : Lines) {
 	    try {
-	    	if (el.findElement(budgetName).getText().equals(lineTitle))
+	    	if (el.findElement(budgetName).getText().contains(lineTitle))
 	    			num++;
 	    } catch (Exception e) {
 		continue;
