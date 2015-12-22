@@ -603,9 +603,9 @@ public class SecondaryBoard extends AbstractPOM {
     }
 
     private List<WebElement> getSubLinesForLine(String lineTitle) {
-	WebElement lineElm = getLineByName(lineTitle);
+		WebElement lineElm = getLineByName(lineTitle);
 	if (lineElm.getAttribute("class").contains("collapsed")) {
-	    lineElm.findElement(By.tagName("i")).click();
+			lineElm.findElement(By.cssSelector(".svg-icon")).click();
 	    WebdriverUtils.elementToHaveClass(lineElm, "expanded");
 	    WebdriverUtils.sleep(200);
 	}

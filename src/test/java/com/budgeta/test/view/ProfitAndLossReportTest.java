@@ -56,7 +56,8 @@ public class ProfitAndLossReportTest extends WrapperTest{
 				.split("/")[0]));
 		toYear = dateTo.split("/")[1];
 		List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(
-fromMonth, fromYear, toMonth, toYear, 0);
+fromMonth, fromYear, toMonth, toYear, 0,
+				false);
 
 		innerBar.openViewTab();
 		Assert.assertEquals(innerBar.getOpenTab(), "View");

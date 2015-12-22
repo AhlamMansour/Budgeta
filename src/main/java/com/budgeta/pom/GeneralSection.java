@@ -40,6 +40,9 @@ public class GeneralSection extends AbstractPOM{
 	@FindBy(className = "attribute-allocated")
 	private WebElement department;
 	
+	@FindBy(className = "cancel")
+	private WebElement cancelBtn;
+
 	private By dateRange_from = By.cssSelector("div.month-picker.from input");
 	private By dateRange_to = By.cssSelector("div.month-picker.to input");
 	private By dropdown = By.className("select2-container");
@@ -79,15 +82,21 @@ public class GeneralSection extends AbstractPOM{
 	}
 	
 	public DateRange openDateRangeFrom(){
+		hoverToNote();
 		wrapper.findElement(dateRange_from).click();
 		return new DateRange();
 	}
 	
 	public DateRange openDateRangeTo(){
+		hoverToNote();
 		wrapper.findElement(dateRange_to).click();
 		return new DateRange();
 	}
-	
+
+	public void hoverToNote() {
+		Actions act = new Actions(driver);
+		act.moveToElement(notes).build().perform();
+	}
 	public void setAccountNumberInRowByIndex(int indexOfRow, String value){
 		WebElement row = getAccountNumber().findElements(By.tagName("input")).get(indexOfRow - 1);
 		row.clear();

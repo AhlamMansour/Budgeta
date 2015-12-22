@@ -59,12 +59,14 @@ public class BudgetaStructureTest extends WrapperTest {
 		subLine.setName(revenuesSubLine);
 		subLine.selectDropDown("Perpetual License");
 		subLine.clickAdd();
+
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLine(cost_of_revenues);
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLineForLine(cost_of_revenues,
 				cost_of_revenues_subLine);
 		secondaryBoard = new SecondaryBoard();
+
 		secondaryBoard.addSubLineForSubLine(cost_of_revenues,
 				cost_of_revenues_subLine, salary_and_wages);
 		secondaryBoard = new SecondaryBoard();
@@ -155,7 +157,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	
 	
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 2)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 2)
 	@DataProviderParams(sheet = "BudgetaForm", area = "Revenues Form_Details")
 	public void revenuesFormDetailsTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -256,13 +258,13 @@ public class BudgetaStructureTest extends WrapperTest {
 			toExactYear = general.getDateRangeTo().split("/")[1];
 
 			board.clickSaveChanges();
-
+			topHeaderBar = new TopHeaderBar();
 			if (data.get("Repeat").equals("Once")) {
 				String[] expectedValues = BudgetaUtils.calculateValues_Once(
 						monthX, yearX, monthY, yearY, data.get("OnDate_Month"),
 						data.get("OnDate_Year"),
 						Integer.parseInt(data.get("Amount")), payAfter,
-						supportPercent, supportPeriod);
+ supportPercent, supportPeriod, toExactMonth, toExactYear);
 				compareExpectedResults(expectedValues);
 			}
 
@@ -270,23 +272,25 @@ public class BudgetaStructureTest extends WrapperTest {
 				String[] expectedValues = BudgetaUtils.calculateValues_Monthly(
 						monthX, yearX, monthY, yearY,
 						Integer.parseInt(data.get("Amount")), payAfter,
-						supportPercent, supportPeriod, growth);
+ supportPercent, supportPeriod, growth,
+						toExactMonth, toExactYear);
 				compareExpectedResults(expectedValues);
 			}
 
 			if (data.get("Repeat").equals("Quarterly")) {
-				BudgetSettings settings = secondaryBoard.openBudgetSettings();
-				String fiscal = settings.getSelectedFiscal().substring(0, 3);
+				BudgetSettings settings = topHeaderBar.openBudgetSettings();
+				String fiscal = settings.getSelectedFiscal().substring(0, 3).toUpperCase();
 				settings.clickCancel();
 				String[] expectedValues = BudgetaUtils
 						.calculateValues_Quaterly(monthX, yearX, monthY, yearY,
 								Integer.parseInt(data.get("Amount")), payAfter,
-								growth, data.get("AtDate"), fiscal);
+ growth, data.get("AtDate"), fiscal,
+						toExactMonth, toExactYear);
 				compareExpectedResults(expectedValues);
 			}
 
 			if (data.get("Repeat").equals("Yearly")) {
-				BudgetSettings settings = secondaryBoard.openBudgetSettings();
+				BudgetSettings settings = topHeaderBar.openBudgetSettings();
 				String fiscal = settings.getSelectedFiscal().substring(0, 3);
 				settings.clickCancel();
 				String[] expectedValues = BudgetaUtils.calculateValues_Yearly(
@@ -457,7 +461,7 @@ public class BudgetaStructureTest extends WrapperTest {
 	
 	
 	
-	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 5)
+	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 5)
 	@DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages_EmployeeForm")
 	public void employeeFormTest(Hashtable<String, String> data) {
 
@@ -507,6 +511,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		}
 		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
 		general.setDepartment(data.get("Department"));
+		general.hoverToNote();
 		general.setGeography(data.get("Geography"));
 		general.setProduct(data.get("Product"));
 		general.setNotes(data.get("Notes"));
@@ -949,7 +954,8 @@ public class BudgetaStructureTest extends WrapperTest {
 				String[] expectedValues = BudgetaUtils.calculateValues_Once(
 						monthX, yearX, monthY, yearY, data.get("OnDate_Month"),
 						data.get("OnDate_Year"),
-						Integer.parseInt(data.get("Amount")), payAfter, 0, 0);
+ Integer.parseInt(data.get("Amount")),
+						payAfter, 0, 0, toExactMonth, toExactYear);
 				compareExpectedResults(expectedValues);
 			}
 
@@ -957,18 +963,19 @@ public class BudgetaStructureTest extends WrapperTest {
 				String[] expectedValues = BudgetaUtils.calculateValues_Monthly(
 						monthX, yearX, monthY, yearY,
 						Integer.parseInt(data.get("Amount")), payAfter, 0, 0,
-						growth);
+ growth, toExactMonth, toExactYear);
 				compareExpectedResults(expectedValues);
 			}
 
 			if (data.get("Occurs").equals("Quarterly")) {
 				BudgetSettings settings = topHeaderBar.openBudgetSettings();
-				String fiscal = settings.getSelectedFiscal().substring(0, 3);
+				String fiscal = settings.getSelectedFiscal().substring(0, 3).toUpperCase();
 				settings.clickCancel();
 				String[] expectedValues = BudgetaUtils
 						.calculateValues_Quaterly(monthX, yearX, monthY, yearY,
 								Integer.parseInt(data.get("Amount")), payAfter,
-								growth, data.get("AtDate"), fiscal);
+ growth, data.get("AtDate"), fiscal,
+						toExactMonth, toExactYear);
 				compareExpectedResults(expectedValues);
 			}
 
