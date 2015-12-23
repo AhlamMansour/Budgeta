@@ -162,7 +162,7 @@ public class BudgetSettingsTest extends WrapperTest {
 	
 
 	@Test(enabled = true, priority = 7)
-	public void DeleteBudgetLineTest() {
+	public void DeleteBudgetTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
@@ -180,7 +180,7 @@ public class BudgetSettingsTest extends WrapperTest {
 	}
 
 	@Test(enabled = true, priority = 8)
-	public void RenameBudgetLineFromNavTest() {
+	public void RenameBudgetFromNavTest() {
 		WebdriverUtils.sleep(1000);
 
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -197,5 +197,10 @@ public class BudgetSettingsTest extends WrapperTest {
 		trigger.clickRenameBudgetFromNav();
 		navigator.setBudgetTitle(BeforeRenameBudget);
 	}
+	
+	
+
+	
+	
 
 }

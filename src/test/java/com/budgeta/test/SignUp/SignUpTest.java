@@ -84,14 +84,18 @@ public class SignUpTest extends BudgetaTest{
 			LoginPage login = new LoginPage();
 			login.setEmail(email);
 			login.setPassword(data.get("password"));
-			login.clickLogin(true);
+			login.clickLoginAfterSignup();
 			
-			WelcomeScreen welcomescreen =  new WelcomeScreen();
+			Assert.assertEquals(login.getErrorMessage(), "Your account is not verified, please look for the verification email in your inbox");
+			
+			/*WelcomeScreen welcomescreen =  new WelcomeScreen();
 			Assert.assertTrue(welcomescreen.isDisplayed(), "Expected welcome screen to be displayed");
 			welcomescreen.clickSkipTour();
 			
 			TopBar topBar = new TopBar();
-			topBar.clickLogout();
+			topBar.clickLogout();*/
+			
+			
 		}
 				
 	}

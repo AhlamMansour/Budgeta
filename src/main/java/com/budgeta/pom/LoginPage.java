@@ -42,6 +42,7 @@ public class LoginPage extends AbstractPOM{
 	
 	
 	public LoginPage(){
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		try{
 			WebdriverUtils.waitForElementToBeFound(driver, By.className("login-page"));
 			WebdriverUtils.waitForElementToBeFound(driver, By.id("login-btn"));
@@ -99,6 +100,12 @@ public class LoginPage extends AbstractPOM{
 			WebdriverUtils.waitForElementToBeFound(driver, By.className("tour-page"));
 		}
 	}
+	
+	public void clickLoginAfterSignup(){
+		loginBtn.click();
+		WebdriverUtils.sleep(5000);
+	}
+	
 	
 	public String getEmailErrorMessage(){
 		if(emailHasError())

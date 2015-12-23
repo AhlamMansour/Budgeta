@@ -11,8 +11,8 @@ import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.SmallPopup;
 import com.budgeta.pom.TopHeaderBar;
 import com.budgeta.pom.Versions;
-import com.budgeta.pom.Versions.View;
 import com.budgeta.test.WrapperTest;
+import com.galilsoftware.AF.core.listeners.KnownIssue;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
@@ -104,6 +104,7 @@ public class VersionsTest extends WrapperTest {
 		Assert.assertFalse(headerBar.selectedVersionDisplay(), "expected to remove version changes");
 	}
 
+	@KnownIssue(bugID = "BUD - 2500")
 	@Test(enabled = true, priority = 3)
 	public void deleteVersionTest() {
 		TopHeaderBar headerBar = new TopHeaderBar();
@@ -129,6 +130,7 @@ public class VersionsTest extends WrapperTest {
 		
 	}
 	
+	@KnownIssue(bugID = "BUD - 2500")
 	@Test(enabled = true, priority = 4)
 	public void clearVersionTest() {
 		TopHeaderBar headerBar = new TopHeaderBar();

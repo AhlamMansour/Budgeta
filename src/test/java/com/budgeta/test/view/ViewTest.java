@@ -124,7 +124,7 @@ public class ViewTest extends WrapperTest {
 			}
 		}
 
-	@KnownIssue(bugID = "BUD - 1964")
+	@KnownIssue(bugID = "BUD - 2508")
 	@Test(enabled = true, expectedExceptions = AssertionError.class)
 	public void validateTotalTest() {
 
