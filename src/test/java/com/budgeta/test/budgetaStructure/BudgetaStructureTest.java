@@ -461,7 +461,7 @@ public class BudgetaStructureTest extends WrapperTest {
 	
 	
 	
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 5)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 5)
 	@DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages_EmployeeForm")
 	public void employeeFormTest(Hashtable<String, String> data) {
 
@@ -477,6 +477,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 		EmplyeeSection employeeSection = mainSection.getEmplyeeSection();
 
+		employeeSection.hoverToUp();
 		employeeSection.setRole(data.get("Role"));
 		employeeSection.setEmployeeId(data.get("EmployeeId"));
 		employeeSection.setBaseSalary(data.get("BaseSalary"));
@@ -509,9 +510,10 @@ public class BudgetaStructureTest extends WrapperTest {
 			to.setYear(data.get("HireDate_to_year"));
 			to.setMonth(data.get("HireDate_to_month"));
 		}
+
+		general.hoverToNote();
 		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
 		general.setDepartment(data.get("Department"));
-		general.hoverToNote();
 		general.setGeography(data.get("Geography"));
 		general.setProduct(data.get("Product"));
 		general.setNotes(data.get("Notes"));
@@ -596,7 +598,7 @@ public class BudgetaStructureTest extends WrapperTest {
 	
 	
 	
-	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 6)
+	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 6)
 	@DataProviderParams(sheet = "BudgetaForm", area = "GrossProfit")
 	public void fillGeneralAndValidate(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -1005,13 +1007,16 @@ public class BudgetaStructureTest extends WrapperTest {
 				expectedValues[i] = String.valueOf(round(Double.parseDouble(expectedValues[i]), 2));
 			}
 		}*/
-		
+
 		PreviewBoard preview = new PreviewBoard();
-		for (int i = 0; i < preview.getValuesSize(); i++) {
+		for (int i = 0; i < expectedValues.length; i++) {
 			Assert.assertEquals(preview.getValueByIndex(i), expectedValues[i],	"error in calculation budgets in index: " + i);
 			if (!expectedValues[i].equals("-"))
 				total += Integer.parseInt(expectedValues[i]);
 				//total += Float.parseFloat(expectedValues[i]);
+		}
+		for (int i = expectedValues.length; i < preview.getValuesSize(); i++) {
+			Assert.assertEquals(preview.getValueByIndex(i), "-", "error in calculation budgets in index: " + i);
 		}
 		if (total == 0)
 			Assert.assertEquals(preview.getTotalValue(), "-");

@@ -2,6 +2,7 @@ package com.budgeta.pom;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.galilsoftware.AF.core.AbstractPOM;
@@ -13,6 +14,9 @@ public class EmplyeeSection extends AbstractPOM{
 	@FindBy(id = "budget-attributes-wrapper")
 	private WebElement wrapper;
 	
+	@FindBy(id = "see-change-log")
+	private WebElement changeLogBtn;
+
 	@FindBy(name = "role")
 	private WebElement role;
 	
@@ -31,7 +35,7 @@ public class EmplyeeSection extends AbstractPOM{
 	@FindBy(name = "benefits")
 	private WebElement benefits;
 
-	@FindBy(css = "div.currency div.select2-container")
+	@FindBy(css = "div.currency div.select2-container a")
 	private WebElement currency;
 	
 	
@@ -44,6 +48,11 @@ public class EmplyeeSection extends AbstractPOM{
 		setText(employeeId, value);
 	}
 	
+	public void hoverToUp() {
+		Actions act = new Actions(driver);
+		act.moveToElement(changeLogBtn).build().perform();
+	}
+
 	public void setBaseSalary(String value){
 		setText(baseSalaryField, value);
 	}
@@ -85,7 +94,7 @@ public class EmplyeeSection extends AbstractPOM{
 	}
 	
 	public String getBaseSalaryField(){
-		return baseSalaryField.getAttribute("value").replaceAll(",", "");
+		return baseSalaryField.getAttribute("title").replaceAll("[^0-9]+", "");
 	}
 	
 	public String getBonus(){

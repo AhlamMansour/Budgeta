@@ -110,6 +110,7 @@ public class GeneralSection extends AbstractPOM{
 	public void setGeography(String value){
 		WebElement field = geography.findElements(By.tagName("input")).get(1);
 		field.clear();
+		if (value != null)
 		field.sendKeys(value);
 	}
 	
