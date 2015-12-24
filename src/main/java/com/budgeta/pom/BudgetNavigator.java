@@ -57,7 +57,7 @@ public class BudgetNavigator extends AbstractPOM{
     @FindBy(css = "div.qtip-focus div.add-option")
 	private WebElement addNewBudget;
     
-    @FindBy(css = "div.search-wrapper input")
+    @FindBy(css = "div.qtip-focus div.search-wrapper input")
 	private WebElement searchBudget;
     
     public BudgetNavigator(){
@@ -264,7 +264,8 @@ public class BudgetNavigator extends AbstractPOM{
         }
         
         public void searchBudget(String budget){
-        	wait.until(ExpectedConditions.visibilityOf(searchBudget));
+        	WebdriverUtils.waitForElementToBeFound(driver, By.cssSelector("div.qtip-focus div.search-wrapper input"));
+        	wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.qtip-focus div.search-wrapper input")));
         	searchBudget.clear();
         	searchBudget.sendKeys(budget);
         }

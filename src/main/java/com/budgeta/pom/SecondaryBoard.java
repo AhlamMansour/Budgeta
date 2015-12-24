@@ -188,7 +188,9 @@ public class SecondaryBoard extends AbstractPOM {
             }
 
     public MenuTrigger getBudgetMenuTrigger() {
-	return new MenuTrigger(settingBudgetIcon);
+    	WebElementUtils.hoverOverField(selectedBudget, driver, null);
+    	WebdriverUtils.sleep(100);
+    	return new MenuTrigger(settingBudgetIcon);
     }
 
     public void openBudgetDropDownOptionsMenu() {

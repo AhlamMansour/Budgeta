@@ -23,6 +23,7 @@ public class MenuTrigger extends AbstractPOM {
 	private By subLineSettingTriggerMenu = By.cssSelector("div.qtip-pos-ti.qtip-focus ul li");
 	
 	private By budgetSettingTriggerMenu = By.cssSelector("div.qtip-focus ul.budgeta-dropdown-list li");
+	private By triggerMenu = By.cssSelector("div.qtip-focus ul.budgeta-dropdown-list");
 	
 	@FindBy(className = "tree-edit-mode")
 	protected WebElement editwrapper;
@@ -216,12 +217,12 @@ private void selectBudgetMenuTrigger(String option){
 		WebElementUtils.clickElementEvent(driver,wrapper);
 		try{
 			WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
-			wait.until(ExpectedConditions.visibilityOfElementLocated(lineSettingTriggerMenu));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(triggerMenu));
 		}
 		catch(Exception e){
 			WebElementUtils.clickElementEvent(driver,wrapper);
 			WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
-			wait.until(ExpectedConditions.visibilityOfElementLocated(lineSettingTriggerMenu));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(triggerMenu));
 		}
 	}
 	
