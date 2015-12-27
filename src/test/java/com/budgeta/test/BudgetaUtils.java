@@ -218,19 +218,19 @@ public class BudgetaUtils {
     public static String[] calculateValues_Quaterly(String fromMonth, String fromYear, String toMonth, String toYear, int amount, int payAfter, int growth,
  String AtDate, String fiscal, String toExactMonth,
 			String toExactYear) {
+		List<String> actualMonths;
 		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, payAfter, false);
 		List<String> speceficMonth = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toExactMonth, toExactYear,
 				payAfter, true);
 
 		String[] res, finalRes;
 		if (months.size() > speceficMonth.size()) {
-			res = new String[months.size()];
-		finalRes = new String[months.size()];
-	}else
-	{
-		res = new String[speceficMonth.size()];
-		finalRes = new String[speceficMonth.size()];
+			actualMonths = months;
+		} else {
+			actualMonths = speceficMonth;
 		}
+		res = new String[actualMonths.size()];
+		finalRes = new String[actualMonths.size()];
 	List<String> quaterly = new ArrayList<>();
 
 	//int sum = amount;
@@ -255,7 +255,7 @@ public class BudgetaUtils {
 		quaterly = getEndOfQuaterlyMonths(fiscal);
 	    
 	    for(int i = 0 ; i < res.length; i++){
-	    	if(quaterly.contains(months.get(i).split(" ")[0].trim())){
+				if (quaterly.contains(actualMonths.get(i).split(" ")[0].trim())) {
 	    		 res[i] = (int)Math.round(sum)+ "";
 	    		 sum = (float) (sum + ((double) growth / 100) * sum);
 	    	}
@@ -268,6 +268,7 @@ public class BudgetaUtils {
 
 
 
+
 	for(int i = 0 ; i < res.length ; i++){
 		if (i - payAfter < 0 )
 			finalRes[i] = "-";
@@ -275,26 +276,28 @@ public class BudgetaUtils {
 			finalRes[i] = res[i - payAfter];
 	}
 
-		for (int i = speceficMonth.size(); i < months.size(); i++) {
+		for (int i = speceficMonth.size(); i < actualMonths.size(); i++) {
 			finalRes[i] = "-";
 		}
-
 	return finalRes;
     }
 
     public static String[] calculateValues_Yearly(String fromMonth, String fromYear, String toMonth, String toYear, int amount, int payAfter, int growth,
  String AtDate, String fiscal, String toExactMonth,
 			String toExactYear) {
-
+		List<String> actualMonths;
 		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, payAfter, false);
 		List<String> speceficMonth = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toExactMonth, toExactYear,
 				payAfter, true);
 
-		String[] res = new String[months.size()], finalRes = new String[months.size()];
-		if (months.size() < speceficMonth.size()) {
-			res = new String[speceficMonth.size()];
-			finalRes = new String[speceficMonth.size()];
+		String[] res, finalRes;
+		if (months.size() > speceficMonth.size()) {
+			actualMonths = months;
+		} else {
+			actualMonths = speceficMonth;
 		}
+		res = new String[actualMonths.size()];
+		finalRes = new String[actualMonths.size()];
 
 	String startMonth = "";
 	int startIndex = payAfter;
@@ -322,7 +325,7 @@ public class BudgetaUtils {
 		startMonth = getPreviousMonth(fiscal);
 	    
 	    for (int i = 0 ; i < res.length; i++) {
-	    	if(months.get(i).contains(startMonth)){
+				if (actualMonths.get(i).contains(startMonth)) {
 	    		res[i] =  (int)Math.round(sum)+ "";
 	    		sum = (float) (sum + ((double) growth / 100) * sum);
 	    	}
@@ -340,10 +343,10 @@ public class BudgetaUtils {
 		else 
 			finalRes[i] = res[i - payAfter];
 	}
-
-		for (int i = speceficMonth.size(); i < months.size(); i++) {
+		for (int i = speceficMonth.size(); i < actualMonths.size(); i++) {
 			finalRes[i] = "-";
 		}
+
 	return finalRes;
     }
 
