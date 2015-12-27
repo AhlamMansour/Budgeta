@@ -74,6 +74,13 @@
 			<class name="com.budgeta.test.BudgetSettings.BudgetSettingsTest"></class>
 		</classes>
 	</test>
+	
+	<test name="Budgeta Error test">
+		<classes>
+			<class name="com.budgeta.test.RunErrorTest"></class>
+		</classes>
+	</test>
+	
 </suite>
 
 
