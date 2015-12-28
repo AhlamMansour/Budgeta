@@ -44,8 +44,10 @@ public class VersionsTest extends WrapperTest {
 
 		headerBar.openRevisionswindow();
 		headerBar.selectAllRevisions();
+		
 		Assert.assertTrue(headerBar.isVersionExist(snapshotName), "expected to add the new snapshot to view all");
 
+		versions = new Versions();
 		headerBar.selectSavedRevisions();
 		Assert.assertTrue(headerBar.isVersionExist(snapshotName), "expected to add the new snapshot to Only Snapshots");
 	}
@@ -63,7 +65,7 @@ public class VersionsTest extends WrapperTest {
 	public void seeingSnapshotsTest() {
 		TopHeaderBar headerBar = new TopHeaderBar();
 		versions = new Versions();
-		headerBar.openRevisionswindow();
+		//headerBar.openRevisionswindow();
 		headerBar.selectSavedRevisions();
 		Assert.assertFalse(headerBar.isVersionExist("Auto save"), "expected Auto Saved not included into only snapshots");
 	}
@@ -105,7 +107,7 @@ public class VersionsTest extends WrapperTest {
 	}
 
 	@KnownIssue(bugID = "BUD - 2500")
-	@Test(enabled = true, priority = 3)
+	@Test(enabled = true, priority = 4)
 	public void deleteVersionTest() {
 		TopHeaderBar headerBar = new TopHeaderBar();
 		BudgetNavigator navigator = new BudgetNavigator();
@@ -131,14 +133,14 @@ public class VersionsTest extends WrapperTest {
 	}
 	
 	@KnownIssue(bugID = "BUD - 2500")
-	@Test(enabled = true, priority = 4)
+	@Test(enabled = true, priority = 3)
 	public void clearVersionTest() {
 		TopHeaderBar headerBar = new TopHeaderBar();
 		BudgetNavigator navigator = new BudgetNavigator();
 		
 		versions = new Versions();
-	
-		headerBar.selectVersion("Snapshot before revert");
+		headerBar.openRevisionswindow();
+		headerBar.selectVersion("Snapshot");
 		navigator.openInputTab();
 		headerBar.clearVersion();
 		

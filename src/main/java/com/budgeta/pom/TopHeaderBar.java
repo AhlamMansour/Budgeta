@@ -89,7 +89,9 @@ public class TopHeaderBar extends AbstractPOM{
 	}
 	
 	public void openRevisionswindow(){
+		WebdriverUtils.sleep(1000);
 		revisions.click();
+		wait.until(ExpectedConditions.visibilityOf(listWrapper));
 		//wait.until(ExpectedConditions.visibilityOf(scenarioWrapper));
 	}
 	
@@ -163,7 +165,7 @@ public class TopHeaderBar extends AbstractPOM{
 	 public void selectVersion(String name){
 		 List<WebElement> versions = new ArrayList<>();
 	    	for (WebElement el : list) {
-	    		if(el.findElement(By.className("text-tag")).getText().equals(name)){
+	    		if(el.findElement(By.className("text-tag")).getText().contains(name)){
 	    			versions.add(el);
 	    		}
 	    	}

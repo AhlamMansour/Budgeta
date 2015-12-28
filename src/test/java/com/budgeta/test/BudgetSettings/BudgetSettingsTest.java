@@ -18,6 +18,7 @@ import com.budgeta.pom.SuccessPage;
 import com.budgeta.pom.Versions;
 import com.budgeta.pom.Versions.View;
 import com.budgeta.test.WrapperTest;
+import com.galilsoftware.AF.core.listeners.KnownIssue;
 import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
@@ -75,6 +76,7 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 
+	@KnownIssue(bugID = "BUD - 2537")
 	@Test(enabled = true, priority = 3)
 	public void ShareBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
