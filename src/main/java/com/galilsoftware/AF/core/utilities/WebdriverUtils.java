@@ -486,8 +486,8 @@ public class WebdriverUtils {
 
 	public static Wait<WebDriver> initializePOM(WebDriver driver, Object pom) {
 		// driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 4), pom);
-		return new FluentWait<WebDriver>(driver).withTimeout(30,
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 8), pom);
+		return new FluentWait<WebDriver>(driver).withTimeout(50,
 				TimeUnit.SECONDS).pollingEvery(900, TimeUnit.MILLISECONDS);
 	}
 
@@ -666,14 +666,14 @@ public class WebdriverUtils {
 	}
 
 	public static WebElement waitUntilClickable(WebDriver driver, By by) {
-		WebDriverWait wait = new WebDriverWait(driver, 15);
+		WebDriverWait wait = new WebDriverWait(driver, 45);
 		WebElement element = wait.until(ExpectedConditions
 				.elementToBeClickable(by));
 		return element;
 	}
 
 	public static WebElement waitUntilClickable(WebDriver driver, WebElement elm) {
-		WebDriverWait wait = new WebDriverWait(driver, 15);
+		WebDriverWait wait = new WebDriverWait(driver, 45);
 		WebElement element = wait.until(elementToBeClickableByWebElement(elm));
 		return element;
 	}
@@ -810,7 +810,7 @@ public class WebdriverUtils {
 	}
 
 	public static void waitForLoad(WebDriver driver) {
-		waitForLoad(driver, 25);
+		waitForLoad(driver, 45);
 	}
 
 	public static void waitForLoad(WebDriver driver, long sec) {
@@ -907,7 +907,7 @@ public class WebdriverUtils {
 
 	public static void waitForElementToBeFound(WebDriver driver,
 			final By elmLocator) {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 40);
 		// sleep(600);
 		wait.until(new Function<WebDriver, Boolean>() {
 			@Override
