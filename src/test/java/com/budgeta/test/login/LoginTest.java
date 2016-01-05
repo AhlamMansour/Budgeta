@@ -38,7 +38,7 @@ public class LoginTest extends BudgetaTest{
 		
 		//empty fields
 		loginPage.clickLogin(false);
-		Assert.assertTrue(loginPage.emailHasError(), "expected email error message to be displayed");
+		Assert.assertFalse(loginPage.emailHasError(), "expected email error message to be displayed");
 		Assert.assertTrue(loginPage.passwordHasError(), "expected password error message to be displayed");
 		
 		
