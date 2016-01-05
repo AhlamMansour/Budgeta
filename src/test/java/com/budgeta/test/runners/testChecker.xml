@@ -13,6 +13,26 @@
 			<class name="com.budgeta.test.login.LoginTest"></class>
 		</classes>
 	</test>
+	<test name="Account Settings Test">
+		<classes>
+			<class name="com.budgeta.test.login.LoginTest"></class>
+		</classes>
+	</test>
+	<test name="Account Settings Test">
+		<classes>
+			<class name="com.budgeta.test.login.LoginTest"></class>
+		</classes>
+	</test>
+	<test name="Account Settings Test">
+		<classes>
+			<class name="com.budgeta.test.login.LoginTest"></class>
+		</classes>
+	</test>
+	<test name="Account Settings Test">
+		<classes>
+			<class name="com.budgeta.test.login.LoginTest"></class>
+		</classes>
+	</test>
 
 </suite>
 	
