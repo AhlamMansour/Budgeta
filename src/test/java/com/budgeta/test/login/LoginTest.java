@@ -18,12 +18,10 @@ public class LoginTest extends BudgetaTest{
 	
 	
 	@BeforeMethod
-	private void initTest() {	
-		//((JavascriptExecutor)driver).executeScript("");
-		
-		driver.manage().window().maximize();
-		
-		
+	private void initTest() {
+
+		System.out.println("The Driver size is: " + driver.manage().window().getSize());
+
 	}
 	
 	

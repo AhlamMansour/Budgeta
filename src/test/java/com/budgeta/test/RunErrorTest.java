@@ -23,7 +23,7 @@ public class RunErrorTest extends WrapperTest {
 	@BeforeMethod
 	private void initTest() {
 
-		driver.manage().window().maximize();
+		System.out.println("The Driver size is: " + driver.manage().window().getSize());
 
 	}
 
