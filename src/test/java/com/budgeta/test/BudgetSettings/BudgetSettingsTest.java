@@ -3,6 +3,7 @@ package com.budgeta.test.BudgetSettings;
 import java.io.File;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetNavigator;
@@ -33,6 +34,14 @@ public class BudgetSettingsTest extends WrapperTest {
 	SuccessPage successPage;
 	SmallPopup smallPopup;
 
+	@BeforeMethod
+	private void initTest() {	
+		
+		driver.manage().window().maximize();
+		
+		
+	}
+	
 	@TestFirst
 	@Test(enabled = true)
 	public void CreateSettingTest() {

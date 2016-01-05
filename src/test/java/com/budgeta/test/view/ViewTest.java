@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -39,6 +40,14 @@ public class ViewTest extends WrapperTest {
 	GeneralSection generalSection;
 	TopHeaderBar topHeaderBar;
 
+	@BeforeMethod
+	private void initTest() {	
+		
+		driver.manage().window().maximize();
+		
+		
+	}
+	
 	@TestFirst
 	@Test(enabled = true)
 	public void setBudgetTest() {

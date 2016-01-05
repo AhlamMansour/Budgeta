@@ -3,6 +3,7 @@ package com.budgeta.test.reporter;
 import java.io.File;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -28,6 +29,14 @@ public class ReporterTest extends WrapperTest{
 	String employee = "employee_";
 	ReportsPopup reports;
 
+	@BeforeMethod
+	private void initTest() {	
+		
+		driver.manage().window().maximize();
+		
+		
+	}
+	
 	@TestFirst
 	@Test(enabled = true)
 	public void setBudgetTest(){		

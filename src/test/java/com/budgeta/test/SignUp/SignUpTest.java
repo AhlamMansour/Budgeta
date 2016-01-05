@@ -3,6 +3,7 @@ package com.budgeta.test.SignUp;
 import java.util.Hashtable;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -24,6 +25,14 @@ public class SignUpTest extends BudgetaTest{
 	SignUpPage signUpPage ;
 	SignUpSuccessPage signUpSuccessPage;
 	String existEmail = "";
+	
+	@BeforeMethod
+	private void initTest() {	
+		
+		driver.manage().window().maximize();
+		
+		
+	}
 	
 	@Test(dataProvider = "ExcelFileLoader", enabled = true)
 	@DataProviderParams(sheet = "SignUp" , area = "CreateUser")

@@ -1,6 +1,7 @@
 package com.budgeta.test.BudgetLineSettings;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetNavigator;
@@ -25,6 +26,15 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	String currentLine = "Revenues";
 	SharePopup sharePopup;
 
+	
+	@BeforeMethod
+	private void initTest() {	
+		
+		driver.manage().window().maximize();
+		
+		
+	}
+	
 	@TestFirst
 	@Test(enabled = true)
 	public void CreateSettingTest() {

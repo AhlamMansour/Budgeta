@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -32,6 +33,15 @@ public class ActualsTest extends WrapperTest {
 	String toYear;
 	List<String> dates;
 
+	@BeforeMethod
+	private void initTest() {	
+		//((JavascriptExecutor)driver).executeScript("");
+		
+		driver.manage().window().maximize();
+		
+		
+	}
+	
 	@TestFirst
 	@Test(enabled = false)
 	public void setBudgetTest() {

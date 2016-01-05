@@ -2,6 +2,7 @@ package com.budgeta.test.accountSettings;
 
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -18,7 +19,14 @@ import com.galilsoftware.AF.core.listeners.TestNGListener;
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class AccountSettingsTest extends WrapperTest{
 	
-	
+	@BeforeMethod
+	private void initTest() {	
+		//((JavascriptExecutor)driver).executeScript("");
+		
+		driver.manage().window().maximize();
+		
+		
+	}
 	
 	@Test(enabled = true)
 	public void changeAccountSettingsTest(){

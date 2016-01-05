@@ -1,6 +1,7 @@
 package com.budgeta.test;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -19,6 +20,13 @@ public class RunErrorTest extends WrapperTest {
 	private GeneralSection general;
 	private TestModal testModal;
 
+	@BeforeMethod
+	private void initTest() {
+
+		driver.manage().window().maximize();
+
+	}
+
 	@Test(enabled = true)
 	public void errorOnRunTest() {
 		navigator = board.getBudgetNavigator();
@@ -27,8 +35,7 @@ public class RunErrorTest extends WrapperTest {
 		general = new GeneralSection();
 		testModal = general.openBugetaErrorModal();
 		testModal.clickOnRunTest();
-		Assert.assertTrue(testModal.checkErrorsResult(),
-				"The error result doesn't reflect the actual number of errors");
+		Assert.assertTrue(testModal.checkErrorsResult(), "The error result doesn't reflect the actual number of errors");
 
 	}
 

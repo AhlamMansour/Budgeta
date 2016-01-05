@@ -1,6 +1,7 @@
 package com.budgeta.test.scenarios;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -34,7 +35,13 @@ public class ScenariosTest extends WrapperTest{
     
     
     
-    
+    @BeforeMethod
+	private void initTest() {	
+		
+		driver.manage().window().maximize();
+		
+		
+	}
     
     
     @TestFirst

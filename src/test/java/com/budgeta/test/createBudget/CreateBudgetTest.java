@@ -3,6 +3,7 @@ package com.budgeta.test.createBudget;
 import java.util.Hashtable;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -23,6 +24,14 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class CreateBudgetTest extends WrapperTest{
+	
+	@BeforeMethod
+	private void initTest() {	
+		
+		driver.manage().window().maximize();
+		
+		
+	}
 	
 	@Test(dataProvider = "ExcelFileLoader", enabled = true)
 	@DataProviderParams(sheet = "CreateBudget" , area = "CreateNewBudget")
