@@ -29,7 +29,7 @@ public class SeleniumDriver {
 
 	private static final String DEFAULT_REMOTE_SELENIUM_HUB_URL = "";
 	private static URL remoteSeleniumHub;
-	private static String remoteHub = System.getProperty("webdriver.test.remoteHub");
+	private static String remoteHub = SelTestProps.get("common.hub.url");
 
 	public enum BrowserType {
 		CHROME, FIREFOX, IE
