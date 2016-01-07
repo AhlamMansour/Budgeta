@@ -15,6 +15,7 @@ import com.budgeta.pom.TopBar;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class AccountSettingsTest extends WrapperTest{
@@ -47,6 +48,7 @@ public class AccountSettingsTest extends WrapperTest{
 		
 		Assert.assertEquals(topBar.getUserName(), "Dema Ma");
 		
+		//WebdriverUtils.sleep(1000);
 		topBar.clickAccountSetting();
 		account = new AccountSettings();
 		
@@ -62,6 +64,7 @@ public class AccountSettingsTest extends WrapperTest{
 	@Test(enabled = true)
 	public void changePasswordTest(){
 		TopBar topBar = new TopBar();
+		//WebdriverUtils.sleep(1000);
 		topBar.clickChangePassword();
 		
 		ChangePassword changePassword = new ChangePassword();

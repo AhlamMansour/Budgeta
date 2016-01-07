@@ -22,7 +22,8 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	
 	public RevenuesAddSubLine() {
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("new-empty-line"));
-		dropdown = new DropDown(wrapper.findElement(By.className("select2-container")));
+		//dropdown = new DropDown(wrapper.findElement(By.className("select2-container")));
+		dropdown = new DropDown(wrapper.findElement(By.className("budget-type-dropdown")));
 	}
 	
 	

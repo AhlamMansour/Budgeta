@@ -78,7 +78,7 @@ public class ScenariosTest extends WrapperTest{
 		Assert.assertEquals(headerBar.newScenatrioText().trim(), scenarioName);
 	}
 	
-	@Test(enabled = true, priority = 2)
+	@Test(enabled = true, priority = 3)
 	public void addLineToScenarioTest(){
 		TopHeaderBar headerBar = new TopHeaderBar();
 		secondaryBoard.addSubLine("Revenues");
@@ -90,6 +90,7 @@ public class ScenariosTest extends WrapperTest{
 		String scenarioName = headerBar.newScenatrioText().trim(); 
 		headerBar.clearScenario();
 		Assert.assertFalse(secondaryBoard.isScenarioLineDisplayed(subLineName), "expected the new line to be disappear in base scenario");
+		//secondary.clickClose();
 		
 		headerBar.openScenariowindow();
 		if(headerBar.isScenarioExist(scenarioName) == true){
@@ -99,7 +100,7 @@ public class ScenariosTest extends WrapperTest{
 		
 		
 	}
-	@Test(enabled = true, priority = 3)
+	@Test(enabled = true, priority = 4)
 	public void deleteLineFromScenarioTest(){
 		MenuTrigger trigger = secondaryBoard.getSubLinSettings("Revenues", subLineName);
 		DeletePopup popup = trigger.clickDelete();
@@ -108,7 +109,7 @@ public class ScenariosTest extends WrapperTest{
 		Assert.assertFalse(secondaryBoard.isScenarioLineDisplayed(subLineName), "expected the new line to be deleted");
 	}
 	
-	@Test(enabled = true, priority = 4)
+	@Test(enabled = true, priority = 2)
 	public void renameScenarioTest(){
 		SmallPopup popup = scenarios.clickRenameScenario();
 		Assert.assertTrue(popup.isDisplayed(), "expected rename popup to be displayed");

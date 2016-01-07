@@ -24,6 +24,8 @@ public class TopBar extends AbstractPOM{
 	
 	private By userenuTriggerMenu = By.cssSelector("div.qtip-focus ul.budgeta-dropdown-list li");
 	
+	private final By noty_message = By.className("noty_text");
+	
 	private boolean isdropdownOpened(WebElement el){
 		return el.getAttribute("class").contains("open");
 	}
@@ -58,6 +60,7 @@ public class TopBar extends AbstractPOM{
 	}
 	
 	public String getUserName(){
+		WebdriverUtils.waitForElementToDisappear(driver, noty_message);
 		return userMenu.getText();
 	}
 	
@@ -117,6 +120,7 @@ public class TopBar extends AbstractPOM{
 	}
 	
 	private void openUserMenue(){
+		WebdriverUtils.waitForElementToDisappear(driver, noty_message);
 		userMenu.click();
 		WebdriverUtils.waitForElementToBeFound(driver,By.className("qtip-focus"));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("qtip-focus")));
