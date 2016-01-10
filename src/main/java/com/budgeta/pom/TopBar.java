@@ -2,12 +2,14 @@ package com.budgeta.pom;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.server.handler.FindElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
+import com.thoughtworks.selenium.Wait;
 
 public class TopBar extends AbstractPOM{
 	
@@ -138,6 +140,13 @@ public void clickChangePassword(){
 	selectUserMenuTrigger("Change Password");
 	//WebdriverUtils.waitForBudgetaLoadBar(driver);
 }
+
+public void clickMyLicense(){
+	
+	selectUserMenuTrigger("My License");
+	wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("my-license-page")));
+}
+
 	
 	@Override
 	public boolean isDisplayed() {

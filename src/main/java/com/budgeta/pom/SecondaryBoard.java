@@ -651,5 +651,5 @@ public class SecondaryBoard extends AbstractPOM {
 	@Override
 	public boolean isDisplayed() {
 		return WebdriverUtils.isDisplayed(wrapper);
-	};
+	}
 }
