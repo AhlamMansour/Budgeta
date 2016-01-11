@@ -8,31 +8,12 @@
 	</listeners>
 
 
-	<test name="Acca Settings Test">
+	<test name="Login Test">
 		<classes>
 			<class name="com.budgeta.test.login.LoginTest"></class>
 		</classes>
 	</test>
-	<test name="Account aaaa Test">
-		<classes>
-			<class name="com.budgeta.test.login.LoginTest"></class>
-		</classes>
-	</test>
-	<test name="Account ads Test">
-		<classes>
-			<class name="com.budgeta.test.login.LoginTest"></class>
-		</classes>
-	</test>
-	<test name="Account SeaTest">
-		<classes>
-			<class name="com.budgeta.test.login.LoginTest"></class>
-		</classes>
-	</test>
-	<test name="Accas Test">
-		<classes>
-			<class name="com.budgeta.test.login.LoginTest"></class>
-		</classes>
-	</test>
+
 
 </suite>
 	
