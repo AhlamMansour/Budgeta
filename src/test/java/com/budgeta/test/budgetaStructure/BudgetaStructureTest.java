@@ -66,7 +66,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		secondaryBoard.addSubLine("Revenues");
 		RevenuesAddSubLine subLine = new RevenuesAddSubLine();
 		subLine.setName(revenuesSubLine);
-		subLine.selectDropDown("Perpetual License");
+		//subLine.selectDropDown("Perpetual License");
 		subLine.clickAdd();
 
 		secondaryBoard = new SecondaryBoard();

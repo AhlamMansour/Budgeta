@@ -61,6 +61,8 @@ public class ReporterTest extends WrapperTest{
 		String budgetName = navigator.getSelectedBudgetName();
 		if(!reports.isDisplayed())
 			openReports();
+		
+		reports.selectOtherReportes();
 		reports.checkBox(boxToCheck);
 		Assert.assertTrue(reports.isBoxChecked(boxToCheck),"Expected the check box ["+boxToCheck+"] to be checked");
 		reports.clickCreate();

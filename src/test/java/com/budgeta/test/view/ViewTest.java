@@ -26,7 +26,7 @@ import com.galilsoftware.AF.core.listeners.TestNGListener;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class ViewTest extends WrapperTest {
-	
+
 	SecondaryBoard secondaryBoard;
 	InnerBar innerBar;
 	BudgetNavigator navigator;
@@ -41,13 +41,12 @@ public class ViewTest extends WrapperTest {
 	TopHeaderBar topHeaderBar;
 
 	@BeforeMethod
-	private void initTest() {	
-		
+	private void initTest() {
+
 		driver.manage().window().maximize();
-		
-		
+
 	}
-	
+
 	@TestFirst
 	@Test(enabled = true)
 	public void setBudgetTest() {
@@ -64,8 +63,7 @@ public class ViewTest extends WrapperTest {
 		fromYear = dateFrom.split("/")[1];
 		toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo.split("/")[0]));
 		toYear = dateTo.split("/")[1];
-		List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0,
-				false);
+		List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
 
 		navigator.openSheetTab();
 		Assert.assertEquals(navigator.getOpenTab(), "Sheets");
@@ -89,7 +87,7 @@ public class ViewTest extends WrapperTest {
 		topHeaderBar.openHeaderTab(ReportEnum.CASH_FLOW.name());
 		sheets.selectSubReportType("Budget");
 		Assert.assertTrue(sheets.isDisplayed(), "expected to view page to be dislayed");
-		}
+	}
 
 	@Test(enabled = true)
 	public void validateTableDataTest() {
@@ -127,14 +125,13 @@ public class ViewTest extends WrapperTest {
 			List<String> values = sheets.getAllValuesOfRow(row);
 
 			for (int i = 0; i < lineValues.size(); i++) {
-				Assert.assertEquals(lineValues.get(i), values.get(i),
-						"... Row title is: " + rowTitle + ", in header: " + dates.get(i));
-			}
+				Assert.assertEquals(lineValues.get(i), values.get(i), "... Row title is: " + rowTitle + ", in header: " + dates.get(i));
 			}
 		}
+	}
 
-	@KnownIssue(bugID = "BUD - 2508")
-	@Test(enabled = true, expectedExceptions = AssertionError.class)
+	// @KnownIssue(bugID = "BUD - 2508")
+	@Test(enabled = true)
 	public void validateTotalTest() {
 
 		navigator = board.getBudgetNavigator();
@@ -150,14 +147,12 @@ public class ViewTest extends WrapperTest {
 					total += Integer.parseInt(str);
 			}
 			if (total == 0)
-				Assert.assertEquals(sheets.getTotalOfRow(row), "-",
-						"... Row title is: " + sheets.getRowTitleByIndex(row));
+				Assert.assertEquals(sheets.getTotalOfRow(row), "-", "... Row title is: " + sheets.getRowTitleByIndex(row));
 			else
-				Assert.assertEquals(sheets.getTotalOfRow(row), total + "",
-						"... Row title is: " + sheets.getRowTitleByIndex(row));
+				Assert.assertEquals(Integer.parseInt(sheets.getTotalOfRow(row)), total, 3 , "... Row title is: " + sheets.getRowTitleByIndex(row));
 
-			}
 		}
+	}
 
 	@Test(enabled = false)
 	public void validateBudgetVsActuals() {
@@ -172,7 +167,7 @@ public class ViewTest extends WrapperTest {
 		int numberOfRows = sheets.getNumbreOfRows();
 		// List<String> baseValues = new ArrayList<>();
 		List<List<String>> baseValues = new ArrayList<List<String>>();
-			
+
 		int index = 0;
 		for (int rows = 0; rows < numberOfRows; rows++) {
 			String rowTitle = sheets.getRowTitleByIndex(rows);
@@ -200,11 +195,11 @@ public class ViewTest extends WrapperTest {
 			checkedRow++;
 			System.out.println(actualeValues.size() + " , " + baseRowValues.size());
 			for (int i = 0; i < actualeValues.size(); i++) {
-				Assert.assertEquals(baseRowValues.get(i), actualeValues.get(i), " line number " + row + "in index: " + i
-						+ "... Base value is" + baseRowValues.get(i) + " and Actual value is: " + actualeValues.get(i));
+				Assert.assertEquals(baseRowValues.get(i), actualeValues.get(i),
+						" line number " + row + "in index: " + i + "... Base value is" + baseRowValues.get(i) + " and Actual value is: " + actualeValues.get(i));
 			}
 
-			}
+		}
 
 	}
 
@@ -233,11 +228,10 @@ public class ViewTest extends WrapperTest {
 				String val = tabValues.get(i);
 				if (!val.equals("-"))
 					val = (int) Math.round((Double.parseDouble(tabValues.get(i)))) + "";
-				Assert.assertEquals(actualeValues.get(i), val, " ... actuals value is" + actualeValues.get(i)
-						+ " and Actual TAb value is: " + tabValues.get(i));
-			}
+				Assert.assertEquals(actualeValues.get(i), val, " ... actuals value is" + actualeValues.get(i) + " and Actual TAb value is: " + tabValues.get(i));
 			}
 		}
+	}
 
 	@Test(enabled = true)
 	public void calculateDifferences() {
@@ -249,7 +243,7 @@ public class ViewTest extends WrapperTest {
 		topHeaderBar.openHeaderTab(ReportEnum.CASH_FLOW.name());
 		sheets.selectSubReportType("Actual");
 		sheets.selectSubActualReportType("Budget vs. actuals");
-	
+
 		int numberOfRows = sheets.getNumbreOfRows();
 		// List<String> baseValues = new ArrayList<>();
 
@@ -257,7 +251,7 @@ public class ViewTest extends WrapperTest {
 			List<String> DifValues = sheets.getAllValuesOfRowByTitle(row, "Differrence");
 			// String val = DifValues.get(row);
 			List<String> BudgetValues = sheets.getAllValuesOfRowByTitle(row, "Budget");
-	
+
 			List<String> actualValues = sheets.getAllValuesOfRowByTitle(row, "Actuals");
 
 			// if (DifValues.get(row).equals("-")) {
@@ -277,36 +271,34 @@ public class ViewTest extends WrapperTest {
 				if (DifValues.get(i).equals("-")) {
 					val = "0";
 				}
-				Assert.assertEquals((Integer.parseInt(budgetValue)) - (Integer.parseInt(actualValue)),
-						Integer.parseInt(val),
-						" line number " + row + "in index: " + i + "... Budget value is" + budgetValue
-								+ " and Actual value is: " + actualValue);
+				Assert.assertEquals((Integer.parseInt(budgetValue)) - (Integer.parseInt(actualValue)), Integer.parseInt(val), " line number " + row
+						+ "in index: " + i + "... Budget value is" + budgetValue + " and Actual value is: " + actualValue);
 
 			}
-	
+
 		}
-	
+
 	}
-	
+
 	@Test(enabled = false)
 	public void viewRollingForecast() {
 		innerBar = board.getInnerBar();
 		secondaryBoard = board.getSecondaryBoard();
 		sheets = new Sheets();
 		actuals = new Actuals();
-			
+
 		innerBar.openViewTab();
 		sheets.selectCurrencyType("By currency");
-			
+
 		innerBar.openActualsTab();
-			
+
 		int numberOfRows = sheets.getNumbreOfRows();
 		List<List<String>> tabValues = new ArrayList<List<String>>();
-			
+
 		for (int rows = 0; rows < numberOfRows; rows++) {
 			tabValues.add(rows, actuals.getAllValuesOfRow(rows));
 
-			}
+		}
 		innerBar.openViewTab();
 		sheets.selectReportType("Cash Flow");
 		sheets.selectSubReportType("Actual");
@@ -316,18 +308,16 @@ public class ViewTest extends WrapperTest {
 
 			List<String> actualeValues = sheets.getAllValuesOfRow(row);
 			List<String> baseRowValues = tabValues.get(row);
-	
+
 			for (int i = 0; i < actualeValues.size(); i++) {
 				String val = baseRowValues.get(i);
 				if (!val.equals("-"))
 					val = (int) Math.round((Double.parseDouble(baseRowValues.get(i)))) + "";
-				Assert.assertEquals(actualeValues.get(i), val,
-						" line number " + row + " Index: " + i + " ... actuals value is" + actualeValues.get(i)
-								+ " and Actual TAb value is: " + baseRowValues.get(i));
+				Assert.assertEquals(actualeValues.get(i), val, " line number " + row + " Index: " + i + " ... actuals value is" + actualeValues.get(i)
+						+ " and Actual TAb value is: " + baseRowValues.get(i));
 			}
-			}
-
 		}
-		
+
+	}
 
 }

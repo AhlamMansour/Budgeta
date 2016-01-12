@@ -5,7 +5,7 @@ import java.util.List;
 
 public class BudgetaUtils {
 
-	static final String[] Month = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV","DEC" };
+	static final String[] Month = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV","DEC" };
 
 	public static List<String> getAllMonthsBetweenTwoMonths(String monthX, String yearX, String monthY, String yearY,
 			int payAfter, boolean isSpecificMonths) {

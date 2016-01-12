@@ -31,6 +31,18 @@ public class ReportsPopup extends AbstractPOM{
 		getCheckBoxElement(boxToCheck).click();
 	}
 	
+	public void selectOtherReportes(){
+		for(WebElement box : checkBoxes){
+			if(box.findElement(By.tagName("input")).getAttribute("value").equals("2")){
+				box.click();
+				return;
+			}
+				
+		}
+		
+	}
+	
+	
 	public boolean isBoxChecked(String checkBox){
 		return getCheckBoxElement(checkBox).findElement(By.tagName("input")).isSelected();
 	}

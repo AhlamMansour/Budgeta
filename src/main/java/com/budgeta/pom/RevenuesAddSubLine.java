@@ -6,6 +6,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.galilsoftware.AF.core.AbstractPOM;
+import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class RevenuesAddSubLine extends AbstractPOM{
@@ -16,7 +17,10 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	
 	private DropDown dropdown ;
 	
-	private By textField = By.className("inline-edit");
+	@FindBy(className = "inline-edit")
+	private WebElement textField;
+	
+	private By textFields = By.className("inline-edit");
 	private By addBtn = By.cssSelector("div.tree-edit-mode div.add-line .add-budget-line");
 
 	
@@ -28,7 +32,7 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	
 	
 	public void setName(String name){
-		WebElement field = wrapper.findElement(textField);
+		WebElement field = wrapper.findElement(textFields);
 		field.click();
 		WebdriverUtils.elementToHaveClass(field, "editing");
 		Actions act = new Actions(driver);
@@ -39,6 +43,10 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	
 	public void selectDropDown(String option){
 		dropdown.selsectOption(option);
+		WebElementUtils.hoverOverField(textField, driver, null);
+		WebElementUtils.hoverOverField(textField, driver, null);
+		
+		
 	}
 	
 	public void selectRandomOption(){
@@ -51,6 +59,7 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	
 	public void clickAdd(){
 		WebdriverUtils.elementToHaveClass(wrapper.findElement(addBtn),"enable");
+		WebElementUtils.hoverOverField(textField, driver, null);
 		wrapper.findElement(addBtn).click();
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("new-empty-line"));
 		WebdriverUtils.waitForBudgetaBusyBar(driver);

@@ -56,7 +56,7 @@ public class ScenariosTest extends WrapperTest{
 	secondaryBoard.addSubLine("Revenues");
 	RevenuesAddSubLine subLine = new RevenuesAddSubLine();
 	subLine.setName(revenuesSubLine);
-	subLine.selectDropDown("Perpetual License");
+	//subLine.selectDropDown("Perpetual License");
 	subLine.clickAdd();
 	
     }
@@ -73,6 +73,8 @@ public class ScenariosTest extends WrapperTest{
 		scenarioName = WebdriverUtils.getTimeStamp(scenarioName);
 		popup.setName(scenarioName);
 		popup.clickConfirm();
+		headerBar.openScenariowindow();
+		headerBar.selectScenario(scenarioName);
 		
 		Assert.assertTrue(headerBar.isScenarioAdded(), "expected scenario trigger to be displayed");
 		Assert.assertEquals(headerBar.newScenatrioText().trim(), scenarioName);

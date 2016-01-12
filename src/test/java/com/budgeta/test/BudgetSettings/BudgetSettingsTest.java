@@ -121,7 +121,7 @@ public class BudgetSettingsTest extends WrapperTest {
 		trigger.clickDuplicateBudget();
 		WebdriverUtils.sleep(2000);
 		String BudgetName = secondary.getSelectedBudgetName();
-
+		WebdriverUtils.sleep(2000);
 		Assert.assertEquals(BudgetName, "Copy of " + CurrentBudgetName);
 	}
 
