@@ -129,7 +129,8 @@ public class BudgetSettingsTest extends WrapperTest {
 	public void backupBudgetTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
-		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
+		BudgetNavigator navigator = new BudgetNavigator();
+		MenuTrigger trigger = navigator.getMenuTrigger();
 		String budgetName = secondary.getSelectedBudgetName();
 		trigger.clickBackupBudget();
 
@@ -178,7 +179,7 @@ public class BudgetSettingsTest extends WrapperTest {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
-		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
+		MenuTrigger trigger = navigator.getMenuTrigger();
 
 		String BudgetName = secondary.getSelectedBudgetName();
 		int num = navigator.getNumberOfBudget(BudgetName);
@@ -197,7 +198,7 @@ public class BudgetSettingsTest extends WrapperTest {
 
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
-		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
+		MenuTrigger trigger = navigator.getMenuTrigger();
 		String BeforeRenameBudget = secondary.getSelectedBudgetName();
 		trigger.clickRenameBudgetFromNav();
 		newBudgetName = WebdriverUtils.getTimeStamp(newBudgetName);

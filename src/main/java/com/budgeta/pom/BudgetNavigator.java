@@ -103,18 +103,27 @@ public class BudgetNavigator extends AbstractPOM{
 	}
     }
     
-    public void openMoreBudgetList(){
-    	moreBtn.click(); 
-    	try{
-			WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
-			wait.until(ExpectedConditions.visibilityOfElementLocated(budgetSettingTriggerMenu));
-		}
-		catch(Exception e){
-			WebElementUtils.clickElementEvent(driver,wrapper);
-			WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
-			wait.until(ExpectedConditions.visibilityOfElementLocated(budgetSettingTriggerMenu));
-		}
-    }
+//    public void openMoreBudgetList(){
+//    	moreBtn.click(); 
+//    	try{
+//			WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
+//			wait.until(ExpectedConditions.visibilityOfElementLocated(budgetSettingTriggerMenu));
+//		}
+//		catch(Exception e){
+//			WebElementUtils.clickElementEvent(driver,wrapper);
+//			WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
+//			wait.until(ExpectedConditions.visibilityOfElementLocated(budgetSettingTriggerMenu));
+//		}
+//    }
+    
+//   public void selectBudgetSettings(String option){
+//	   MenuTrigger navigatior = new MenuTrigger(moreBtn);
+//	   navigatior.selectBudgetMenuTrigger(option);
+//   }
+   
+   public MenuTrigger getMenuTrigger(){
+	  return new MenuTrigger(moreBtn);
+   }
 	
     public boolean isBudgetExist(String budgetaName) {
 	openBudgetsList();

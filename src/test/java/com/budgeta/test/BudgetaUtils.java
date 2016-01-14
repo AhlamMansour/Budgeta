@@ -3,6 +3,8 @@ package com.budgeta.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.budgeta.pom.GeneralSection;
+
 public class BudgetaUtils {
 
 	static final String[] Month = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV","DEC" };
@@ -351,12 +353,13 @@ public class BudgetaUtils {
     }
 
     public static String[] calculateEmployeeValues_Monthly(String fromMonth, String fromYear, String toMonth, String toYear, String HireDateMonth,
-	    String HireDateYear, String EndDateMonth, String EndDateYear, int baseSalary, int benefits, int bonus, String payment) {
+	    String HireDateYear, String EndDateMonth, String EndDateYear, int baseSalary, int benefits, int bonus, String payment, int yearlyVacationDays, int AvgAccruedVacation) {
 		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
 	String[] res = new String[months.size()];
 	int startIndex = 0, endIndex = res.length;
 	int fromHireToView = getNumOfMonthsBetweenTwoDate(HireDateMonth, HireDateYear, fromMonth, fromYear);
 	int fromEndHireToEndView = getNumOfMonthsBetweenTwoDate(EndDateMonth, EndDateYear, toMonth, toYear);
+	int indexOfExtra = months.indexOf(EndDateMonth+" "+EndDateYear);
 	if (getNumOfMonthsBetweenTwoDate(HireDateMonth, HireDateYear, toMonth, toYear) < 0
 		|| getNumOfMonthsBetweenTwoDate(EndDateMonth, EndDateYear, fromMonth, fromYear) > 0) {
 	    for (int i = 0; i < res.length; i++) {
@@ -367,7 +370,7 @@ public class BudgetaUtils {
 	int bonusMonths = 0;
 	int benefit = (int) Math.round(((double) benefits / 100) * baseSalary);
 	//float benefit =  (float) (((double) benefits / 100) * baseSalary);
-
+	
 	if (fromHireToView < 0) {
 	    for (int i = 0; i > fromHireToView + 1; i--) {
 		res[-i] = "-";
@@ -382,6 +385,12 @@ public class BudgetaUtils {
 	}
 
 	int sum = baseSalary + benefit;
+	double yearlyVacation = (double) yearlyVacationDays/12;
+	int worksMonth = getNumOfMonthsBetweenTwoDate(HireDateMonth, HireDateYear, EndDateMonth, EndDateYear);
+	double avgAccural = (((double) AvgAccruedVacation / 100) * (worksMonth * yearlyVacation));
+	double valueOfvactationDays = (double)baseSalary / 21.75;
+	double Extra = avgAccural * valueOfvactationDays;
+
 	//float sum = baseSalary + benefit;
 
 	for (int i = startIndex; i < endIndex; i++) {
@@ -397,6 +406,8 @@ public class BudgetaUtils {
 	for (int i = endIndex; i < res.length; i++) {
 	    res[i] = "-";
 	}
+	
+	res[indexOfExtra] = ((int) Math.round((double) Extra + sum)) + "";
 	if (payment.equals("Same month"))
 	    return res;
 

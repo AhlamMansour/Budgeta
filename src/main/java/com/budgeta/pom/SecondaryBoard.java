@@ -16,6 +16,8 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class SecondaryBoard extends AbstractPOM {
 
+	MenuTrigger trigger;
+	
 	private SecondaryBoard secondaryBoard;
 	protected BudgetaBoard board;
 
@@ -74,6 +76,10 @@ public class SecondaryBoard extends AbstractPOM {
 	@FindBy(className = "root-budget")
 	private WebElement selectedBudget;
 
+	@FindBy(css = "div.root-budget a.add-child-budget")
+	private WebElement addBudgetLines;
+	
+	
 	// private final By newLine = By.className("new-line");
 	// private final By selectBudget =
 	// By.cssSelector("aside.secondary h2 input");
@@ -90,6 +96,8 @@ public class SecondaryBoard extends AbstractPOM {
 	private final By lineSetting = By.className("budget-menu");
 
 	private final By nameField = By.className("ember-text-field");
+	
+	
 
 	// private final By shareIcon =
 	// By.cssSelector("div.actions-toggle span.budget-name  div.svg-icon");
@@ -479,12 +487,13 @@ public class SecondaryBoard extends AbstractPOM {
 	}
 
 	public void selectDropDownInLine(String dropdown, String textToSelect) {
+		addBudgetLines.click();
 		final By secondaryBarDDNLocator = By.cssSelector("ol.tree.nav");
 		WebdriverUtils.sleep(1100);
 		List<WebElement> list = driver.findElements(secondaryBarDDNLocator);
 		for (WebElement listMember : list) {
-			if (WebdriverUtils.isDisplayed(listMember) && listMember.findElement(By.className("select2-chosen")).getText().equalsIgnoreCase(dropdown))
-				selectDropDown(listMember.findElement(By.className("select2-chosen")), textToSelect);
+			if (WebdriverUtils.isDisplayed(listMember) && listMember.findElement(By.className("dropdown-value-text")).getText().equalsIgnoreCase(dropdown))
+				selectDropDown(listMember.findElement(By.className("dropdown-value-text")), textToSelect);
 		}
 	}
 
@@ -536,9 +545,14 @@ public class SecondaryBoard extends AbstractPOM {
 	}
 
 	private String getLineName(WebElement el) {
-		if (el.getAttribute("class").contains("new-line"))
-			return el.findElement(lineName).getText();
-		return el.findElement(budgetName).getText();
+		try{
+			if (el.getAttribute("class").contains("new-line"))
+				return el.findElement(lineName).getText();
+			return el.findElement(budgetName).getText();
+		}
+		catch(Exception e){
+			return "";
+		}
 		// String accountId = "";
 		// try {
 		// accountId =
@@ -638,14 +652,18 @@ public class SecondaryBoard extends AbstractPOM {
 	}
 
 	private void selectDropDown(WebElement dropdown, String textToSelect) {
-		dropdown.click();
-		wait.until(WebdriverUtils.elementToHaveAttribute(dropdown.findElement(By.xpath("./..")).findElement(By.xpath("./..")), "select2-dropdown-open"));
-		for (WebElement elm : driver.findElements(By.cssSelector("ul.select2-results li")))
-			if (elm.getText().equalsIgnoreCase(textToSelect)) {
-				elm.click();
-				break;
-			}
-		WebdriverUtils.sleep(1000);
+		trigger.selectBudgetMenuTrigger(textToSelect);
+		//WebElementUtils.hoverOverField(lineName, driver, null);
+	//	lineName.click();
+		
+		
+//		wait.until(WebdriverUtils.elementToHaveAttribute(dropdown.findElement(By.xpath("./..")).findElement(By.xpath("./..")), "select2-dropdown-open"));
+//		for (WebElement elm : driver.findElements(By.cssSelector("ul.select2-results li")))
+//			if (elm.getText().equalsIgnoreCase(textToSelect)) {
+//				elm.click();
+//				break;
+//			}
+//		WebdriverUtils.sleep(1000);
 	}
 
 	@Override

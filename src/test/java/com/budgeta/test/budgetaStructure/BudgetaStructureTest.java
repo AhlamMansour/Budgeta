@@ -66,7 +66,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		secondaryBoard.addSubLine("Revenues");
 		RevenuesAddSubLine subLine = new RevenuesAddSubLine();
 		subLine.setName(revenuesSubLine);
-		//subLine.selectDropDown("Perpetual License");
+		subLine.selectDropDown("Perpetual License");
 		subLine.clickAdd();
 
 		secondaryBoard = new SecondaryBoard();
@@ -101,7 +101,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 1)
+	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 1)
 	@DataProviderParams(sheet = "BudgetaForm", area = "GeneralRevenues")
 	public void GeneralRevenuesTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -145,7 +145,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		}
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 2)
+	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 2)
 	@DataProviderParams(sheet = "BudgetaForm", area = "Revenues Form_Details")
 	public void revenuesFormDetailsTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -273,7 +273,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 3)
+	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 3)
 	@DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale")
 	public void CostOfSaleTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -323,7 +323,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		}
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 4)
+	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 4)
 	@DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages")
 	public void CostOfSale_SalaryAndwagesTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -386,7 +386,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		}
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 5)
+	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 5)
 	@DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages_EmployeeForm")
 	public void employeeFormTest(Hashtable<String, String> data) {
 
@@ -453,7 +453,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			String yearTo = dateTo.split("/")[1];
 			secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages, employee);
 
-			int baseSalary = 0, benefits = 0, bonus = 0;
+			int baseSalary = 0, benefits = 0, bonus = 0, AvgAccruedVacation = 0, yearlyVacationDays = 0 ;
 			String monthFrom = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom.split("/")[0]));
 			String monthTo = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo.split("/")[0]));
 			String payment = data.get("Payment");
@@ -484,10 +484,15 @@ public class BudgetaStructureTest extends WrapperTest {
 				benefits = Integer.parseInt(employeeSection.getBenefits());
 			if (!employeeSection.getBonus().isEmpty())
 				bonus = Integer.parseInt(employeeSection.getBonus());
+			
+			if(!employeeSection.getAvgAccuredVacation().isEmpty())
+				AvgAccruedVacation = Integer.parseInt(employeeSection.getAvgAccuredVacation());
+			if(!employeeSection.getYearlyVacationDays().isEmpty())
+				yearlyVacationDays = Integer.parseInt(employeeSection.getYearlyVacationDays());
 
 			if (employeeSection.getSelecredTerm().equals("Monthly")) {
 				String[] expectedValues = BudgetaUtils.calculateEmployeeValues_Monthly(monthFrom, yearFrom, monthTo, yearTo, hireMonth, hireYear, endMonth,
-						endYear, baseSalary, benefits, bonus, payment);
+						endYear, baseSalary, benefits, bonus, payment, yearlyVacationDays, AvgAccruedVacation);
 				compareExpectedResults(expectedValues);
 			}
 			if (employeeSection.getSelecredTerm().equals("Yearly")) {
@@ -641,7 +646,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 9)
+	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 9)
 	@DataProviderParams(sheet = "BudgetaForm", area = "OtherIncomeAndExpenses")
 	public void OtherIncomeAndExpensesTest(Hashtable<String, String> data) {
 

@@ -34,9 +34,17 @@ public class EmplyeeSection extends AbstractPOM{
 	
 	@FindBy(name = "benefits")
 	private WebElement benefits;
+	
+	@FindBy(name = "avgAccruedVacation")
+	private WebElement avgAccruedVacation;
 
+	@FindBy(name = "yearlyVacationDays")
+	private WebElement yearlyVacationDays;
+	
 	@FindBy(css = "div.currency div.select2-container a")
 	private WebElement currency;
+	
+	
 	
 	
 	
@@ -85,6 +93,16 @@ public class EmplyeeSection extends AbstractPOM{
 		setText(benefits, value);
 	}
 	
+	public void setAvgAccuredVacation(String value){
+		setText(avgAccruedVacation, value);
+	}
+	
+	public void setYearlyVacationDays(String value){
+		setText(yearlyVacationDays, value);
+	}
+	
+	
+	
 	public String getRole(){
 		return role.getAttribute("value");
 	}
@@ -103,6 +121,14 @@ public class EmplyeeSection extends AbstractPOM{
 	
 	public String getBenefits(){
 		return benefits.getAttribute("value");
+	}
+	
+	public String getYearlyVacationDays(){
+		return yearlyVacationDays.getAttribute("value");
+	}
+	
+	public String getAvgAccuredVacation(){
+		return avgAccruedVacation.getAttribute("value");
 	}
 	/***************************************************************************/
 	private void setText(WebElement el, String value){

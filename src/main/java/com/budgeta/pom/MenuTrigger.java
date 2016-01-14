@@ -74,7 +74,7 @@ public class MenuTrigger extends AbstractPOM {
 	}
 	
 	public void clickRestoreBudget(String path){
-		openLineSettings();
+		openTrigger();
 		for(WebElement el : driver.findElements(lineSettingTriggerMenu)){
 			if(el.getText().equals("Restore")){
 				el.findElement(By.tagName("input")).sendKeys(path);
@@ -187,7 +187,7 @@ public class MenuTrigger extends AbstractPOM {
 	}
 	
 	private void selectScenarioTrigger(String option){
-		openLineSettings();
+		openTrigger();
 		for(WebElement el : driver.findElements(lineSettingTriggerMenu)){
 			if(el.getText().equals(option)){
 				el.click();
@@ -196,9 +196,10 @@ public class MenuTrigger extends AbstractPOM {
 		}
 	}
 	
-private void selectBudgetMenuTrigger(String option){
-		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.openMoreBudgetList();
+	public void selectBudgetMenuTrigger(String option){
+//		BudgetNavigator navigator = new BudgetNavigator();
+//		navigator.openMoreBudgetList();
+		openTrigger();
 		for(WebElement el : driver.findElements(budgetSettingTriggerMenu)){
 			if(el.getText().equals(option)){
 				el.click();
@@ -210,7 +211,7 @@ private void selectBudgetMenuTrigger(String option){
 
 	
 	
-	private void openLineSettings(){
+	private void openTrigger(){
 		WebElementUtils.hoverOverField(wrapper, driver, null);
 		WebdriverUtils.sleep(1000);
 		wait.until(ExpectedConditions.visibilityOf(wrapper));
@@ -225,7 +226,18 @@ private void selectBudgetMenuTrigger(String option){
 			wait.until(ExpectedConditions.visibilityOfElementLocated(triggerMenu));
 		}
 	}
+
 	
+/***********************************************************************************/	
+	public void selectOption(String option){
+		openTrigger();
+		for(WebElement el : driver.findElements(lineSettingTriggerMenu)){
+			if(el.getText().equals(option)){
+				el.click();
+				return;
+			}
+		}
+	}
 	
 
 	

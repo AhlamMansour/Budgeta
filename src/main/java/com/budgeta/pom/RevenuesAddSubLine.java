@@ -15,7 +15,8 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	@FindBy(className = "new-empty-line")
 	private WebElement wrapper;
 	
-	private DropDown dropdown ;
+//	private DropDown dropdown ;
+	MenuTrigger trigger;
 	
 	@FindBy(className = "inline-edit")
 	private WebElement textField;
@@ -27,7 +28,7 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	public RevenuesAddSubLine() {
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("new-empty-line"));
 		//dropdown = new DropDown(wrapper.findElement(By.className("select2-container")));
-		dropdown = new DropDown(wrapper.findElement(By.className("budget-type-dropdown")));
+		trigger = new MenuTrigger(wrapper.findElement(By.className("dropdown-value")));
 	}
 	
 	
@@ -42,16 +43,16 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	}
 	
 	public void selectDropDown(String option){
-		dropdown.selsectOption(option);
+		trigger.selectBudgetMenuTrigger(option);
 		WebElementUtils.hoverOverField(textField, driver, null);
-		WebElementUtils.hoverOverField(textField, driver, null);
+		textField.click();
 		
 		
 	}
 	
-	public void selectRandomOption(){
-		dropdown.selsectRandomOption();
-	}
+//	public void selectRandomOption(){
+//		trigger.selsectRandomOption();
+//	}
 	
 	public boolean isAddBtnEnable(){
 		return wrapper.findElement(addBtn).getAttribute("class").contains("enable");
