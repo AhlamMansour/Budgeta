@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.server.handler.FindElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.galilsoftware.AF.core.AbstractPOM;
@@ -26,6 +27,9 @@ public class LicenseScreen extends AbstractPOM {
 	
 	@FindBy(className = "is-admin-label")
 	private WebElement makeAdmin;
+	
+	@FindBy(css = "div.user-input input.ember-text-field")
+	private WebElement yourPlanName;
 	
 
 	
@@ -70,6 +74,11 @@ public class LicenseScreen extends AbstractPOM {
 	
 	public void makeAdminUser(){
 		makeAdmin.click();
+	}
+	
+	public String yourPlanName()
+	{
+		return yourPlanName.getText();
 	}
 	
 	@Override
