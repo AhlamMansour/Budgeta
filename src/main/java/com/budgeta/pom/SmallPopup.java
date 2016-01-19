@@ -1,5 +1,7 @@
 package com.budgeta.pom;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,7 +12,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class SmallPopup extends AbstractPOM{
 
 	@FindBy(className = "modal-content")
-	protected WebElement wrapper;
+	protected List<WebElement> wrappers;
 
 	@FindBy(id = "cancel-btn")
 	private WebElement cancelBtn;
@@ -25,8 +27,14 @@ public class SmallPopup extends AbstractPOM{
 	private By closeBtn = By.className("close");
 	
 
+	protected WebElement wrapper;
 	
-	
+	public SmallPopup(){
+		for(WebElement el : wrappers){
+			if(WebdriverUtils.isDisplayed(el))
+				wrapper = el;
+		}
+	}
 	
 	
 	
@@ -52,9 +60,9 @@ public class SmallPopup extends AbstractPOM{
 	
 	public void clickConfirm(boolean doWait){
 		confirmBtn.click();
-		WebdriverUtils.sleep(5000);
-		WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
+		WebdriverUtils.sleep(1000);
 		if(doWait){
+			WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
 			WebdriverUtils.sleep(1000);
 			WebdriverUtils.waitForBudgetaBusyBar(driver);
 			WebdriverUtils.waitForBudgetaLoadBar(driver);

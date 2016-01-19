@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.server.handler.FindElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.galilsoftware.AF.core.AbstractPOM;
@@ -25,7 +26,14 @@ public class PlansAndPricingWindow extends AbstractPOM {
 	@FindBy(className = "current-plan")
 	private WebElement currentPlan;
 	
+	@FindBy(className = "plan-box")
+	private List<WebElement> planBox;
 	
+	@FindBy(className = "subscription-end-msg")
+	private WebElement endMsg;
+	
+	@FindBy(className = "svg-icon")
+	private WebElement close;
 	
 	public void openEditUsers(){
 		
@@ -52,6 +60,24 @@ public class PlansAndPricingWindow extends AbstractPOM {
 		return yourPlan;
 	}
 	
+	public String getButtonNameOfCurrentPlanName(String option){
+		for (WebElement el : planBox){
+			String planName = el.findElement(By.tagName("h2")).getText().replaceAll("\\d", "").trim();
+			if (planName.contains("\n"))
+				planName = planName.substring(0, planName.indexOf("\n"));
+			String buttonName = el.findElement(By.className("btn")).getText();
+			if(planName.equals(option)){
+				return buttonName;
+			}
+	
+			continue;
+
+		}
+		return null;
+	}
+	
+	
+	
 
 	
 	
@@ -74,6 +100,30 @@ public class PlansAndPricingWindow extends AbstractPOM {
 		}
 
 	}
+	
+	
+	public void selectPlan2(String option, String action){
+		
+		for (WebElement el : planBox){
+			String planName = el.findElement(By.tagName("h2")).getText().replaceAll("\\d", "").trim();
+			if (planName.contains("\n"))
+				planName = planName.substring(0, planName.indexOf("\n"));
+			String buttonName = el.findElement(By.className("btn")).getText();
+			if(planName.equals(option) && buttonName.equals(action)){
+				el.findElement(By.className("btn")).click();
+				break;
+			}
+			
+			if (planName.equals(option) && !buttonName.equals(action)){
+					
+			}
+			
+			
+			
+			continue;
+
+		}
+	}
 
 	
 	public void upgradePlan(String option){
@@ -89,20 +139,34 @@ public class PlansAndPricingWindow extends AbstractPOM {
 	
 	
 	
-	public void upgradeFromBasic(String option){
-		if (getCurrentPlanName().equals("BASIC")){
-			selectPlan(option);
-			
-		}
+	public void upgradeFromBasic(String option, String action){
+//		if (getCurrentPlanName().equals("BASIC")){
+//			
+//			
+//		}
+		selectPlan2(option,action);
 	}
 	
 	
 	
 	
+	public boolean subscriptionEndMsg(String option){
+		for (WebElement el : planBox){
+			String planName = el.findElement(By.tagName("h2")).getText().replaceAll("\\d", "").trim();
+			if (planName.contains("\n"))
+				planName = planName.substring(0, planName.indexOf("\n"));
+			if (planName.equals(option) && endMsg.isDisplayed())
+				return true;
+		}
+		
+		return false;
+	}
 	
 	
-	
-	
+	public void closePriceAndPlansWin(){
+		close.click();
+		WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
+	}
 	
 	
 	@Override
