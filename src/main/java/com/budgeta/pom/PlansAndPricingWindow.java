@@ -4,6 +4,7 @@ import java.awt.Container;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.server.handler.FindElement;
 import org.openqa.selenium.support.FindBy;
@@ -155,10 +156,17 @@ public class PlansAndPricingWindow extends AbstractPOM {
 			String planName = el.findElement(By.tagName("h2")).getText().replaceAll("\\d", "").trim();
 			if (planName.contains("\n"))
 				planName = planName.substring(0, planName.indexOf("\n"));
-			if (planName.equals(option) && endMsg.isDisplayed())
-				return true;
+			if (planName.equals(option)){
+				try{
+					if(endMsg.isDisplayed())
+						return true;
+					return false;
+				}
+				catch(NoSuchElementException e){
+					return false;
+				}
+			}
 		}
-		
 		return false;
 	}
 	
