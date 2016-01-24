@@ -47,7 +47,7 @@ public class ActualsTest extends WrapperTest {
 	public void setBudgetTest() {
 
 		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.selectRandomBudgetWithPrefix("budget7_");
+		navigator.selectRandomBudgeta();
 
 		innerBar = board.getInnerBar();
 		Assert.assertTrue(innerBar.isDisplayed(),

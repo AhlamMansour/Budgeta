@@ -157,7 +157,7 @@ public class SecondaryBoard extends AbstractPOM {
 			line = getNextLineToAdd();
 			WebElement add = line.findElement(addLineBtn);
 			if (add.getAttribute("class").contains("enable")) {
-				add.findElement(By.cssSelector(".add-budget-line")).click();
+				add.findElement(By.className("add-budget-line")).click();
 				WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				WebdriverUtils.sleep(1500);

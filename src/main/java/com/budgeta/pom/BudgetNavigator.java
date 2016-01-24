@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -71,6 +72,9 @@ public class BudgetNavigator extends AbstractPOM{
 	
 	public void openInputTab(){
 		clickOnTab(inputs);
+		TopHeaderBar topBar = new TopHeaderBar();
+		topBar.openBaseTab();
+		
 	}
 	
 	public void openSheetTab(){
@@ -195,6 +199,13 @@ public class BudgetNavigator extends AbstractPOM{
     	budgetsList.get(random).click();
     	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("budget-list")));
     	WebdriverUtils.waitForElementToBeFound(driver, By.className("level-1"));
+    	openInputTab();
+    	try{
+    		driver.findElement(By.className("highlight")).isDisplayed();
+    		selectRandomBudgeta();
+    	}catch(NoSuchElementException e){
+    		
+    	}
         }
 
         public void selectRandomBudgetWithPrefix(String prefix) {
