@@ -1,5 +1,7 @@
 package com.budgeta.pom;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,8 +22,10 @@ public class DateRange extends AbstractPOM{
 	
 	private By year = By.className("year");
 	
-	private By months = By.cssSelector("div.month-picker ul li");
+	private By months = By.cssSelector("div.month-picker-control li");
 	
+	@FindBy(className = "month-picker-control")
+	private List<WebElement> controler;
 	
 	public DateRange() {
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
@@ -36,12 +40,14 @@ public class DateRange extends AbstractPOM{
 		if(wantedYear == selectedYear)
 			return;
 		while(wantedYear < selectedYear){
+			//controler.get(0).findElement(prevYear).click();
 			wrapper.findElement(prevYear).click();
 			WebdriverUtils.waitForBudgetaBusyBar(driver);
 			WebdriverUtils.waitForBudgetaLoadBar(driver);
 			selectedYear = Integer.parseInt(wrapper.findElement(year).getText());
 		}
 		while(wantedYear > selectedYear){
+			//controler.get(0).findElement(nextYear).click();
 			wrapper.findElement(nextYear).click();
 			WebdriverUtils.waitForBudgetaBusyBar(driver);
 			WebdriverUtils.waitForBudgetaLoadBar(driver);
@@ -50,10 +56,19 @@ public class DateRange extends AbstractPOM{
 		
 	}
 	
+
+		
+	
 	public void setMonth(String wantedMonth){
 		for(WebElement el : wrapper.findElements(months)){
 			if(el.getText().equalsIgnoreCase(wantedMonth)){
 				el.click();
+				NewBudgetPopup popup = new NewBudgetPopup();
+				if(popup.isDisplayed()){
+					popup.clickonName();
+				}
+				
+				//WebElementUtils.hoverOverField(driver.findElement(By.id("budget-type-dropdown")), driver, null);
 				WebdriverUtils.waitForInvisibilityOfElement(driver, wrapper, 10);
 				return;
 			}

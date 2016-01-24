@@ -214,6 +214,11 @@ public class NewBudgetPopup extends AbstractPOM{
 		return "";
 	}
 	
+	public void clickonName()
+	{
+		name.click();
+	}
+	
 	public void clickRestoreAndUpload(String path){
 		/*wrapper.findElement(restore).sendKeys(path);
 		WebdriverUtils.sleep(5000);

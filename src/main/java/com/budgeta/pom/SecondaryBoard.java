@@ -156,7 +156,7 @@ public class SecondaryBoard extends AbstractPOM {
 		while (getNextLineToAdd() != null) {
 			line = getNextLineToAdd();
 			WebElement add = line.findElement(addLineBtn);
-			if (add.getAttribute("class").contains("enable")) {
+			if (add.getAttribute("class").contains("enable") && WebdriverUtils.isVisible(add)) {
 				add.findElement(By.className("add-budget-line")).click();
 				WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
@@ -601,7 +601,7 @@ public class SecondaryBoard extends AbstractPOM {
 				if (el.findElement(lineName).getText().contains("Model") && isLineExist("Model"))
 					return null;
 				try {
-					if (el.findElement(addLineBtn).getAttribute("class").contains("enable"))
+					if (el.findElement(addLineBtn).getAttribute("class").contains("enable") && WebdriverUtils.isVisible(el.findElement(addLineBtn)))
 						return el;
 				} catch (Exception e) {
 					continue;
