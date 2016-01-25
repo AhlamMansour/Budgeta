@@ -88,7 +88,7 @@ public class SecondaryBoard extends AbstractPOM {
 
 	private final By addLinesBtn = By.className("add-child-budget");
 
-	private final By budgetName = By.className("budget-name-text");
+	private final By budgetName = By.className("budget-name-text-display");
 	private final By addLineBtn = By.cssSelector(".add.add-line");
 
 	private final By lineName = By.className("inline-edit");
@@ -538,6 +538,7 @@ public class SecondaryBoard extends AbstractPOM {
 	private WebElement getLineByName(String name) {
 		List<WebElement> lines = getLines();
 		for (WebElement el : lines) {
+			System.out.println(getLineName(el));
 			if (getLineName(el).startsWith(name))// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
 				return el;
 		}

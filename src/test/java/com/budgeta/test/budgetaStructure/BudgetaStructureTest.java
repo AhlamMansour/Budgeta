@@ -60,7 +60,8 @@ public class BudgetaStructureTest extends WrapperTest {
 
 		secondaryBoard = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.selectRandomBudgeta();
+		//navigator.selectRandomBudgeta();
+		navigator.selectRandomBudgetWithPrefix("budget7_1450228792400");
 		secondaryBoard.addAllLines();
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLine("Revenues");
