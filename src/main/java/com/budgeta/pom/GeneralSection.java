@@ -84,13 +84,13 @@ public class GeneralSection extends AbstractPOM{
 	public DateRange openDateRangeFrom(){
 		hoverToNote();
 		wrapper.findElement(dateRange_from).click();
-		return new DateRange();
+		return new DateRange("From");
 	}
 	
 	public DateRange openDateRangeTo(){
 		hoverToNote();
 		wrapper.findElement(dateRange_to).click();
-		return new DateRange();
+		return new DateRange("To");
 	}
 
 	public void hoverToNote() {

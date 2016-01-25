@@ -3,6 +3,7 @@ package com.budgeta.pom;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -194,12 +195,18 @@ public class NewBudgetPopup extends AbstractPOM{
 	
 	public DateRange openDateRangeFrom(){
 		dateRange_from.click();
-		return new DateRange();
+		return new DateRange("From");
 	}
 	
 	public DateRange openDateRangeTo(){
-		dateRange_to.click();
-		return new DateRange();
+		try{
+			if(!driver.findElement(By.cssSelector("div.qtip-focus div.month-picker-control")).isDisplayed())
+				dateRange_to.click();
+		}
+		catch(NoSuchElementException e){
+			dateRange_to.click();
+		}
+		return new DateRange("To");
 	}
 	
 	public boolean pageHasError(){

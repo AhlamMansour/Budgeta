@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -14,7 +15,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class DateRange extends AbstractPOM{
 
 	@FindBy(className = "qtip-focus")
-	private WebElement wrapper;
+	private WebElement wrappers;
 	
 	private By prevYear = By.className("left-arrow");
 	
@@ -22,10 +23,13 @@ public class DateRange extends AbstractPOM{
 	
 	private By year = By.className("year");
 	
-	private By months = By.cssSelector("div.month-picker-control li");
+	private By months = By.cssSelector("ul li");
 	
-	@FindBy(className = "month-picker-control")
-	private List<WebElement> controler;
+	private WebElement wrapper;
+	
+//	@FindBy(className = "month-picker-control")
+//	private List<WebElement> controler;
+	private By controler = By.className("month-picker-control");
 	
 	public DateRange() {
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
@@ -33,6 +37,19 @@ public class DateRange extends AbstractPOM{
 		WebElementUtils.hoverOverField(driver.findElement(By.className("qtip-focus")), driver, null);
 	}
 	
+	public DateRange(String cal) {
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("qtip-focus"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("qtip-focus")));
+		WebElementUtils.hoverOverField(driver.findElement(By.className("qtip-focus")), driver, null);
+		initializeWrapper(cal);
+	}
+	
+	private void initializeWrapper(String cal){
+		if(cal.equalsIgnoreCase("From"))
+			wrapper = wrappers.findElements(controler).get(0);
+		if(cal.equalsIgnoreCase("To"))
+			wrapper = wrappers.findElements(controler).get(1);
+	}
 	
 	public void setYear(String _year){
 		int wantedYear = Integer.parseInt(_year);
@@ -63,25 +80,22 @@ public class DateRange extends AbstractPOM{
 		for(WebElement el : wrapper.findElements(months)){
 			if(el.getText().equalsIgnoreCase(wantedMonth)){
 				el.click();
-				NewBudgetPopup popup = new NewBudgetPopup();
-				if(popup.isDisplayed()){
-					popup.clickonName();
-				}
-				
-				//WebElementUtils.hoverOverField(driver.findElement(By.id("budget-type-dropdown")), driver, null);
-				WebdriverUtils.waitForInvisibilityOfElement(driver, wrapper, 10);
+				Actions action = new Actions(driver);
+				action.moveByOffset(0, 0).build().perform();
+				WebElementUtils.hoverOverField(wrappers.findElement(By.xpath("../..")), driver, null);
+				WebdriverUtils.waitForInvisibilityOfElement(driver, wrappers, 10);
 				return;
 			}
 		}
 	}
 	
 	public void setMonthByIndex(int index){
-		wrapper.findElements(months).get(index-1).click();
-		WebdriverUtils.waitForInvisibilityOfElement(driver, wrapper, 10);
+		wrappers.findElements(months).get(index-1).click();
+		WebdriverUtils.waitForInvisibilityOfElement(driver, wrappers, 10);
 	}
 	
 	public String getDateRange(){
-		return wrapper.findElement(By.className("ember-text-field")).getAttribute("value");
+		return wrappers.findElement(By.className("ember-text-field")).getAttribute("value");
 	}
 	
 /*****************************************************************************************/
