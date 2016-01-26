@@ -66,6 +66,10 @@ public class TopBar extends AbstractPOM{
 		return userMenu.getText();
 	}
 	
+	public void waitNotyMessageTodisappear(){
+		WebdriverUtils.waitForElementToDisappear(driver, noty_message);
+	}
+	
 	public boolean isUserMenuOpened(){
 		return isdropdownOpened(userMenu);
 	}

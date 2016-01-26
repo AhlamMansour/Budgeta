@@ -81,7 +81,7 @@ public class BillingsSection extends AbstractPOM{
 	
 	public void selectOnDate(String month, String year){
 		onDate.findElement(dateRange).click();
-		DateRange range = new DateRange();
+		DateRange range = new DateRange("From");
 		range.setYear(year);
 		range.setMonth(month);
 		

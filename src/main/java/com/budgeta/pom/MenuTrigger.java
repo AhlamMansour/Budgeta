@@ -88,7 +88,7 @@ public class MenuTrigger extends AbstractPOM {
 	
 	public void clickDuplicateBudget(){
 		
-		selectBudgetMenuTrigger("Duplicate");
+		selectDuplicateFromMenuTrigger("Duplicate");
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
@@ -197,8 +197,8 @@ public class MenuTrigger extends AbstractPOM {
 	}
 	
 	public void selectBudgetMenuTrigger(String option){
-//		BudgetNavigator navigator = new BudgetNavigator();
-//		navigator.openMoreBudgetList();
+	//BudgetNavigator navigator = new BudgetNavigator();
+	//navigator.openMoreBudgetList();
 		openTrigger();
 		for(WebElement el : driver.findElements(budgetSettingTriggerMenu)){
 			if(el.getText().equals(option)){
@@ -208,6 +208,17 @@ public class MenuTrigger extends AbstractPOM {
 		}
 	}
 
+	public void selectDuplicateFromMenuTrigger(String option){
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.openMoreBudgetList();
+			//openTrigger();
+			for(WebElement el : driver.findElements(budgetSettingTriggerMenu)){
+				if(el.getText().equals(option)){
+					el.click();
+					return;
+				}
+			}
+		}
 
 	
 	

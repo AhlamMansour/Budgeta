@@ -67,6 +67,7 @@ public class AccountSettings extends AbstractPOM{
 		getSaveButton().click();
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		
 
 		
 		return new BudgetaBoard();

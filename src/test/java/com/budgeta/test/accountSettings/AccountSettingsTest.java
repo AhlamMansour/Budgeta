@@ -45,6 +45,7 @@ public class AccountSettingsTest extends WrapperTest{
 		account.setFirstName("Dema");
 		account.setLastName("Ma");
 		account.clickSave();
+		topBar.waitNotyMessageTodisappear();
 		
 		Assert.assertEquals(topBar.getUserName(), "Dema Ma");
 		

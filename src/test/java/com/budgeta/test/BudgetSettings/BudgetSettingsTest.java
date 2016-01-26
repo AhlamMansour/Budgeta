@@ -112,7 +112,7 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true, priority = 4)
+	@Test(enabled = true, priority = 6)
 	public void duplicateBudget() {
 		WebdriverUtils.sleep(1000);
 
@@ -125,7 +125,7 @@ public class BudgetSettingsTest extends WrapperTest {
 		Assert.assertEquals(BudgetName, "Copy of " + CurrentBudgetName);
 	}
 
-	@Test(enabled = true, priority = 5)
+	@Test(enabled = true, priority = 4)
 	public void backupBudgetTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -151,7 +151,7 @@ public class BudgetSettingsTest extends WrapperTest {
 	}
 	
 	
-	@Test(enabled = true, priority = 6)
+	@Test(enabled = true, priority = 5)
 	public void restoreBudgetTest(){
 		WebdriverUtils.sleep(1000);
 		secondary = board.getSecondaryBoard();

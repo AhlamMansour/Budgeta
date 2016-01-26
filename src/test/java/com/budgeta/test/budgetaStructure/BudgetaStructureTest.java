@@ -421,14 +421,14 @@ public class BudgetaStructureTest extends WrapperTest {
 		GeneralSection general = new GeneralSection();
 		Assert.assertTrue(general.isDisplayed(), "expected general section to be displayed");
 		if (!data.get("HireDate_from_year").isEmpty()) {
-			DateRange from = general.openDateRangeFrom();
-			from.setYear(data.get("HireDate_from_year"));
-			from.setMonth(data.get("HireDate_from_month"));
+			DateRange from = general.openHireDateFrom();
+			from.setHireYear(data.get("HireDate_from_year"));
+			from.setHireMonth(data.get("HireDate_from_month"));
 		}
 		if (!data.get("HireDate_to_year").isEmpty()) {
-			DateRange to = general.openDateRangeTo();
-			to.setYear(data.get("HireDate_to_year"));
-			to.setMonth(data.get("HireDate_to_month"));
+			DateRange to = general.openHireDateTo();
+			to.setHireYear(data.get("HireDate_to_year"));
+			to.setHireMonth(data.get("HireDate_to_month"));
 		}
 
 		general.hoverToNote();

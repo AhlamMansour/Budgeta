@@ -57,14 +57,14 @@ public class DateRange extends AbstractPOM{
 		if(wantedYear == selectedYear)
 			return;
 		while(wantedYear < selectedYear){
-			//controler.get(0).findElement(prevYear).click();
+			
 			wrapper.findElement(prevYear).click();
 			WebdriverUtils.waitForBudgetaBusyBar(driver);
 			WebdriverUtils.waitForBudgetaLoadBar(driver);
 			selectedYear = Integer.parseInt(wrapper.findElement(year).getText());
 		}
 		while(wantedYear > selectedYear){
-			//controler.get(0).findElement(nextYear).click();
+			
 			wrapper.findElement(nextYear).click();
 			WebdriverUtils.waitForBudgetaBusyBar(driver);
 			WebdriverUtils.waitForBudgetaLoadBar(driver);
@@ -74,7 +74,27 @@ public class DateRange extends AbstractPOM{
 	}
 	
 
+	public void setHireYear(String _year){
+		int wantedYear = Integer.parseInt(_year);
+		int selectedYear = Integer.parseInt(wrappers.findElement(year).getText());
+		if(wantedYear == selectedYear)
+			return;
+		while(wantedYear < selectedYear){
+			
+			wrappers.findElement(prevYear).click();
+			WebdriverUtils.waitForBudgetaBusyBar(driver);
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
+			selectedYear = Integer.parseInt(wrappers.findElement(year).getText());
+		}
+		while(wantedYear > selectedYear){
+			
+			wrappers.findElement(nextYear).click();
+			WebdriverUtils.waitForBudgetaBusyBar(driver);
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
+			selectedYear = Integer.parseInt(wrappers.findElement(year).getText());
+		}
 		
+	}
 	
 	public void setMonth(String wantedMonth){
 		for(WebElement el : wrapper.findElements(months)){
@@ -83,6 +103,18 @@ public class DateRange extends AbstractPOM{
 				Actions action = new Actions(driver);
 				action.moveByOffset(0, 0).build().perform();
 				WebElementUtils.hoverOverField(wrappers.findElement(By.xpath("../..")), driver, null);
+				WebdriverUtils.waitForInvisibilityOfElement(driver, wrappers, 10);
+				return;
+			}
+		}
+	}
+	
+	
+	
+	public void setHireMonth(String wantedMonth){
+		for(WebElement el : wrappers.findElements(months)){
+			if(el.getText().equalsIgnoreCase(wantedMonth)){
+				el.click();
 				WebdriverUtils.waitForInvisibilityOfElement(driver, wrappers, 10);
 				return;
 			}

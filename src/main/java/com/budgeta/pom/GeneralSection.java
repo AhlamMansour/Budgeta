@@ -92,6 +92,19 @@ public class GeneralSection extends AbstractPOM{
 		wrapper.findElement(dateRange_to).click();
 		return new DateRange("To");
 	}
+	
+	
+	public DateRange openHireDateFrom(){
+		wrapper.findElement(dateRange_from).click();
+		return new DateRange();
+	}
+	
+	public DateRange openHireDateTo(){
+		wrapper.findElement(dateRange_to).click();
+		return new DateRange();
+	}  
+	
+	
 
 	public void hoverToNote() {
 		Actions act = new Actions(driver);
