@@ -128,6 +128,8 @@ public class TopHeaderBar extends AbstractPOM{
 			if(el.getAttribute("title").equals("Clear"))
 			{
 				el.click();
+				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("div.active div.select-revision")));
 				break;
 			}
