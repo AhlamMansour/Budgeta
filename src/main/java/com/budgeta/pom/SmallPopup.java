@@ -53,9 +53,9 @@ public class SmallPopup extends AbstractPOM{
 	public void clickConfirm(){
 		confirmBtn.click();
 		WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
-		WebdriverUtils.sleep(3000);
+		//WebdriverUtils.sleep(3000);
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
-		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		//WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
 	public void clickConfirm(boolean doWait){

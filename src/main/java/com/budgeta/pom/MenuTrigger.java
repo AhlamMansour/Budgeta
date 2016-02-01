@@ -31,6 +31,9 @@ public class MenuTrigger extends AbstractPOM {
 	@FindBy(className = "root-budget")
 	private WebElement selectedBudget;
 	
+	@FindBy(className = "upload")
+	private WebElement restore;
+	
 	
 	
 	public MenuTrigger(WebElement _wrapper){
@@ -75,7 +78,7 @@ public class MenuTrigger extends AbstractPOM {
 	
 	public void clickRestoreBudget(String path){
 		openTrigger();
-		for(WebElement el : driver.findElements(lineSettingTriggerMenu)){
+		for(WebElement el : driver.findElements(budgetSettingTriggerMenu)){
 			if(el.getText().equals("Restore")){
 				el.findElement(By.tagName("input")).sendKeys(path);
 				WebdriverUtils.sleep(2000);
@@ -116,6 +119,10 @@ public class MenuTrigger extends AbstractPOM {
 		selectBudgetMenuTrigger("Backup");
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
+	
+	
+	
+	
 	
 	public CreateNewSnapshotPopup snapshotBudget(){
 		board = new BudgetaBoard();

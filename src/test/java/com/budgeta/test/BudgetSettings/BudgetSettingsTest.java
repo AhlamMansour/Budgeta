@@ -151,6 +151,27 @@ public class BudgetSettingsTest extends WrapperTest {
 	}
 	
 	
+//	@Test(enabled = true, priority = 5)
+//	public void restoreBudgetTest(){
+//		WebdriverUtils.sleep(1000);
+//		secondary = board.getSecondaryBoard();
+//		BudgetNavigator navigator = new BudgetNavigator();
+//		String budgetName = secondary.getSelectedBudgetName();
+//		int num = navigator.getNumberOfBudget(budgetName);
+//		
+//		NewBudgetPopup popup = navigator.addNewBudget();
+//		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");
+//		popup.clickRestoreAndUpload(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
+//		board = new BudgetaBoard();
+//		String message = board.getNotyMessage();
+//		Assert.assertEquals(message, "Budget restored successfully.");
+//		navigator = new BudgetNavigator();
+//		int num2 = navigator.getNumberOfBudget(budgetName);
+//		Assert.assertEquals(num2,num + 1 );
+//		
+//		
+//	}
+	
 	@Test(enabled = true, priority = 5)
 	public void restoreBudgetTest(){
 		WebdriverUtils.sleep(1000);
@@ -159,19 +180,24 @@ public class BudgetSettingsTest extends WrapperTest {
 		String budgetName = secondary.getSelectedBudgetName();
 		int num = navigator.getNumberOfBudget(budgetName);
 		
-		NewBudgetPopup popup = navigator.addNewBudget();
-		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");
-		popup.clickRestoreAndUpload(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
+//		NewBudgetPopup popup = navigator.addNewBudget();
+//		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");
+		MenuTrigger trigger = navigator.getMenuTrigger();
+		trigger.clickRestoreBudget(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
+		//popup.clickRestoreAndUpload(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
 		board = new BudgetaBoard();
+		
+		SmallPopup popup = new SmallPopup();
+		Assert.assertTrue(popup.isDisplayed(), "Confirm Restore pop up is display");
+		popup.clickConfirm();
 		String message = board.getNotyMessage();
 		Assert.assertEquals(message, "Budget restored successfully.");
-		navigator = new BudgetNavigator();
-		int num2 = navigator.getNumberOfBudget(budgetName);
-		Assert.assertEquals(num2,num + 1 );
+//		navigator = new BudgetNavigator();
+//		int num2 = navigator.getNumberOfBudget(budgetName);
+//		Assert.assertEquals(num2,num + 1 );
 		
 		
 	}
-	
 	
 
 	@Test(enabled = true, priority = 7)

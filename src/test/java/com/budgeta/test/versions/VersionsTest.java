@@ -40,7 +40,8 @@ public class VersionsTest extends WrapperTest {
 	public void createSnapshot() {
 		secondary = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.selectRandomBudgeta();
+		//navigator.selectRandomBudgeta();
+		navigator.selectRandomBudgetWithPrefix("budget7_1450919934212");
 		versions = new Versions();
 		TopHeaderBar headerBar = new TopHeaderBar();
 		headerBar.openRevisionswindow();
