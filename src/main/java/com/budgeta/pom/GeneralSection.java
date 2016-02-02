@@ -43,9 +43,19 @@ public class GeneralSection extends AbstractPOM{
 	@FindBy(className = "cancel")
 	private WebElement cancelBtn;
 
+	@FindBy(className = "ember-text-field")
+	private WebElement currencyField;
+	
+	@FindBy(className = "budgeta-type-value")
+	List<WebElement> typeValue;
+	
+	
+	
 	private By dateRange_from = By.cssSelector("div.month-picker.from input");
 	private By dateRange_to = By.cssSelector("div.month-picker.to input");
 	private By dropdown = By.className("select2-container");
+	
+	
 
 	public TestModal openBugetaErrorModal() {
 		title.click();
@@ -62,9 +72,21 @@ public class GeneralSection extends AbstractPOM{
 	}
 	
 	public String getSelectedCurrency(){
-		DropDown curr = new DropDown(currency.findElement(dropdown));
-		return curr.getSelectedValue();
+//		DropDown curr = new DropDown(currency.findElement(dropdown));
+//		return curr.getSelectedValue();
+		//return currencyField.findElement(By.tagName("placeholder")).getText();
+		for (WebElement el : typeValue){
+			if (el.findElement(By.tagName("input")).getAttribute("name").equals("currency")){
+				return el.findElement(By.tagName("input")).getAttribute("placeholder");
+			}
+			
+		}
+		
+		return null;
 	}
+	
+	
+	
 	
 	public String getDateRangeFrom(){
 		if(wrapper.findElement(dateRange_from).getAttribute("value").isEmpty()){

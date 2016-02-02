@@ -39,6 +39,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
 		navigator.selectRandomBudgeta();
+		
 
 		budgetNavigator = new BudgetNavigator();
 		budgetNavigator.openInputTab();

@@ -121,7 +121,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		to.setYear(data.get("DateRange_to_year"));
 		to.setMonth(data.get("DateRange_to_month"));
 
-		general.selectCurrency(data.get("Currency"));
+		//general.selectCurrency(data.get("Currency"));
 
 		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
 		general.setProduct(data.get("Product"));
@@ -142,7 +142,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(general.getDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
 		}
 	}
 
@@ -294,7 +294,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		to.setYear(data.get("DateRange_to_year"));
 		to.setMonth(data.get("DateRange_to_month"));
 
-		general.selectCurrency(data.get("Currency"));
+	//	general.selectCurrency(data.get("Currency"));
 
 		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
 		general.setDepartment(data.get("Departments"));
@@ -317,7 +317,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(general.getDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+		//	Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
 			Assert.assertEquals(general.getDepartment(), data.get("Departments"));
 			Assert.assertEquals(general.getGeography(), data.get("Geography"));
 			Assert.assertEquals(general.getProduct(), data.get("Product"));
@@ -529,7 +529,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		to.setYear(data.get("DateRange_to_year"));
 		to.setMonth(data.get("DateRange_to_month"));
 
-		general.selectCurrency(data.get("Currency"));
+		//general.selectCurrency(data.get("Currency"));
 
 		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
 		general.setProduct(data.get("Product"));
@@ -550,7 +550,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(general.getDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+		//	Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
 		}
 	}
 
@@ -574,7 +574,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		to.setYear(data.get("DateRange_to_year"));
 		to.setMonth(data.get("DateRange_to_month"));
 
-		general.selectCurrency(data.get("Currency"));
+		//general.selectCurrency(data.get("Currency"));
 
 		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
 		general.setGeography(data.get("Geography"));
@@ -596,7 +596,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(general.getDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
 		}
 
 	}
@@ -621,7 +621,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		to.setYear(data.get("DateRange_to_year"));
 		to.setMonth(data.get("DateRange_to_month"));
 
-		general.selectCurrency(data.get("Currency"));
+	//	general.selectCurrency(data.get("Currency"));
 
 		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
 		general.setGeography(data.get("Geography"));
@@ -643,7 +643,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(general.getDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
 		}
 
 	}
@@ -668,7 +668,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		to.setYear(data.get("DateRange_to_year"));
 		to.setMonth(data.get("DateRange_to_month"));
 
-		general.selectCurrency(data.get("Currency"));
+	//	general.selectCurrency(data.get("Currency"));
 
 		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
 		general.setGeography(data.get("Geography"));
@@ -690,7 +690,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(general.getDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
 		}
 
 	}

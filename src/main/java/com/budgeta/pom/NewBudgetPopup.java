@@ -62,6 +62,9 @@ public class NewBudgetPopup extends AbstractPOM{
 	
 	private By dropdownOptions = By.cssSelector("ul.dropdown-menu li");
 	
+	//private By dropdownOptionsCurrency = By.cssSelector("ul.select2-result-sub li");
+	@FindBy(css = "ul.select2-result-sub li")
+	private List<WebElement> dropdownOptionsCurrency;
 	
 	@FindBy(className = "upload")
 	private WebElement restore;
@@ -156,7 +159,7 @@ public class NewBudgetPopup extends AbstractPOM{
 	}
 	
 	public void setCurrency(String curr){
-		setOptionInDropDown(currency, curr);
+		setCurrencyOptionInDropDown(currency, curr);
 	}
 	
 	public void setFiscalYearStartOn(String _year){
@@ -258,6 +261,17 @@ public class NewBudgetPopup extends AbstractPOM{
 			if(el.getText().equalsIgnoreCase(option)){
 				el.click();
 				WebdriverUtils.waitForElementToDisappear(driver, By.className("open"));
+			}
+		}
+	}
+	
+	private void setCurrencyOptionInDropDown(WebElement dropdown, String option){
+		openDropDown(dropdown);
+		for(WebElement el : dropdownOptionsCurrency){
+			if(el.getText().equalsIgnoreCase(option)){
+				el.click();
+				WebdriverUtils.waitForElementToDisappear(driver, By.className("open"));
+				break;
 			}
 		}
 	}
