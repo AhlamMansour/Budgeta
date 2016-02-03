@@ -46,8 +46,8 @@ public class BudgetSettingsTest extends WrapperTest {
 	@Test(enabled = true)
 	public void CreateSettingTest() {
 		BudgetNavigator navigator = new BudgetNavigator();
-		//navigator.selectRandomBudgeta();
-		navigator.selectRandomBudgetWithPrefix("New Budget name_1454382415250");
+		navigator.selectRandomBudgeta();
+		
 		
 		secondary = new SecondaryBoard();
 		navigator.openInputTab();

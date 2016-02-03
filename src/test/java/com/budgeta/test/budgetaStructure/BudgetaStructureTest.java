@@ -18,6 +18,7 @@ import com.budgeta.pom.EmployeeAssumptions;
 import com.budgeta.pom.EmplyeeSection;
 import com.budgeta.pom.GeneralSection;
 import com.budgeta.pom.MainSection;
+import com.budgeta.pom.NewBudgetPopup;
 import com.budgeta.pom.PreviewBoard;
 import com.budgeta.pom.RevenuesAddSubLine;
 import com.budgeta.pom.SecondaryBoard;
@@ -47,12 +48,12 @@ public class BudgetaStructureTest extends WrapperTest {
 	String OtherIncomeAndExpensesSub_SubLine = "Simple_";
 	private TopHeaderBar topHeaderBar;
 
-	@BeforeMethod
-	private void initTest() {	
-		//((JavascriptExecutor)driver).executeScript("");
-		
-		driver.manage().window().maximize();
-	}
+//	@BeforeMethod
+//	private void initTest() {	
+//		//((JavascriptExecutor)driver).executeScript("");
+//		
+//		driver.manage().window().maximize();
+//	}
 
 	@TestFirst
 	@Test(enabled = true)
@@ -60,8 +61,8 @@ public class BudgetaStructureTest extends WrapperTest {
 
 		secondaryBoard = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
-		//navigator.selectRandomBudgeta();
-		navigator.selectRandomBudgetWithPrefix("budget7_1450228792400");
+		navigator.selectRandomBudgeta();
+		//navigator.selectRandomBudgetWithPrefix("budget5_1454418309045");
 		secondaryBoard.addAllLines();
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLine("Revenues");
@@ -124,7 +125,23 @@ public class BudgetaStructureTest extends WrapperTest {
 		//general.selectCurrency(data.get("Currency"));
 
 		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
-		general.setProduct(data.get("Product"));
+		
+		if (!data.get("Product").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isProductFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setProduct(data.get("Product"));
+			}
+			
+		}
+		
 		general.setNotes(data.get("Notes"));
 
 		if (data.get("ShouldPass").equals("FALSE"))
@@ -180,12 +197,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			billings.setSupportPercentage("");
 		}
 		if (data.get("ShouldPass").equals("FALSE")) {
-			Assert.assertTrue(billings.isBillingsHasError(), "expected to error in billings section");
-		} else {
-
-			general = new GeneralSection();
-			Assert.assertTrue(general.isDisplayed(), "expected general section to be displayed");
-
+			
 			DateRange from = general.openDateRangeFrom();
 			if (!data.get("DateRange_from_year").isEmpty()) {
 				from.setYear(data.get("DateRange_from_year"));
@@ -196,10 +208,66 @@ public class BudgetaStructureTest extends WrapperTest {
 				to.setYear(data.get("DateRange_to_year"));
 				to.setMonth(data.get("DateRange_to_month"));
 			}
+			
+			Assert.assertTrue(billings.isBillingsHasError(), "expected to error in billings section");
+		} else {
 
-			general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
-			general.setGeography(data.get("Geography"));
-			general.setProduct(data.get("Product"));
+			general = new GeneralSection();
+			Assert.assertTrue(general.isDisplayed(), "expected general section to be displayed");
+
+			
+
+			
+			if (!data.get("AccountNumber").isEmpty())
+			{
+				TopHeaderBar topheader = new TopHeaderBar();
+				topheader.openBudgetSettings();
+				BudgetSettings settings = new BudgetSettings();
+				boolean selectedProduct = settings.isAccountNumberFieldSelected();
+				
+				settings.clickCancel();
+				
+				if (selectedProduct)
+				{
+					general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+				}
+				
+			}
+			
+			if (!data.get("Geography").isEmpty())
+			{
+				TopHeaderBar topheader = new TopHeaderBar();
+				topheader.openBudgetSettings();
+				BudgetSettings settings = new BudgetSettings();
+				boolean selectedProduct = settings.isGeographyFieldSelected();
+				
+				settings.clickCancel();
+				
+				if (selectedProduct)
+				{
+					general.setGeography(data.get("Geography"));
+				}
+				
+			}
+			
+			
+			
+			if (!data.get("Product").isEmpty())
+			{
+				TopHeaderBar topheader = new TopHeaderBar();
+				topheader.openBudgetSettings();
+				BudgetSettings settings = new BudgetSettings();
+				boolean selectedProduct = settings.isProductFieldSelected();
+				
+				settings.clickCancel();
+				
+				if (selectedProduct)
+				{
+					general.setProduct(data.get("Product"));
+				}
+				
+			}
+			
 			general.setNotes(data.get("Notes"));
 			board.clickSaveChanges();
 			board.clickSaveChanges();
@@ -296,10 +364,56 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	//	general.selectCurrency(data.get("Currency"));
 
-		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
 		general.setDepartment(data.get("Departments"));
-		general.setGeography(data.get("Geography"));
-		general.setProduct(data.get("Product"));
+		if (!data.get("AccountNumber").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isAccountNumberFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+			}
+			
+		}
+		
+		if (!data.get("Geography").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isGeographyFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setGeography(data.get("Geography"));
+			}
+			
+		}
+		
+		
+		
+		if (!data.get("Product").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isProductFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setProduct(data.get("Product"));
+			}
+			
+		}
 		general.setNotes(data.get("Notes"));
 
 		if (data.get("ShouldPass").equals("FALSE"))
@@ -355,10 +469,56 @@ public class BudgetaStructureTest extends WrapperTest {
 		to.setYear(data.get("DateRange_to_year"));
 		to.setMonth(data.get("DateRange_to_month"));
 
-		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+		if (!data.get("AccountNumber").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isAccountNumberFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+			}
+			
+		}
+		
+		if (!data.get("Geography").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isGeographyFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setGeography(data.get("Geography"));
+			}
+			
+		}
+		
+		
+		
+		if (!data.get("Product").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isProductFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setProduct(data.get("Product"));
+			}
+			
+		}
 		general.setDepartment(data.get("Department"));
-		general.setGeography(data.get("Geography"));
-		general.setProduct(data.get("Product"));
 		general.setNotes(data.get("Notes"));
 
 		board = new BudgetaBoard();
@@ -433,10 +593,57 @@ public class BudgetaStructureTest extends WrapperTest {
 		}
 
 		general.hoverToNote();
-		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+		
 		general.setDepartment(data.get("Department"));
-		general.setGeography(data.get("Geography"));
-		general.setProduct(data.get("Product"));
+		if (!data.get("AccountNumber").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isAccountNumberFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+			}
+			
+		}
+		
+		if (!data.get("Geography").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isGeographyFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setGeography(data.get("Geography"));
+			}
+			
+		}
+		
+		
+		
+		if (!data.get("Product").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isProductFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setProduct(data.get("Product"));
+			}
+			
+		}
 		general.setNotes(data.get("Notes"));
 
 		board = new BudgetaBoard();
@@ -531,8 +738,40 @@ public class BudgetaStructureTest extends WrapperTest {
 
 		//general.selectCurrency(data.get("Currency"));
 
-		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
-		general.setProduct(data.get("Product"));
+		if (!data.get("AccountNumber").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isAccountNumberFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+			}
+			
+		}
+		
+		
+		
+		
+		if (!data.get("Product").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isProductFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setProduct(data.get("Product"));
+			}
+			
+		}
 		general.setNotes(data.get("Notes"));
 
 		if (data.get("ShouldPass").equals("FALSE"))
@@ -576,9 +815,55 @@ public class BudgetaStructureTest extends WrapperTest {
 
 		//general.selectCurrency(data.get("Currency"));
 
-		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
-		general.setGeography(data.get("Geography"));
-		general.setProduct(data.get("Product"));
+		if (!data.get("AccountNumber").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isAccountNumberFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+			}
+			
+		}
+		
+		if (!data.get("Geography").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isGeographyFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setGeography(data.get("Geography"));
+			}
+			
+		}
+		
+		
+		
+		if (!data.get("Product").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isProductFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setProduct(data.get("Product"));
+			}
+			
+		}
 		general.setNotes(data.get("Notes"));
 
 		if (data.get("ShouldPass").equals("FALSE"))
@@ -623,9 +908,56 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	//	general.selectCurrency(data.get("Currency"));
 
-		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
-		general.setGeography(data.get("Geography"));
-		general.setProduct(data.get("Product"));
+		if (!data.get("AccountNumber").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isAccountNumberFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+			}
+			
+		}
+		
+		if (!data.get("Geography").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isGeographyFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setGeography(data.get("Geography"));
+			}
+			
+		}
+		
+		
+		
+		if (!data.get("Product").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isProductFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setProduct(data.get("Product"));
+			}
+			
+		}
+		
 		general.setNotes(data.get("Notes"));
 
 		if (data.get("ShouldPass").equals("FALSE"))
@@ -670,9 +1002,56 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	//	general.selectCurrency(data.get("Currency"));
 
-		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
-		general.setGeography(data.get("Geography"));
-		general.setProduct(data.get("Product"));
+		if (!data.get("AccountNumber").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isAccountNumberFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+			}
+			
+		}
+		
+		if (!data.get("Geography").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isGeographyFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setGeography(data.get("Geography"));
+			}
+			
+		}
+		
+		
+		
+		if (!data.get("Product").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isProductFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setProduct(data.get("Product"));
+			}
+			
+		}
+		
 		general.setNotes(data.get("Notes"));
 
 		if (data.get("ShouldPass").equals("FALSE"))
@@ -739,9 +1118,56 @@ public class BudgetaStructureTest extends WrapperTest {
 			to.setMonth(data.get("DateRange_to_month"));
 		}
 
-		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
-		general.setGeography(data.get("Geography"));
-		general.setProduct(data.get("Product"));
+		if (!data.get("AccountNumber").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isAccountNumberFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
+			}
+			
+		}
+		
+		if (!data.get("Geography").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isGeographyFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setGeography(data.get("Geography"));
+			}
+			
+		}
+		
+		
+		
+		if (!data.get("Product").isEmpty())
+		{
+			TopHeaderBar topheader = new TopHeaderBar();
+			topheader.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			boolean selectedProduct = settings.isProductFieldSelected();
+			
+			settings.clickCancel();
+			
+			if (selectedProduct)
+			{
+				general.setProduct(data.get("Product"));
+			}
+			
+		}
+		
 		general.setNotes(data.get("Notes"));
 		board.clickSaveChanges();
 

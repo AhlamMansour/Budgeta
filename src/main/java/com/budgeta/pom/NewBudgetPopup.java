@@ -180,6 +180,10 @@ public class NewBudgetPopup extends AbstractPOM{
 		removeCheckBox(accountNumberCheckBox);
 	}
 	
+	public boolean isAccountNumberFieldSelected(){
+		return isCheckBoxIsSelected(accountNumberCheckBox);
+	}
+	
 	public void selectProductField(){
 		selectCheckBox(productFieldCheckBox);
 	}
@@ -188,12 +192,20 @@ public class NewBudgetPopup extends AbstractPOM{
 		removeCheckBox(productFieldCheckBox);
 	}
 	
+	public boolean isProductFieldSelected(){
+		return isCheckBoxIsSelected(productFieldCheckBox);
+	}
+	
 	public void selectGeographyField(){
 		selectCheckBox(geographyFieldCheckBox);
 	}
 	
 	public void removeGeographyField(){
 		removeCheckBox(geographyFieldCheckBox);
+	}
+	
+	public boolean isGeographyFieldSelected(){
+		return isCheckBoxIsSelected(geographyFieldCheckBox);
 	}
 	
 	public DateRange openDateRangeFrom(){
@@ -286,6 +298,14 @@ public class NewBudgetPopup extends AbstractPOM{
 		if(!checkBox.isSelected())
 			return;
 		checkBox.click();
+	}
+	
+	
+	public boolean isCheckBoxIsSelected(WebElement checkBox){
+		if(checkBox.isSelected())
+			return true;
+		else 
+			return false;
 	}
 	
 	@Override
