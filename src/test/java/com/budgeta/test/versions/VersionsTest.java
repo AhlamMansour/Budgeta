@@ -124,6 +124,7 @@ public class VersionsTest extends WrapperTest {
 		
 		versions = new Versions();
 		headerBar.openRevisionswindow();
+		WebdriverUtils.sleep(5000);
 		headerBar.selectSavedRevisions();
 		headerBar.selectVersion(snapshotName);
 
