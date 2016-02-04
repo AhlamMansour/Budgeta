@@ -254,7 +254,8 @@ public class BudgetNavigator extends AbstractPOM{
         }
 
         public int getNumbreOfExistBudgets() {
-    	return budgetsList.size();
+        	openBudgetsList();
+        	return budgetsList.size();
         }
 
         
@@ -282,6 +283,14 @@ public class BudgetNavigator extends AbstractPOM{
         	WebdriverUtils.waitForBudgetaLoadBar(driver);
         	return new NewBudgetPopup();
         }
+        
+        public LimitPopup budgetLimit(){
+        	openBudgetsList();
+        	addNewBudget.click();
+        	WebdriverUtils.waitForBudgetaLoadBar(driver);
+        	return new LimitPopup();
+        }
+        
         
         public void searchBudget(String budget){
         	WebdriverUtils.waitForElementToBeFound(driver, By.cssSelector("div.qtip-focus div.search-wrapper input"));

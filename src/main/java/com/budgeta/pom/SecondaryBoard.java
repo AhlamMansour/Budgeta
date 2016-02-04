@@ -589,6 +589,21 @@ public class SecondaryBoard extends AbstractPOM {
 		}
 		return list;
 	}
+	
+	
+	
+	public Integer getNumberOfLines() {
+		List<WebElement> list = new ArrayList<WebElement>();
+		try {
+			for (WebElement el : driver.findElement(By.cssSelector("ol.tree")).findElement(By.className("selected-root")).findElement(By.tagName("ol"))
+					.findElements(line)) {
+				if ((el.getAttribute("data-level").equals("1") || el.getAttribute("data-level").equals("2") || el.getAttribute("data-level").equals("3") || el.getAttribute("data-level").equals("4")) && WebdriverUtils.isDisplayed(el))
+					list.add(el);
+			}
+		} catch (Exception e) {
+		}
+		return list.size();
+	}
 
 	private List<WebElement> getAllLines() {
 		return driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol"))
@@ -611,6 +626,10 @@ public class SecondaryBoard extends AbstractPOM {
 		}
 		return null;
 	}
+	
+	
+	
+	
 
 	private List<WebElement> getSubLinesForLine(String lineTitle) {
 		WebElement lineElm = getLineByName(lineTitle);
