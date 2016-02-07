@@ -22,9 +22,12 @@ public class SharePopup extends SmallPopup {
     private List<WebElement> table ;
 //	private By moreInfoBtn = By.cssSelector("div.modal-body span.help-iq");
 	
+	@FindBy(className = "permission-select")
+	private WebElement permissionSelect;
 	
+    private By sharePermissions = By.cssSelector("div.select2-drop-active ul.select2-results li");
 	
-	
+
 	
 	
 	
@@ -38,6 +41,15 @@ public class SharePopup extends SmallPopup {
 		setName(_email);
 	}
 	
+	public void selectSharePermissios(String option){
+		permissionSelect.click();
+		for(WebElement el : driver.findElements(sharePermissions)){
+			if(el.getText().equals(option)){
+				el.click();
+				return;
+			}
+		}
+	}
 	
 	
 	public boolean isShareErrorAppear(){

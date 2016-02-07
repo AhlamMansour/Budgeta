@@ -42,6 +42,8 @@ public class BudgetNavigator extends AbstractPOM{
     @FindBy(id = "more-budget-actions")
     private WebElement moreBtn;
     
+    @FindBy(className = "share")
+    private WebElement shareBtn; 
     
     @FindBy(css = "div.budget-title a.active")
     private WebElement selectedBudget;
@@ -85,6 +87,13 @@ public class BudgetNavigator extends AbstractPOM{
 	
 	public String getOpenTab(){
 		return wrapper.findElement(By.cssSelector(".navigator-header-text.active")).getText();
+	}
+	
+	
+	public void openSharePopup(){
+		shareBtn.click();
+		WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
+		
 	}
 	
 	

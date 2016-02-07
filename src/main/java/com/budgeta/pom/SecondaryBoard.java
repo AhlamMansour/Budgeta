@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -531,6 +532,70 @@ public class SecondaryBoard extends AbstractPOM {
 		}
 		return false;
 	}
+	
+	
+	public void addNewline(){
+		clickAddLineButton();
+		clickAddSubLineButton();
+		List<WebElement> lines = getSubLines();
+		for (WebElement el : lines) {
+			if ((el.getAttribute("data-level").equals("2") || el.getAttribute("data-level").equals("3")) && el.getAttribute("class").contains("new-line")) {
+				
+				try {
+					if (el.findElement(addLineBtn).getAttribute("class").contains("enable") && WebdriverUtils.isVisible(el.findElement(addLineBtn))){
+						el.findElement(addLineBtn).click();
+						return;
+					}
+						
+					
+				} catch (Exception e) {
+					continue;
+				}
+			}
+		}
+		
+		
+		
+	}
+	
+	public void clickAddLineButton(){
+		List<WebElement> lines = getLines();
+		for (WebElement el : lines){
+			if (WebdriverUtils.isDisplayed(el)){
+				WebElementUtils.hoverOverField(el, driver, null);
+				try{
+					if(el.findElement(By.className("add-child-budget")).isDisplayed()){
+						el.findElement(By.className("add-child-budget")).click();
+						
+					}
+				}catch (NoSuchElementException e){
+					continue;
+				}
+				
+				
+			}
+			
+		}
+	}
+	public void clickAddSubLineButton(){
+		List<WebElement> lines = getSubLines();
+		for (WebElement el : lines){
+			if (WebdriverUtils.isDisplayed(el)){
+				WebElementUtils.hoverOverField(el, driver, null);
+				try{
+					if(el.findElement(By.className("add-child-budget")).isDisplayed()){
+						el.findElement(By.className("add-child-budget")).click();
+						
+					}
+				}catch (NoSuchElementException e){
+					continue;
+				}
+				
+				
+			}
+			
+		}
+	}
 
 	/*************************************************************************************************************/
 	/*************************************************************************************************************/
@@ -590,9 +655,21 @@ public class SecondaryBoard extends AbstractPOM {
 		return list;
 	}
 	
-	
+	private List<WebElement> getSubLines() {
+		List<WebElement> list = new ArrayList<WebElement>();
+		try {
+			for (WebElement el : driver.findElement(By.cssSelector("ol.tree")).findElement(By.className("selected-root")).findElement(By.tagName("ol"))
+					.findElements(line)) {
+				if (el.getAttribute("data-level").equals("2") ||el.getAttribute("data-level").equals("3"))
+					list.add(el);
+			}
+		} catch (Exception e) {
+		}
+		return list;
+	}
 	
 	public Integer getNumberOfLines() {
+		clickClose();
 		List<WebElement> list = new ArrayList<WebElement>();
 		try {
 			for (WebElement el : driver.findElement(By.cssSelector("ol.tree")).findElement(By.className("selected-root")).findElement(By.tagName("ol"))

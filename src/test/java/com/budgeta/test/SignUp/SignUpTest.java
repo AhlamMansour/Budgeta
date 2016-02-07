@@ -26,13 +26,13 @@ public class SignUpTest extends BudgetaTest{
 	SignUpSuccessPage signUpSuccessPage;
 	String existEmail = "";
 	
-	@BeforeMethod
-	private void initTest() {	
-		
-		driver.manage().window().maximize();
-		
-		
-	}
+//	@BeforeMethod
+//	private void initTest() {	
+//		
+//		driver.manage().window().maximize();
+//		
+//		
+//	}
 	
 	@Test(dataProvider = "ExcelFileLoader", enabled = true)
 	@DataProviderParams(sheet = "SignUp" , area = "CreateUser")
