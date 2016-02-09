@@ -80,6 +80,9 @@ public class SecondaryBoard extends AbstractPOM {
 	@FindBy(css = "div.root-budget a.add-child-budget")
 	private WebElement addBudgetLines;
 	
+	@FindBy(className = "collapse-tree")
+	private WebElement collapsedTree;
+	
 	
 	// private final By newLine = By.className("new-line");
 	// private final By selectBudget =
@@ -675,6 +678,9 @@ public class SecondaryBoard extends AbstractPOM {
 			for (WebElement el : driver.findElement(By.cssSelector("ol.tree")).findElement(By.className("selected-root")).findElement(By.tagName("ol"))
 					.findElements(line)) {
 				if ((el.getAttribute("data-level").equals("1") || el.getAttribute("data-level").equals("2") || el.getAttribute("data-level").equals("3") || el.getAttribute("data-level").equals("4")) && WebdriverUtils.isDisplayed(el))
+					if(el.getAttribute("class").contains("collapsed")){
+						collapsedTree.click();	
+					}
 					list.add(el);
 			}
 		} catch (Exception e) {

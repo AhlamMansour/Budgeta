@@ -22,7 +22,7 @@ public class SharePopup extends SmallPopup {
     private List<WebElement> table ;
 //	private By moreInfoBtn = By.cssSelector("div.modal-body span.help-iq");
 	
-	@FindBy(className = "permission-select")
+	@FindBy(css = "div.modal-content div.permission-select")
 	private WebElement permissionSelect;
 	
     private By sharePermissions = By.cssSelector("div.select2-drop-active ul.select2-results li");

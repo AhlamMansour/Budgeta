@@ -31,7 +31,8 @@ public class LicenseScreen extends AbstractPOM {
 	@FindBy(css = "div.user-input input.ember-text-field")
 	private WebElement yourPlanName;
 	
-
+	@FindBy(className = "user-line")
+	private List<WebElement> userLines;
 	
 	
 	public void clickUpdate(){
@@ -79,6 +80,12 @@ public class LicenseScreen extends AbstractPOM {
 	public String yourPlanName()
 	{
 		return yourPlanName.getText();
+	}
+	
+	
+	public Integer usersNumber()
+	{
+		return userLines.size();
 	}
 	
 	@Override

@@ -5,26 +5,64 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetNavigator;
+import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.LicenseScreen;
 import com.budgeta.pom.LimitPopup;
+import com.budgeta.pom.LoginPage;
 import com.budgeta.pom.MenuTrigger;
 import com.budgeta.pom.NewBudgetPopup;
 import com.budgeta.pom.PlansAndPricingWindow;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.SharePopup;
-import com.budgeta.pom.SuccessPage;
 import com.budgeta.pom.TopBar;
-import com.budgeta.test.WrapperTest;
+import com.budgeta.test.BudgetaTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
+import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
-public class PermissionsForStarterUserTest extends WrapperTest{
+public class PermissionsForStarterUserTest extends BudgetaTest{
 	
 	
 	String email = "ahlam_mns@hotmail.com";
 	
+	
+	@TestFirst
+	@Test(enabled = true)
+	public void setTest() {
+		driver.get(baseURL);
+
+		LoginPage loginPage = new LoginPage();
+		Assert.assertTrue(loginPage.isDisplayed(), "expected login page to be displayed");
+		
+		loginPage.setEmail("galiltest123@gmail.com");
+		loginPage.setPassword("galil1234");
+		loginPage.clickLogin(true);
+		BudgetaBoard board = new BudgetaBoard();
+		Assert.assertTrue(board.isDisplayed(), "expected budgeta board to be displayed");
+		
+		TopBar topBar = new TopBar();
+		LicenseScreen licenseScreen = new LicenseScreen();
+		if (!licenseScreen.isDisplayed()) {
+			topBar.clickMyLicense();
+		}
+
+		licenseScreen.clickUpdate();
+		PlansAndPricingWindow plans = new PlansAndPricingWindow();
+		System.out.println("Your Plan name is: " + plans.getCurrentPlanName());
+		String currentPlan = plans.getCurrentPlanName();
+		plans.closePriceAndPlansWin();
+		licenseScreen.clickCancele();
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.openInputTab();
+		
+		Assert.assertEquals(currentPlan, "STARTER", "Your current plan is Starter plan");
+	
+			
+		
+
+	}
 	
 	@Test(enabled = true)
 	public void AddNewBudget() {
@@ -61,35 +99,15 @@ public class PermissionsForStarterUserTest extends WrapperTest{
 	
 	@Test(enabled = true)
 	public void AddLines() {
-		TopBar topBar = new TopBar();
-		LicenseScreen licenseScreen = new LicenseScreen();
-		if (!licenseScreen.isDisplayed()) {
-			topBar.clickMyLicense();
-		}
-
-		licenseScreen.clickUpdate();
-		PlansAndPricingWindow plans = new PlansAndPricingWindow();
-		System.out.println("Your Plan name is: " + plans.getCurrentPlanName());
-		String currentPlan = plans.getCurrentPlanName();
-		plans.closePriceAndPlansWin();
-		licenseScreen.clickCancele();
-		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.selectRandomBudgetWithPrefix("Galil123_2");
-		navigator.openInputTab();
-		
-		SecondaryBoard secondaryBoard = board.getSecondaryBoard();
+		SecondaryBoard secondaryBoard = new SecondaryBoard();
 		int NumberOfBudgetLines = secondaryBoard.getNumberOfLines();
-
-		if (currentPlan.equals("STARTER")){
-			
 
 			while (NumberOfBudgetLines < 14){
 				secondaryBoard.addAllLines();
 				NumberOfBudgetLines = secondaryBoard.getNumberOfLines();
 				secondaryBoard.addNewline();
 				NumberOfBudgetLines = secondaryBoard.getNumberOfLines();
-				
-				
+	
 			}
 			
 			if (NumberOfBudgetLines >= 14){
@@ -100,31 +118,12 @@ public class PermissionsForStarterUserTest extends WrapperTest{
 			popup.clickCancel();
 			
 	}
-		
-		
-		}
-		
-	
+
 	}
 	
 	
 	@Test(enabled = true)
-	public void shareBudgetPermisions() {
-		TopBar topBar = new TopBar();
-		LicenseScreen licenseScreen = new LicenseScreen();
-		if (!licenseScreen.isDisplayed()) {
-			topBar.clickMyLicense();
-		}
-
-		licenseScreen.clickUpdate();
-		PlansAndPricingWindow plans = new PlansAndPricingWindow();
-		System.out.println("Your Plan name is: " + plans.getCurrentPlanName());
-		String currentPlan = plans.getCurrentPlanName();
-		plans.closePriceAndPlansWin();
-		licenseScreen.clickCancele();
-		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.selectRandomBudgetWithPrefix("Galil123_2");
-		navigator.openInputTab();
+	public void shareBudgetPermissions() {
 		
 		String prefix = email.substring(0, email.indexOf("@"));
 		String suffix = email.substring(email.indexOf("@"));
@@ -134,9 +133,9 @@ public class PermissionsForStarterUserTest extends WrapperTest{
 		String viewPermisssion = "Can View";
 		
 
-		if (currentPlan.equals("STARTER")){
-			SecondaryBoard secondary = board.getSecondaryBoard();
-			MenuTrigger trigger = secondary.getBudgetMenuTrigger();
+		
+			SecondaryBoard secondaryBoard = new SecondaryBoard();
+			MenuTrigger trigger = secondaryBoard.getBudgetMenuTrigger();
 			SharePopup popup = trigger.clickShareBudget();
 			Assert.assertTrue(popup.isDisplayed(), "expected share popup to be displayed");
 			popup.setName(email);
@@ -162,7 +161,7 @@ public class PermissionsForStarterUserTest extends WrapperTest{
 			
 
 	
-	}
+	
 
 	
 	

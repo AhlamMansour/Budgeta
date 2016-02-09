@@ -22,6 +22,9 @@ public class TopBar extends AbstractPOM{
 	@FindBy(className = "help-menu")
 	private WebElement helpMenu;
 	
+	@FindBy(css = "div.qtip-focus div.add-option")
+	private WebElement logout;
+	
 	private By dropDownOptions = By.cssSelector("ul.dropdown-menu li");
 	
 	private By userenuTriggerMenu = By.cssSelector("div.qtip-focus ul.budgeta-dropdown-list li");
@@ -87,7 +90,9 @@ public class TopBar extends AbstractPOM{
 	}*/
 	
 	public void clickLogout(){
-		clickDropDownOption(userMenu, "Logout");
+		//clickDropDownOption(userMenu, "Logout");
+		openUserMenue();
+		logout.click();
 	}
 	
 	public void clickDocumentation(){

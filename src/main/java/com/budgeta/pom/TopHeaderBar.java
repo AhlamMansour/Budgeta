@@ -64,6 +64,9 @@ public class TopHeaderBar extends AbstractPOM{
 	
 	@FindBy(className = "base-header")
 	private WebElement baseTab;
+	
+	@FindBy(className = "actuals-header")
+	private WebElement actualsTab;
 	 
 	public void openHeaderTab(String reportName) {
 		if (activereport.getText().replaceAll("[^\\d\\p{IsLetter}]+", "_").equalsIgnoreCase(reportName)) {
@@ -227,6 +230,9 @@ public class TopHeaderBar extends AbstractPOM{
 	 WebdriverUtils.elementToHaveClass(baseTab, "active");
  }
  
+ public void openActalsTab(){
+	 actualsTab.click();
+ }
  
  public String selectedVesrionName(){
 	 return newScenarioVersion.getText();
