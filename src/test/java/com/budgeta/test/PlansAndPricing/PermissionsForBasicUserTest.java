@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.AddNewUser;
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.LicenseScreen;
@@ -15,6 +16,7 @@ import com.budgeta.pom.PlansAndPricingWindow;
 import com.budgeta.pom.Scenarios;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.SharePopup;
+import com.budgeta.pom.SmallPopup;
 import com.budgeta.pom.TopBar;
 import com.budgeta.pom.TopHeaderBar;
 import com.budgeta.pom.Versions;
@@ -27,7 +29,6 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class PermissionsForBasicUserTest extends BudgetaTest {
 
-	// share -> 1 editing user/ up to 3 user/ up to 6 user
 	String snapshotName = "snapshot test_";
 	String newSnapshotName = "rename test";
 	Versions versions;
@@ -67,7 +68,7 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void AddNewBudget() {
 
 		BudgetNavigator navigator = new BudgetNavigator();
@@ -95,7 +96,7 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void addNewSnapshot() {
 		versions = new Versions();
 		TopHeaderBar headerBar = new TopHeaderBar();
@@ -108,7 +109,7 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void addNewScenario() {
 
 		TopHeaderBar headerBar = new TopHeaderBar();
@@ -122,8 +123,13 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void openActualsTab() {
+		LicenseScreen licenseScreen = new LicenseScreen();
+		if (licenseScreen.isDisplayed()) {
+			licenseScreen.clickCancele();
+		}
+
 		TopHeaderBar headerBar = new TopHeaderBar();
 		headerBar.openActalsTab();
 		LimitPopup limitPopup = new LimitPopup();
@@ -133,7 +139,7 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void shareOneEditUser() {
 		TopBar topBar = new TopBar();
 		LicenseScreen licenseScreen = new LicenseScreen();
@@ -191,22 +197,34 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 		PlansAndPricingWindow plans = new PlansAndPricingWindow();
 		licenseScreen.clickUpdate();
 		String currentEditUsers = plans.getCurrentEditingUser(plans.getCurrentPlanName());
-		// System.out.println("current edit users: " +
-		// plans.getCurrentEditingUser(plans.getCurrentPlanName()));
 		plans.closePriceAndPlansWin();
 
 		int currentUsers = licenseScreen.usersNumber();
-		// System.out.println("the current users are: " +
-		// licenseScreen.usersNumber());
 
 		if (currentEditUsers.equals("Up to 3 user")) {
 
-			if (currentUsers < 3) {
+			while (currentUsers < 3) {
+				licenseScreen.addUser();
+
+				AddNewUser addPopup = new AddNewUser();
+				Assert.assertTrue(addPopup.isDisplayed(), "Add user pop up is display");
+
+				SmallPopup smallPopup = new SmallPopup();
+
+				String prefix = email.substring(0, email.indexOf("@"));
+				String suffix = email.substring(email.indexOf("@"));
+				email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
+
+				smallPopup.setName(email);
+				addPopup.clickAddUser();
+				currentUsers = licenseScreen.usersNumber();
+
+				email = "ahlam_mns@hotmail.com";
 
 			}
 
 			if (currentUsers >= 3) {
-				
+				licenseScreen.addUser();
 				LimitPopup limitPopup = new LimitPopup();
 				Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
 				Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is open");
@@ -214,23 +232,186 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 
 			}
 		}
-		
-		
+
 		if (currentEditUsers.equals("Up to 6 user")) {
 
-			if (currentUsers < 6) {
+			while (currentUsers < 6) {
 				licenseScreen.addUser();
+
+				AddNewUser addPopup = new AddNewUser();
+				Assert.assertTrue(addPopup.isDisplayed(), "Add user pop up is display");
+
+				SmallPopup smallPopup = new SmallPopup();
+
+				String prefix = email.substring(0, email.indexOf("@"));
+				String suffix = email.substring(email.indexOf("@"));
+				email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
+
+				smallPopup.setName(email);
+				addPopup.clickAddUser();
+				currentUsers = licenseScreen.usersNumber();
+
+				email = "ahlam_mns@hotmail.com";
 
 			}
 
 			if (currentUsers >= 6) {
-				
+				licenseScreen.addUser();
 				LimitPopup limitPopup = new LimitPopup();
 				Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
 				Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is open");
 				limitPopup.clickCancel();
 
 			}
+		}
+
+	}
+
+	@Test(enabled = true)
+	public void editUserViaShare() {
+		TopBar topBar = new TopBar();
+		LicenseScreen licenseScreen = new LicenseScreen();
+		if (!licenseScreen.isDisplayed()) {
+			topBar.clickMyLicense();
+		}
+		PlansAndPricingWindow plans = new PlansAndPricingWindow();
+		licenseScreen.clickUpdate();
+		String currentEditUsers = plans.getCurrentEditingUser(plans.getCurrentPlanName());
+		plans.closePriceAndPlansWin();
+
+		int currentUsers = licenseScreen.usersNumber();
+
+		licenseScreen.clickCancele();
+
+		if (currentEditUsers.equals("Up to 3 user")) {
+
+			while (currentUsers < 3) {
+
+				String prefix = email.substring(0, email.indexOf("@"));
+				String suffix = email.substring(email.indexOf("@"));
+				email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
+
+				SecondaryBoard secondaryBoard = new SecondaryBoard();
+				MenuTrigger trigger = secondaryBoard.getBudgetMenuTrigger();
+				SharePopup popup = trigger.clickShareBudget();
+				Assert.assertTrue(popup.isDisplayed(), "expected share popup to be displayed");
+				popup.setName(email);
+				popup.selectSharePermissios("Can Modify");
+				popup.clickSend();
+
+				topBar.clickMyLicense();
+				currentUsers = licenseScreen.usersNumber();
+				licenseScreen.clickCancele();
+
+				email = "ahlam_mns@hotmail.com";
+
+			}
+
+			if (currentUsers >= 3) {
+				String prefix = email.substring(0, email.indexOf("@"));
+				String suffix = email.substring(email.indexOf("@"));
+				email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
+
+				SecondaryBoard secondaryBoard = new SecondaryBoard();
+				MenuTrigger trigger = secondaryBoard.getBudgetMenuTrigger();
+				SharePopup popup = trigger.clickShareBudget();
+				Assert.assertTrue(popup.isDisplayed(), "expected share popup to be displayed");
+				popup.setName(email);
+				popup.selectSharePermissios("Can Modify");
+				popup.clickSend();
+
+				popup.clickConfirm();
+
+				LimitPopup limitPopup = new LimitPopup();
+				Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
+				Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is open");
+				limitPopup.clickCancel();
+
+			}
+		}
+
+		if (currentEditUsers.equals("Up to 6 user")) {
+
+			while (currentUsers < 6) {
+				String prefix = email.substring(0, email.indexOf("@"));
+				String suffix = email.substring(email.indexOf("@"));
+				email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
+
+				SecondaryBoard secondaryBoard = new SecondaryBoard();
+				MenuTrigger trigger = secondaryBoard.getBudgetMenuTrigger();
+				SharePopup popup = trigger.clickShareBudget();
+				Assert.assertTrue(popup.isDisplayed(), "expected share popup to be displayed");
+				popup.setName(email);
+				popup.selectSharePermissios("Can Modify");
+				popup.clickSend();
+
+				popup.clickConfirm();
+
+				topBar.clickMyLicense();
+				currentUsers = licenseScreen.usersNumber();
+				licenseScreen.clickCancele();
+				email = "ahlam_mns@hotmail.com";
+
+			}
+
+			if (currentUsers >= 6) {
+
+				String prefix = email.substring(0, email.indexOf("@"));
+				String suffix = email.substring(email.indexOf("@"));
+				email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
+
+				SecondaryBoard secondaryBoard = new SecondaryBoard();
+				MenuTrigger trigger = secondaryBoard.getBudgetMenuTrigger();
+				SharePopup popup = trigger.clickShareBudget();
+				Assert.assertTrue(popup.isDisplayed(), "expected share popup to be displayed");
+				popup.setName(email);
+				popup.selectSharePermissios("Can Modify");
+				popup.clickSend();
+
+				LimitPopup limitPopup = new LimitPopup();
+				Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
+				Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is not open ");
+				limitPopup.clickCancel();
+
+			}
+		}
+
+	}
+
+	@Test(enabled = true)
+	public void removeUser() {
+
+		TopBar topBar = new TopBar();
+		LicenseScreen licenseScreen = new LicenseScreen();
+		if (!licenseScreen.isDisplayed()) {
+			topBar.clickMyLicense();
+		}
+
+		BudgetaBoard board = new BudgetaBoard();
+
+		if (licenseScreen.isRemoveButtonIsDisplay()) {
+			licenseScreen.removeUser();
+			String message = board.getNotyMessage();
+			Assert.assertEquals(message, "The user was removed from your billing account",
+					"The message: The user was removed from your billing account - should be displayed but found: " + message);
+		}
+
+	}
+
+	@Test(enabled = true)
+	public void makeAdminUser() {
+
+		TopBar topBar = new TopBar();
+		LicenseScreen licenseScreen = new LicenseScreen();
+		if (!licenseScreen.isDisplayed()) {
+			topBar.clickMyLicense();
+		}
+		int adminUser = licenseScreen.numberOfAdminUsers();
+
+		if (licenseScreen.isMakeAdminIsDisplay()) {
+			licenseScreen.makeAdminUser();
+			Assert.assertEquals(licenseScreen.numberOfAdminUsers(), adminUser + 1,
+					"the expected result is: " + (adminUser + 1) + "But found: " + licenseScreen.numberOfAdminUsers());
 		}
 
 	}

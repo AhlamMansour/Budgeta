@@ -671,7 +671,7 @@ public class SecondaryBoard extends AbstractPOM {
 		return list;
 	}
 	
-	public Integer getNumberOfLines() {
+	public int getNumberOfLines() {
 		clickClose();
 		List<WebElement> list = new ArrayList<WebElement>();
 		try {
