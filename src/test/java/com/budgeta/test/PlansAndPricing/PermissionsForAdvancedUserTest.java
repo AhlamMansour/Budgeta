@@ -4,9 +4,12 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.Actuals;
 import com.budgeta.pom.AddNewUser;
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetaBoard;
+import com.budgeta.pom.CreateNewScenarioPopup;
+import com.budgeta.pom.CreateNewSnapshotPopup;
 import com.budgeta.pom.LicenseScreen;
 import com.budgeta.pom.LimitPopup;
 import com.budgeta.pom.LoginPage;
@@ -27,13 +30,15 @@ import com.galilsoftware.AF.core.listeners.TestNGListener;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
-public class PermissionsForBasicUserTest extends BudgetaTest {
-
+public class PermissionsForAdvancedUserTest extends BudgetaTest{
+	
+	
 	String snapshotName = "snapshot test_";
 	String newSnapshotName = "rename test";
 	Versions versions;
 	Scenarios scenarios;
 	String email = "ahlam_mns@hotmail.com";
+	String scenarioName = "new scenario_";
 
 	@TestFirst
 	@Test(enabled = true)
@@ -43,7 +48,7 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 		LoginPage loginPage = new LoginPage();
 		Assert.assertTrue(loginPage.isDisplayed(), "expected login page to be displayed");
 
-		loginPage.setEmail("galils1@hotmail.com");
+		loginPage.setEmail("galiltest1234@gmail.com");
 		loginPage.setPassword("galil1234");
 		loginPage.clickLogin(true);
 		BudgetaBoard board = new BudgetaBoard();
@@ -64,10 +69,31 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 		BudgetNavigator navigator = new BudgetNavigator();
 		navigator.openInputTab();
 
-		Assert.assertEquals(currentPlan, "BASIC", "Your current plan is Basic plan");
+		Assert.assertEquals(currentPlan, "ADVANCED", "Your current plan is not professional plan");
 
 	}
+	
+	@Test(enabled = true, priority = 1)
+	public void openActualsTab() {
+		
+		LicenseScreen licenseScreen = new LicenseScreen();
+		if (licenseScreen.isDisplayed()) {
+			licenseScreen.clickCancele();
+		}
+		
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgeta();
 
+		
+
+		TopHeaderBar headerBar = new TopHeaderBar();
+		headerBar.openActalsTab();
+		
+		Actuals actual = new Actuals();
+		Assert.assertTrue(actual.isDisplayed(), "expected true but found: " + actual.isDisplayed());
+
+	}
+	
 	@Test(enabled = true)
 	public void AddNewBudget() {
 
@@ -95,50 +121,56 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 		}
 
 	}
-
+	
 	@Test(enabled = true)
 	public void addNewSnapshot() {
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgeta();
+		//navigator.selectRandomBudgetWithPrefix("budget7_1450919934212");
 		versions = new Versions();
 		TopHeaderBar headerBar = new TopHeaderBar();
 		headerBar.openRevisionswindow();
-		versions.createNewSnapshot();
-		LimitPopup limitPopup = new LimitPopup();
-		Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
-		Assert.assertEquals(limitPopup.getTilte(), "Versions", "Budget line limit popup is open");
-		limitPopup.clickCancel();
+		CreateNewSnapshotPopup popup = versions.createNewSnapshot();
+		Assert.assertTrue(popup.isDisplayed(), "expected create new version to be displayed");
+		snapshotName = WebdriverUtils.getTimeStamp(snapshotName);
+		popup.setName(snapshotName);
+		popup.clickConfirm(true);
+		versions = new Versions();
+
+		headerBar.openRevisionswindow();
+		headerBar.selectAllRevisions();
+		
+		Assert.assertTrue(headerBar.isVersionExist(snapshotName), "expected to add the new snapshot to view all");
+
+		versions = new Versions();
+		headerBar.selectSavedRevisions();
+		Assert.assertTrue(headerBar.isVersionExist(snapshotName), "expected to add the new snapshot to Only Snapshots");
 
 	}
 
 	@Test(enabled = true)
 	public void addNewScenario() {
-
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgeta();
 		TopHeaderBar headerBar = new TopHeaderBar();
 		headerBar.openScenariowindow();
 		scenarios = new Scenarios();
-		scenarios.createNewScenario();
-		LimitPopup limitPopup = new LimitPopup();
-		Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
-		Assert.assertEquals(limitPopup.getTilte(), "Scenarios", "Budget line limit popup is open");
-		limitPopup.clickCancel();
+		//Assert.assertTrue(scenarios.isDisplayed(), "expected scenarios to be displayed");
+		
+		CreateNewScenarioPopup popup = scenarios.createNewScenario();
+		Assert.assertTrue(popup.isDisplayed(), "expected create new scenario popup to be displayed");
+		scenarioName = WebdriverUtils.getTimeStamp(scenarioName);
+		popup.setName(scenarioName);
+		popup.clickConfirm();
+		headerBar.openScenariowindow();
+		headerBar.selectScenario(scenarioName);
+		
+		Assert.assertTrue(headerBar.isScenarioAdded(), "expected scenario trigger to be displayed");
+		Assert.assertEquals(headerBar.newScenatrioText().trim(), scenarioName);
 
 	}
-
-	@Test(enabled = true)
-	public void openActualsTab() {
-		LicenseScreen licenseScreen = new LicenseScreen();
-		if (licenseScreen.isDisplayed()) {
-			licenseScreen.clickCancele();
-		}
-
-		TopHeaderBar headerBar = new TopHeaderBar();
-		headerBar.openActalsTab();
-		LimitPopup limitPopup = new LimitPopup();
-		Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
-		Assert.assertEquals(limitPopup.getTilte(), "Actuals", "Budget line limit popup is open");
-		limitPopup.clickCancel();
-
-	}
-
+	
+	
 	@Test(enabled = true)
 	public void shareOneEditUser() {
 		TopBar topBar = new TopBar();
@@ -165,11 +197,13 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 			limitPopup.clickCancel();
 
 			licenseScreen.clickCancele();
+			
+			BudgetNavigator navigator = new BudgetNavigator();
+			navigator.openInputTab();
 
 			String prefix = email.substring(0, email.indexOf("@"));
 			String suffix = email.substring(email.indexOf("@"));
 			email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
-
 			SecondaryBoard secondaryBoard = new SecondaryBoard();
 			MenuTrigger trigger = secondaryBoard.getBudgetMenuTrigger();
 			SharePopup popup = trigger.clickShareBudget();
@@ -446,5 +480,6 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 		}
 
 	}
+
 
 }
