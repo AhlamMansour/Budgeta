@@ -39,6 +39,10 @@ public class PermissionsForStarterUserTest extends BudgetaTest{
 		loginPage.setEmail("galiltest123@gmail.com");
 		loginPage.setPassword("galil1234");
 		loginPage.clickLogin(true);
+		
+		loginPage.setPasscode("nopasscode");
+		loginPage.clicksendPasscode(true);
+		
 		BudgetaBoard board = new BudgetaBoard();
 		Assert.assertTrue(board.isDisplayed(), "expected budgeta board to be displayed");
 		

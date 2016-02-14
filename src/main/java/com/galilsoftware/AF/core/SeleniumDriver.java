@@ -17,13 +17,15 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.galilsoftware.AF.core.logging.SelTestLog;
 import com.galilsoftware.AF.core.testConfig.BaseSeleniumTest;
+
 //import org.apache.http.impl.client.DefaultHttpClient;
 
-
 /**
- * This class is used for creating all kinds of the Selenium Drivers, capabilities, user agents.. etc.
+ * This class is used for creating all kinds of the Selenium Drivers,
+ * capabilities, user agents.. etc.
+ * 
  * @author Amir Najjar
- *
+ * 
  */
 public class SeleniumDriver {
 
@@ -38,8 +40,8 @@ public class SeleniumDriver {
 	public enum UserAgent {
 		IPHONE("Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25"), ANDROID_PHONE(
 				"Mozilla/5.0 (Linux; U; Android 4.0.4; en-gb; GT-I9300 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30"), IPAD(
-						"Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53"), DESKTOP_CHROME(
-								"Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
+				"Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53"), DESKTOP_CHROME(
+				"Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
 
 		private String userAgentString;
 
@@ -63,6 +65,7 @@ public class SeleniumDriver {
 
 		/**
 		 * returns the user agent
+		 * 
 		 * @return current used user agent
 		 */
 		public String getUserAgentString() {
@@ -84,6 +87,7 @@ public class SeleniumDriver {
 
 	/**
 	 * creates a driver according to the settings in BaseSeleniumTest.java
+	 * 
 	 * @param browser
 	 * @return the newly created driver.
 	 */
@@ -101,9 +105,9 @@ public class SeleniumDriver {
 				e.printStackTrace();
 			}
 		}
-		
-		File dummyFile = new File("");;
-		
+
+		File dummyFile = new File("");
+
 		switch (browser) {
 		case CHROME:
 
@@ -112,10 +116,13 @@ public class SeleniumDriver {
 			if (userAgent != null) {
 				options.addArguments("--user-agent=" + userAgent.getUserAgentString());
 			}
-			options.addArguments("--test-type");
+			//options.addArguments("--test-type");
+		   // options.addArguments("start-maximized");
+		    //options.addArguments("user-data-dir=C:/temp/");
 			DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-			capabilities.setCapability("screen-resolution","1600x900");
+			capabilities.setCapability("screen-resolution", "1600x900");
 			System.setProperty("webdriver.chrome.logfile", "NUL");
+			capabilities.setCapability("chrome.binary", "res/chromedriver.exe");
 
 			if (!BaseSeleniumTest.local) {
 				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
@@ -127,21 +134,21 @@ public class SeleniumDriver {
 					driver = new RemoteWebDriver(remoteSeleniumHub, capabilities);
 				}
 
-			} else {				
-				File file = new File(dummyFile.getAbsolutePath()+"/drivers/chromedriver.exe");
+			} else {
+				File file = new File(dummyFile.getAbsolutePath() + "/drivers/chromedriver.exe");
 				System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
 				if (StringUtils.startsWithIgnoreCase(System.getProperty("os.name"), "Mac OS X")) {
 					System.setProperty("webdriver.chrome.driver", "drivers/chromedriver-for-macosx");
 				}
 
-				if(!file.canExecute())
+				if (!file.canExecute())
 					System.err.println("could not find chrome driver");
 				HashMap<String, Object> myPrefs = new HashMap<String, Object>();
 				myPrefs.put("profile.default_content_settings.popups", 0);
-				File downloaDir = new File(dummyFile.getAbsolutePath()+"/browserDownloads");
+				File downloaDir = new File(dummyFile.getAbsolutePath() + "/browserDownloads");
 				myPrefs.put("download.default_directory", downloaDir.getAbsolutePath());
 				options.setExperimentalOption("prefs", myPrefs);
-				
+
 				driver = new ChromeDriver(options);
 			}
 
@@ -161,9 +168,9 @@ public class SeleniumDriver {
 			if (!BaseSeleniumTest.local) {
 				driver = new RemoteWebDriver(remoteSeleniumHub, DesiredCapabilities.internetExplorer());
 			} else {
-				File file = new File(dummyFile.getAbsolutePath()+"/drivers/IEDriverServer.exe");
+				File file = new File(dummyFile.getAbsolutePath() + "/drivers/IEDriverServer.exe");
 
-				if(!file.canExecute())
+				if (!file.canExecute())
 					System.err.println("could not find IE driver");
 				System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
 				driver = new InternetExplorerDriver();
@@ -178,37 +185,42 @@ public class SeleniumDriver {
 
 	/**
 	 * returns the remote hub url
+	 * 
 	 * @return the hub url
 	 */
 	private static String gethubUrl() {
-		if (remoteHub != null && remoteHub.length() > 10) 
+		if (remoteHub != null && remoteHub.length() > 10)
 			return remoteHub;
 		return DEFAULT_REMOTE_SELENIUM_HUB_URL;
 	}
 
 	/**
 	 * returns a JSONObject containing node data.
+	 * 
 	 * @param driver
 	 * @return the JSONObject
 	 */
-//	public static JSONObject getNodeData(WebDriver driver) {
-//
-//		if (driver instanceof RemoteWebDriver) {
-//			RemoteWebDriver remoteWebDriver = (RemoteWebDriver) driver;
-//			HttpHost host = new HttpHost(gethubUrl().replace("http://", ""), 4444);
-//			// DefaultHttpClient client = new DefaultHttpClient();
-//			HttpClient client = HttpClientBuilder.create().build();
-//			URL testSessionApi;
-//			try {
-//				testSessionApi = new URL(gethubUrl() + ":4444" + "/grid/api/testsession?session=" + remoteWebDriver.getSessionId());
-//				BasicHttpEntityEnclosingRequest r = new BasicHttpEntityEnclosingRequest("POST", testSessionApi.toExternalForm());
-//				HttpResponse response = client.execute(host, r);
-//				JsonObject object = new JsonObject(EntityUtils.toString(response.getEntity()));
-//				return object;
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		} 
-//		return null;
-//	}
+	// public static JSONObject getNodeData(WebDriver driver) {
+	//
+	// if (driver instanceof RemoteWebDriver) {
+	// RemoteWebDriver remoteWebDriver = (RemoteWebDriver) driver;
+	// HttpHost host = new HttpHost(gethubUrl().replace("http://", ""), 4444);
+	// // DefaultHttpClient client = new DefaultHttpClient();
+	// HttpClient client = HttpClientBuilder.create().build();
+	// URL testSessionApi;
+	// try {
+	// testSessionApi = new URL(gethubUrl() + ":4444" +
+	// "/grid/api/testsession?session=" + remoteWebDriver.getSessionId());
+	// BasicHttpEntityEnclosingRequest r = new
+	// BasicHttpEntityEnclosingRequest("POST", testSessionApi.toExternalForm());
+	// HttpResponse response = client.execute(host, r);
+	// JsonObject object = new
+	// JsonObject(EntityUtils.toString(response.getEntity()));
+	// return object;
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// return null;
+	// }
 }

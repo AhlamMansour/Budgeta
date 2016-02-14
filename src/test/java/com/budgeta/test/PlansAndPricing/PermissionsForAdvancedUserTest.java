@@ -51,6 +51,9 @@ public class PermissionsForAdvancedUserTest extends BudgetaTest{
 		loginPage.setEmail("galiltest1234@gmail.com");
 		loginPage.setPassword("galil1234");
 		loginPage.clickLogin(true);
+		
+		loginPage.setPasscode("nopasscode");
+		loginPage.clicksendPasscode(true);
 		BudgetaBoard board = new BudgetaBoard();
 		Assert.assertTrue(board.isDisplayed(), "expected budgeta board to be displayed");
 
@@ -82,8 +85,8 @@ public class PermissionsForAdvancedUserTest extends BudgetaTest{
 		}
 		
 		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.selectRandomBudgeta();
-
+		//navigator.selectRandomBudgeta();
+		navigator.openInputTab();
 		
 
 		TopHeaderBar headerBar = new TopHeaderBar();
@@ -167,6 +170,8 @@ public class PermissionsForAdvancedUserTest extends BudgetaTest{
 		
 		Assert.assertTrue(headerBar.isScenarioAdded(), "expected scenario trigger to be displayed");
 		Assert.assertEquals(headerBar.newScenatrioText().trim(), scenarioName);
+		
+		headerBar.clearScenario();
 
 	}
 	
@@ -181,8 +186,31 @@ public class PermissionsForAdvancedUserTest extends BudgetaTest{
 
 		licenseScreen.clickUpdate();
 		PlansAndPricingWindow plans = new PlansAndPricingWindow();
-		plans.changeEditingUser(plans.getCurrentPlanName(), "1 editing user");
+		String currentPlan = plans.getCurrentPlanName();
+		String currentEdituser = plans.getCurrentEditingUser(plans.getCurrentPlanName());
+		plans.changeEditingUser(currentPlan, "1 editing user");
+		
+		if(currentPlan.equals("ADVANCED") && !currentEdituser.equals("1 editing user")){
+			
+			SmallPopup popup = new SmallPopup();
+			Assert.assertTrue(popup.isDisplayed(), "Advanced plan code pop up is displayed");
 
+			popup.setName("beadvanced");
+			popup.clickConfirm(false);
+			popup = new SmallPopup();
+			Assert.assertTrue(popup.isDisplayed(), "Advanced plan code pop up is displayed");
+			popup.clickConfirm();
+		}
+		else
+		{
+			
+			SmallPopup smallPopup = new SmallPopup();
+			if (smallPopup.isDisplayed())
+				smallPopup.clickConfirm();
+			
+		}
+		
+		
 		licenseScreen.clickUpdate();
 		String currentEditUsers = plans.getCurrentEditingUser(plans.getCurrentPlanName());
 		// System.out.println("current edit users: " +
@@ -195,10 +223,11 @@ public class PermissionsForAdvancedUserTest extends BudgetaTest{
 			Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
 			Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is open");
 			limitPopup.clickCancel();
-
 			licenseScreen.clickCancele();
 			
+			
 			BudgetNavigator navigator = new BudgetNavigator();
+			navigator.selectRandomBudgeta();
 			navigator.openInputTab();
 
 			String prefix = email.substring(0, email.indexOf("@"));

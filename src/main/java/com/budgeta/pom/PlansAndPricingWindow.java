@@ -152,7 +152,8 @@ private void selectEditingUser(String option, String action){
 			String planName = el.findElement(By.tagName("h2")).getText().replaceAll("\\d", "").trim();
 			if (planName.contains("\n"))
 				planName = planName.substring(0, planName.indexOf("\n"));
-			if(planName.equals(option) ){			
+			if(planName.equals(option) ){	
+				
 				String users = el.findElement(By.className("select2-chosen")).getText();
 				if(users.equals(action)){
 					closePriceAndPlansWin();
@@ -163,9 +164,7 @@ private void selectEditingUser(String option, String action){
 					if(edit.getText().equals(action)){
 						edit.click();
 						el.findElement(By.className("btn")).click();
-						SmallPopup popup = new SmallPopup();
-						popup.clickConfirm();
-						
+
 						return;
 					}
 				

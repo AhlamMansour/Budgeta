@@ -54,6 +54,9 @@ public class PermissionsForProfessionalUserTest extends BudgetaTest{
 		loginPage.setEmail("ahlam_mns@hotmail.com");
 		loginPage.setPassword("a1234567");
 		loginPage.clickLogin(true);
+		
+		loginPage.setPasscode("nopasscode");
+		loginPage.clicksendPasscode(true);
 		BudgetaBoard board = new BudgetaBoard();
 		Assert.assertTrue(board.isDisplayed(), "expected budgeta board to be displayed");
 
@@ -85,8 +88,9 @@ public class PermissionsForProfessionalUserTest extends BudgetaTest{
 		}
 		
 		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.selectRandomBudgeta();
-		navigator.selectRandomBudgetWithPrefix("New budget ");
+		navigator.openInputTab();
+		//navigator.selectRandomBudgeta();
+	//	navigator.selectRandomBudgetWithPrefix("New budget ");
 		
 
 		TopHeaderBar headerBar = new TopHeaderBar();
@@ -172,6 +176,8 @@ public class PermissionsForProfessionalUserTest extends BudgetaTest{
 		Assert.assertTrue(headerBar.isScenarioAdded(), "expected scenario trigger to be displayed");
 		Assert.assertEquals(headerBar.newScenatrioText().trim(), scenarioName);
 
+		headerBar.clearScenario();
+		
 	}
 	
 	
@@ -185,8 +191,18 @@ public class PermissionsForProfessionalUserTest extends BudgetaTest{
 
 		licenseScreen.clickUpdate();
 		PlansAndPricingWindow plans = new PlansAndPricingWindow();
+		String currentEdituser = plans.getCurrentEditingUser(plans.getCurrentPlanName());
 		plans.changeEditingUser(plans.getCurrentPlanName(), "1 editing user");
-
+		SmallPopup smallPopup = new SmallPopup();
+		
+		if(!currentEdituser.equals("1 editing user")){
+			smallPopup.clickConfirm();
+		}
+				
+			
+			
+				
+		
 		licenseScreen.clickUpdate();
 		String currentEditUsers = plans.getCurrentEditingUser(plans.getCurrentPlanName());
 		// System.out.println("current edit users: " +

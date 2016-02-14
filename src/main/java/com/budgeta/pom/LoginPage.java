@@ -29,8 +29,14 @@ public class LoginPage extends AbstractPOM{
 	@FindBy(id = "login-btn")
 	WebElement loginBtn;
 
+	@FindBy(css = "form.login button.right")
+	WebElement sendPasscode;
+	
 	@FindBy(id = "signup-btn")
 	WebElement signUpBtn;
+	
+	@FindBy(id = "userpasscode")
+	WebElement userPasscode;
 
 	@FindBy(id = "terms-cond-btn")
 	WebElement termsAndCondBtn;
@@ -67,12 +73,21 @@ public class LoginPage extends AbstractPOM{
 		password.sendKeys(pass);
 	}
 	
+	public void setPasscode(String pass){
+		userPasscode.clear();
+		userPasscode.sendKeys(pass);
+	}
+	
 	public void getEmail(){
 		email.getAttribute("value");
 	}
 	
 	public void getPassword(){
 		password.getAttribute("value");
+	}
+	
+	public void getPasscode(){
+		userPasscode.getAttribute("value");
 	}
 	
 	public boolean emailHasError(){
@@ -85,6 +100,25 @@ public class LoginPage extends AbstractPOM{
 	
 	public void clickLogin(boolean doLogin){
 		loginBtn.click();
+		WebdriverUtils.sleep(5000);
+		if(!doLogin){
+			WebdriverUtils.sleep(5000);
+			return;
+		}
+//		WebdriverUtils.waitForElementToDisappear(driver, By.className("login-page"));
+//		WebdriverUtils.waitForBudgetaBusyBar(driver);
+//		try{
+//			WebdriverUtils.waitForBudgetaLoadBar(driver);
+//			WebdriverUtils.waitForElementToBeFound(driver, By.className("tour-page"));
+//		}
+//		catch(Exception e){
+//			WebdriverUtils.waitForBudgetaLoadBar(driver);
+//			WebdriverUtils.waitForElementToBeFound(driver, By.className("tour-page"));
+//		}
+	}
+	
+	public void clicksendPasscode(boolean doLogin){
+		sendPasscode.click();
 		if(!doLogin){
 			WebdriverUtils.sleep(5000);
 			return;

@@ -46,6 +46,10 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 		loginPage.setEmail("galils1@hotmail.com");
 		loginPage.setPassword("galil1234");
 		loginPage.clickLogin(true);
+		
+		loginPage.setPasscode("nopasscode");
+		loginPage.clicksendPasscode(true);
+		
 		BudgetaBoard board = new BudgetaBoard();
 		Assert.assertTrue(board.isDisplayed(), "expected budgeta board to be displayed");
 
@@ -149,8 +153,13 @@ public class PermissionsForBasicUserTest extends BudgetaTest {
 
 		licenseScreen.clickUpdate();
 		PlansAndPricingWindow plans = new PlansAndPricingWindow();
+		String currentEdituser = plans.getCurrentEditingUser(plans.getCurrentPlanName());
 		plans.changeEditingUser(plans.getCurrentPlanName(), "1 editing user");
-
+		SmallPopup smallPopup = new SmallPopup();
+		
+		if(!currentEdituser.equals("1 editing user")){
+			smallPopup.clickConfirm();
+		}
 		licenseScreen.clickUpdate();
 		String currentEditUsers = plans.getCurrentEditingUser(plans.getCurrentPlanName());
 		// System.out.println("current edit users: " +

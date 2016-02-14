@@ -203,7 +203,11 @@ public class BudgetNavigator extends AbstractPOM{
     
     public void selectRandomBudgeta(){
     	openBudgetsList();
-    	int random = WebElementUtils.getRandomNumberByRange(0, getNumbreOfExistBudgets() - 1);
+    	int random = WebElementUtils.getRandomNumberByRange(0, getNumbreOfExistBudgets() - 1),i=0;
+    	while(budgetsList.get(random).findElement(By.xpath("..")).getAttribute("class").contains("hidden") && i<5){
+    		random = WebElementUtils.getRandomNumberByRange(0, getNumbreOfExistBudgets() - 1);
+    		i++;
+    	}
     	WebElementUtils.hoverOverField(budgetsList.get(random), driver, null);
     	budgetsList.get(random).click();
     	wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("budget-list")));
