@@ -227,7 +227,7 @@ public class PermissionsForAdvancedUserTest extends BudgetaTest{
 			
 			
 			BudgetNavigator navigator = new BudgetNavigator();
-			navigator.selectRandomBudgeta();
+		//	navigator.selectRandomBudgeta();
 			navigator.openInputTab();
 
 			String prefix = email.substring(0, email.indexOf("@"));

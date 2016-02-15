@@ -90,17 +90,17 @@ public class GeneralSection extends AbstractPOM{
 	
 	public String getDateRangeFrom(){
 		if(wrapper.findElement(dateRange_from).getAttribute("value").isEmpty()){
-			return wrapper.findElement(dateRange_from).getAttribute("placeholder");
+			return wrapper.findElements(dateRange_from).get(1).getAttribute("placeholder");
 			
 		}
-		return wrapper.findElement(dateRange_from).getAttribute("value");
+		return wrapper.findElements(dateRange_from).get(1).getAttribute("value");
 	}
 	
 	public String getDateRangeTo(){
 		if(wrapper.findElement(dateRange_to).getAttribute("value").isEmpty()){
-			return wrapper.findElement(dateRange_to).getAttribute("placeholder");
+			return wrapper.findElements(dateRange_to).get(1).getAttribute("placeholder");
 		}
-		return wrapper.findElement(dateRange_to).getAttribute("value");
+		return wrapper.findElements(dateRange_to).get(1).getAttribute("value");
 	}
 	
 	public DateRange openDateRangeFrom(){

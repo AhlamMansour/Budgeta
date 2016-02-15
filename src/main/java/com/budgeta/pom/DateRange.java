@@ -17,6 +17,9 @@ public class DateRange extends AbstractPOM{
 	@FindBy(className = "qtip-focus")
 	private WebElement wrappers;
 	
+	@FindBy(css = "div.qtip-content div.top")
+	private WebElement topYearsWrappers;
+	
 	private By prevYear = By.className("left-arrow");
 	
 	private By nextYear = By.className("right-arrow");
@@ -48,7 +51,7 @@ public class DateRange extends AbstractPOM{
 		if(cal.equalsIgnoreCase("From"))
 			wrapper = wrappers.findElements(controler).get(0);
 		if(cal.equalsIgnoreCase("To"))
-			wrapper = wrappers.findElements(controler).get(1);
+			wrapper = wrappers.findElements(controler).get(0);
 	}
 	
 	public void setYear(String _year){
@@ -128,6 +131,18 @@ public class DateRange extends AbstractPOM{
 	
 	public String getDateRange(){
 		return wrappers.findElement(By.className("ember-text-field")).getAttribute("value");
+	}
+	
+	
+	public int getFromYear(){
+		int fromYear = Integer.parseInt(topYearsWrappers.findElement(By.cssSelector("div.left-top-inner div.year")).getText());
+		return fromYear;
+	}
+	
+	
+	public int getToYear(){
+		int toYear = Integer.parseInt(topYearsWrappers.findElement(By.cssSelector("div.right-top-inner div.year")).getText());
+		return toYear;
 	}
 	
 /*****************************************************************************************/
