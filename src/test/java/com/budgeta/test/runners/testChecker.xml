@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Budgeta Tests" parallel="tests" thread-count="1"
+<suite name="Budgeta Tests" parallel="tests" thread-count="3"
 	verbose="3">
 
 	<listeners>
@@ -8,9 +8,21 @@
 	</listeners>
 
 
-	<test name="Login Test">
+	<test name="Budgeta Structure Test">
 		<classes>
-			<class name="com.budgeta.test.login.LoginTest"></class>
+			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest"></class>
+		</classes>
+	</test>
+	
+	<test name="Budgeta  Test">
+		<classes>
+			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part2"></class>
+		</classes>
+	</test>
+	
+	<test name="Budgeta Structure ">
+		<classes>
+			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part3"></class>
 		</classes>
 	</test>
 

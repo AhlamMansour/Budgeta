@@ -68,6 +68,18 @@
 			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest"></class>
 		</classes>
 	</test>
+	
+	<test name="Budgeta Structure Test Part2">
+		<classes>
+			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part2"></class>
+		</classes>
+	</test>
+	
+	<test name="Budgeta Structure Test Part3">
+		<classes>
+			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part3"></class>
+		</classes>
+	</test>
 
 	<test name="Budgeta Settings">
 		<classes>

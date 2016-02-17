@@ -2,9 +2,7 @@ package com.budgeta.test.budgetaStructure;
 
 import java.util.Hashtable;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -18,7 +16,6 @@ import com.budgeta.pom.EmployeeAssumptions;
 import com.budgeta.pom.EmplyeeSection;
 import com.budgeta.pom.GeneralSection;
 import com.budgeta.pom.MainSection;
-import com.budgeta.pom.NewBudgetPopup;
 import com.budgeta.pom.PreviewBoard;
 import com.budgeta.pom.RevenuesAddSubLine;
 import com.budgeta.pom.SecondaryBoard;
@@ -26,6 +23,7 @@ import com.budgeta.pom.TopHeaderBar;
 import com.budgeta.test.BudgetaTest;
 import com.budgeta.test.BudgetaUtils;
 import com.budgeta.test.WrapperTest;
+import com.budgeta.test.common.BudgetaCommon;
 import com.galilsoftware.AF.core.listeners.DataProviderParams;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
@@ -40,6 +38,8 @@ public class BudgetaStructureTest extends WrapperTest {
 	String revenues = "Revenues";
 	String cost_of_revenues = "Cost of Revenues";
 	String cost_of_revenues_subLine = "Professional Services";
+	String OperationalExpenses = "Operational Expenses";
+	String OperationalExpensesSubline = "Salary & wages";
 	String salary_and_wages = "Salary & wages";
 	String employee = "employee_";
 
@@ -58,14 +58,15 @@ public class BudgetaStructureTest extends WrapperTest {
 	@TestFirst
 	@Test(enabled = true)
 	public void setBudgetTest() {
-
+		BudgetaCommon create = new BudgetaCommon();
+		create.createBudget();
 		secondaryBoard = board.getSecondaryBoard();
-		BudgetNavigator navigator = new BudgetNavigator();
+		//BudgetNavigator navigator = new BudgetNavigator();
 		//navigator.selectRandomBudgeta();
-		navigator.selectRandomBudgetWithPrefix("New Budget name_14545161527031454516306527");
-		navigator.openInputTab();
+		//navigator.selectRandomBudgetWithPrefix("aaaa");
+		//navigator.openInputTab();
 		
-		secondaryBoard.addAllLines();
+		secondaryBoard.addAllBudgetLines();
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLine("Revenues");
 		RevenuesAddSubLine subLine = new RevenuesAddSubLine();
@@ -79,9 +80,10 @@ public class BudgetaStructureTest extends WrapperTest {
 		secondaryBoard.addSubLineForLine(cost_of_revenues, cost_of_revenues_subLine);
 		secondaryBoard = new SecondaryBoard();
 
-		secondaryBoard.addSubLineForSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages);
+		//secondaryBoard.addSubLineForSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages);
+		secondaryBoard.addSubLine(OperationalExpenses);
 		secondaryBoard = new SecondaryBoard();
-		secondaryBoard.openAddChild(salary_and_wages, 3);
+		secondaryBoard.openAddChild(OperationalExpensesSubline, 2);
 		subLine = new RevenuesAddSubLine();
 		employee = WebdriverUtils.getTimeStamp(employee);
 		subLine.setName(employee);
@@ -120,9 +122,9 @@ public class BudgetaStructureTest extends WrapperTest {
 		from.setYear(data.get("DateRange_from_year"));
 		from.setMonth(data.get("DateRange_from_month"));
 
-		DateRange to = general.openDateRangeTo();
-		to.setYear(data.get("DateRange_to_year"));
-		to.setMonth(data.get("DateRange_to_month"));
+		//DateRange to = general.openDateRangeTo();
+		from.setYear(data.get("DateRange_to_year"));
+		from.setMonth(data.get("DateRange_to_month"));
 
 		//general.selectCurrency(data.get("Currency"));
 
@@ -158,9 +160,9 @@ public class BudgetaStructureTest extends WrapperTest {
 			board.clickSaveChanges();
 
 			general = new GeneralSection();
-			Assert.assertEquals(general.getDateRangeFrom(),
+			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
-			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
+			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
 			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
 		}
 	}
@@ -172,8 +174,8 @@ public class BudgetaStructureTest extends WrapperTest {
 		secondaryBoard = board.getSecondaryBoard();
 		secondaryBoard.clickOnLine("Revenues");
 		GeneralSection general = new GeneralSection();
-		String monthY = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getDateRangeTo().split("/")[0]));
-		String yearY = general.getDateRangeTo().split("/")[1];
+		String monthY = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getGeneralDateRangeTo().split("/")[0]));
+		String yearY = general.getGeneralDateRangeTo().split("/")[1];
 
 		secondaryBoard.clickOnSubLine(revenues, revenuesSubLine);
 
@@ -205,10 +207,10 @@ public class BudgetaStructureTest extends WrapperTest {
 				from.setYear(data.get("DateRange_from_year"));
 				from.setMonth(data.get("DateRange_from_month"));
 			}
-			DateRange to = general.openDateRangeTo();
+			//DateRange to = general.openDateRangeTo();
 			if (!data.get("DateRange_to_year").isEmpty()) {
-				to.setYear(data.get("DateRange_to_year"));
-				to.setMonth(data.get("DateRange_to_month"));
+				from.setYear(data.get("DateRange_to_year"));
+				from.setMonth(data.get("DateRange_to_month"));
 			}
 			
 			Assert.assertTrue(billings.isBillingsHasError(), "expected to error in billings section");
@@ -300,13 +302,13 @@ public class BudgetaStructureTest extends WrapperTest {
 			else
 				growth = Integer.parseInt(data.get("GrowthPercent"));
 
-			monthX = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getDateRangeFrom().split("/")[0]));
-			yearX = general.getDateRangeFrom().split("/")[1];
+			monthX = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getGeneralDateRangeFrom().split("/")[0]));
+			yearX = general.getGeneralDateRangeFrom().split("/")[1];
 
 			String toExactMonth, toExactYear;
 
-			toExactMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getDateRangeTo().split("/")[0]));
-			toExactYear = general.getDateRangeTo().split("/")[1];
+			toExactMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getGeneralDateRangeTo().split("/")[0]));
+			toExactYear = general.getGeneralDateRangeTo().split("/")[1];
 
 			board.clickSaveChanges();
 			board.clickSaveChanges();
@@ -345,7 +347,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 3)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 3)
 	@DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale")
 	public void CostOfSaleTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -360,13 +362,13 @@ public class BudgetaStructureTest extends WrapperTest {
 		from.setYear(data.get("DateRange_from_year"));
 		from.setMonth(data.get("DateRange_from_month"));
 
-		DateRange to = general.openDateRangeTo();
-		to.setYear(data.get("DateRange_to_year"));
-		to.setMonth(data.get("DateRange_to_month"));
+		//DateRange to = general.openDateRangeTo();
+		from.setYear(data.get("DateRange_to_year"));
+		from.setMonth(data.get("DateRange_to_month"));
 
 	//	general.selectCurrency(data.get("Currency"));
 
-		general.setDepartment(data.get("Departments"));
+	//	general.setDepartment(data.get("Departments"));
 		if (!data.get("AccountNumber").isEmpty())
 		{
 			TopHeaderBar topheader = new TopHeaderBar();
@@ -430,18 +432,18 @@ public class BudgetaStructureTest extends WrapperTest {
 			board.clickSaveChanges();
 
 			general = new GeneralSection();
-			Assert.assertEquals(general.getDateRangeFrom(),
+			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
-			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
+			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
 		//	Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
-			Assert.assertEquals(general.getDepartment(), data.get("Departments"));
+			//Assert.assertEquals(general.getDepartment(), data.get("Departments"));
 			Assert.assertEquals(general.getGeography(), data.get("Geography"));
 			Assert.assertEquals(general.getProduct(), data.get("Product"));
 
 		}
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 4)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 4)
 	@DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages")
 	public void CostOfSale_SalaryAndwagesTest(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -467,9 +469,9 @@ public class BudgetaStructureTest extends WrapperTest {
 		from.setYear(data.get("DateRange_from_year"));
 		from.setMonth(data.get("DateRange_from_month"));
 
-		DateRange to = general.openDateRangeTo();
-		to.setYear(data.get("DateRange_to_year"));
-		to.setMonth(data.get("DateRange_to_month"));
+	//	DateRange to = general.openDateRangeTo();
+		from.setYear(data.get("DateRange_to_year"));
+		from.setMonth(data.get("DateRange_to_month"));
 
 		if (!data.get("AccountNumber").isEmpty())
 		{
@@ -532,9 +534,9 @@ public class BudgetaStructureTest extends WrapperTest {
 		else {
 
 			general = new GeneralSection();
-			Assert.assertEquals(general.getDateRangeFrom(),
+			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
-			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
+			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
 			Assert.assertEquals(general.getDepartment(), data.get("Department"));
 			Assert.assertEquals(general.getGeography(), data.get("Geography"));
 			Assert.assertEquals(general.getProduct(), data.get("Product"));
@@ -550,13 +552,15 @@ public class BudgetaStructureTest extends WrapperTest {
 		}
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 5)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 5)
 	@DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages_EmployeeForm")
 	public void employeeFormTest(Hashtable<String, String> data) {
 
 		board = new BudgetaBoard();
 		secondaryBoard = board.getSecondaryBoard();
-		secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages, employee);
+		//secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages, employee);
+		//secondaryBoard.clickOnSubLine(OperationalExpenses, OperationalExpensesSubline);
+		secondaryBoard.clickOnSubLine(OperationalExpenses, OperationalExpensesSubline, employee);
 		secondaryBoard = new SecondaryBoard();
 
 		MainSection mainSection = new MainSection();
@@ -788,9 +792,9 @@ public class BudgetaStructureTest extends WrapperTest {
 			board.clickSaveChanges();
 
 			general = new GeneralSection();
-			Assert.assertEquals(general.getDateRangeFrom(),
+			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
-			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
+			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
 		//	Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
 		}
 	}
@@ -880,9 +884,9 @@ public class BudgetaStructureTest extends WrapperTest {
 			board.clickSaveChanges();
 
 			general = new GeneralSection();
-			Assert.assertEquals(general.getDateRangeFrom(),
+			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
-			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
+			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
 			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
 		}
 
@@ -974,15 +978,15 @@ public class BudgetaStructureTest extends WrapperTest {
 			board.clickSaveChanges();
 
 			general = new GeneralSection();
-			Assert.assertEquals(general.getDateRangeFrom(),
+			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
-			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
+			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
 			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
 		}
 
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 9)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 9)
 	@DataProviderParams(sheet = "BudgetaForm", area = "OtherIncomeAndExpenses")
 	public void OtherIncomeAndExpensesTest(Hashtable<String, String> data) {
 
@@ -998,9 +1002,9 @@ public class BudgetaStructureTest extends WrapperTest {
 		from.setYear(data.get("DateRange_from_year"));
 		from.setMonth(data.get("DateRange_from_month"));
 
-		DateRange to = general.openDateRangeTo();
-		to.setYear(data.get("DateRange_to_year"));
-		to.setMonth(data.get("DateRange_to_month"));
+		//DateRange to = general.openDateRangeTo();
+		from.setYear(data.get("DateRange_to_year"));
+		from.setMonth(data.get("DateRange_to_month"));
 
 	//	general.selectCurrency(data.get("Currency"));
 
@@ -1068,15 +1072,15 @@ public class BudgetaStructureTest extends WrapperTest {
 			board.clickSaveChanges();
 
 			general = new GeneralSection();
-			Assert.assertEquals(general.getDateRangeFrom(),
+			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
-			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
+			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
 			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
 		}
 
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 10)
+	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 10)
 	@DataProviderParams(sheet = "BudgetaForm", area = "OtherIncomeAndExpenses_SubLines")
 	public void OtherIncomeAndExpenses_OtherIncome(Hashtable<String, String> data) {
 		board = new BudgetaBoard();
@@ -1084,8 +1088,8 @@ public class BudgetaStructureTest extends WrapperTest {
 		secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine);
 
 		GeneralSection general = new GeneralSection();
-		String monthY = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getDateRangeTo().split("/")[0]));
-		String yearY = general.getDateRangeTo().split("/")[1];
+		String monthY = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getGeneralDateRangeTo().split("/")[0]));
+		String yearY = general.getGeneralDateRangeTo().split("/")[1];
 
 		secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
 		secondaryBoard = new SecondaryBoard();
@@ -1114,10 +1118,10 @@ public class BudgetaStructureTest extends WrapperTest {
 			from.setYear(data.get("DateRange_from_year"));
 			from.setMonth(data.get("DateRange_from_month"));
 		}
-		DateRange to = general.openDateRangeTo();
+	//	DateRange to = general.openDateRangeTo();
 		if (!data.get("DateRange_to_year").isEmpty()) {
-			to.setYear(data.get("DateRange_to_year"));
-			to.setMonth(data.get("DateRange_to_month"));
+			from.setYear(data.get("DateRange_to_year"));
+			from.setMonth(data.get("DateRange_to_month"));
 		}
 
 		if (!data.get("AccountNumber").isEmpty())
@@ -1207,8 +1211,8 @@ public class BudgetaStructureTest extends WrapperTest {
 
 			board.clickSaveChanges();
 			general = new GeneralSection();
-			String dateFrom = general.getDateRangeFrom();
-			String dateTo = general.getDateRangeTo();
+			String dateFrom = general.getGeneralDateRangeFrom();
+			String dateTo = general.getGeneralDateRangeTo();
 			yearX = dateFrom.split("/")[1];
 			monthX = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom.split("/")[0]));
 

@@ -45,6 +45,10 @@ public class SmallPopup extends AbstractPOM{
 		return title.getText();
 	}
 	
+	public String getConfirmButtontext(){
+		return confirmBtn.getText();
+	}
+	
 	public void setName(String name){
 		wrapper.findElement(nameField).clear();
 		wrapper.findElement(nameField).sendKeys(name);

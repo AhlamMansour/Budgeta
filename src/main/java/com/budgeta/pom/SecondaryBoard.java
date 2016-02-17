@@ -102,7 +102,7 @@ public class SecondaryBoard extends AbstractPOM {
 	private final By nameField = By.className("ember-text-field");
 	
 	
-
+	String Department = "departmen"; 
 	// private final By shareIcon =
 	// By.cssSelector("div.actions-toggle span.budget-name  div.svg-icon");
 
@@ -167,6 +167,301 @@ public class SecondaryBoard extends AbstractPOM {
 				WebdriverUtils.sleep(1500);
 			}
 		}
+	}
+	
+	public void buildBudget(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.slectOption("Yes", "No Grouping");
+		buildPopup.clickNext();
+	}
+	
+	public void addRevenues(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("revenue");
+		buildPopup.clickNext();
+	}
+	
+	public void addCostOfRevenues(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.slectOption("Yes", "");
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("expense");
+		buildPopup.clickNext();
+	}
+	
+	public void addProfessionalServices(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.selectOption();
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName(Department);
+		buildPopup.clickNext();
+	}
+	
+	public void addDepartment(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.selectOption();
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.selectAllcheckBoxes();
+		buildPopup.clickNext();
+		
+	}
+	
+	public void addSalaryAndWages(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("employee1");
+		buildPopup.clickNext();
+		
+	}
+	
+	public void addDepartmentAndProfessionalServices(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("Contractor");
+		buildPopup.clickNext();
+		
+	}
+	
+	public void addTransactionBalance(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setLineNumber("1");
+		buildPopup.clickNext();
+		
+	}
+	
+	public void addOperationalExpenses(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.selectAllcheckBoxes();
+		buildPopup.clickNext();
+		
+	}
+	
+	public void addOperationalExpensesAndSalary(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("employee");
+		buildPopup.clickNext();
+	}
+	
+	public void addOperationalExpensesAndProfessionalServices(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("contractor");
+		buildPopup.clickNext();
+	}
+	
+	public void addExpensesAndPastBlances(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setLineNumber("1");
+		buildPopup.clickNext();
+	}
+	
+	public void addOtherIncomeAndExpenses(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.selectAllcheckBoxes();
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("expense");
+		buildPopup.clickNext();
+	}
+	
+	public void addOtherIncome(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("income");
+		buildPopup.clickNext();
+	}
+	
+	
+	public void addAllBudgetLines() {
+		if (!wrapper.getAttribute("class").contains("tree-edit")) {
+			selectedBudget.findElement(addLinesBtn).click();
+			BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+			if(buildPopup.isDisplayed()){
+				while (!buildPopup.getConfirmButtontext().equals("Finish")){
+					if(buildPopup.getTilte().equals("Build your company budget"))
+					{
+						buildBudget();
+					}
+					if(buildPopup.getTilte().equals("Revenues"))
+					{
+						addRevenues();
+					}
+					
+					if(buildPopup.getTilte().equals("Cost of Revenues"))
+					{
+						addCostOfRevenues();
+					}
+					
+					if(buildPopup.getTilte().equals("Professional Services"))
+					{
+						addProfessionalServices();
+					}
+					
+					if(buildPopup.getTilte().equals(Department))
+					{
+						addDepartment();
+					}
+					
+					if(buildPopup.getTilte().equals("Salary & wages"))
+					{
+						addSalaryAndWages();
+					}
+					
+					if(buildPopup.getTilte().equals(Department+" / Professional services"))
+					{
+						addDepartmentAndProfessionalServices();
+					}
+					
+					if(buildPopup.getTilte().equals("Past balances and transactions"))
+					{
+						addTransactionBalance();
+					}
+					
+					if(buildPopup.getTilte().equals("Operational Expenses"))
+					{
+						addOperationalExpenses();
+					}
+					
+					if(buildPopup.getTilte().equals("Operational Expenses / Salary & wages"))
+					{
+						addOperationalExpensesAndSalary();
+					}
+				
+					if(buildPopup.getTilte().equals("Operational Expenses / Professional services"))
+					{
+						addOperationalExpensesAndProfessionalServices();
+					}
+					
+					if(buildPopup.getTilte().contains("Operational Expenses / Past balances and transactions"))
+					{
+						addExpensesAndPastBlances();
+					}
+					
+					if(buildPopup.getTilte().equals("Other income and expenses"))
+					{
+						addOtherIncomeAndExpenses();
+					}
+					
+					if(buildPopup.getTilte().equals("Other income"))
+					{
+						addOtherIncome();
+					}
+					
+				}
+				
+				if(buildPopup.getTilte().equals("All Done") || buildPopup.getConfirmButtontext().equals("Finish"))
+				{
+					buildPopup.clickConfirm();
+				}
+				
+				
+			}
+			else
+				WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
+			
+		}
+	}
+	
+	public void addAllBudgetLines_Old() {
+		if (!wrapper.getAttribute("class").contains("tree-edit")) {
+			selectedBudget.findElement(addLinesBtn).click();
+			BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+			if(buildPopup.isDisplayed()){
+				buildPopup.slectOption("Yes", "No Grouping");
+				buildPopup.clickNext();
+				buildPopup.clickCreateBudget("Create with Budgeta");
+				buildPopup.clickAdd();
+				buildPopup = new BuildCompanyBudgetPopup();
+				buildPopup.setName("revenue");
+				buildPopup.clickNext();
+				buildPopup.clickCreateBudget("Create with Budgeta");
+				buildPopup.slectOption("Yes", "");
+				buildPopup.clickAdd();
+				buildPopup = new BuildCompanyBudgetPopup();
+				buildPopup.setName("expense");
+				buildPopup.clickNext();
+				buildPopup.selectOption();
+				buildPopup.clickAdd();
+				buildPopup = new BuildCompanyBudgetPopup();
+				buildPopup.setName("department");
+				buildPopup.clickNext();
+				buildPopup.clickCreateBudget("Create with Budgeta");
+				buildPopup.selectAllcheckBoxes();
+				buildPopup.clickNext();
+				buildPopup.clickCreateBudget("Create with Budgeta");
+				buildPopup.clickAdd();
+				buildPopup = new BuildCompanyBudgetPopup();
+				buildPopup.setName("employee1");
+				buildPopup.clickNext();
+				buildPopup.clickCreateBudget("Create with Budgeta");
+				buildPopup.clickAdd();
+				buildPopup = new BuildCompanyBudgetPopup();
+				buildPopup.setName("contractor");
+				buildPopup.clickNext();
+				buildPopup.setLineNumber("1");
+				buildPopup.clickNext();
+				buildPopup.clickCreateBudget("Create with Budgeta");
+				buildPopup.selectAllcheckBoxes();
+				buildPopup.clickNext();
+				buildPopup.clickCreateBudget("Create with Budgeta");
+				buildPopup.clickAdd();
+				buildPopup = new BuildCompanyBudgetPopup();
+				buildPopup.setName("employee");
+				buildPopup.clickNext();
+				buildPopup.clickCreateBudget("Create with Budgeta");
+				buildPopup.clickAdd();
+				buildPopup = new BuildCompanyBudgetPopup();
+				buildPopup.setName("contractor");
+				buildPopup.clickNext();
+				buildPopup.setLineNumber("1");
+				buildPopup.clickNext();
+				buildPopup.clickCreateBudget("Create with Budgeta");
+				buildPopup.selectAllcheckBoxes();
+				buildPopup.clickAdd();
+				buildPopup = new BuildCompanyBudgetPopup();
+				buildPopup.setName("expense");
+				buildPopup.clickNext();
+				buildPopup.clickCreateBudget("Create with Budgeta");
+				buildPopup.clickAdd();
+				buildPopup = new BuildCompanyBudgetPopup();
+				buildPopup.setName("income");
+				buildPopup.clickNext();
+				buildPopup.clickConfirm();
+			}
+			else
+				WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
+			
+		}
+//		WebElement line = null;
+//		while (getNextLineToAdd() != null) {
+//			line = getNextLineToAdd();
+//			WebElement add = line.findElement(addLineBtn);
+//			if (add.getAttribute("class").contains("enable") && WebdriverUtils.isVisible(add)) {
+//				add.findElement(By.className("add-budget-line")).click();
+//				WebdriverUtils.waitForBudgetaBusyBar(driver);
+//				WebdriverUtils.waitForBudgetaLoadBar(driver);
+//				WebdriverUtils.sleep(1500);
+//			}
+//		}
 	}
 
 	public void addLine(String lineTitle) {

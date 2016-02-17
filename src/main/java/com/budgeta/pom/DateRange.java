@@ -103,15 +103,25 @@ public class DateRange extends AbstractPOM{
 		for(WebElement el : wrapper.findElements(months)){
 			if(el.getText().equalsIgnoreCase(wantedMonth)){
 				el.click();
-				Actions action = new Actions(driver);
-				action.moveByOffset(0, 0).build().perform();
-				WebElementUtils.hoverOverField(wrappers.findElement(By.xpath("../..")), driver, null);
-				WebdriverUtils.waitForInvisibilityOfElement(driver, wrappers, 10);
+				//Actions action = new Actions(driver);
+				//action.moveByOffset(0, 0).build().perform();
+				//WebElementUtils.hoverOverField(wrappers.findElement(By.xpath("../..")), driver, null);
+				//WebdriverUtils.waitForInvisibilityOfElement(driver, wrappers, 10);
 				return;
 			}
 		}
 	}
 	
+	
+	public void closeDatePopup(){
+		
+				Actions action = new Actions(driver);
+				action.moveByOffset(0, 0).build().perform();
+				WebElementUtils.hoverOverField(wrappers.findElement(By.xpath("../..")), driver, null);
+				WebdriverUtils.waitForInvisibilityOfElement(driver, wrappers, 10);
+				
+			
+	} 
 	
 	
 	public void setHireMonth(String wantedMonth){

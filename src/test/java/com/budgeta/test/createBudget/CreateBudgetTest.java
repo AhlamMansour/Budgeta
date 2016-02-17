@@ -3,12 +3,12 @@ package com.budgeta.test.createBudget;
 import java.util.Hashtable;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetaBoard;
+import com.budgeta.pom.BuildCompanyBudgetPopup;
 import com.budgeta.pom.DateRange;
 import com.budgeta.pom.GeneralSection;
 import com.budgeta.pom.NewBudgetPopup;
@@ -55,9 +55,14 @@ public class CreateBudgetTest extends WrapperTest{
 		from.setYear(data.get("DateRange_year_from"));
 		from.setMonth(data.get("DateRange_month_from"));
 		
-		DateRange to = popup.openDateRangeTo();
-		to.setYear(data.get("DateRange_year_to"));
-		to.setMonth(data.get("DateRange_month_to"));
+		//DateRange to = popup.openDateRangeTo();
+		from.setYear(data.get("DateRange_year_to"));
+		from.setMonth(data.get("DateRange_month_to"));
+		
+		
+		from.closeDatePopup();
+		
+		
 		
 		//error in the first page
 		if(data.get("ContinueShouldPass").equals("FALSE")){
@@ -82,14 +87,18 @@ public class CreateBudgetTest extends WrapperTest{
 		
 			popup.clickCreate();
 			
+			BuildCompanyBudgetPopup budgetPopup = new BuildCompanyBudgetPopup();
+			budgetPopup.clickCancel();
+			
+			navigator.openInputTab();
 			
 		
 			Assert.assertEquals(secondaryBoard.getSelectedBudgetName(), budgetaName);
 		
 			GeneralSection general = new GeneralSection();
 		
-			Assert.assertEquals(general.getDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_month_from"), data.get("DateRange_year_from")));
-			Assert.assertEquals(general.getDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_month_to"), data.get("DateRange_year_to")));
+			Assert.assertEquals(general.getGeneralDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_month_from"), data.get("DateRange_year_from")));
+			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_month_to"), data.get("DateRange_year_to")));
 			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
 			secondaryBoard.addAllLines();
 		}	

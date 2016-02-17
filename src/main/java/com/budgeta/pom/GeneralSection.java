@@ -46,10 +46,11 @@ public class GeneralSection extends AbstractPOM{
 	@FindBy(className = "ember-text-field")
 	private WebElement currencyField;
 	
+	@FindBy(css = "div.budgeta-type-value span.select2-chosen")
+	private WebElement currentCurrency;
+	
 	@FindBy(className = "budgeta-type-value")
 	List<WebElement> typeValue;
-	
-	
 	
 	private By dateRange_from = By.cssSelector("div.month-picker.from input");
 	private By dateRange_to = By.cssSelector("div.month-picker.to input");
@@ -75,14 +76,14 @@ public class GeneralSection extends AbstractPOM{
 //		DropDown curr = new DropDown(currency.findElement(dropdown));
 //		return curr.getSelectedValue();
 		//return currencyField.findElement(By.tagName("placeholder")).getText();
-		for (WebElement el : typeValue){
-			if (el.findElement(By.tagName("input")).getAttribute("name").equals("currency")){
-				return el.findElement(By.tagName("input")).getAttribute("placeholder");
-			}
-			
-		}
+//		for (WebElement el : typeValue){
+//			if (el.findElement(By.tagName("input")).getAttribute("name").equals("currency")){
+//				return el.findElement(By.tagName("input")).getAttribute("placeholder");
+//			}
+//			
+//		}
 		
-		return null;
+		return currentCurrency.getText();
 	}
 	
 	
@@ -101,6 +102,22 @@ public class GeneralSection extends AbstractPOM{
 			return wrapper.findElements(dateRange_to).get(1).getAttribute("placeholder");
 		}
 		return wrapper.findElements(dateRange_to).get(1).getAttribute("value");
+	}
+	
+	
+	public String getGeneralDateRangeFrom(){
+		if(wrapper.findElement(dateRange_from).getAttribute("value").isEmpty()){
+			return wrapper.findElement(dateRange_from).getAttribute("placeholder");
+			
+		}
+		return wrapper.findElement(dateRange_from).getAttribute("value");
+	}
+	
+	public String getGeneralDateRangeTo(){
+		if(wrapper.findElement(dateRange_to).getAttribute("value").isEmpty()){
+			return wrapper.findElement(dateRange_to).getAttribute("placeholder");
+		}
+		return wrapper.findElement(dateRange_to).getAttribute("value");
 	}
 	
 	public DateRange openDateRangeFrom(){
