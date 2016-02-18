@@ -47,7 +47,7 @@ public class Sheets extends AbstractPOM{
 	
 	
 //	private By reportType = By.cssSelector("div.subnav div.report-view-wrapper div.reportType");
-	private By subReportType = By.cssSelector(".select2-choice");
+	private By subReportType = By.className("select2-choice");
 	
 	private By fillterView = By.className("dropdown");
 

@@ -76,12 +76,14 @@ public class BudgetaStructureTest extends WrapperTest {
 
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLine(cost_of_revenues);
+		secondaryBoard.addAllSubBudgetLines();
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLineForLine(cost_of_revenues, cost_of_revenues_subLine);
 		secondaryBoard = new SecondaryBoard();
 
 		//secondaryBoard.addSubLineForSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages);
 		secondaryBoard.addSubLine(OperationalExpenses);
+		secondaryBoard.addAllSubBudgetLines();
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.openAddChild(OperationalExpensesSubline, 2);
 		subLine = new RevenuesAddSubLine();
@@ -92,6 +94,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLine(OtherIncomeAndExpensesLine);
+		secondaryBoard.addAllSubBudgetLines();
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLineForLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine);
 		secondaryBoard = new SecondaryBoard();
