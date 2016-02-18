@@ -25,13 +25,6 @@
 		</classes>
 	</test>
 
-	<test name="Restore Budget Test">
-		<classes>
-			<class name="com.budgeta.test.reporter.ReporterTest"></class>
-		</classes>
-	</test>
-
-
 	<test name="SignUp Test">
 		<classes>
 			<class name="com.budgeta.test.SignUp.SignUpTest"></class>
@@ -68,13 +61,13 @@
 			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest"></class>
 		</classes>
 	</test>
-	
+
 	<test name="Budgeta Structure Test Part2">
 		<classes>
 			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part2"></class>
 		</classes>
 	</test>
-	
+
 	<test name="Budgeta Structure Test Part3">
 		<classes>
 			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part3"></class>
@@ -86,13 +79,13 @@
 			<class name="com.budgeta.test.BudgetSettings.BudgetSettingsTest"></class>
 		</classes>
 	</test>
-	
+
 	<test name="Budgeta Error test">
 		<classes>
 			<class name="com.budgeta.test.RunErrorTest"></class>
 		</classes>
 	</test>
-	
+
 </suite>
 
 
