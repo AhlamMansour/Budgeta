@@ -30,12 +30,15 @@ public class BuildCompanyBudgetPopup extends SmallPopup {
 
 		for (WebElement el : selectoption) {
 			if (el.findElement(By.tagName("label")).getText().equals(option) || el.findElement(By.tagName("label")).getText().equals(expenses)) {
-				el.click();
+				if(el.findElement(By.tagName("input")).getAttribute("type").equals("radio"))
+					el.click();
+				
 			}
 		}
 	}
 	
 	public void selectOption() {
+		
 		selectoption.get(0).click();
 	}
 
@@ -67,7 +70,9 @@ public class BuildCompanyBudgetPopup extends SmallPopup {
 	public void selectAllcheckBoxes(){
 		
 		for (WebElement el : selectoption) {
-			el.click();
+			if(el.findElement(By.tagName("input")).getAttribute("type").equals("checkbox"))
+				el.click();
+			
 		}
 		
 	}

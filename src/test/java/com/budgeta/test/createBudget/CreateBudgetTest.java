@@ -100,7 +100,7 @@ public class CreateBudgetTest extends WrapperTest{
 			Assert.assertEquals(general.getGeneralDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_month_from"), data.get("DateRange_year_from")));
 			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_month_to"), data.get("DateRange_year_to")));
 			Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
-			secondaryBoard.addAllLines();
+			secondaryBoard.addAllBudgetLines();
 		}	
 	
 		}

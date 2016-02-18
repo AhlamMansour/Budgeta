@@ -288,11 +288,13 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 			board.clickSaveChanges();
 			secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages);
 			general = new GeneralSection();
-			String dateFrom = general.getDateRangeFrom();
-			String dateTo = general.getDateRangeTo();
+			///////////////////////
+			String dateFrom = general.getGeneralDateRangeFrom();
+			/////////////////////
+			String dateTo = general.getGeneralDateRangeTo();
 			String yearFrom = dateFrom.split("/")[1];
 			String yearTo = dateTo.split("/")[1];
-			secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages, employee);
+			secondaryBoard.clickOnSubLine(OperationalExpenses, OperationalExpensesSubline, employee);
 
 			int baseSalary = 0, benefits = 0, bonus = 0, AvgAccruedVacation = 0, yearlyVacationDays = 0 ;
 			String monthFrom = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom.split("/")[0]));
@@ -301,8 +303,8 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 			if (payment.isEmpty())
 				payment = "Same month";
 			general = new GeneralSection();
-			String hireDate = general.getDateRangeFrom(), endDate = general.getDateRangeTo(), hireMonth, endMonth, hireYear, endYear;
-			if (general.getDateRangeFrom().equals("MM/YYYY")) {
+			String hireDate = general.getGeneralDateRangeFrom(), endDate = general.getGeneralDateRangeTo(), hireMonth, endMonth, hireYear, endYear;
+			if (general.getGeneralDateRangeFrom().equals("MM/YYYY")) {
 				hireDate = dateFrom;
 				hireMonth = monthFrom;
 				hireYear = yearFrom;
@@ -311,7 +313,7 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 				hireYear = hireDate.split("/")[1];
 			}
 
-			if (general.getDateRangeTo().equals("MM/YYYY")) {
+			if (general.getGeneralDateRangeTo().equals("MM/YYYY")) {
 				endDate = dateTo;
 				endMonth = monthTo;
 				endYear = yearTo;

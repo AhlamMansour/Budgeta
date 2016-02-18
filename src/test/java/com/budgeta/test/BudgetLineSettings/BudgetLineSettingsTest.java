@@ -64,7 +64,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	}
 
 	// done
-	@Test(enabled = true, priority = 2)
+	@Test(enabled = false, priority = 2)
 	public void CopyBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -79,7 +79,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	}
 
 	// Done
-	@Test(enabled = true, priority = 3)
+	@Test(enabled = false, priority = 3)
 	public void MoveBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();

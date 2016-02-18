@@ -56,8 +56,8 @@ public class ViewTest extends WrapperTest {
 		navigator.selectRandomBudgeta();
 		generalSection = new GeneralSection();
 
-		String dateFrom = generalSection.getDateRangeFrom();
-		String dateTo = generalSection.getDateRangeTo();
+		String dateFrom = generalSection.getGeneralDateRangeFrom();
+		String dateTo = generalSection.getGeneralDateRangeTo();
 
 		fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom.split("/")[0]));
 		fromYear = dateFrom.split("/")[1];

@@ -242,6 +242,7 @@ public class SecondaryBoard extends AbstractPOM {
 	public void addOperationalExpenses(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.slectOption("Yes", "No Grouping");
 		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickNext();
 		
@@ -278,6 +279,14 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("expense");
+		buildPopup.clickNext();
+	}
+	
+	public void addProfissionalServicesAndDepartment(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.slectOption("Yes", "No Grouping");
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickNext();
 	}
 	
@@ -327,8 +336,13 @@ public class SecondaryBoard extends AbstractPOM {
 					}
 					
 					if(buildPopup.getTilte().equals(Department+" / Professional services"))
-					{
+					{ 
 						addDepartmentAndProfessionalServices();
+					}
+					
+					if(buildPopup.getTilte().equals("Professional Services - " + Department))
+					{ 
+						addProfissionalServicesAndDepartment();
 					}
 					
 					if(buildPopup.getTilte().equals("Past balances and transactions"))
@@ -379,89 +393,6 @@ public class SecondaryBoard extends AbstractPOM {
 				WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
 			
 		}
-	}
-	
-	public void addAllBudgetLines_Old() {
-		if (!wrapper.getAttribute("class").contains("tree-edit")) {
-			selectedBudget.findElement(addLinesBtn).click();
-			BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-			if(buildPopup.isDisplayed()){
-				buildPopup.slectOption("Yes", "No Grouping");
-				buildPopup.clickNext();
-				buildPopup.clickCreateBudget("Create with Budgeta");
-				buildPopup.clickAdd();
-				buildPopup = new BuildCompanyBudgetPopup();
-				buildPopup.setName("revenue");
-				buildPopup.clickNext();
-				buildPopup.clickCreateBudget("Create with Budgeta");
-				buildPopup.slectOption("Yes", "");
-				buildPopup.clickAdd();
-				buildPopup = new BuildCompanyBudgetPopup();
-				buildPopup.setName("expense");
-				buildPopup.clickNext();
-				buildPopup.selectOption();
-				buildPopup.clickAdd();
-				buildPopup = new BuildCompanyBudgetPopup();
-				buildPopup.setName("department");
-				buildPopup.clickNext();
-				buildPopup.clickCreateBudget("Create with Budgeta");
-				buildPopup.selectAllcheckBoxes();
-				buildPopup.clickNext();
-				buildPopup.clickCreateBudget("Create with Budgeta");
-				buildPopup.clickAdd();
-				buildPopup = new BuildCompanyBudgetPopup();
-				buildPopup.setName("employee1");
-				buildPopup.clickNext();
-				buildPopup.clickCreateBudget("Create with Budgeta");
-				buildPopup.clickAdd();
-				buildPopup = new BuildCompanyBudgetPopup();
-				buildPopup.setName("contractor");
-				buildPopup.clickNext();
-				buildPopup.setLineNumber("1");
-				buildPopup.clickNext();
-				buildPopup.clickCreateBudget("Create with Budgeta");
-				buildPopup.selectAllcheckBoxes();
-				buildPopup.clickNext();
-				buildPopup.clickCreateBudget("Create with Budgeta");
-				buildPopup.clickAdd();
-				buildPopup = new BuildCompanyBudgetPopup();
-				buildPopup.setName("employee");
-				buildPopup.clickNext();
-				buildPopup.clickCreateBudget("Create with Budgeta");
-				buildPopup.clickAdd();
-				buildPopup = new BuildCompanyBudgetPopup();
-				buildPopup.setName("contractor");
-				buildPopup.clickNext();
-				buildPopup.setLineNumber("1");
-				buildPopup.clickNext();
-				buildPopup.clickCreateBudget("Create with Budgeta");
-				buildPopup.selectAllcheckBoxes();
-				buildPopup.clickAdd();
-				buildPopup = new BuildCompanyBudgetPopup();
-				buildPopup.setName("expense");
-				buildPopup.clickNext();
-				buildPopup.clickCreateBudget("Create with Budgeta");
-				buildPopup.clickAdd();
-				buildPopup = new BuildCompanyBudgetPopup();
-				buildPopup.setName("income");
-				buildPopup.clickNext();
-				buildPopup.clickConfirm();
-			}
-			else
-				WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
-			
-		}
-//		WebElement line = null;
-//		while (getNextLineToAdd() != null) {
-//			line = getNextLineToAdd();
-//			WebElement add = line.findElement(addLineBtn);
-//			if (add.getAttribute("class").contains("enable") && WebdriverUtils.isVisible(add)) {
-//				add.findElement(By.className("add-budget-line")).click();
-//				WebdriverUtils.waitForBudgetaBusyBar(driver);
-//				WebdriverUtils.waitForBudgetaLoadBar(driver);
-//				WebdriverUtils.sleep(1500);
-//			}
-//		}
 	}
 
 	public void addLine(String lineTitle) {

@@ -51,7 +51,7 @@ public class ScenariosTest extends WrapperTest{
 	secondaryBoard = board.getSecondaryBoard();
 	BudgetNavigator navigator = new BudgetNavigator();
 	navigator.selectRandomBudgeta();
-	secondaryBoard.addAllLines();
+	secondaryBoard.addAllBudgetLines();
 	secondaryBoard = new SecondaryBoard();
 	secondaryBoard.addSubLine("Revenues");
 	RevenuesAddSubLine subLine = new RevenuesAddSubLine();

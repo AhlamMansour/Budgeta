@@ -107,7 +107,7 @@ public class PermissionsForStarterUserTest extends BudgetaTest{
 		int NumberOfBudgetLines = secondaryBoard.getNumberOfLines();
 
 			while (NumberOfBudgetLines < 14){
-				secondaryBoard.addAllLines();
+				secondaryBoard.addAllBudgetLines();
 				NumberOfBudgetLines = secondaryBoard.getNumberOfLines();
 				secondaryBoard.addNewline();
 				NumberOfBudgetLines = secondaryBoard.getNumberOfLines();
