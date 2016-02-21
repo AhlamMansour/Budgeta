@@ -140,8 +140,100 @@ public class SecondaryBoard extends AbstractPOM {
 		WebdriverUtils.sleep(300);
 		WebElementUtils.hoverOverField(lineElm.findElement(addLinesBtn), driver, null);
 		lineElm.findElement(addLinesBtn).click();
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		if(buildPopup.isDisplayed()){
+			while (!buildPopup.getConfirmButtontext().equals("Finish")){
+				if(buildPopup.getTilte().equals("Build your company budget"))
+				{
+					buildBudget();
+				}
+				if(buildPopup.getTilte().equals("Revenues"))
+				{
+					addRevenues();
+				}
+				
+				if(buildPopup.getTilte().equals("Cost of Revenues"))
+				{
+					addCostOfRevenues();
+				}
+				
+				if(buildPopup.getTilte().equals("Professional Services"))
+				{
+					addProfessionalServices();
+				}
+				
+				if(buildPopup.getTilte().equals(Department))
+				{
+					addDepartment();
+				}
+				
+				if(buildPopup.getTilte().equals("Salary & wages"))
+				{
+					addSalaryAndWages();
+				}
+				
+				if(buildPopup.getTilte().equals(Department+" / Professional services"))
+				{ 
+					addDepartmentAndProfessionalServices();
+				}
+				
+				if(buildPopup.getTilte().equals("Professional Services - " + Department))
+				{ 
+					addProfissionalServicesAndDepartment();
+				}
+				
+				if(buildPopup.getTilte().equals("Past balances and transactions"))
+				{
+					addTransactionBalance();
+				}
+				
+				if(buildPopup.getTilte().equals("Operational Expenses"))
+				{
+					addOperationalExpenses();
+				}
+				
+				if(buildPopup.getTilte().equals("Operational Expenses / Salary & wages"))
+				{
+					addOperationalExpensesAndSalary();
+				}
+			
+				if(buildPopup.getTilte().equals("Operational Expenses / Professional services"))
+				{
+					addOperationalExpensesAndProfessionalServices();
+				}
+				
+				if(buildPopup.getTilte().contains("Operational Expenses / Past balances and transactions"))
+				{
+					addExpensesAndPastBlances();
+				}
+				
+				if(buildPopup.getTilte().equals("Other income and expenses"))
+				{
+					addOtherIncomeAndExpenses();
+				}
+				
+				if(buildPopup.getTilte().equals("Other income"))
+				{
+					addOtherIncome();
+				}
+				
+			}
+			
+			if(buildPopup.getTilte().equals("All Done") || buildPopup.getConfirmButtontext().equals("Finish"))
+			{
+				buildPopup.clickConfirm();
+				lineElm.findElement(addLinesBtn).click();
+			}
+			
+			
+		}
+		else
+			WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
+		
 		WebdriverUtils.sleep(500);
 	}
+		
+	
 
 	public void addLine() {
 		if (!wrapper.getAttribute("class").contains("tree-edit")) {

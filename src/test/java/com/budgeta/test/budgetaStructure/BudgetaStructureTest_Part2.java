@@ -297,7 +297,7 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 					"expected to error in employee assumption sectcion or in general section");
 		else {
 			board.clickSaveChanges();
-			secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages);
+			secondaryBoard.clickOnSubLine(OperationalExpenses, OperationalExpensesSubline);
 			general = new GeneralSection();
 			///////////////////////
 			String dateFrom = general.getGeneralDateRangeFrom();
@@ -314,8 +314,8 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 			if (payment.isEmpty())
 				payment = "Same month";
 			general = new GeneralSection();
-			String hireDate = general.getGeneralDateRangeFrom(), endDate = general.getGeneralDateRangeTo(), hireMonth, endMonth, hireYear, endYear;
-			if (general.getGeneralDateRangeFrom().equals("MM/YYYY")) {
+			String hireDate = general.getHireDateRangeFrom(), endDate = general.getHireDateRangeTo(), hireMonth, endMonth, hireYear, endYear;
+			if (general.getHireDateRangeFrom().equals("MM/YYYY")) {
 				hireDate = dateFrom;
 				hireMonth = monthFrom;
 				hireYear = yearFrom;
@@ -324,7 +324,7 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 				hireYear = hireDate.split("/")[1];
 			}
 
-			if (general.getGeneralDateRangeTo().equals("MM/YYYY")) {
+			if (general.getHireDateRangeTo().equals("MM/YYYY")) {
 				endDate = dateTo;
 				endMonth = monthTo;
 				endYear = yearTo;

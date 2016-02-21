@@ -53,7 +53,9 @@ public class GeneralSection extends AbstractPOM{
 	List<WebElement> typeValue;
 	
 	private By dateRange_from = By.cssSelector("div.month-picker.from input");
+	private By hireDateRange_from = By.cssSelector("div.year-picker-from div.from input");
 	private By dateRange_to = By.cssSelector("div.month-picker.to input");
+	private By hireDateRange_to = By.cssSelector("div.year-picker-to div.to input");
 	private By dropdown = By.className("select2-container");
 	
 	
@@ -97,6 +99,16 @@ public class GeneralSection extends AbstractPOM{
 		return wrapper.findElements(dateRange_from).get(1).getAttribute("value");
 	}
 	
+	
+	public String getHireDateRangeFrom(){
+		if(wrapper.findElement(hireDateRange_from).getAttribute("value").isEmpty()){
+			return wrapper.findElement(hireDateRange_from).getAttribute("placeholder");
+			
+		}
+		return wrapper.findElement(hireDateRange_from).getAttribute("value");
+	}
+	
+	
 	public String getDateRangeTo(){
 		if(wrapper.findElement(dateRange_to).getAttribute("value").isEmpty()){
 			return wrapper.findElements(dateRange_to).get(1).getAttribute("placeholder");
@@ -104,6 +116,12 @@ public class GeneralSection extends AbstractPOM{
 		return wrapper.findElements(dateRange_to).get(1).getAttribute("value");
 	}
 	
+	public String getHireDateRangeTo(){
+		if(wrapper.findElement(hireDateRange_to).getAttribute("value").isEmpty()){
+			return wrapper.findElement(hireDateRange_to).getAttribute("placeholder");
+		}
+		return wrapper.findElement(hireDateRange_to).getAttribute("value");
+	}
 	
 	public String getGeneralDateRangeFrom(){
 		if(wrapper.findElement(dateRange_from).getAttribute("value").isEmpty()){
