@@ -53,6 +53,7 @@ public class VersionsTest extends WrapperTest {
 
 		headerBar.openRevisionswindow();
 		headerBar.selectAllRevisions();
+		versions = new Versions(); 
 		
 		Assert.assertTrue(headerBar.isVersionExist(snapshotName), "expected to add the new snapshot to view all");
 
