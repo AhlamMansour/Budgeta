@@ -254,7 +254,7 @@ public class SecondaryBoard extends AbstractPOM {
 			WebElement add = line.findElement(addLineBtn);
 			if (add.getAttribute("class").contains("enable") && WebdriverUtils.isVisible(add)) {
 				add.findElement(By.className("add-budget-line")).click();
-				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				///WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				WebdriverUtils.sleep(1500);
 			}
@@ -324,6 +324,17 @@ public class SecondaryBoard extends AbstractPOM {
 		
 	}
 	
+	
+	public void addDepartmentAndSalaryWages(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("Empoloyee");
+		buildPopup.clickNext();
+		
+	}
+	
 	public void addTransactionBalance(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setLineNumber("1");
@@ -374,6 +385,14 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup.clickNext();
 	}
 	
+	public void addOtherExpenses(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("expense");
+		buildPopup.clickNext();
+	}
 	public void addProfissionalServicesAndDepartment(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.slectOption("Yes", "No Grouping");
@@ -432,6 +451,12 @@ public class SecondaryBoard extends AbstractPOM {
 						addDepartmentAndProfessionalServices();
 					}
 					
+					if(buildPopup.getTilte().equals(Department+" - Salary & wages"))
+					{ 
+						addDepartmentAndSalaryWages();
+					}
+					
+					
 					if(buildPopup.getTilte().equals("Professional Services - " + Department))
 					{ 
 						addProfissionalServicesAndDepartment();
@@ -451,6 +476,12 @@ public class SecondaryBoard extends AbstractPOM {
 					{
 						addOperationalExpensesAndSalary();
 					}
+					
+					if(buildPopup.getTilte().equals("Operational Expenses - Salary & wages"))
+					{
+						addOperationalExpensesAndSalary();
+					}
+				
 				
 					if(buildPopup.getTilte().equals("Operational Expenses / Professional services"))
 					{
@@ -462,6 +493,17 @@ public class SecondaryBoard extends AbstractPOM {
 						addExpensesAndPastBlances();
 					}
 					
+					if(buildPopup.getTilte().equals("Operational Expenses - Professional services"))
+					{
+						addOperationalExpensesAndProfessionalServices();
+					}
+					
+					if(buildPopup.getTilte().contains("Operational Expenses - Past balances and transactions"))
+					{
+						addExpensesAndPastBlances();
+					}
+					
+					
 					if(buildPopup.getTilte().equals("Other income and expenses"))
 					{
 						addOtherIncomeAndExpenses();
@@ -470,6 +512,11 @@ public class SecondaryBoard extends AbstractPOM {
 					if(buildPopup.getTilte().equals("Other income"))
 					{
 						addOtherIncome();
+					}
+					
+					if(buildPopup.getTilte().equals("Other expenses"))
+					{
+						addOtherExpenses();
 					}
 					
 				}
@@ -594,7 +641,7 @@ public class SecondaryBoard extends AbstractPOM {
 				if (add.getAttribute("class").contains("enable")) {
 					add.click();
 					WebdriverUtils.sleep(300);
-					WebdriverUtils.waitForBudgetaBusyBar(driver);
+				//	WebdriverUtils.waitForBudgetaBusyBar(driver);
 					WebdriverUtils.waitForBudgetaLoadBar(driver);
 					return;
 				}
@@ -622,7 +669,7 @@ public class SecondaryBoard extends AbstractPOM {
 			if (el.getText().equalsIgnoreCase(option)) {
 				WebElementUtils.hoverOverField(el, driver, null);
 				el.click();
-				WebdriverUtils.waitForBudgetaLoadBar(driver);
+			//	WebdriverUtils.waitForBudgetaLoadBar(driver);
 				WebdriverUtils.waitForBudgetaBusyBar(driver);
 			}
 		}
@@ -779,7 +826,7 @@ public class SecondaryBoard extends AbstractPOM {
 	public void clickOnLine(String name) {
 		clickClose();
 		getLineByName(name).findElement(budgetName).click();
-		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		//WebdriverUtils.waitForBudgetaBusyBar(driver);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 
@@ -789,7 +836,7 @@ public class SecondaryBoard extends AbstractPOM {
 		for (WebElement el : sublines) {
 			if (getLineName(el).equals(subLineName)) {
 				el.findElement(budgetName).click();
-				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				//WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				return;
 			}
@@ -803,7 +850,7 @@ public class SecondaryBoard extends AbstractPOM {
 		for (WebElement el : sublines) {
 			if (getLineName(el).contains(sub_subLine)) {
 				el.findElement(budgetName).click();
-				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				//WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				return;
 			}
@@ -817,7 +864,7 @@ public class SecondaryBoard extends AbstractPOM {
 			if (getLineName(el).contains(nextLevelLine)) {
 				el.findElement(budgetName).click();
 				WebdriverUtils.elementToHaveClass(el, "active");
-				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				//WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				return;
 			}
@@ -827,7 +874,7 @@ public class SecondaryBoard extends AbstractPOM {
 	public BudgetSettings openBudgetSettings() {
 		budgetSettings.click();
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
-		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		//WebdriverUtils.waitForBudgetaBusyBar(driver);
 		return new BudgetSettings();
 	}
 
@@ -838,7 +885,7 @@ public class SecondaryBoard extends AbstractPOM {
 				if (el.findElement(lineName).getText().equals(subLineName)) {
 					el.findElement(addLineBtn).click();
 					WebdriverUtils.sleep(300);
-					WebdriverUtils.waitForBudgetaBusyBar(driver);
+					//WebdriverUtils.waitForBudgetaBusyBar(driver);
 					WebdriverUtils.waitForBudgetaLoadBar(driver);
 					return;
 				}
@@ -857,7 +904,7 @@ public class SecondaryBoard extends AbstractPOM {
 					WebElementUtils.hoverOverField(el.findElement(addLineBtn), driver, null);
 					el.findElement(addLineBtn).click();
 					WebdriverUtils.sleep(600);
-					WebdriverUtils.waitForBudgetaBusyBar(driver);
+					//WebdriverUtils.waitForBudgetaBusyBar(driver);
 					WebdriverUtils.waitForBudgetaLoadBar(driver);
 					return;
 				}
@@ -877,7 +924,7 @@ public class SecondaryBoard extends AbstractPOM {
 				WebElementUtils.hoverOverField(el.findElement(addLinesBtn), driver, null);
 				el.findElement(addLinesBtn).click();
 				WebdriverUtils.sleep(600);
-				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				//WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				return;
 			}

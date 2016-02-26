@@ -41,6 +41,11 @@ public class EmplyeeSection extends AbstractPOM{
 	@FindBy(name = "yearlyVacationDays")
 	private WebElement yearlyVacationDays;
 	
+	
+	@FindBy(name = "yearlyIncrease")
+	private WebElement yearlyIncrease;
+	
+	
 	@FindBy(css = "div.currency div.select2-container a")
 	private WebElement currency;
 	
@@ -126,6 +131,11 @@ public class EmplyeeSection extends AbstractPOM{
 	public String getYearlyVacationDays(){
 		return yearlyVacationDays.getAttribute("value");
 	}
+	
+	public String getYearlyIncrease(){
+		return yearlyIncrease.getAttribute("value");
+	}
+	
 	
 	public String getAvgAccuredVacation(){
 		return avgAccruedVacation.getAttribute("value");

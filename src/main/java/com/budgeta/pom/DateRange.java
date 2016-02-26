@@ -62,14 +62,14 @@ public class DateRange extends AbstractPOM{
 		while(wantedYear < selectedYear){
 			
 			wrapper.findElement(prevYear).click();
-			WebdriverUtils.waitForBudgetaBusyBar(driver);
+		//	WebdriverUtils.waitForBudgetaBusyBar(driver);
 			WebdriverUtils.waitForBudgetaLoadBar(driver);
 			selectedYear = Integer.parseInt(wrapper.findElement(year).getText());
 		}
 		while(wantedYear > selectedYear){
 			
 			wrapper.findElement(nextYear).click();
-			WebdriverUtils.waitForBudgetaBusyBar(driver);
+			//WebdriverUtils.waitForBudgetaBusyBar(driver);
 			WebdriverUtils.waitForBudgetaLoadBar(driver);
 			selectedYear = Integer.parseInt(wrapper.findElement(year).getText());
 		}
@@ -85,14 +85,14 @@ public class DateRange extends AbstractPOM{
 		while(wantedYear < selectedYear){
 			
 			wrappers.findElement(prevYear).click();
-			WebdriverUtils.waitForBudgetaBusyBar(driver);
+			//WebdriverUtils.waitForBudgetaBusyBar(driver);
 			WebdriverUtils.waitForBudgetaLoadBar(driver);
 			selectedYear = Integer.parseInt(wrappers.findElement(year).getText());
 		}
 		while(wantedYear > selectedYear){
 			
 			wrappers.findElement(nextYear).click();
-			WebdriverUtils.waitForBudgetaBusyBar(driver);
+			//WebdriverUtils.waitForBudgetaBusyBar(driver);
 			WebdriverUtils.waitForBudgetaLoadBar(driver);
 			selectedYear = Integer.parseInt(wrappers.findElement(year).getText());
 		}

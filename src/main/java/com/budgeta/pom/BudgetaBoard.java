@@ -33,7 +33,7 @@ public class BudgetaBoard extends AbstractPOM {
     }
     
     public SecondaryBoard getSecondaryBoard() {
-	WebdriverUtils.waitForBudgetaBusyBar(driver);
+	//WebdriverUtils.waitForBudgetaBusyBar(driver);
 	WebdriverUtils.waitForBudgetaLoadBar(driver);
 	return new SecondaryBoard();
     }

@@ -131,7 +131,7 @@ public class TopHeaderBar extends AbstractPOM{
 			if(el.getAttribute("title").equals("Clear"))
 			{
 				el.click();
-				WebdriverUtils.waitForBudgetaBusyBar(driver);
+			//	WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("div.active div.select-revision")));
 				break;
@@ -180,7 +180,7 @@ public class TopHeaderBar extends AbstractPOM{
 	    	int random = WebElementUtils.getRandomNumberByRange(0, versions.size() - 1);
 	    	WebElementUtils.hoverOverField(versions.get(random), driver, null);
 	    	versions.get(random).click();
-	    	WebdriverUtils.waitForBudgetaBusyBar(driver);
+	    	//WebdriverUtils.waitForBudgetaBusyBar(driver);
 	    	WebdriverUtils.sleep(300);
 	    	isScenarioAdded();
 	    	
@@ -253,7 +253,7 @@ public class TopHeaderBar extends AbstractPOM{
 	public BudgetSettings openBudgetSettings() {
 		budgetSettings.click();
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
-		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		//WebdriverUtils.waitForBudgetaBusyBar(driver);
 		return new BudgetSettings();
 	}
 	

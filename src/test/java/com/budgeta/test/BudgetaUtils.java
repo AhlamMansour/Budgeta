@@ -353,13 +353,16 @@ public class BudgetaUtils {
     }
 
     public static String[] calculateEmployeeValues_Monthly(String fromMonth, String fromYear, String toMonth, String toYear, String HireDateMonth,
-	    String HireDateYear, String EndDateMonth, String EndDateYear, int baseSalary, int benefits, int bonus, String payment, int yearlyVacationDays, int AvgAccruedVacation) {
+	    String HireDateYear, String EndDateMonth, String EndDateYear, int baseSalary, int benefits, int bonus, String payment, int yearlyVacationDays, int AvgAccruedVacation, int YearlyIncrease, String fiscal) {
 		List<String> months = getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
 	String[] res = new String[months.size()];
 	int startIndex = 0, endIndex = res.length;
 	int fromHireToView = getNumOfMonthsBetweenTwoDate(HireDateMonth, HireDateYear, fromMonth, fromYear);
 	int fromEndHireToEndView = getNumOfMonthsBetweenTwoDate(EndDateMonth, EndDateYear, toMonth, toYear);
 	int indexOfExtra = months.indexOf(EndDateMonth+" "+EndDateYear);
+	int indexBonusMonth = getIndexOfMonth(getPreviousMonth(fiscal));
+	String BonusMonth = getPreviousMonth(fiscal);
+	int fromHireDateToFiscal = (getNumOfMonthsBetweenTwoDate(HireDateMonth, HireDateYear, fiscal, EndDateYear )) - 1;
 	if (getNumOfMonthsBetweenTwoDate(HireDateMonth, HireDateYear, toMonth, toYear) < 0
 		|| getNumOfMonthsBetweenTwoDate(EndDateMonth, EndDateYear, fromMonth, fromYear) > 0) {
 	    for (int i = 0; i < res.length; i++) {
@@ -390,19 +393,38 @@ public class BudgetaUtils {
 	double avgAccural = (((double) AvgAccruedVacation / 100) * (worksMonth * yearlyVacation));
 	double valueOfvactationDays = (double)baseSalary / 21.75;
 	double Extra = avgAccural * valueOfvactationDays;
+	
+	int Bonus = (int) Math.round(((double) bonus / 100) * baseSalary) * fromHireDateToFiscal ;
+	
+	int BonusForEmployee = baseSalary + Bonus + benefit;
+	
+	
+	
 
 	//float sum = baseSalary + benefit;
 
+//	for (int i = startIndex; i < endIndex; i++) {
+//	    bonusMonths++;
+//	    if (months.get(i).contains("Dec")) {
+//		res[i] = sum + ((int) Math.round(((double) bonus / 100) * bonusMonths * baseSalary)) + "";
+//	    //res[i] = sum + ((float)(((double) bonus / 100) * bonusMonths * baseSalary)) + "";
+//		bonusMonths = 0;
+//	    } else {
+//		res[i] = sum + "";
+//	    }
+//	}
+	
 	for (int i = startIndex; i < endIndex; i++) {
 	    bonusMonths++;
-	    if (months.get(i).contains("Dec")) {
-		res[i] = sum + ((int) Math.round(((double) bonus / 100) * bonusMonths * baseSalary)) + "";
+	    if (months.get(i).contains(BonusMonth)) {
+		res[i] = BonusForEmployee + "";
 	    //res[i] = sum + ((float)(((double) bonus / 100) * bonusMonths * baseSalary)) + "";
 		bonusMonths = 0;
 	    } else {
 		res[i] = sum + "";
 	    }
 	}
+	
 	for (int i = endIndex; i < res.length; i++) {
 	    res[i] = "-";
 	}

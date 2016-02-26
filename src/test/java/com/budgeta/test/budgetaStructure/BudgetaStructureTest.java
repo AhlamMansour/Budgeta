@@ -653,6 +653,12 @@ public class BudgetaStructureTest extends WrapperTest {
 			}
 			
 		}
+		
+		TopHeaderBar topheader = new TopHeaderBar();
+		BudgetSettings settings = topheader.openBudgetSettings();
+		String fiscal = settings.getSelectedFiscal().substring(0, 3).toUpperCase();
+		settings.clickCancel();
+		
 		general.setNotes(data.get("Notes"));
 
 		board = new BudgetaBoard();
@@ -671,7 +677,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			String yearTo = dateTo.split("/")[1];
 			secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages, employee);
 
-			int baseSalary = 0, benefits = 0, bonus = 0, AvgAccruedVacation = 0, yearlyVacationDays = 0 ;
+			int baseSalary = 0, benefits = 0, bonus = 0, AvgAccruedVacation = 0, yearlyVacationDays = 0, YearlyIncrease = 0 ;
 			String monthFrom = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom.split("/")[0]));
 			String monthTo = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo.split("/")[0]));
 			String payment = data.get("Payment");
@@ -707,10 +713,13 @@ public class BudgetaStructureTest extends WrapperTest {
 				AvgAccruedVacation = Integer.parseInt(employeeSection.getAvgAccuredVacation());
 			if(!employeeSection.getYearlyVacationDays().isEmpty())
 				yearlyVacationDays = Integer.parseInt(employeeSection.getYearlyVacationDays());
+			
+			if(!employeeSection.getYearlyIncrease().isEmpty())
+				YearlyIncrease = Integer.parseInt(employeeSection.getYearlyIncrease());
 
 			if (employeeSection.getSelecredTerm().equals("Monthly")) {
 				String[] expectedValues = BudgetaUtils.calculateEmployeeValues_Monthly(monthFrom, yearFrom, monthTo, yearTo, hireMonth, hireYear, endMonth,
-						endYear, baseSalary, benefits, bonus, payment, yearlyVacationDays, AvgAccruedVacation);
+						endYear, baseSalary, benefits, bonus, payment, yearlyVacationDays, AvgAccruedVacation, YearlyIncrease, fiscal);
 				compareExpectedResults(expectedValues);
 			}
 			if (employeeSection.getSelecredTerm().equals("Yearly")) {

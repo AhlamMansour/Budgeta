@@ -43,7 +43,7 @@ public class CommentsSection extends AbstractPOM{
 		WebElementUtils.hoverOverField(wrapper.findElement(add), driver, null);
 		WebElementUtils.clickElementEvent(driver, wrapper.findElement(add));
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("comment-text"));
-		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		//WebdriverUtils.waitForBudgetaBusyBar(driver);
 		WebdriverUtils.sleep(1000);
 	}
 	
