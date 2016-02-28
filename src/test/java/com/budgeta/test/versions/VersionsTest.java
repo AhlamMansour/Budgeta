@@ -39,8 +39,8 @@ public class VersionsTest extends WrapperTest {
 	public void createSnapshot() {
 		secondary = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
-		//navigator.selectRandomBudgeta();
-		navigator.selectRandomBudgetWithPrefix("budget7_1450919934212");
+		navigator.selectRandomBudgeta();
+		//navigator.selectRandomBudgetWithPrefix("budget7_1450919934212");
 		versions = new Versions();
 		TopHeaderBar headerBar = new TopHeaderBar();
 		headerBar.openRevisionswindow();
@@ -69,6 +69,7 @@ public class VersionsTest extends WrapperTest {
 		headerBar.openRevisionswindow();
 		headerBar.selectAllRevisions();
 		Assert.assertTrue(versions.getNumberOfAutoSaveVersions() > 0, "expected number of auto saved to be bigger than 0");
+		
 	}
 
 	@Test(enabled = true)
@@ -77,7 +78,9 @@ public class VersionsTest extends WrapperTest {
 		versions = new Versions();
 		//headerBar.openRevisionswindow();
 		headerBar.selectSavedRevisions();
+		versions = new Versions();
 		Assert.assertFalse(headerBar.isVersionExist("Auto save"), "expected Auto Saved not included into only snapshots");
+		//headerBar.openRevisionswindow();
 	}
 
 	@Test(enabled = true, priority = 1)
@@ -86,19 +89,20 @@ public class VersionsTest extends WrapperTest {
 		BudgetNavigator navigator = new BudgetNavigator();
 		
 		versions = new Versions();
+	//	headerBar.openRevisionswindow();
 		headerBar.selectSavedRevisions();
 		headerBar.selectVersion(snapshotName);
 
 		navigator.openInputTab();
 		
 		SmallPopup popup = versions.clickRenameVersion();
-		Assert.assertTrue(popup.isDisplayed(), "exoected rename popup to be displayed");
+		Assert.assertTrue(popup.isDisplayed(), "expected rename popup to be displayed");
 		popup.setName(newSnapshotName);
 		popup.clickConfirm();
 		Assert.assertEquals(headerBar.selectedVesrionName(), newSnapshotName);
 
 		popup = versions.clickRenameVersion();
-		Assert.assertTrue(popup.isDisplayed(), "exoected rename popup to be displayed");
+		Assert.assertTrue(popup.isDisplayed(), "expected rename popup to be displayed");
 		popup.setName(snapshotName);
 		popup.clickConfirm();
 		Assert.assertEquals(headerBar.selectedVesrionName(), snapshotName);
@@ -109,7 +113,7 @@ public class VersionsTest extends WrapperTest {
 		TopHeaderBar headerBar = new TopHeaderBar();
 		versions = new Versions();
 		SmallPopup popup = versions.clickRevertVersion();
-		Assert.assertTrue(popup.isDisplayed(), "exoected revert popup to be displayed");
+		Assert.assertTrue(popup.isDisplayed(), "expected revert popup to be displayed");
 		popup.clickConfirm(true);
 		BudgetNavigator navigator = new BudgetNavigator();
 		navigator.openInputTab();
@@ -131,7 +135,7 @@ public class VersionsTest extends WrapperTest {
 		navigator.openInputTab();
 		
 		DeletePopup popup = versions.clickDeleteVersion();
-		Assert.assertTrue(popup.isDisplayed(), "exoected rename popup to be displayed");
+		Assert.assertTrue(popup.isDisplayed(), "expected rename popup to be displayed");
 		popup.clickConfirm(true);
 		
 		navigator.openInputTab();

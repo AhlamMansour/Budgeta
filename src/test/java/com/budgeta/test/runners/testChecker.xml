@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Budgeta Tests" parallel="tests" thread-count="3"
+<suite name="Budgeta Tests" parallel="tests" thread-count="5"
 	verbose="3">
 
 	<listeners>
@@ -8,21 +8,33 @@
 	</listeners>
 
 
-	<test name="Budgeta Structure Test">
+	<test name="Permissions For Advanced User">
 		<classes>
-			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest"></class>
+			<class name="com.budgeta.test.PlansAndPricing.PermissionsForAdvancedUserTest"></class>
 		</classes>
 	</test>
 	
-	<test name="Budgeta  Test">
+	<test name="Permissions For Basic User">
 		<classes>
-			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part2"></class>
+			<class name="com.budgeta.test.PlansAndPricing.PermissionsForBasicUserTest"></class>
 		</classes>
 	</test>
 	
-	<test name="Budgeta Structure ">
+	<test name="Permissions For Professional User">
 		<classes>
-			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part3"></class>
+			<class name="com.budgeta.test.PlansAndPricing.PermissionsForProfessionalUserTest"></class>
+		</classes>
+	</test>
+	
+	<test name="Permissions For Strater User">
+		<classes>
+			<class name="com.budgeta.test.PlansAndPricing.PermissionsForStarterUserTest"></class>
+		</classes>
+	</test>
+	
+	<test name="Upgrade and Downgrade Plans">
+		<classes>
+			<class name="com.budgeta.test.PlansAndPricing.UpgradeAndDowngradePlanTest"></class>
 		</classes>
 	</test>
 

@@ -420,9 +420,15 @@ public class BudgetaUtils {
 		res[i] = BonusForEmployee + "";
 	    //res[i] = sum + ((float)(((double) bonus / 100) * bonusMonths * baseSalary)) + "";
 		bonusMonths = 0;
-	    } else {
+	    } 
+	    else if(months.get(i).contains(fiscal) && !HireDateMonth.equals(fiscal)){
+	    	sum = sum + ((int) Math.round(((double) YearlyIncrease / 100) * sum));
+	    	res[i] = sum + "";
+	    }
+	    else {
 		res[i] = sum + "";
 	    }
+	    
 	}
 	
 	for (int i = endIndex; i < res.length; i++) {

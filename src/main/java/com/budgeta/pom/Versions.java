@@ -91,10 +91,7 @@ public class Versions extends AbstractPOM{
 		return new Versions();
 			
 	}
-	
-	
-	
-	
+
 	public int getNumberOfVersions(){
 		return dropdown.getNumberOfOptions() - 1;//-1 because of checkbox
 	}

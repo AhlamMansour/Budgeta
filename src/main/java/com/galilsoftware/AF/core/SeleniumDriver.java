@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -118,9 +119,10 @@ public class SeleniumDriver {
 			}
 			//options.addArguments("--test-type");
 		   // options.addArguments("start-maximized");
-		    //options.addArguments("user-data-dir=C:/temp/");
+		  //  options.addArguments("user-data-dir=C:\\Users\\Ahlam\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
 			DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 			capabilities.setCapability("screen-resolution", "1600x900");
+			capabilities.setCapability(CapabilityType.SUPPORTS_APPLICATION_CACHE, true);
 			System.setProperty("webdriver.chrome.logfile", "NUL");
 			capabilities.setCapability("chrome.binary", "res/chromedriver.exe");
 

@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebElementUtils;
@@ -152,6 +153,20 @@ public class MenuTrigger extends AbstractPOM {
 		return new DeletePopup();
 	}
 	
+	public DeletePopup clickDeleteAllBudget(){
+		BudgetNavigator navigator = new BudgetNavigator();
+		int ExistBudget = navigator.getNumbreOfExistBudgets();
+		while (ExistBudget >5){
+			selectBudgetMenuTrigger("Delete");
+			WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
+			WebdriverUtils.sleep(1000);
+			DeletePopup popup = new DeletePopup();
+			Assert.assertTrue(popup.isDisplayed(), "expected delete popup to be displayed");
+			popup.clickConfirm();
+		}
+		
+		return new DeletePopup();
+	}
 	
 	public SecondaryBoard clickMove(){
 		selectScenarioTrigger("Move");

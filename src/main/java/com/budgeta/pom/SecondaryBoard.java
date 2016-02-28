@@ -269,7 +269,7 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addRevenues(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("revenue");
@@ -278,7 +278,7 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addCostOfRevenues(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.slectOption("Yes", "");
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
@@ -298,7 +298,7 @@ public class SecondaryBoard extends AbstractPOM {
 	public void addDepartment(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.selectOption();
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickNext();
 		
@@ -306,7 +306,7 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addSalaryAndWages(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("employee1");
@@ -316,7 +316,7 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addDepartmentAndProfessionalServices(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("Contractor");
@@ -327,7 +327,7 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addDepartmentAndSalaryWages(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("Empoloyee");
@@ -344,7 +344,7 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addOperationalExpenses(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.slectOption("Yes", "No Grouping");
 		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickNext();
@@ -353,7 +353,7 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addOperationalExpensesAndSalary(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("employee");
@@ -362,7 +362,7 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addOperationalExpensesAndProfessionalServices(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("contractor");
@@ -377,7 +377,7 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addOtherIncomeAndExpenses(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
@@ -387,7 +387,7 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addOtherExpenses(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("expense");
@@ -396,14 +396,14 @@ public class SecondaryBoard extends AbstractPOM {
 	public void addProfissionalServicesAndDepartment(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.slectOption("Yes", "No Grouping");
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickNext();
 	}
 	
 	public void addOtherIncome(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create with Budgeta");
+		buildPopup.clickCreateBudget("Create");
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("income");
@@ -572,6 +572,12 @@ public class SecondaryBoard extends AbstractPOM {
 						addDepartmentAndProfessionalServices();
 					}
 					
+					if(buildPopup.getTilte().equals(Department+" - Salary & wages"))
+					{ 
+						addDepartmentAndSalaryWages();
+					}
+					
+					
 					if(buildPopup.getTilte().equals("Professional Services - " + Department))
 					{ 
 						addProfissionalServicesAndDepartment();
@@ -591,6 +597,12 @@ public class SecondaryBoard extends AbstractPOM {
 					{
 						addOperationalExpensesAndSalary();
 					}
+					
+					if(buildPopup.getTilte().equals("Operational Expenses - Salary & wages"))
+					{
+						addOperationalExpensesAndSalary();
+					}
+				
 				
 					if(buildPopup.getTilte().equals("Operational Expenses / Professional services"))
 					{
@@ -602,6 +614,17 @@ public class SecondaryBoard extends AbstractPOM {
 						addExpensesAndPastBlances();
 					}
 					
+					if(buildPopup.getTilte().equals("Operational Expenses - Professional services"))
+					{
+						addOperationalExpensesAndProfessionalServices();
+					}
+					
+					if(buildPopup.getTilte().contains("Operational Expenses - Past balances and transactions"))
+					{
+						addExpensesAndPastBlances();
+					}
+					
+					
 					if(buildPopup.getTilte().equals("Other income and expenses"))
 					{
 						addOtherIncomeAndExpenses();
@@ -610,6 +633,11 @@ public class SecondaryBoard extends AbstractPOM {
 					if(buildPopup.getTilte().equals("Other income"))
 					{
 						addOtherIncome();
+					}
+					
+					if(buildPopup.getTilte().equals("Other expenses"))
+					{
+						addOtherExpenses();
 					}
 					
 				}
