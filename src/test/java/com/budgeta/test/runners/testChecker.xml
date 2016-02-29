@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Budgeta Tests" parallel="tests" thread-count="5"
+<suite name="Budgeta Tests" parallel="tests" thread-count="1"
 	verbose="3">
 
 	<listeners>
@@ -8,35 +8,35 @@
 	</listeners>
 
 
-	<test name="Permissions For Advanced User">
+	<test name="Login">
 		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.PermissionsForAdvancedUserTest"></class>
+			<class name="com.budgeta.test.login.LoginTest"></class>
 		</classes>
 	</test>
 	
-	<test name="Permissions For Basic User">
-		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.PermissionsForBasicUserTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Permissions For Basic User"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.PermissionsForBasicUserTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 	
-	<test name="Permissions For Professional User">
-		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.PermissionsForProfessionalUserTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Permissions For Professional User"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.PermissionsForProfessionalUserTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 	
-	<test name="Permissions For Strater User">
-		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.PermissionsForStarterUserTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Permissions For Strater User"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.PermissionsForStarterUserTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 	
-	<test name="Upgrade and Downgrade Plans">
-		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.UpgradeAndDowngradePlanTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Upgrade and Downgrade Plans"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.UpgradeAndDowngradePlanTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
 
 </suite>

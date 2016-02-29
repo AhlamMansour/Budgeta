@@ -2,7 +2,9 @@ package com.budgeta.test.login;
 
 
 
+import org.openqa.selenium.Dimension;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -17,15 +19,15 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class LoginTest extends BudgetaTest{
 	
 	
-//	@BeforeMethod
-//	private void initTest() {
-//		
+	@BeforeMethod
+	private void initTest() {
+		
 //		Dimension d = new Dimension(1920, 1080);
 //		driver.manage().window().setSize(d);
-//		System.out.println("The Driver size is: " + driver.manage().window().getSize());
-//
-//	}
-//	
+		System.out.println("The Driver size is: " + driver.manage().window().getSize());
+
+	}
+	
 	
 	@Test(enabled = true)
 	public void secureLoginTest(){
