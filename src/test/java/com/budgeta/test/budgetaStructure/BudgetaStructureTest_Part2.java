@@ -221,7 +221,7 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 
 		EmployeeAssumptions emplyeeAssumption = new EmployeeAssumptions();
 
-	//	emplyeeAssumption.selectPayment(data.get("Payment"));
+		emplyeeAssumption.selectPayment(data.get("Payment"));
 		emplyeeAssumption.setYearlyVacatoinDays(data.get("YearlyVactaionDays"));
 		emplyeeAssumption.setAvgAccruedVacation(data.get("AvgAccruedVactaion_Percentage"));
 		emplyeeAssumption.setMaxAccruedVacation(data.get("MaxAccruedVactaionDays"));

@@ -64,7 +64,7 @@ public class BudgetNavigator extends AbstractPOM{
 	private WebElement searchBudget;
     
     public BudgetNavigator(){
-    WebdriverUtils.waitForBudgetaBusyBar(driver);
+    //WebdriverUtils.waitForBudgetaBusyBar(driver);
     WebdriverUtils.waitForBudgetaLoadBar(driver);
     }
     

@@ -327,6 +327,7 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addDepartmentAndSalaryWages(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		WebdriverUtils.sleep(5000);
 		buildPopup.clickCreateBudget("Create");
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
@@ -417,73 +418,74 @@ public class SecondaryBoard extends AbstractPOM {
 			BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 			if(buildPopup.isDisplayed()){
 				while (!buildPopup.getConfirmButtontext().equals("Finish")){
-					if(buildPopup.getTilte().equals("Build your company budget"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Build your company budget"))
 					{
 						buildBudget();
 					}
-					if(buildPopup.getTilte().equals("Revenues"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Revenues"))
 					{
 						addRevenues();
 					}
 					
-					if(buildPopup.getTilte().equals("Cost of Revenues"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Cost of Revenues"))
 					{
 						addCostOfRevenues();
 					}
 					
-					if(buildPopup.getTilte().equals("Professional Services"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Professional Services"))
 					{
 						addProfessionalServices();
+						//addDepartmentAndProfessionalServices();
 					}
 					
-					if(buildPopup.getTilte().equals(Department))
+					if(buildPopup.getTilte().equalsIgnoreCase(Department))
 					{
 						addDepartment();
 					}
 					
-					if(buildPopup.getTilte().equals("Salary & wages"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Salary & wages"))
 					{
 						addSalaryAndWages();
 					}
 					
-					if(buildPopup.getTilte().equals(Department+" / Professional services"))
+					if(buildPopup.getTilte().equalsIgnoreCase(Department+" / Professional services"))
 					{ 
 						addDepartmentAndProfessionalServices();
 					}
 					
-					if(buildPopup.getTilte().equals(Department+" - Salary & wages"))
+					if(buildPopup.getTilte().equalsIgnoreCase(Department+" - Salary & wages"))
 					{ 
 						addDepartmentAndSalaryWages();
 					}
 					
 					
-					if(buildPopup.getTilte().equals("Professional Services - " + Department))
+					if(buildPopup.getTilte().equalsIgnoreCase("Professional Services - " + Department))
 					{ 
 						addProfissionalServicesAndDepartment();
 					}
 					
-					if(buildPopup.getTilte().equals("Past balances and transactions"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Past balances and transactions"))
 					{
 						addTransactionBalance();
 					}
 					
-					if(buildPopup.getTilte().equals("Operational Expenses"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses"))
 					{
 						addOperationalExpenses();
 					}
 					
-					if(buildPopup.getTilte().equals("Operational Expenses / Salary & wages"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses / Salary & wages"))
 					{
 						addOperationalExpensesAndSalary();
 					}
 					
-					if(buildPopup.getTilte().equals("Operational Expenses - Salary & wages"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses - Salary & wages"))
 					{
 						addOperationalExpensesAndSalary();
 					}
 				
 				
-					if(buildPopup.getTilte().equals("Operational Expenses / Professional services"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses / Professional services"))
 					{
 						addOperationalExpensesAndProfessionalServices();
 					}
@@ -493,7 +495,7 @@ public class SecondaryBoard extends AbstractPOM {
 						addExpensesAndPastBlances();
 					}
 					
-					if(buildPopup.getTilte().equals("Operational Expenses - Professional services"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses - Professional services"))
 					{
 						addOperationalExpensesAndProfessionalServices();
 					}
@@ -504,24 +506,24 @@ public class SecondaryBoard extends AbstractPOM {
 					}
 					
 					
-					if(buildPopup.getTilte().equals("Other income and expenses"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Other income and expenses"))
 					{
 						addOtherIncomeAndExpenses();
 					}
 					
-					if(buildPopup.getTilte().equals("Other income"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Other income"))
 					{
 						addOtherIncome();
 					}
 					
-					if(buildPopup.getTilte().equals("Other expenses"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Other expenses"))
 					{
 						addOtherExpenses();
 					}
 					
 				}
 				
-				if(buildPopup.getTilte().equals("All Done") || buildPopup.getConfirmButtontext().equals("Finish"))
+				if(buildPopup.getTilte().equalsIgnoreCase("All Done") || buildPopup.getConfirmButtontext().equalsIgnoreCase("Finish"))
 				{
 					buildPopup.clickConfirm();
 				}
@@ -538,73 +540,74 @@ public class SecondaryBoard extends AbstractPOM {
 			BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 			if(buildPopup.isDisplayed()){
 				while (!buildPopup.getConfirmButtontext().equals("Finish")){
-					if(buildPopup.getTilte().equals("Build your company budget"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Build your company budget"))
 					{
 						buildBudget();
 					}
-					if(buildPopup.getTilte().equals("Revenues"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Revenues"))
 					{
 						addRevenues();
 					}
 					
-					if(buildPopup.getTilte().equals("Cost of Revenues"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Cost of Revenues"))
 					{
 						addCostOfRevenues();
 					}
 					
-					if(buildPopup.getTilte().equals("Professional Services"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Professional Services"))
 					{
 						addProfessionalServices();
+						//addDepartmentAndProfessionalServices();
 					}
 					
-					if(buildPopup.getTilte().equals(Department))
+					if(buildPopup.getTilte().equalsIgnoreCase(Department))
 					{
 						addDepartment();
 					}
 					
-					if(buildPopup.getTilte().equals("Salary & wages"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Salary & wages"))
 					{
 						addSalaryAndWages();
 					}
 					
-					if(buildPopup.getTilte().equals(Department+" / Professional services"))
+					if(buildPopup.getTilte().equalsIgnoreCase(Department+" / Professional services"))
 					{ 
 						addDepartmentAndProfessionalServices();
 					}
 					
-					if(buildPopup.getTilte().equals(Department+" - Salary & wages"))
+					if(buildPopup.getTilte().equalsIgnoreCase(Department+" - Salary & wages"))
 					{ 
 						addDepartmentAndSalaryWages();
 					}
 					
 					
-					if(buildPopup.getTilte().equals("Professional Services - " + Department))
+					if(buildPopup.getTilte().equalsIgnoreCase("Professional Services - " + Department))
 					{ 
 						addProfissionalServicesAndDepartment();
 					}
 					
-					if(buildPopup.getTilte().equals("Past balances and transactions"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Past balances and transactions"))
 					{
 						addTransactionBalance();
 					}
 					
-					if(buildPopup.getTilte().equals("Operational Expenses"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses"))
 					{
 						addOperationalExpenses();
 					}
 					
-					if(buildPopup.getTilte().equals("Operational Expenses / Salary & wages"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses / Salary & wages"))
 					{
 						addOperationalExpensesAndSalary();
 					}
 					
-					if(buildPopup.getTilte().equals("Operational Expenses - Salary & wages"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses - Salary & wages"))
 					{
 						addOperationalExpensesAndSalary();
 					}
 				
 				
-					if(buildPopup.getTilte().equals("Operational Expenses / Professional services"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses / Professional services"))
 					{
 						addOperationalExpensesAndProfessionalServices();
 					}
@@ -614,7 +617,7 @@ public class SecondaryBoard extends AbstractPOM {
 						addExpensesAndPastBlances();
 					}
 					
-					if(buildPopup.getTilte().equals("Operational Expenses - Professional services"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses - Professional services"))
 					{
 						addOperationalExpensesAndProfessionalServices();
 					}
@@ -625,24 +628,24 @@ public class SecondaryBoard extends AbstractPOM {
 					}
 					
 					
-					if(buildPopup.getTilte().equals("Other income and expenses"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Other income and expenses"))
 					{
 						addOtherIncomeAndExpenses();
 					}
 					
-					if(buildPopup.getTilte().equals("Other income"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Other income"))
 					{
 						addOtherIncome();
 					}
 					
-					if(buildPopup.getTilte().equals("Other expenses"))
+					if(buildPopup.getTilte().equalsIgnoreCase("Other expenses"))
 					{
 						addOtherExpenses();
 					}
 					
 				}
 				
-				if(buildPopup.getTilte().equals("All Done") || buildPopup.getConfirmButtontext().equals("Finish"))
+				if(buildPopup.getTilte().equalsIgnoreCase("All Done") || buildPopup.getConfirmButtontext().equals("Finish"))
 				{
 					buildPopup.clickConfirm();
 				}

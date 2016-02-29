@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
+
 public class BuildCompanyBudgetPopup extends SmallPopup {
 
 	@FindBy(className = "wizard-question-radio")
@@ -31,7 +33,11 @@ public class BuildCompanyBudgetPopup extends SmallPopup {
 		for (WebElement el : selectoption) {
 			if (el.findElement(By.tagName("label")).getText().equals(option) || el.findElement(By.tagName("label")).getText().equals(expenses)) {
 				if(el.findElement(By.tagName("input")).getAttribute("type").equals("radio"))
+				{
 					el.click();
+					WebdriverUtils.sleep(1000);
+				}
+				
 				
 			}
 		}
