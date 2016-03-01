@@ -238,7 +238,7 @@ public class BudgetSettingsTest extends WrapperTest {
 	
 	
 
-	@Test(enabled = true, priority = 9)
+	@Test(enabled = false, priority = 9)
 	public void DeleteAllBudgetTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();

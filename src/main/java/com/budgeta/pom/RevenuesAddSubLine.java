@@ -63,7 +63,7 @@ public class RevenuesAddSubLine extends AbstractPOM{
 		WebElementUtils.hoverOverField(textField, driver, null);
 		wrapper.findElement(addBtn).click();
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("new-empty-line"));
-		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		//WebdriverUtils.waitForBudgetaBusyBar(driver);
 	}
 	
 	@Override

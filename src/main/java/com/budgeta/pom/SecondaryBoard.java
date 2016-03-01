@@ -269,7 +269,8 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addRevenues(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create");
+//		buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("revenue");
@@ -278,7 +279,8 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addCostOfRevenues(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create");
+		//buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.slectOption("Yes", "");
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
@@ -298,7 +300,8 @@ public class SecondaryBoard extends AbstractPOM {
 	public void addDepartment(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.selectOption();
-		buildPopup.clickCreateBudget("Create");
+		//buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickNext();
 		
@@ -306,7 +309,8 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addSalaryAndWages(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create");
+		//buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("employee1");
@@ -316,7 +320,8 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addDepartmentAndProfessionalServices(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create");
+		//buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("Contractor");
@@ -328,7 +333,8 @@ public class SecondaryBoard extends AbstractPOM {
 	public void addDepartmentAndSalaryWages(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		WebdriverUtils.sleep(5000);
-		buildPopup.clickCreateBudget("Create");
+		//buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("Empoloyee");
@@ -345,7 +351,8 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addOperationalExpenses(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create");
+		//buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.slectOption("Yes", "No Grouping");
 		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickNext();
@@ -354,7 +361,8 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addOperationalExpensesAndSalary(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create");
+		//buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("employee");
@@ -363,7 +371,8 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addOperationalExpensesAndProfessionalServices(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create");
+		//buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("contractor");
@@ -378,7 +387,8 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addOtherIncomeAndExpenses(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create");
+		//buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
@@ -388,7 +398,8 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addOtherExpenses(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create");
+		//buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("expense");
@@ -397,14 +408,16 @@ public class SecondaryBoard extends AbstractPOM {
 	public void addProfissionalServicesAndDepartment(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.slectOption("Yes", "No Grouping");
-		buildPopup.clickCreateBudget("Create");
+		//buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickNext();
 	}
 	
 	public void addOtherIncome(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.clickCreateBudget("Create");
+		//buildPopup.clickCreateBudget("Create");
+		buildPopup.clickCreateBudget();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("income");

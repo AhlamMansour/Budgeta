@@ -16,17 +16,26 @@ public class BuildCompanyBudgetPopup extends SmallPopup {
 	@FindBy(className = "Create with Budgeta")
 	private WebElement createBudget;
 	
-	@FindBy(className = "inactive")
-	private List<WebElement> create;
+//	@FindBy(className = "inactive")
+//	private List<WebElement> create;
 	
 	@FindBy(id = "confirm-btn")
 	private WebElement nextmBtn;
 
+	@FindBy(className = "manual")
+	private WebElement create;
+	
+	@FindBy(className = "import")
+	private WebElement importBtn;
+	
+	
 	@FindBy(css = "a.add")
 	private WebElement addRevenue;
 
 	@FindBy(css = "input.add-multi")
 	private List<WebElement> lineNumbers;
+	
+	
 	
 	public void slectOption(String option, String expenses) {
 
@@ -48,14 +57,24 @@ public class BuildCompanyBudgetPopup extends SmallPopup {
 		selectoption.get(0).click();
 	}
 
-	public void clickCreateBudget(String option) {
+//	public void clickCreateBudget(String option) {
+//
+//		for (WebElement el : create){
+//			if(el.getText().equals(option)){
+//				el.click();
+//				break;
+//			}
+//		}
+//
+//	}
+	
+	public void clickCreateBudget() {
+		create.click();
 
-		for (WebElement el : create){
-			if(el.getText().equals(option)){
-				el.click();
-				break;
-			}
-		}
+	}
+	
+	public void clickImportBudget() {
+		importBtn.click();
 
 	}
 	
