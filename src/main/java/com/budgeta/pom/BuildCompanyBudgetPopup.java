@@ -75,6 +75,8 @@ public class BuildCompanyBudgetPopup extends SmallPopup {
 	
 	public void clickImportBudget() {
 		importBtn.click();
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("import"));
+		
 
 	}
 	

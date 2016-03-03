@@ -1,7 +1,5 @@
 package com.budgeta.pom;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -117,7 +115,7 @@ public class DateRange extends AbstractPOM{
 		
 				Actions action = new Actions(driver);
 				action.moveByOffset(0, 0).build().perform();
-				WebElementUtils.hoverOverField(wrappers.findElement(By.xpath("../..")), driver, null);
+			//	WebElementUtils.hoverOverField(wrappers.findElement(By.xpath("../..")), driver, null);
 				WebdriverUtils.waitForInvisibilityOfElement(driver, wrappers, 10);
 				
 			

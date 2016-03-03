@@ -1,5 +1,6 @@
 package com.budgeta.pom;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,7 +103,9 @@ public class SecondaryBoard extends AbstractPOM {
 	private final By nameField = By.className("ember-text-field");
 	
 	
-	String Department = "departmen"; 
+	String Department = "departmen";
+	String importBudgetName = "Example 3 for share";
+	String selectLineType = "Perpetual Licenses";
 	// private final By shareIcon =
 	// By.cssSelector("div.actions-toggle span.budget-name  div.svg-icon");
 
@@ -277,6 +280,31 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup.clickNext();
 	}
 	
+	public void importRevenueLines(){
+		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.clickImportBudget();
+		UploadImportFile upload = new UploadImportFile();
+		upload.clickUpload(new File("").getAbsolutePath() + "/browserDownloads/" + importBudgetName + ".xlsx");
+		ImportWinStep1 importSetup = new ImportWinStep1();
+		importSetup.clickOnNext();
+		
+		ImportWinStep2 importData = new ImportWinStep2();
+		importData.selectAllRows();
+		importData.selectType(selectLineType);
+		importData.clickNext();
+		
+		ImportWinStep3 importcolumns = new ImportWinStep3();
+		//add select columns
+		importcolumns.clickNext();
+		
+		ImportWinStep4 importBudget = new ImportWinStep4();
+		importBudget.clickImport();
+		
+		
+		
+
+	}
+	
 	public void addCostOfRevenues(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		//buildPopup.clickCreateBudget("Create");
@@ -438,6 +466,130 @@ public class SecondaryBoard extends AbstractPOM {
 					if(buildPopup.getTilte().equalsIgnoreCase("Revenues"))
 					{
 						addRevenues();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase("Cost of Revenues"))
+					{
+						addCostOfRevenues();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase("Professional Services"))
+					{
+						addProfessionalServices();
+						//addDepartmentAndProfessionalServices();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase(Department))
+					{
+						addDepartment();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase("Salary & wages"))
+					{
+						addSalaryAndWages();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase(Department+" / Professional services"))
+					{ 
+						addDepartmentAndProfessionalServices();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase(Department+" - Salary & wages"))
+					{ 
+						addDepartmentAndSalaryWages();
+					}
+					
+					
+					if(buildPopup.getTilte().equalsIgnoreCase("Professional Services - " + Department))
+					{ 
+						addProfissionalServicesAndDepartment();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase("Past balances and transactions"))
+					{
+						addTransactionBalance();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses"))
+					{
+						addOperationalExpenses();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses / Salary & wages"))
+					{
+						addOperationalExpensesAndSalary();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses - Salary & wages"))
+					{
+						addOperationalExpensesAndSalary();
+					}
+				
+				
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses / Professional services"))
+					{
+						addOperationalExpensesAndProfessionalServices();
+					}
+					
+					if(buildPopup.getTilte().contains("Operational Expenses / Past balances and transactions"))
+					{
+						addExpensesAndPastBlances();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase("Operational Expenses - Professional services"))
+					{
+						addOperationalExpensesAndProfessionalServices();
+					}
+					
+					if(buildPopup.getTilte().contains("Operational Expenses - Past balances and transactions"))
+					{
+						addExpensesAndPastBlances();
+					}
+					
+					
+					if(buildPopup.getTilte().equalsIgnoreCase("Other income and expenses"))
+					{
+						addOtherIncomeAndExpenses();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase("Other income"))
+					{
+						addOtherIncome();
+					}
+					
+					if(buildPopup.getTilte().equalsIgnoreCase("Other expenses"))
+					{
+						addOtherExpenses();
+					}
+					
+				}
+				
+				if(buildPopup.getTilte().equalsIgnoreCase("All Done") || buildPopup.getConfirmButtontext().equalsIgnoreCase("Finish"))
+				{
+					buildPopup.clickConfirm();
+				}
+				
+				
+			}
+			else
+				WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
+			
+		}
+	}
+	
+	public void importAllBudgetLines() {
+		if (!wrapper.getAttribute("class").contains("tree-edit")) {
+			selectedBudget.findElement(addLinesBtn).click();
+			BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
+			if(buildPopup.isDisplayed()){
+				while (!buildPopup.getConfirmButtontext().equals("Finish")){
+					if(buildPopup.getTilte().equalsIgnoreCase("Build your company budget"))
+					{
+						buildBudget();
+					}
+					if(buildPopup.getTilte().equalsIgnoreCase("Revenues"))
+					{
+						importRevenueLines();
 					}
 					
 					if(buildPopup.getTilte().equalsIgnoreCase("Cost of Revenues"))

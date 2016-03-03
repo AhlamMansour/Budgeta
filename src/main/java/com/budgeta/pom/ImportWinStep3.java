@@ -19,6 +19,12 @@ public class ImportWinStep3 extends ImportWinStep2{
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("step-2"));
 	}
 	
+	
+	public void selectColumns(){
+		
+	}
+	
+	
 	public void clickNext(){
 		nextBtn.click();
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("step-4"));
