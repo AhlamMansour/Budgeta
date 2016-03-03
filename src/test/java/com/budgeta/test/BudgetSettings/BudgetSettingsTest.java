@@ -40,7 +40,7 @@ public class BudgetSettingsTest extends WrapperTest {
 	}
 	
 	@TestFirst
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void CreateSettingTest() {
 		BudgetNavigator navigator = new BudgetNavigator();
 		navigator.selectRandomBudgeta();
@@ -51,7 +51,7 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false, priority = 1)
+	@Test(enabled = true, priority = 1)
 	public void RenameBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 
@@ -67,7 +67,7 @@ public class BudgetSettingsTest extends WrapperTest {
 		Assert.assertNotEquals(BeforeRenameBudget, AfterRenameBudget);
 	}
 
-	@Test(enabled = false, priority = 2)
+	@Test(enabled = true, priority = 2)
 	public void FlagBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -85,7 +85,7 @@ public class BudgetSettingsTest extends WrapperTest {
 	}
 
 	@KnownIssue(bugID = "BUD - 2537")
-	@Test(enabled = false, priority = 3)
+	@Test(enabled = true, priority = 3)
 	public void ShareBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -111,7 +111,7 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false, priority = 6)
+	@Test(enabled = true, priority = 6)
 	public void duplicateBudget() {
 		WebdriverUtils.sleep(1000);
 
@@ -124,7 +124,7 @@ public class BudgetSettingsTest extends WrapperTest {
 		Assert.assertEquals(BudgetName, "Copy of " + CurrentBudgetName);
 	}
 
-	@Test(enabled = false, priority = 4)
+	@Test(enabled = true, priority = 4)
 	public void backupBudgetTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -171,7 +171,7 @@ public class BudgetSettingsTest extends WrapperTest {
 //		
 //	}
 	
-	@Test(enabled = false, priority = 5)
+	@Test(enabled = true, priority = 5)
 	public void restoreBudgetTest(){
 		WebdriverUtils.sleep(1000);
 		secondary = board.getSecondaryBoard();
@@ -199,7 +199,7 @@ public class BudgetSettingsTest extends WrapperTest {
 	}
 	
 
-	@Test(enabled = false, priority = 7)
+	@Test(enabled = true, priority = 7)
 	public void DeleteBudgetTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -217,7 +217,7 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false, priority = 8)
+	@Test(enabled = true, priority = 8)
 	public void RenameBudgetFromNavTest() {
 		WebdriverUtils.sleep(1000);
 

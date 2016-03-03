@@ -294,7 +294,7 @@ public class SecondaryBoard extends AbstractPOM {
 		importData.clickNext();
 		
 		ImportWinStep3 importcolumns = new ImportWinStep3();
-		//add select columns
+		importcolumns.selectColumns();
 		importcolumns.clickNext();
 		
 		ImportWinStep4 importBudget = new ImportWinStep4();
