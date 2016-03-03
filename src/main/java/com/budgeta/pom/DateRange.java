@@ -115,8 +115,17 @@ public class DateRange extends AbstractPOM{
 		
 				Actions action = new Actions(driver);
 				action.moveByOffset(0, 0).build().perform();
+				WebdriverUtils.sleep(1000);
 			//	WebElementUtils.hoverOverField(wrappers.findElement(By.xpath("../..")), driver, null);
-				WebdriverUtils.waitForInvisibilityOfElement(driver, wrappers, 10);
+				try{
+					if(wrappers.isDisplayed()){
+						WebdriverUtils.forceElementInvisibility(driver,wrappers);
+						WebdriverUtils.waitForElementToDisappear(driver, By.className("qtip-focus"));
+					}
+				}
+				catch(Exception e){
+					WebdriverUtils.forceElementInvisibility(driver,wrappers);
+				}
 				
 			
 	} 
