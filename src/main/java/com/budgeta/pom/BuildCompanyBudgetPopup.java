@@ -22,6 +22,9 @@ public class BuildCompanyBudgetPopup extends SmallPopup {
 	@FindBy(id = "confirm-btn")
 	private WebElement nextmBtn;
 
+	@FindBy(id = "more-btn")
+	private WebElement moreBtn;
+	
 	@FindBy(className = "manual")
 	private WebElement create;
 	
@@ -93,6 +96,10 @@ public class BuildCompanyBudgetPopup extends SmallPopup {
 
 	}
 	
+	public void clickMore() {
+		moreBtn.click();
+
+	}
 	
 	public void selectAllcheckBoxes(){
 		

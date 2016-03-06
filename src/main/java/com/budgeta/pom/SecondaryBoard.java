@@ -289,8 +289,10 @@ public class SecondaryBoard extends AbstractPOM {
 		importSetup.clickOnNext();
 		
 		ImportWinStep2 importData = new ImportWinStep2();
-		importData.selectAllRows();
-		importData.selectType(selectLineType);
+		//importData.selectAllRows();
+		importData.selectRandomLines();
+		//importData.selectType(selectLineType);
+		importData.selectTypeForSelectedLines(selectLineType);
 		importData.clickNext();
 		
 		ImportWinStep3 importcolumns = new ImportWinStep3();
@@ -313,6 +315,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("expense");
+		buildPopup.clickMore();
+		WebdriverUtils.sleep(1000);
 		buildPopup.clickNext();
 	}
 	
@@ -331,6 +335,12 @@ public class SecondaryBoard extends AbstractPOM {
 		//buildPopup.clickCreateBudget("Create");
 		buildPopup.clickCreateBudget();
 		buildPopup.selectAllcheckBoxes();
+		
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("Expenses");
+		buildPopup.clickMore();
+		WebdriverUtils.sleep(1000);
 		buildPopup.clickNext();
 		
 	}
@@ -372,7 +382,11 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addTransactionBalance(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.setLineNumber("1");
+	//	buildPopup.setLineNumber("1");
+		buildPopup.clickCreateBudget();
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("Balance");
 		buildPopup.clickNext();
 		
 	}
@@ -383,6 +397,11 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup.clickCreateBudget();
 		buildPopup.slectOption("Yes", "No Grouping");
 		buildPopup.selectAllcheckBoxes();
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("Expenses");
+		buildPopup.clickMore();
+		WebdriverUtils.sleep(1000);
 		buildPopup.clickNext();
 		
 	}
@@ -409,7 +428,11 @@ public class SecondaryBoard extends AbstractPOM {
 	
 	public void addExpensesAndPastBlances(){
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.setLineNumber("1");
+	//	buildPopup.setLineNumber("1");
+		buildPopup.clickCreateBudget();
+		buildPopup.clickAdd();
+		buildPopup = new BuildCompanyBudgetPopup();
+		buildPopup.setName("Balance1");
 		buildPopup.clickNext();
 	}
 	
