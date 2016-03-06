@@ -39,13 +39,14 @@ public class ImportWinStep3 extends ImportWinStep2{
 					//((JavascriptExecutor) driver).executeScript("arguments[0].click();,':before'", el.findElement(By.tagName("span")).findElement(By.cssSelector("label ::before")));
 					//WebElementUtils.clickElementEvent(driver,el.findElement(By.cssSelector("span ::before")));
 					//el.findElement(By.tagName("span")).findElement(By.cssSelector("label ::before")).click();
-					if(){//add is selected function
-						el.findElement(By.tagName("span")).findElement(By.tagName("label")).click();
-						WebdriverUtils.waitForElementToBeFound(driver, By.className("noty_type_information"));
-						DateRangeSelection selectDates = new DateRangeSelection();
-						selectDates.confirmSelectionMonth();
-						break;
-					}
+					////////////////////////////
+//					if(){//add is selected function
+//						el.findElement(By.tagName("span")).findElement(By.tagName("label")).click();
+//						WebdriverUtils.waitForElementToBeFound(driver, By.className("noty_type_information"));
+//						DateRangeSelection selectDates = new DateRangeSelection();
+//						selectDates.confirmSelectionMonth();
+//						break;
+//					}
 					
 					
 					
