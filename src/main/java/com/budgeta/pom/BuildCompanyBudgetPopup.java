@@ -93,6 +93,7 @@ public class BuildCompanyBudgetPopup extends SmallPopup {
 	
 	public void clickNext() {
 		nextmBtn.click();
+		
 
 	}
 	

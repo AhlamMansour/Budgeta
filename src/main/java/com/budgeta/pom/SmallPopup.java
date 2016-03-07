@@ -3,6 +3,7 @@ package com.budgeta.pom;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -20,9 +21,10 @@ public class SmallPopup extends AbstractPOM{
 	@FindBy(id = "confirm-btn")
 	private WebElement confirmBtn;
 	
-	@FindBy(className = "modal-title")
-	private WebElement title;
+//	@FindBy(className = "modal-title")
+//	private WebElement title;
 	
+	private By title = By.className("modal-title");
 	private By nameField = By.className("ember-text-field");
 	private By closeBtn = By.className("close");
 	
@@ -42,7 +44,15 @@ public class SmallPopup extends AbstractPOM{
 	
 	
 	public String getTilte(){
-		return title.getText();
+		//return driver.findElement(title).getText();
+		String title;
+		try{
+			title = driver.findElement(By.className("modal-title")).getText();
+		}catch(StaleElementReferenceException se){
+			WebdriverUtils.sleep(1000);
+			title = driver.findElement(By.className("modal-title")).getText();
+		}
+		return title;
 	}
 	
 	public String getConfirmButtontext(){
