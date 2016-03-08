@@ -1,5 +1,7 @@
 package com.budgeta.pom;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -22,7 +24,7 @@ public class ImportWinStep2 extends ImportWinStep1{
 //    private WebElement selectAll;
 	
 	@FindBy(className = "small-checkbox")
-    private List<WebElement> selectAll;
+    private List<WebElement> BudgetLines;
 	
 	@FindBy(className = "small-checkbox")
     private List<WebElement> checkBox;
@@ -33,10 +35,14 @@ public class ImportWinStep2 extends ImportWinStep1{
 	@FindBy(css = "div.select2-drop ul.select2-results li")
     private List<WebElement> typeOptions; 
 	
+	
+
+
+	
 	public void selectAllRows(){
 		//selectAll.findElement(By.tagName("label")).getAttribute("for").equals("importSelectAll");
 		
-		for (WebElement el : selectAll){
+		for (WebElement el : BudgetLines){
 			if(el.findElement(By.tagName("label")).getAttribute("for").equals("importSelectAll")){
 				el.findElement(By.tagName("label")).click();
 				break;
@@ -46,7 +52,7 @@ public class ImportWinStep2 extends ImportWinStep1{
 	}
 	
 	public boolean isAllLinesSelected(){
-		for (WebElement el : selectAll)
+		for (WebElement el : BudgetLines)
 		{
 			if((el.findElement(By.tagName("input"))).isSelected())
 				return true;
@@ -55,17 +61,36 @@ public class ImportWinStep2 extends ImportWinStep1{
 	}
 	
 	public int getLinesNumber(){
-		return selectAll.size();
+		return BudgetLines.size();
 	}
 	
 	public void selectRandomLines(){
 		int random = WebElementUtils.getRandomNumberByRange(0, getLinesNumber() - 1) , i=0;
-		while(!(selectAll.get(random).findElement(By.tagName("label")).isSelected()) && i<5){
+		while(!(BudgetLines.get(random).findElement(By.tagName("label")).isSelected()) && i<5){
 			random = WebElementUtils.getRandomNumberByRange(0, getLinesNumber() - 1);
     		i++;
-    		WebElementUtils.hoverOverField(selectAll.get(random), driver, null);
-    		selectAll.get(random).click();
+    		WebElementUtils.hoverOverField(BudgetLines.get(random), driver, null);
+    		BudgetLines.get(random).click();
 		}
+		
+	}
+	
+	public void selectSpecificLines(ArrayList<String> lines){
+		
+		for (String line : lines){
+			for(WebElement el : BudgetLines){
+				if(el.getAttribute("title").trim().equalsIgnoreCase(line)){
+					if(!el.findElement(By.tagName("input")).isSelected()){
+						el.click();
+						break;
+					}
+					
+				}
+				
+			}
+		}
+		
+		
 		
 	}
 	
@@ -104,6 +129,7 @@ public class ImportWinStep2 extends ImportWinStep1{
 					for (WebElement type : typeOptions){
 						if(type.getText().equals(option)){
 							type.click();
+							WebdriverUtils.sleep(1000);
 							break;
 						}
 

@@ -119,7 +119,8 @@ public class SeleniumDriver {
 			}
 			//options.addArguments("--test-type");
 		   // options.addArguments("start-maximized");
-		  //  options.addArguments("user-data-dir=C:\\Users\\Ahlam\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
+			//options.addArguments("user-data-dir=C:\\Users\\Ahlam\\AppData\\Local\\Google\\Chrome\\User Data\\Default");
+			//options.addArguments("user-data-dir=C:\\chrome-dev-profile\\Default");
 			DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 			capabilities.setCapability("screen-resolution", "1600x900");
 			capabilities.setCapability(CapabilityType.SUPPORTS_APPLICATION_CACHE, true);
