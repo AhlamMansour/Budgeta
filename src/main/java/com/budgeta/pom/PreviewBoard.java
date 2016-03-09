@@ -88,7 +88,7 @@ public class PreviewBoard extends AbstractPOM{
 	public int getIndexOfHeaderDate(String date){
 		int i = 0;
 		for(WebElement el : dateHeader){
-			if(el.getText().equals(date))
+			if(el.getText().equalsIgnoreCase(date))
 				return i;
 			i++;
 		}

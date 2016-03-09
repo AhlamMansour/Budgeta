@@ -3,7 +3,9 @@ package com.budgeta.pom;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -269,7 +271,7 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup.clickNext();
 	}
 
-	public void importRevenueLines() {
+	public Map<String, List<String>> importRevenueLines() {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.clickImportBudget();
 		UploadImportFile upload = new UploadImportFile();
@@ -292,11 +294,13 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.clickNext();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
+		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
+		
 		importBudget.clickImport();
-
+		return valuesBeforeImport;
 	}
 	
-	public void importCostOfRevenueLines() {
+	public Map<String, List<String>> importCostOfRevenueLines() {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.clickImportBudget();
 		UploadImportFile upload = new UploadImportFile();
@@ -316,11 +320,14 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.clickNext();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
+		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
+		
 		importBudget.clickImport();
+		return valuesBeforeImport;
 
 	}
 	
-	public void importOperatingExpensesLines() {
+	public Map<String, List<String>> importOperatingExpensesLines() {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.clickImportBudget();
 		UploadImportFile upload = new UploadImportFile();
@@ -340,11 +347,14 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.clickNext();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
+		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
+		
 		importBudget.clickImport();
+		return valuesBeforeImport;
 
 	}
 	
-	public void importOtherIncomeAndExpensesLines() {
+	public Map<String, List<String>> importOtherIncomeAndExpensesLines() {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.clickImportBudget();
 		UploadImportFile upload = new UploadImportFile();
@@ -364,7 +374,10 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.clickNext();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
+		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
+		
 		importBudget.clickImport();
+		return valuesBeforeImport;
 
 	}
 
@@ -634,7 +647,8 @@ public class SecondaryBoard extends AbstractPOM {
 		}
 	}
 
-	public void importAllBudgetLines() {
+	public Map<String,Map<String, List<String>>> importAllBudgetLines() {
+		Map<String,Map<String, List<String>>> allMaps = new HashMap<String, Map<String,List<String>>>();
 		if (!wrapper.getAttribute("class").contains("tree-edit")) {
 			selectedBudget.findElement(addLinesBtn).click();
 			BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
@@ -644,11 +658,12 @@ public class SecondaryBoard extends AbstractPOM {
 						buildBudget();
 					}
 					if (buildPopup.getTilte().equalsIgnoreCase("Revenues")) {
-						importRevenueLines();
+						allMaps.put("Revenues", importRevenueLines());
 					}
 
 					if (buildPopup.getTilte().equalsIgnoreCase("Cost of Revenues")) {
-						importCostOfRevenueLines();
+						allMaps.put("Cost of Revenues", importCostOfRevenueLines());
+						//importCostOfRevenueLines();
 					}
 
 					if (buildPopup.getTilte().equalsIgnoreCase("Professional Services")) {
@@ -681,7 +696,8 @@ public class SecondaryBoard extends AbstractPOM {
 					}
 
 					if (buildPopup.getTilte().equalsIgnoreCase("Operational Expenses")) {
-						importOperatingExpensesLines();
+						allMaps.put("Operational Expenses", importOperatingExpensesLines());
+						//importOperatingExpensesLines();
 					}
 
 					if (buildPopup.getTilte().equalsIgnoreCase("Operational Expenses / Salary & wages")) {
@@ -709,7 +725,8 @@ public class SecondaryBoard extends AbstractPOM {
 					}
 
 					if (buildPopup.getTilte().equalsIgnoreCase("Other income and expenses")) {
-						importOtherIncomeAndExpensesLines();
+						allMaps.put("Other income and expenses", importOtherIncomeAndExpensesLines());
+						//importOtherIncomeAndExpensesLines();
 					}
 
 					if (buildPopup.getTilte().equalsIgnoreCase("Other income")) {
@@ -730,6 +747,7 @@ public class SecondaryBoard extends AbstractPOM {
 				WebdriverUtils.waitForElementToBeFound(driver, By.className("tree-edit"));
 
 		}
+		return allMaps;
 	}
 
 	public void addAllSubBudgetLines() {

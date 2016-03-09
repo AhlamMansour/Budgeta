@@ -3,6 +3,7 @@ package com.budgeta.pom;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -43,15 +44,29 @@ public class BuildCompanyBudgetPopup extends SmallPopup {
 	public void slectOption(String option, String expenses) {
 
 		for (WebElement el : selectoption) {
-			if (el.findElement(By.tagName("label")).getText().equals(option) || el.findElement(By.tagName("label")).getText().equals(expenses)) {
-				if(el.findElement(By.tagName("input")).getAttribute("type").equals("radio"))
-				{
-					el.click();
-					WebdriverUtils.sleep(1000);
+			try{
+				if (el.findElement(By.tagName("label")).getText().equals(option) || el.findElement(By.tagName("label")).getText().equals(expenses)) {
+					if(el.findElement(By.tagName("input")).getAttribute("type").equals("radio"))
+					{
+						el.click();
+						WebdriverUtils.sleep(1000);
+					}
+					
+					
 				}
-				
-				
+			}catch(StaleElementReferenceException se){
+				WebdriverUtils.sleep(1000);
+				if (el.findElement(By.tagName("label")).getText().equals(option) || el.findElement(By.tagName("label")).getText().equals(expenses)) {
+					if(el.findElement(By.tagName("input")).getAttribute("type").equals("radio"))
+					{
+						el.click();
+						WebdriverUtils.sleep(1000);
+					}
+					
+					
+				}
 			}
+			
 		}
 	}
 	
