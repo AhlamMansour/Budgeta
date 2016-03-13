@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetNavigator;
@@ -17,9 +18,13 @@ import com.budgeta.pom.SuccessPage;
 import com.budgeta.pom.Versions;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.KnownIssue;
+import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
+import com.galilsoftware.AF.core.listeners.TestNGListener;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
+
+@Listeners({ MethodListener.class, TestNGListener.class })
 public class BudgetSettingsTest extends WrapperTest {
 
 	String snapshotName = "snapshot test_";

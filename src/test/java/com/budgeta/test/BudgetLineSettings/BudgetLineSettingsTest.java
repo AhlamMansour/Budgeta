@@ -2,6 +2,7 @@ package com.budgeta.test.BudgetLineSettings;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetNavigator;
@@ -12,9 +13,13 @@ import com.budgeta.pom.SharePopup;
 import com.budgeta.pom.SmallPopup;
 import com.budgeta.pom.SuccessPage;
 import com.budgeta.test.WrapperTest;
+import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
+import com.galilsoftware.AF.core.listeners.TestNGListener;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
+
+@Listeners({ MethodListener.class, TestNGListener.class })
 public class BudgetLineSettingsTest extends WrapperTest {
 
 	MenuTrigger menuTrigger;

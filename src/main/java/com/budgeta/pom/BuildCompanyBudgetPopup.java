@@ -55,7 +55,7 @@ public class BuildCompanyBudgetPopup extends SmallPopup {
 					
 				}
 			}catch(StaleElementReferenceException se){
-				WebdriverUtils.sleep(1000);
+				WebdriverUtils.sleep(3000);
 				if (el.findElement(By.tagName("label")).getText().equals(option) || el.findElement(By.tagName("label")).getText().equals(expenses)) {
 					if(el.findElement(By.tagName("input")).getAttribute("type").equals("radio"))
 					{
