@@ -56,7 +56,16 @@ public class SmallPopup extends AbstractPOM{
 	}
 	
 	public String getConfirmButtontext(){
-		return confirmBtn.getText();
+		String confirmText;
+		
+		try{
+			confirmText = driver.findElement(By.id("confirm-btn")).getText();
+		}catch(StaleElementReferenceException se){
+			WebdriverUtils.sleep(1000);
+			confirmText = driver.findElement(By.id("confirm-btn")).getText();
+		}
+		
+		return confirmText;
 	}
 	
 	public void setName(String name){

@@ -233,6 +233,7 @@ public class ViewTest extends WrapperTest {
 		}
 	}
 
+	@KnownIssue(bugID = "BUD - 3252")
 	@Test(enabled = true)
 	public void calculateDifferences() {
 		navigator = board.getBudgetNavigator();

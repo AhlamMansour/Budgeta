@@ -42,7 +42,8 @@ public class Sheets extends AbstractPOM{
 	
 	private By columnTitle = By.className("sub-header-text-wrapper");	
 	private By rowTitle = By.className("fixed-columns");
-	private By rowValues = By.cssSelector("div.scroll-columns div.column span span");
+	//private By rowValues = By.cssSelector("div.scroll-columns div.column span span");
+	private By rowValues = By.cssSelector("div.scroll-columns div.forecast-row span");
 	private By rowTotal = By.className("total-column");
 	
 	

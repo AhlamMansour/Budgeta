@@ -2,6 +2,7 @@ package com.budgeta.test.common;
 
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetaBoard;
@@ -27,6 +28,8 @@ public class BudgetaCommon extends WrapperTest{
 	String setToYear = "2018";
 	String setToMonth = "Dec";
 	String currency = "USD";
+	
+	@Test
 	public void createBudget(){
 		//driver.get(baseURL);
 		
