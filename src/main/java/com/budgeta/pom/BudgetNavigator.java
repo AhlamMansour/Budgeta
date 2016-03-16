@@ -307,7 +307,7 @@ public class BudgetNavigator extends AbstractPOM{
         
         public void searchBudget(String budget){
         	WebdriverUtils.waitForElementToBeFound(driver, By.cssSelector("div.qtip-focus div.search-wrapper input"));
-        	wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.qtip-focus div.search-wrapper input")));
+        //	wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.qtip-focus div.search-wrapper input")));
         	searchBudget.clear();
         	searchBudget.sendKeys(budget);
         }
