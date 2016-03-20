@@ -258,6 +258,7 @@ public class SecondaryBoard extends AbstractPOM {
 	public void buildBudget() {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.slectOption("Yes", "No Grouping");
+		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.clickNext();
 	}
 
@@ -555,7 +556,7 @@ public class SecondaryBoard extends AbstractPOM {
 			BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 			if (buildPopup.isDisplayed()) {
 				while (!buildPopup.getConfirmButtontext().equals("Finish")) {
-					if (buildPopup.getTilte().equalsIgnoreCase("Build your company budget")) {
+					if (buildPopup.getTilte().contains("Build your")) {
 						buildBudget();
 					}
 					if (buildPopup.getTilte().equalsIgnoreCase("Revenues")) {
@@ -654,7 +655,7 @@ public class SecondaryBoard extends AbstractPOM {
 			BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 			if (buildPopup.isDisplayed()) {
 				while (!buildPopup.getConfirmButtontext().equals("Finish")) {
-					if (buildPopup.getTilte().equalsIgnoreCase("Build your company budget")) {
+					if (buildPopup.getTilte().contains("Build your")) {
 						buildBudget();
 					}
 					if (buildPopup.getTilte().equalsIgnoreCase("Revenues")) {
@@ -754,7 +755,7 @@ public class SecondaryBoard extends AbstractPOM {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		if (buildPopup.isDisplayed()) {
 			while (!buildPopup.getConfirmButtontext().equals("Finish")) {
-				if (buildPopup.getTilte().equalsIgnoreCase("Build your company budget")) {
+				if (buildPopup.getTilte().contains("Build your")) {
 					buildBudget();
 				}
 				if (buildPopup.getTilte().equalsIgnoreCase("Revenues")) {

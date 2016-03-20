@@ -182,7 +182,7 @@ public class BudgetSettingsTest extends WrapperTest {
 		secondary = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
 		String budgetName = secondary.getSelectedBudgetName();
-		int num = navigator.getNumberOfBudget(budgetName);
+		//int num = navigator.getNumberOfBudget(budgetName);
 		
 //		NewBudgetPopup popup = navigator.addNewBudget();
 //		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");

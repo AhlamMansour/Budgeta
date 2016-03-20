@@ -18,7 +18,7 @@ public class TearDown extends BaseSeleniumTest {
 
 	@AfterClass
 	public void closeBrowser() throws IOException {
-		System.out.println("heLLOOOOOOOOOOOOOOOOOOOOOOO");
+	//	System.out.println("heLLOOOOOOOOOOOOOOOOOOOOOOO");
 		
 		try{
 			closeDriver();
