@@ -518,6 +518,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("expense");
+		buildPopup.clickMore();
+		WebdriverUtils.sleep(1000);
 		buildPopup.clickNext();
 	}
 
