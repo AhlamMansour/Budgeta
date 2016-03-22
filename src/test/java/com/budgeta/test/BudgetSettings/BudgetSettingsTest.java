@@ -140,8 +140,8 @@ public class BudgetSettingsTest extends WrapperTest {
 
 		File f = null;
 		try {
-			System.out.println(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
-			f = new File(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
+			System.out.println(new File("").getAbsolutePath() + "\\browserDownloads\\" + budgetName + ".bdg");
+			f = new File(new File("").getAbsolutePath() + "\\browserDownloads\\" + budgetName + ".bdg");
 			Assert.assertTrue(f.exists(), "Expected the file [" + budgetName + ".bdg] to exist");
 			Assert.assertTrue(f.canExecute(), "Expected the file [" + budgetName + ".bdg] to be able to execute");
 			Assert.assertTrue(f.canRead(), "Expected the file [" + budgetName + ".bdg] to be readable");
@@ -187,7 +187,7 @@ public class BudgetSettingsTest extends WrapperTest {
 //		NewBudgetPopup popup = navigator.addNewBudget();
 //		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");
 		MenuTrigger trigger = navigator.getMenuTrigger();
-		trigger.clickRestoreBudget(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
+		trigger.clickRestoreBudget(new File("").getAbsolutePath() + "\\browserDownloads\\" + budgetName + ".bdg");
 		//popup.clickRestoreAndUpload(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
 		board = new BudgetaBoard();
 		

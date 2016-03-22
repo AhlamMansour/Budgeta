@@ -8,9 +8,9 @@
 	</listeners>
 
 
-<test name="Login">
+<test name="Budget settings">
 		<classes>
-			<class name="com.budgeta.test.login.LoginTest"></class>
+			<class name="com.budgeta.test.BudgetSettings.BudgetSettingsTest"></class>
 		</classes>
 	</test>
 	
