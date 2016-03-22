@@ -8,11 +8,18 @@
 	</listeners>
 
 
-	<test name="CreateBudget500Line">
+<test name="Login">
 		<classes>
-			<class name="com.budgeta.test.createBudget.CreateBudget500Line"></class>
+			<class name="com.budgeta.test.login.LoginTest"></class>
 		</classes>
 	</test>
+	
+	
+<!-- 	<test name="CreateBudget500Line"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.createBudget.CreateBudget500Line"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 	
 <!-- 	<test name="Permissions For Basic User"> -->
 <!-- 		<classes> -->
