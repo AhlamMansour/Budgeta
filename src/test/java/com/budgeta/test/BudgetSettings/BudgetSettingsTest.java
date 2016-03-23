@@ -28,7 +28,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class BudgetSettingsTest extends WrapperTest {
 
 	String snapshotName = "snapshot test_";
-	String newBudgetName = "New Budget name_";
+	String newBudgetName = "NewBudgetname_";
 	String newSnapshotName = "rename test";
 	Versions versions;
 	SecondaryBoard secondary;
@@ -140,8 +140,8 @@ public class BudgetSettingsTest extends WrapperTest {
 
 		File f = null;
 		try {
-			System.out.println(new File("").getAbsolutePath() + "\\browserDownloads\\" + budgetName + ".bdg");
-			f = new File(new File("").getAbsolutePath() + "\\browserDownloads\\" + budgetName + ".bdg");
+			System.out.println(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
+			f = new File(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
 			Assert.assertTrue(f.exists(), "Expected the file [" + budgetName + ".bdg] to exist");
 			Assert.assertTrue(f.canExecute(), "Expected the file [" + budgetName + ".bdg] to be able to execute");
 			Assert.assertTrue(f.canRead(), "Expected the file [" + budgetName + ".bdg] to be readable");

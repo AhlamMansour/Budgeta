@@ -128,6 +128,16 @@ public class SeleniumDriver {
 			capabilities.setCapability("chrome.binary", "res/chromedriver.exe");
 
 			if (!BaseSeleniumTest.local) {
+				//
+				File file = new File(dummyFile.getAbsolutePath() + "/drivers/chromedriver.exe");
+				if (!file.canExecute())
+					System.err.println("could not find chrome driver");
+				HashMap<String, Object> myPrefs = new HashMap<String, Object>();
+				myPrefs.put("profile.default_content_settings.popups", 0);
+				File downloaDir = new File(dummyFile.getAbsolutePath() + "/browserDownloads");
+				myPrefs.put("download.default_directory", downloaDir.getAbsolutePath());
+				options.setExperimentalOption("prefs", myPrefs);
+				//
 				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 				try {
 					driver = new RemoteWebDriver(remoteSeleniumHub, capabilities);
