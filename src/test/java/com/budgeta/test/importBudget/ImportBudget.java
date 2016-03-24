@@ -8,6 +8,8 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.BillingsSection;
+import com.budgeta.pom.GeneralSection;
 import com.budgeta.pom.PreviewBoard;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.test.WrapperTest;
@@ -39,7 +41,7 @@ public class ImportBudget extends WrapperTest{
 	}
 	
 	
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void ValidateRevenues(){
 		Map<String, List<String>> revenuesValues = allMaps.get("Revenues");
 		for(String line : revenuesValues.keySet()){
@@ -69,7 +71,7 @@ public class ImportBudget extends WrapperTest{
 		}
 	}
 	
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void ValidateCostOfRevenues(){
 		Map<String, List<String>> revenuesValues = allMaps.get("Cost of Revenues");
 		for(String line : revenuesValues.keySet()){
@@ -112,24 +114,65 @@ public class ImportBudget extends WrapperTest{
 			List<String> lineValues = new ArrayList<>();
 			int startIndex = previewBoard.getIndexOfHeaderDate(fromMonth + " " + fromYear);
 			int endIndex = previewBoard.getIndexOfHeaderDate(toMonth + " " + toYear);
-			if (startIndex < 0 && endIndex >= 0)
-				startIndex = 0;
-			else if (startIndex >= 0 && endIndex < 0)
-				endIndex = previewBoard.getValuesSize() - 1;
+			BillingsSection billing = new BillingsSection();
+			GeneralSection general = new GeneralSection();
+		/////	
+			if(!billing.getOccuresvalue().equals("Once")){
+				if(billing.getSpreadvalue().equals("Same amount each billing")){
+					startIndex = previewBoard.getIndexOfHeaderDate(general.getDateRangeFrom());
+					endIndex = previewBoard.getIndexOfHeaderDate(general.getDateRangeTo());
+					
+					if (startIndex < 0 && endIndex >= 0)
+						startIndex = 0;
+					else if (startIndex >= 0 && endIndex < 0)
+						endIndex = previewBoard.getValuesSize() - 1;
 
-			for (int i = startIndex; i <= endIndex; i++) {
-				lineValues.add(previewBoard.getValueByIndex(i));
+					for (int i = startIndex; i <= endIndex; i++) {
+						lineValues.add(previewBoard.getValueByIndex(i));
+					}
+
+
+					for (int i = 0; i < lineValues.size(); i++) {
+						Assert.assertEquals(lineValues.get(i), values.get(i), "in index : " + i );
+					}
+				}else {
+					if (startIndex < 0 && endIndex >= 0)
+						startIndex = 0;
+					else if (startIndex >= 0 && endIndex < 0)
+						endIndex = previewBoard.getValuesSize() - 1;
+
+					for (int i = startIndex; i <= endIndex; i++) {
+						lineValues.add(previewBoard.getValueByIndex(i));
+					}
+
+
+					for (int i = 0; i < lineValues.size(); i++) {
+						Assert.assertEquals(lineValues.get(i), values.get(i), "in index : " + i );
+					}
+					
+				}
+			}////////
+			else{
+				if (startIndex < 0 && endIndex >= 0)
+					startIndex = 0;
+				else if (startIndex >= 0 && endIndex < 0)
+					endIndex = previewBoard.getValuesSize() - 1;
+
+				for (int i = startIndex; i <= endIndex; i++) {
+					lineValues.add(previewBoard.getValueByIndex(i));
+				}
+
+
+				for (int i = 0; i < lineValues.size(); i++) {
+					Assert.assertEquals(lineValues.get(i), values.get(i), "in index : " + i );
+				}
+				
 			}
 
-
-			for (int i = 0; i < lineValues.size(); i++) {
-				Assert.assertEquals(lineValues.get(i), values.get(i), "in index : " + i );
-			}
-			
 		}
 	}
 	
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void ValidateOtherIncomeAndExpenses(){
 		Map<String, List<String>> revenuesValues = allMaps.get("Other income and expenses");
 		for(String line : revenuesValues.keySet()){

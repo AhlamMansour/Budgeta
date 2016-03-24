@@ -1,5 +1,6 @@
 package com.budgeta.pom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -117,7 +118,12 @@ public class LicenseScreen extends AbstractPOM {
 	}
 
 	public Integer usersNumber() {
-		return userLines.size();
+		List<WebElement> users = new ArrayList<WebElement>();
+		for(WebElement el : userLines){
+			if(!el.findElement(By.className("user-email")).getText().equals("No users"))
+				users.add(el);	
+		}
+		return users.size();
 	}
 
 	public boolean isRemoveButtonIsDisplay() {

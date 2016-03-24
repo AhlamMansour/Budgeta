@@ -16,7 +16,7 @@ public class SmallPopup extends AbstractPOM{
 	protected List<WebElement> wrappers;
 
 	@FindBy(id = "cancel-btn")
-	private WebElement cancelBtn;
+	WebElement cancelBtn;
 	
 	@FindBy(id = "confirm-btn")
 	private WebElement confirmBtn;

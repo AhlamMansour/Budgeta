@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import com.budgeta.pom.AddNewUser;
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetaBoard;
+import com.budgeta.pom.BuildCompanyBudgetPopup;
 import com.budgeta.pom.CreateNewScenarioPopup;
 import com.budgeta.pom.CreateNewSnapshotPopup;
 import com.budgeta.pom.LicenseScreen;
@@ -122,6 +123,9 @@ public class PermissionsForProfessionalUserTest extends BudgetaTest{
 			popup.setName(budgetaName);
 			popup.clickContinue(true);
 			popup.clickCreate();
+			
+			BuildCompanyBudgetPopup budgetPopup = new BuildCompanyBudgetPopup();
+			budgetPopup.clickExit();
 
 			SecondaryBoard secondaryBoard = board.getSecondaryBoard();
 			Assert.assertEquals(secondaryBoard.getSelectedBudgetName(), budgetaName);

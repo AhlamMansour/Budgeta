@@ -140,6 +140,16 @@ public class BillingsSection extends AbstractPOM{
 		}
 		return false;
 	}
+	
+	public String getOccuresvalue(){
+		return repeat.findElement(By.cssSelector("div.select2-container a span.select2-chosen")).getText();
+	}
+	
+	public String getSpreadvalue(){
+		return spread.findElement(By.tagName("label")).getText();
+	}
+	
+	
 	/*************************************************************************/
 	private void initializeRepeatDropdown(){
 		repeatDropDown = new DropDown(repeat.findElement(dropdown));

@@ -11,6 +11,8 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class BuildCompanyBudgetPopup extends SmallPopup {
 
+
+	
 	@FindBy(className = "wizard-question-radio")
 	private List<WebElement> selectoption;
 
@@ -137,6 +139,12 @@ public class BuildCompanyBudgetPopup extends SmallPopup {
 			
 		}
 		
+	}
+	
+	
+	public void clickExit(){
+		cancelBtn.click();
+		WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
 	}
 
 }
