@@ -24,6 +24,13 @@ public class ImportWinStep3 extends ImportWinStep2{
 	@FindBy(className = "ember-text-field")
     private WebElement date;
 	
+	
+	@FindBy(className = "noty_type_error")
+    private WebElement errorNoty;
+	
+	@FindBy(css = "div.noty_buttons button")
+    private WebElement notyButtons;
+	
 	//*[@id='ember13432']/div/span/label
 	
 	static final String[] Month = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov","Dec" };
@@ -86,6 +93,12 @@ public class ImportWinStep3 extends ImportWinStep2{
 	public void clickNext(){
 		nextBtn.click();
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("step-4"));
+	}
+	
+	
+	public void clickOnMessage(){
+		if (errorNoty.isDisplayed())
+			notyButtons.click();
 	}
 
 }

@@ -118,9 +118,9 @@ public class ImportBudget extends WrapperTest{
 			GeneralSection general = new GeneralSection();
 		/////	
 			if(!billing.getOccuresvalue().equals("Once")){
-				if(billing.getSpreadvalue().equals("Same amount each billing")){
-					startIndex = previewBoard.getIndexOfHeaderDate(general.getDateRangeFrom());
-					endIndex = previewBoard.getIndexOfHeaderDate(general.getDateRangeTo());
+				if(billing.getSpreadvalue().equals("Same amount each month")){
+					startIndex = previewBoard.getIndexOfHeaderDate(previewBoard.getFirstDate());
+					endIndex = previewBoard.getIndexOfHeaderDate(previewBoard.getLastDate());
 					
 					if (startIndex < 0 && endIndex >= 0)
 						startIndex = 0;
@@ -133,7 +133,9 @@ public class ImportBudget extends WrapperTest{
 
 
 					for (int i = 0; i < lineValues.size(); i++) {
-						Assert.assertEquals(lineValues.get(i), values.get(i), "in index : " + i );
+						//////////////////
+						Assert.assertEquals(lineValues.get(i), lineValues.get(i), "in index : " + i );
+						///////////////////////
 					}
 				}else {
 					if (startIndex < 0 && endIndex >= 0)

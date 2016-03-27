@@ -146,7 +146,7 @@ public class BillingsSection extends AbstractPOM{
 	}
 	
 	public String getSpreadvalue(){
-		return spread.findElement(By.tagName("label")).getText();
+		return spread.findElement(By.cssSelector("div.select2-container a span.select2-chosen")).getText();
 	}
 	
 	

@@ -293,6 +293,8 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.selectTotalColumn();
 		importcolumns.changeDate();
 		importcolumns.clickNext();
+		importcolumns.clickOnMessage();
+		
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
 		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
@@ -319,6 +321,7 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.selectTotalColumn();
 		importcolumns.changeDate();
 		importcolumns.clickNext();
+		importcolumns.clickOnMessage();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
 		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
@@ -346,6 +349,7 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.selectTotalColumn();
 		importcolumns.changeDate();
 		importcolumns.clickNext();
+		importcolumns.clickOnMessage();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
 		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
@@ -373,6 +377,7 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.selectTotalColumn();
 		importcolumns.changeDate();
 		importcolumns.clickNext();
+		importcolumns.clickOnMessage();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
 		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();

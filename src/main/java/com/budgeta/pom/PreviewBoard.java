@@ -107,6 +107,16 @@ public class PreviewBoard extends AbstractPOM{
 		return null;
 	}
 	
+	public String getFirstDate(){
+		return dateHeader.get(0).findElement(By.className("text-header")).getText();
+	}
+	
+	public String getLastDate(){
+		int i = dateHeader.size();
+		return dateHeader.get(i-1).findElement(By.className("text-header")).getText();
+		
+	}
+	
 	
 	@Override
 	public boolean isDisplayed() {
