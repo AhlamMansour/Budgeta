@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Budgeta Tests" parallel="tests" thread-count="5"
+<suite name="Budgeta Tests" parallel="tests" thread-count="3"
 	verbose="3">
 
 	<listeners>
@@ -21,33 +21,52 @@
 <!-- 		</classes> -->
 <!-- 	</test> -->
 	
-	<test name="Permissions For Basic User">
+<!-- 	<test name="Permissions For Basic User"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.PermissionsForBasicUserTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+	
+<!-- 	<test name="Permissions For Professional User"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.PermissionsForProfessionalUserTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+	
+<!-- 	<test name="Permissions For Strater User"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.PermissionsForStarterUserTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+	
+<!-- 	<test name="Permissions For Advanced User"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.PermissionsForAdvancedUserTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+	
+<!-- 	<test name="Upgrade and Downgrade Plans"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.UpgradeAndDowngradePlanTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+	
+	
+	<test name="Budget Structure 1">
 		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.PermissionsForBasicUserTest"></class>
+			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest"></class>
 		</classes>
 	</test>
 	
-	<test name="Permissions For Professional User">
+	<test name="Budget Structure 2">
 		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.PermissionsForProfessionalUserTest"></class>
+			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part2"></class>
 		</classes>
 	</test>
 	
-	<test name="Permissions For Strater User">
+	<test name="Budget Structure 3">
 		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.PermissionsForStarterUserTest"></class>
-		</classes>
-	</test>
-	
-	<test name="Permissions For Advanced User">
-		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.PermissionsForAdvancedUserTest"></class>
-		</classes>
-	</test>
-	
-	<test name="Upgrade and Downgrade Plans">
-		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.UpgradeAndDowngradePlanTest"></class>
+			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part3"></class>
 		</classes>
 	</test>
 

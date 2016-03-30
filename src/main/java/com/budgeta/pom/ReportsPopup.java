@@ -9,52 +9,90 @@ import org.openqa.selenium.support.FindBy;
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
-public class ReportsPopup extends AbstractPOM{
+public class ReportsPopup extends AbstractPOM {
 
 	@FindBy(className = "modal-content")
 	private WebElement wrapper;
-	
-	@FindBy( css = "div.modal-body label.full")
+
+	@FindBy(css = "div.modal-body label.full")
 	private List<WebElement> checkBoxes;
-	
-	@FindBy( id = "confirm-btn")
+
+	@FindBy(id = "confirm-btn")
 	private WebElement createBtn;
+
+	@FindBy(className = "type-excel")
+	private WebElement excelType;
 	
-	public ReportsPopup(){
-		try{
+	@FindBy(className = "type-pdf")
+	private WebElement pdfType;
+	
+	public ReportsPopup() {
+		try {
 			wait.until(WebdriverUtils.visibilityOfWebElement(wrapper));
-		}catch(Exception e){
+		} catch (Exception e) {
 		}
 	}
-	
+
 	public void checkBox(String boxToCheck) {
 		getCheckBoxElement(boxToCheck).click();
 	}
-	
-	public void selectOtherReportes(){
-		for(WebElement box : checkBoxes){
-			if(box.findElement(By.tagName("input")).getAttribute("value").equals("2")){
+
+	public void selectOtherReportes() {
+		for (WebElement box : checkBoxes) {
+			if (box.findElement(By.tagName("input")).getAttribute("value").equals("2")) {
 				box.click();
 				return;
 			}
-				
+
 		}
-		
+
 	}
-	
-	
-	public boolean isBoxChecked(String checkBox){
-		return getCheckBoxElement(checkBox).findElement(By.tagName("input")).isSelected();
+
+	public void selectReports(String option) {
+		for (WebElement box : checkBoxes) {
+			if (box.getText().equals(option)) {
+				box.click();
+				return;
+			}
+
+		}
+
 	}
-	
-	private WebElement getCheckBoxElement(String checkBox){
-		for(WebElement box : checkBoxes){
-			if(box.getText().contains(checkBox))
+
+	public void selectReportType(String option) {
+		for (WebElement box : checkBoxes) {
+			if (box.getText().equals(option)) {
+				box.click();
+				return;
+			}
+
+		}
+
+	}
+
+	public void selectExcelReportType() {
+		excelType.click();
+		WebdriverUtils.sleep(1000);
+
+	}
+
+	public void selectPdfReportType() {
+		pdfType.click();
+		WebdriverUtils.sleep(1000);
+	}
+
+	public boolean isBoxChecked(String checkBox) {
+		return getCheckBoxElement(checkBox).findElement(By.xpath("..")).findElement(By.tagName("input")).isSelected();
+	}
+
+	private WebElement getCheckBoxElement(String checkBox) {
+		for (WebElement box : checkBoxes) {
+			if (box.getText().contains(checkBox))
 				return box;
 		}
 		return null;
 	}
-	
+
 	@Override
 	public boolean isDisplayed() {
 		return WebdriverUtils.isDisplayed(wrapper);

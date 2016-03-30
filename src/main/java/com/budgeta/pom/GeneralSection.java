@@ -52,12 +52,15 @@ public class GeneralSection extends AbstractPOM{
 	@FindBy(className = "budgeta-type-value")
 	List<WebElement> typeValue;
 	
+	@FindBy(css = "div.month-picker input")
+	List<WebElement> onDate;
+	
 	private By dateRange_from = By.cssSelector("div.month-picker.from input");
 	private By hireDateRange_from = By.cssSelector("div.year-picker-from div.from input");
 	private By dateRange_to = By.cssSelector("div.month-picker.to input");
 	private By hireDateRange_to = By.cssSelector("div.year-picker-to div.to input");
 	private By dropdown = By.className("select2-container");
-	
+	//private By onDate = By.cssSelector("div.month-picker input");
 	
 
 	public TestModal openBugetaErrorModal() {
@@ -136,6 +139,10 @@ public class GeneralSection extends AbstractPOM{
 			return wrapper.findElement(dateRange_to).getAttribute("placeholder");
 		}
 		return wrapper.findElement(dateRange_to).getAttribute("value");
+	}
+	
+	public String getDateRange(){
+		return onDate.get(0).getAttribute("value");
 	}
 	
 	public DateRange openDateRangeFrom(){

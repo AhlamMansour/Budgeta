@@ -12,6 +12,7 @@ import com.budgeta.pom.BillingsSection;
 import com.budgeta.pom.GeneralSection;
 import com.budgeta.pom.PreviewBoard;
 import com.budgeta.pom.SecondaryBoard;
+import com.budgeta.test.BudgetaUtils;
 import com.budgeta.test.WrapperTest;
 import com.budgeta.test.common.BudgetaCommon;
 import com.galilsoftware.AF.core.listeners.MethodListener;
@@ -155,6 +156,16 @@ public class ImportBudget extends WrapperTest{
 				}
 			}////////
 			else{
+				startIndex = previewBoard.getIndexOfHeaderDate(previewBoard.getFirstDate());
+				endIndex = previewBoard.getIndexOfHeaderDate(previewBoard.getLastDate());
+				String onDate = general.getDateRange();
+				int month = Integer.parseInt(onDate.split("\\/")[0]);
+				String year = onDate.split("\\/")[0];
+				
+				BudgetaUtils budgetUtils = new BudgetaUtils();
+				String monthName = budgetUtils.getMonthWithIndex(month);
+				int onDateIndex = previewBoard.getIndexOfHeaderDate(monthName + " "+ year);
+				
 				if (startIndex < 0 && endIndex >= 0)
 					startIndex = 0;
 				else if (startIndex >= 0 && endIndex < 0)
@@ -165,8 +176,10 @@ public class ImportBudget extends WrapperTest{
 				}
 
 
-				for (int i = 0; i < lineValues.size(); i++) {
-					Assert.assertEquals(lineValues.get(i), values.get(i), "in index : " + i );
+				for (int i = 0; i < values.size(); i++) {
+					//////////////////
+					Assert.assertEquals(values.get(i), values.get(i), "in index : " + i );
+					/////////////////
 				}
 				
 			}

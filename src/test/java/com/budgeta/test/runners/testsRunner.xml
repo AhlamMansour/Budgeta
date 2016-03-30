@@ -85,6 +85,12 @@
 			<class name="com.budgeta.test.RunErrorTest"></class>
 		</classes>
 	</test>
+	
+	<test name="Reports test">
+		<classes>
+			<class name="com.budgeta.test.reporter.ReporterTest"></class>
+		</classes>
+	</test>
 
 </suite>
 

@@ -55,14 +55,16 @@ public class ReporterTest extends WrapperTest{
 	}
 
 	@Test(dataProvider = "reportsTypeProvider", enabled = true)
-	public void fillGeneralAndValidate(String boxToCheck) {
+	public void fillGeneralAndValidateExcelReport(String boxToCheck) {
 		secondaryBoard = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
 		String budgetName = navigator.getSelectedBudgetName();
 		if(!reports.isDisplayed())
 			openReports();
 		
-		reports.selectOtherReportes();
+		//reports.selectOtherReportes();
+		reports.selectExcelReportType();
+		reports.selectReports("Selected reports");
 		reports.checkBox(boxToCheck);
 		Assert.assertTrue(reports.isBoxChecked(boxToCheck),"Expected the check box ["+boxToCheck+"] to be checked");
 		reports.clickCreate();
@@ -82,10 +84,42 @@ public class ReporterTest extends WrapperTest{
 			throw e;
 		}
 	}
+	
+	@Test(dataProvider = "reportsTypeProvider", enabled = false)
+	public void fillGeneralAndValidatePdfReport(String boxToCheck) {
+		secondaryBoard = board.getSecondaryBoard();
+		BudgetNavigator navigator = new BudgetNavigator();
+		String budgetName = navigator.getSelectedBudgetName();
+		if(!reports.isDisplayed())
+			openReports();
+		
+		//reports.selectOtherReportes();
+		reports.selectPdfReportType();
+		reports.selectReports("Selected reports");
+		reports.checkBox(boxToCheck);
+		Assert.assertTrue(reports.isBoxChecked(boxToCheck),"Expected the check box ["+boxToCheck+"] to be checked");
+		reports.clickCreate();
+		File f = null;
+		try{
+			System.out.println(new File("").getAbsolutePath()+"/browserDownloads/"+budgetName+".pdf");
+			f = new File(new File("").getAbsolutePath()+"/browserDownloads/"+budgetName+".pdf");
+			Assert.assertTrue(f.exists(),"Expected the file ["+budgetName+".pdf] to exist");
+			Assert.assertTrue(f.canExecute(),"Expected the file ["+budgetName+".pdf] to be able to execute");
+			Assert.assertTrue(f.canRead(),"Expected the file ["+budgetName+".pdf] to be readable");
+			long fileSize = f.getTotalSpace();
+			Assert.assertTrue(fileSize > 10 ,"Expected the file ["+budgetName+".pdf] size to be at least 11 bytes or more but found: "+fileSize);
+			f.delete();
+		}catch(Throwable e){
+			if(f!= null)
+				f.delete();
+			throw e;
+		}
+	}
+
 
 	@DataProvider(name = "reportsTypeProvider")
 	public static Object[][] primeNumbers() {
-		return new Object[][] {{"Cash Flow"}, {"Profit & Loss"}, {"Budget vs. Actual"}, {"Dashboard"}};
+		return new Object[][] {{"Cash"}, {"Profit & Loss"}, {"Budget vs. Actual"}, {"Dashboard"},{"Balance Sheet"},{"Transactions"}};
 	}
 
 }

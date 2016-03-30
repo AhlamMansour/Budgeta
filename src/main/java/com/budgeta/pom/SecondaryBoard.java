@@ -114,7 +114,7 @@ public class SecondaryBoard extends AbstractPOM {
 	ArrayList<String> costOfRevenueLines = new ArrayList<>(Arrays.asList("Data Licensing Fee", "Data Maintenance Fee", "Data Feed Cost", "Insurance Licensing"));
 	ArrayList<String> operatingExpensesLines = new ArrayList<>(Arrays.asList("CEO", "Director of Engineering", "Director of Product", "Director of Sales",
 			"Data Scientist", "Front end Engineer", "Consultant", "Marketing Consultant", "Marketing VP", "Insurance Costs And Employee Taxes",
-			"Content Writers", "(Content Writer)", "(Content Writer)", "Licensing Consultant", "PR", "Development Costs "));
+			"Content Writers", "(Content Writer)", "Licensing Consultant", "PR", "Development Costs "));
 	ArrayList<String> otherIncomeAndExpensesLines = new ArrayList<>(Arrays.asList("Servers and Laptops", "Liability insurance", "Legal fees", "Rent",
 			"Other G&A"));
 	// private final By shareIcon =
@@ -293,7 +293,7 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.selectTotalColumn();
 		importcolumns.changeDate();
 		importcolumns.clickNext();
-		importcolumns.clickOnMessage();
+		//importcolumns.clickOnMessage();
 		
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
@@ -321,7 +321,7 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.selectTotalColumn();
 		importcolumns.changeDate();
 		importcolumns.clickNext();
-		importcolumns.clickOnMessage();
+	//	importcolumns.clickOnMessage();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
 		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
@@ -349,7 +349,7 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.selectTotalColumn();
 		importcolumns.changeDate();
 		importcolumns.clickNext();
-		importcolumns.clickOnMessage();
+		//importcolumns.clickOnMessage();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
 		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
@@ -377,7 +377,7 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.selectTotalColumn();
 		importcolumns.changeDate();
 		importcolumns.clickNext();
-		importcolumns.clickOnMessage();
+		//importcolumns.clickOnMessage();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
 		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
@@ -1444,7 +1444,31 @@ public class SecondaryBoard extends AbstractPOM {
 		// }
 		// WebdriverUtils.sleep(1000);
 	}
+	
+	
+	public boolean isBudgetSettingIconDispaly() {
 
+		try {
+			return settingBudgetIcon.isDisplayed();
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+
+	}
+	
+	public boolean isBudgetLineSettingIconDispaly(String name) {
+		WebElement line = getLineByName(name);
+		WebElementUtils.hoverOverField(line, driver, null);
+		Actions act = new Actions(driver);
+		act.moveToElement(line).build().perform();
+		try{
+			return line.findElement(lineSetting).isDisplayed();
+		}catch (NoSuchElementException e) {
+			return false;
+		}
+		
+	}
+	
 	@Override
 	public boolean isDisplayed() {
 		return WebdriverUtils.isDisplayed(wrapper);

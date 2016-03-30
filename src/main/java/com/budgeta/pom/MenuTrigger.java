@@ -120,6 +120,7 @@ public class MenuTrigger extends AbstractPOM {
 	public void clickBackupBudget(){
 		selectBudgetMenuTrigger("Backup");
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.sleep(1000);
 	}
 	
 	
@@ -157,6 +158,7 @@ public class MenuTrigger extends AbstractPOM {
 	public DeletePopup clickDeleteAllBudget(){
 		BudgetNavigator navigator = new BudgetNavigator();
 		int ExistBudget = navigator.getNumbreOfExistBudgets();
+		System.out.println(ExistBudget);
 		while (ExistBudget >5){
 			selectBudgetMenuTrigger("Delete");
 			WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
@@ -274,7 +276,19 @@ public class MenuTrigger extends AbstractPOM {
 	}
 	
 
-	
+	public boolean checkBudgetMenuTrigger(String option){
+			boolean flag = true;
+			openTrigger();
+			for(WebElement el : driver.findElements(budgetSettingTriggerMenu)){
+				if(el.getText().equals(option)){
+					flag = true;
+				}else{
+					flag = false;
+				}
+				
+			}
+			return flag;
+		}
 
 	@Override
 	public boolean isDisplayed() {

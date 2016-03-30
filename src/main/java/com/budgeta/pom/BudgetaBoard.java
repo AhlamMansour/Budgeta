@@ -46,13 +46,13 @@ public class BudgetaBoard extends AbstractPOM {
     	String notyMessage = "no_message";
     	try {
     		WebdriverUtils.waitForBudgetaBusyBar(driver);
-			WebdriverUtils.waitForElementToBeFound(driver, noty_message);
+			//WebdriverUtils.waitForElementToBeFound(driver, noty_message);
 			notyMessage = driver.findElement(noty_message).getText().trim();
 			WebdriverUtils.waitForElementToDisappear(driver, noty_message);
 			
 			//WebdriverUtils.waitForBudgetaLoadBar(driver);
 		} catch (Exception e) {
-			WebdriverUtils.waitForElementToBeFound(driver, noty_message);
+		//	WebdriverUtils.waitForElementToBeFound(driver, noty_message);
 			notyMessage = driver.findElement(noty_message).getText().trim();
 			WebdriverUtils.waitForElementToDisappear(driver, noty_message);
 		}

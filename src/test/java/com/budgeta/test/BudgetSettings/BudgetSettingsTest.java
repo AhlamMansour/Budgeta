@@ -187,7 +187,7 @@ public class BudgetSettingsTest extends WrapperTest {
 //		NewBudgetPopup popup = navigator.addNewBudget();
 //		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");
 		MenuTrigger trigger = navigator.getMenuTrigger();
-		trigger.clickRestoreBudget(new File("").getAbsolutePath() + "\\browserDownloads\\" + budgetName + ".bdg");
+		trigger.clickRestoreBudget(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
 		//popup.clickRestoreAndUpload(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
 		board = new BudgetaBoard();
 		
@@ -257,6 +257,7 @@ public class BudgetSettingsTest extends WrapperTest {
 //		popup.clickConfirm();
 
 		int num2 = navigator.getNumberOfBudget(BudgetName);
+		
 		Assert.assertFalse(num == (num - 1), "The budget was successfully deleted, number of budget was:" + num + " now is:" + num2);
 
 	}
