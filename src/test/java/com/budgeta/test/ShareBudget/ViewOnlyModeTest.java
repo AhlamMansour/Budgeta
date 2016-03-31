@@ -1,4 +1,4 @@
-package com.budgeta.test;
+package com.budgeta.test.ShareBudget;
 
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
@@ -11,6 +11,7 @@ import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.TopBar;
 import com.budgeta.pom.TopBarButtons;
 import com.budgeta.pom.TopHeaderBar;
+import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
 

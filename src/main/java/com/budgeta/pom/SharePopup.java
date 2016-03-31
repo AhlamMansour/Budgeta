@@ -34,7 +34,7 @@ public class SharePopup extends SmallPopup {
 	public void clickSend(){
 		wrapper.findElement(sendBtn).click();
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
-		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	//	WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
 	public void sendEmail(String _email){

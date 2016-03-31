@@ -92,7 +92,7 @@ public class BudgetNavigator extends AbstractPOM{
 	
 	public void openSharePopup(){
 		shareBtn.click();
-		WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
 		
 	}
 	
@@ -315,6 +315,38 @@ public class BudgetNavigator extends AbstractPOM{
         public void clearSearch(){
         	searchBudget.clear();
         }
+        
+        public boolean isInputTabDispaly() {
+
+    		try {
+    			return inputs.isDisplayed();
+    		} catch (NoSuchElementException e) {
+    			return false;
+    		}
+
+    	}
+        
+        public boolean isSheetsTabDispaly() {
+
+    		try {
+    			return Sheets.isDisplayed();
+    		} catch (NoSuchElementException e) {
+    			return false;
+    		}
+
+    	}
+        
+        public boolean isDashboardTabDispaly() {
+
+    		try {
+    			return dashBoard.isDisplayed();
+    		} catch (NoSuchElementException e) {
+    			return false;
+    		}
+
+    	}
+        
+        
 	
 	@Override
 	public boolean isDisplayed() {

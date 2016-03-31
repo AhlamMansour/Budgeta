@@ -65,6 +65,9 @@ public class TopHeaderBar extends AbstractPOM {
 
 	@FindBy(className = "actuals-header")
 	private WebElement actualsTab;
+	
+	@FindBy(className = "metrics-header")
+	private WebElement modelTab;
 
 	@FindBy(className = "table-edit")
 	private WebElement editTableIcon;
@@ -285,6 +288,35 @@ public class TopHeaderBar extends AbstractPOM {
 
 	}
 	
+	public boolean isMainTabDispaly() {
+
+		try {
+			return baseTab.isDisplayed();
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+
+	}
+	
+	public boolean isModelTabDispaly() {
+
+		try {
+			return modelTab.isDisplayed();
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+
+	}
+	
+	public boolean isActualsTabDispaly() {
+
+		try {
+			return actualsTab.isDisplayed();
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+
+	}
 	
 	
 
