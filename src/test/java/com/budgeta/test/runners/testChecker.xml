@@ -21,35 +21,35 @@
 <!-- 		</classes> -->
 <!-- 	</test> -->
 	
-	<test name="Permissions For Basic User">
-		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.PermissionsForBasicUserTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Permissions For Basic User"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.PermissionsForBasicUserTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 	
-	<test name="Permissions For Professional User">
-		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.PermissionsForProfessionalUserTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Permissions For Professional User"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.PermissionsForProfessionalUserTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 	
-	<test name="Permissions For Strater User">
-		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.PermissionsForStarterUserTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Permissions For Strater User"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.PermissionsForStarterUserTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 	
-	<test name="Permissions For Advanced User">
-		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.PermissionsForAdvancedUserTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Permissions For Advanced User"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.PermissionsForAdvancedUserTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 	
-	<test name="Upgrade and Downgrade Plans">
-		<classes>
-			<class name="com.budgeta.test.PlansAndPricing.UpgradeAndDowngradePlanTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Upgrade and Downgrade Plans"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.PlansAndPricing.UpgradeAndDowngradePlanTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 	
 	
 

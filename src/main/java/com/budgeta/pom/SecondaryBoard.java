@@ -917,7 +917,8 @@ public class SecondaryBoard extends AbstractPOM {
 			// "").trim().equals(subLineTitle))
 			// if
 			// (el.findElement(By.className("budget-name-text")).getText().contains(subLineTitle)){
-			if (el.findElement(By.className("budget-name-text-display")).getText().contains(subLineTitle)) {
+//			if (el.findElement(By.className("budget-name-text-display")).getText().contains(subLineTitle)) {
+			if (el.findElement(By.className("budget-name")).getText().contains(subLineTitle)) {
 				WebElementUtils.hoverOverField(el, driver, null);
 				Actions act = new Actions(driver);
 				act.moveToElement(el).build().perform();
