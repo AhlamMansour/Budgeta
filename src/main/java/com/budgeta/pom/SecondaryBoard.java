@@ -293,16 +293,15 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.selectTotalColumn();
 		importcolumns.changeDate();
 		importcolumns.clickNext();
-		//importcolumns.clickOnMessage();
-		
+		// importcolumns.clickOnMessage();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
 		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
-		
+
 		importBudget.clickImport();
 		return valuesBeforeImport;
 	}
-	
+
 	public Map<String, List<String>> importCostOfRevenueLines() {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.clickImportBudget();
@@ -321,16 +320,16 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.selectTotalColumn();
 		importcolumns.changeDate();
 		importcolumns.clickNext();
-	//	importcolumns.clickOnMessage();
+		// importcolumns.clickOnMessage();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
 		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
-		
+
 		importBudget.clickImport();
 		return valuesBeforeImport;
 
 	}
-	
+
 	public Map<String, List<String>> importOperatingExpensesLines() {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.clickImportBudget();
@@ -349,16 +348,16 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.selectTotalColumn();
 		importcolumns.changeDate();
 		importcolumns.clickNext();
-		//importcolumns.clickOnMessage();
+		// importcolumns.clickOnMessage();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
 		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
-		
+
 		importBudget.clickImport();
 		return valuesBeforeImport;
 
 	}
-	
+
 	public Map<String, List<String>> importOtherIncomeAndExpensesLines() {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.clickImportBudget();
@@ -377,11 +376,11 @@ public class SecondaryBoard extends AbstractPOM {
 		importcolumns.selectTotalColumn();
 		importcolumns.changeDate();
 		importcolumns.clickNext();
-		//importcolumns.clickOnMessage();
+		// importcolumns.clickOnMessage();
 
 		ImportWinStep4 importBudget = new ImportWinStep4();
 		Map<String, List<String>> valuesBeforeImport = importBudget.getAllValues();
-		
+
 		importBudget.clickImport();
 		return valuesBeforeImport;
 
@@ -655,8 +654,8 @@ public class SecondaryBoard extends AbstractPOM {
 		}
 	}
 
-	public Map<String,Map<String, List<String>>> importAllBudgetLines() {
-		Map<String,Map<String, List<String>>> allMaps = new HashMap<String, Map<String,List<String>>>();
+	public Map<String, Map<String, List<String>>> importAllBudgetLines() {
+		Map<String, Map<String, List<String>>> allMaps = new HashMap<String, Map<String, List<String>>>();
 		if (!wrapper.getAttribute("class").contains("tree-edit")) {
 			selectedBudget.findElement(addLinesBtn).click();
 			BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
@@ -671,7 +670,7 @@ public class SecondaryBoard extends AbstractPOM {
 
 					if (buildPopup.getTilte().equalsIgnoreCase("Cost of Revenues")) {
 						allMaps.put("Cost of Revenues", importCostOfRevenueLines());
-						//importCostOfRevenueLines();
+						// importCostOfRevenueLines();
 					}
 
 					if (buildPopup.getTilte().equalsIgnoreCase("Professional Services")) {
@@ -705,7 +704,7 @@ public class SecondaryBoard extends AbstractPOM {
 
 					if (buildPopup.getTilte().equalsIgnoreCase("Operational Expenses")) {
 						allMaps.put("Operational Expenses", importOperatingExpensesLines());
-						//importOperatingExpensesLines();
+						// importOperatingExpensesLines();
 					}
 
 					if (buildPopup.getTilte().equalsIgnoreCase("Operational Expenses / Salary & wages")) {
@@ -734,7 +733,7 @@ public class SecondaryBoard extends AbstractPOM {
 
 					if (buildPopup.getTilte().equalsIgnoreCase("Other income and expenses")) {
 						allMaps.put("Other income and expenses", importOtherIncomeAndExpensesLines());
-						//importOtherIncomeAndExpensesLines();
+						// importOtherIncomeAndExpensesLines();
 					}
 
 					if (buildPopup.getTilte().equalsIgnoreCase("Other income")) {
@@ -917,7 +916,9 @@ public class SecondaryBoard extends AbstractPOM {
 			// "").trim().equals(subLineTitle))
 			// if
 			// (el.findElement(By.className("budget-name-text")).getText().contains(subLineTitle)){
-//			if (el.findElement(By.className("budget-name-text-display")).getText().contains(subLineTitle)) {
+			// if
+			// (el.findElement(By.className("budget-name-text-display")).getText().contains(subLineTitle))
+			// {
 			if (el.findElement(By.className("budget-name")).getText().contains(subLineTitle)) {
 				WebElementUtils.hoverOverField(el, driver, null);
 				Actions act = new Actions(driver);
@@ -1327,8 +1328,10 @@ public class SecondaryBoard extends AbstractPOM {
 	private List<WebElement> getLines() {
 		List<WebElement> list = new ArrayList<WebElement>();
 		try {
-			for (WebElement el : driver.findElement(By.cssSelector("ol.tree")).findElement(By.className("selected-root")).findElement(By.tagName("ol"))
-					.findElements(line)) {
+			// for (WebElement el :
+			// driver.findElement(By.cssSelector("ol.tree")).findElement(By.className("selected-root")).findElement(By.tagName("ol"))
+			// .findElements(line)) {
+			for (WebElement el : driver.findElements(line)) {
 				if (el.getAttribute("data-level").equals("1"))
 					list.add(el);
 			}
@@ -1445,8 +1448,7 @@ public class SecondaryBoard extends AbstractPOM {
 		// }
 		// WebdriverUtils.sleep(1000);
 	}
-	
-	
+
 	public boolean isBudgetSettingIconDispaly() {
 
 		try {
@@ -1456,20 +1458,20 @@ public class SecondaryBoard extends AbstractPOM {
 		}
 
 	}
-	
+
 	public boolean isBudgetLineSettingIconDispaly(String name) {
 		WebElement line = getLineByName(name);
 		WebElementUtils.hoverOverField(line, driver, null);
 		Actions act = new Actions(driver);
 		act.moveToElement(line).build().perform();
-		try{
+		try {
 			return line.findElement(lineSetting).isDisplayed();
-		}catch (NoSuchElementException e) {
+		} catch (NoSuchElementException e) {
 			return false;
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean isDisplayed() {
 		return WebdriverUtils.isDisplayed(wrapper);

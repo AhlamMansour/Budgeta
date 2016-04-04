@@ -53,54 +53,57 @@
 	
 	
 
-	<test name="Login Test">
-		<classes>
-			<class name="com.budgeta.test.login.LoginTest"></class>
-		</classes>
-	</test>
-
-	<test name="Scenarios Test">
-		<classes>
-			<class name="com.budgeta.test.scenarios.ScenariosTest"></class>
-		</classes>
-	</test>
-
-	<test name="Versions Test">
-		<classes>
-			<class name="com.budgeta.test.versions.VersionsTest"></class>
-		</classes>
-	</test>
-
-	<test name="SignUp Test">
-		<classes>
-			<class name="com.budgeta.test.SignUp.SignUpTest"></class>
-		</classes>
-	</test>
 
 
-	<test name="View Test">
-		<classes>
-			<class name="com.budgeta.test.view.ViewTest"></class>
-		</classes>
-	</test>
 
-	<test name="Account Settings Test">
-		<classes>
-			<class name="com.budgeta.test.accountSettings.AccountSettingsTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Login Test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.login.LoginTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
-	<test name="Create Budget Test">
-		<classes>
-			<class name="com.budgeta.test.createBudget.CreateBudgetTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Scenarios Test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.scenarios.ScenariosTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
-	<test name="Budget Line Settings Test">
-		<classes>
-			<class name="com.budgeta.test.BudgetLineSettings.BudgetLineSettingsTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Versions Test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.versions.VersionsTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+
+<!-- 	<test name="SignUp Test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.SignUp.SignUpTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+
+
+<!-- 	<test name="View Test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.view.ViewTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+
+<!-- 	<test name="Account Settings Test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.accountSettings.AccountSettingsTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+
+<!-- 	<test name="Create Budget Test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.createBudget.CreateBudgetTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+
+<!-- 	<test name="Budget Line Settings Test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.BudgetLineSettings.BudgetLineSettingsTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
 	<test name="Budgeta Structure Test">
 		<classes>
@@ -120,43 +123,43 @@
 		</classes>
 	</test>
 
-	<test name="Budgeta Settings">
-		<classes>
-			<class name="com.budgeta.test.BudgetSettings.BudgetSettingsTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Budgeta Settings"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.BudgetSettings.BudgetSettingsTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
-	<test name="Budgeta Error test">
-		<classes>
-			<class name="com.budgeta.test.RunErrorTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Budgeta Error test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.RunErrorTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 	
-	<test name="Reports test">
-		<classes>
-			<class name="com.budgeta.test.reporter.ReporterTest"></class>
-		</classes>
-	</test>
-	
-
-	<test name="Import Budget Test">
-		<classes>
-			<class name="com.budgeta.test.importBudget.ImportBudget"></class>
-		</classes>
-	</test>
-	
-	<test name="Dashboard Share test">
-		<classes>
-			<class name="com.budgeta.test.ShareBudget.DashboardShare"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Reports test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.reporter.ReporterTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 	
 
-	<test name="View Only Mode Budget Test">
-		<classes>
-			<class name="com.budgeta.test.ShareBudget.ViewOnlyModeTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Import Budget Test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.importBudget.ImportBudget"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+	
+<!-- 	<test name="Dashboard Share test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.ShareBudget.DashboardShare"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
+	
+
+<!-- 	<test name="View Only Mode Budget Test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.ShareBudget.ViewOnlyModeTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
 </suite>
 	
