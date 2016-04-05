@@ -28,9 +28,13 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	public RevenuesAddSubLine() {
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("new-empty-line"));
 		//dropdown = new DropDown(wrapper.findElement(By.className("select2-container")));
-		trigger = new MenuTrigger(wrapper.findElement(By.className("dropdown-value")));
+		
 	}
 	
+	MenuTrigger getTrigger(){
+		trigger = new MenuTrigger(wrapper.findElement(By.className("dropdown-value")));
+		return trigger;
+	}
 	
 	public void setName(String name){
 		WebElement field = wrapper.findElement(textFields);
@@ -43,6 +47,7 @@ public class RevenuesAddSubLine extends AbstractPOM{
 	}
 	
 	public void selectDropDown(String option){
+		getTrigger();
 		trigger.selectBudgetMenuTrigger(option);
 		WebElementUtils.hoverOverField(textField, driver, null);
 		textField.click();

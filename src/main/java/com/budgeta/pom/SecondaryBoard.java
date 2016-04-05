@@ -646,6 +646,7 @@ public class SecondaryBoard extends AbstractPOM {
 
 				if (buildPopup.getTilte().equalsIgnoreCase("All Done") || buildPopup.getConfirmButtontext().equalsIgnoreCase("Finish")) {
 					buildPopup.clickConfirm();
+					selectedBudget.findElement(addLinesBtn).click();
 				}
 
 			} else
@@ -1143,8 +1144,9 @@ public class SecondaryBoard extends AbstractPOM {
 
 	public void openAddChild(String lineTitle, int level) {
 		clickClose();
-		List<WebElement> allLinesInLevel = driver.findElements(By.cssSelector("ol.tree.nav")).get(0).findElement(By.className("selected-root"))
-				.findElement(By.tagName("ol")).findElements(line);
+//		List<WebElement> allLinesInLevel = driver.findElements(By.cssSelector("ol.tree.nav")).get(0).findElement(By.className("selected-root"))
+//				.findElement(By.tagName("ol")).findElements(line);
+		List<WebElement> allLinesInLevel = driver.findElements(line);
 		for (WebElement el : allLinesInLevel) {
 			if (getLineName(el).equals(lineTitle) && el.getAttribute("data-level").equals(level + "")) {
 				WebElementUtils.hoverOverField(el, driver, null);
@@ -1372,8 +1374,9 @@ public class SecondaryBoard extends AbstractPOM {
 	}
 
 	private List<WebElement> getAllLines() {
-		return driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol"))
-				.findElements(line);
+//		return driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol"))
+//				.findElements(line);
+		return driver.findElements(line);
 	}
 
 	private WebElement getNextLineToAdd() {
@@ -1394,13 +1397,40 @@ public class SecondaryBoard extends AbstractPOM {
 	}
 
 	private List<WebElement> getSubLinesForLine(String lineTitle) {
-		WebElement lineElm = getLineByName(lineTitle);
-		if (lineElm.getAttribute("class").contains("collapsed")) {
-			lineElm.findElement(By.cssSelector(".svg-icon")).click();
-			WebdriverUtils.elementToHaveClass(lineElm, "expanded");
-			WebdriverUtils.sleep(200);
+		List<WebElement> subLines = new ArrayList<WebElement>();
+		List<WebElement> lines = getAllLines();
+		int dataLevel = -1;
+		boolean startInsert = false;
+		for (WebElement el : lines) {
+			System.out.println(getLineName(el));
+			if (getLineName(el).startsWith(lineTitle)){// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
+				if (el.getAttribute("class").contains("collapsed")) {
+					el.findElement(By.cssSelector(".svg-icon")).click();
+					WebdriverUtils.elementToHaveClass(el, "expanded");
+					WebdriverUtils.sleep(200);
+				}
+				dataLevel = Integer.parseInt(el.getAttribute("data-level"));
+				startInsert = true;
+				continue;
+			}
+			if(startInsert){
+				int currentLevel = Integer.parseInt(el.getAttribute("data-level"));
+				if(currentLevel == (dataLevel+1)){
+					subLines.add(el);
+				}
+				else if(currentLevel <= dataLevel){
+					break;
+				}
+			}
 		}
-		return lineElm.findElements(line);
+		return subLines;
+		//		WebElement lineElm = getLineByName(lineTitle);
+//		if (lineElm.getAttribute("class").contains("collapsed")) {
+//			lineElm.findElement(By.cssSelector(".svg-icon")).click();
+//			WebdriverUtils.elementToHaveClass(lineElm, "expanded");
+//			WebdriverUtils.sleep(200);
+//		}
+//		return lineElm.findElements(line);
 	}
 
 	private List<WebElement> getSubLinesForSubLine(String lineTitle, String subLineTitle) {
