@@ -1431,21 +1431,50 @@ public class SecondaryBoard extends AbstractPOM {
 //			WebdriverUtils.sleep(200);
 //		}
 //		return lineElm.findElements(line);
+		
+		
 	}
 
 	private List<WebElement> getSubLinesForSubLine(String lineTitle, String subLineTitle) {
-		List<WebElement> sublines = getSubLinesForLine(lineTitle);
-		for (WebElement el : sublines) {
-			if (getLineName(el).equals(subLineTitle)) {
+//		List<WebElement> sublines = getSubLinesForLine(lineTitle);
+//		for (WebElement el : sublines) {
+//			if (getLineName(el).equals(subLineTitle)) {
+//				if (el.getAttribute("class").contains("collapsed")) {
+//					el.findElement(By.cssSelector(".svg-icon.collapse-tree ")).click();
+//					WebdriverUtils.elementToHaveClass(el, "expanded");
+//					WebdriverUtils.sleep(200);
+//				}
+//				return el.findElements(line);
+//			}
+//		}
+//		return null;
+		List<WebElement> subLines = getSubLinesForLine(lineTitle);
+		List<WebElement> lines = getAllLines();
+		int dataLevel = -1;
+		boolean startInsert = false;
+		for (WebElement el : lines) {
+			System.out.println(getLineName(el));
+			if (getLineName(el).equals(subLineTitle)){// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
 				if (el.getAttribute("class").contains("collapsed")) {
-					el.findElement(By.cssSelector(".svg-icon.collapse-tree ")).click();
+					el.findElement(By.cssSelector(".svg-icon")).click();
 					WebdriverUtils.elementToHaveClass(el, "expanded");
 					WebdriverUtils.sleep(200);
 				}
-				return el.findElements(line);
+				dataLevel = Integer.parseInt(el.getAttribute("data-level"));
+				startInsert = true;
+				continue;
+			}
+			if(startInsert){
+				int currentLevel = Integer.parseInt(el.getAttribute("data-level"));
+				if(currentLevel == (dataLevel+1)){
+					subLines.add(el);
+				}
+				else if(currentLevel <= dataLevel){
+					break;
+				}
 			}
 		}
-		return null;
+		return subLines;
 	}
 
 	private List<WebElement> getSubLinesFourthLevel(String lineTitle, String subLineTitle, String sub_subLine) {
