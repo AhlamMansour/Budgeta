@@ -69,6 +69,7 @@ public class BudgetSettingsTest extends WrapperTest {
 		secondary.setBudgetTitle(newBudgetName);
 		Assert.assertTrue(navigator.isBudgetExist(newBudgetName), "expected to rename the line");
 		String AfterRenameBudget = secondary.getSelectedBudgetName();
+		navigator.closeBudgetsList();
 		Assert.assertNotEquals(BeforeRenameBudget, AfterRenameBudget);
 	}
 
