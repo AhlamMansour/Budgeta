@@ -181,7 +181,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		String yearY = general.getGeneralDateRangeTo().split("/")[1];
 
 		secondaryBoard.clickOnSubLine(revenues, revenuesSubLine);
-
+		secondaryBoard.clickOnSubLine(revenues, revenuesSubLine);
 		BillingsSection billings = new BillingsSection();
 		Assert.assertTrue(billings.isDisplayed(), "expected billings section to be displayed");
 

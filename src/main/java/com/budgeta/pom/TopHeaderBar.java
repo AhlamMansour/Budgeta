@@ -169,17 +169,37 @@ public class TopHeaderBar extends AbstractPOM {
 
 	public void selectVersion(String name) {
 		List<WebElement> versions = new ArrayList<>();
-		for (WebElement el : list) {
-			if (el.findElement(By.className("text-tag")).getText().contains(name)) {
-				versions.add(el);
+		try{
+			for (WebElement el : list) {
+				if (el.findElement(By.className("text-tag")).getText().contains(name)) {
+					versions.add(el);
+				}
 			}
+			int random = WebElementUtils.getRandomNumberByRange(0, versions.size() - 1);
+			WebElementUtils.hoverOverField(versions.get(random), driver, null);
+			versions.get(random).click();
+			// WebdriverUtils.waitForBudgetaBusyBar(driver);
+			WebdriverUtils.sleep(300);
+			isScenarioAdded();
+		}catch(Exception e){
+			
+			TopHeaderBar headerBar = new TopHeaderBar();
+			headerBar.openRevisionswindow();
+			headerBar.openRevisionswindow();
+			
+			for (WebElement el : list) {
+				if (el.findElement(By.className("text-tag")).getText().contains(name)) {
+					versions.add(el);
+				}
+			}
+			int random = WebElementUtils.getRandomNumberByRange(0, versions.size() - 1);
+			WebElementUtils.hoverOverField(versions.get(random), driver, null);
+			versions.get(random).click();
+			// WebdriverUtils.waitForBudgetaBusyBar(driver);
+			WebdriverUtils.sleep(300);
+			isScenarioAdded();
 		}
-		int random = WebElementUtils.getRandomNumberByRange(0, versions.size() - 1);
-		WebElementUtils.hoverOverField(versions.get(random), driver, null);
-		versions.get(random).click();
-		// WebdriverUtils.waitForBudgetaBusyBar(driver);
-		WebdriverUtils.sleep(300);
-		isScenarioAdded();
+		
 
 	}
 

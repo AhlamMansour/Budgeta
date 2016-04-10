@@ -83,6 +83,7 @@ public class VersionsTest extends WrapperTest {
 		//headerBar.openRevisionswindow();
 	}
 
+	@KnownIssue(bugID = "BUD - 3543")
 	@Test(enabled = true, priority = 1)
 	public void renameVersionTest() {
 		TopHeaderBar headerBar = new TopHeaderBar();
@@ -111,8 +112,14 @@ public class VersionsTest extends WrapperTest {
 	@Test(enabled = true, priority = 2)
 	public void revertVersionTest() {
 		TopHeaderBar headerBar = new TopHeaderBar();
+		SmallPopup popup = new SmallPopup();
+		if (popup.isDisplayed()){
+			popup.clickCancel();
+		}
+		
 		versions = new Versions();
-		SmallPopup popup = versions.clickRevertVersion();
+		
+		popup = versions.clickRevertVersion();
 		Assert.assertTrue(popup.isDisplayed(), "expected revert popup to be displayed");
 		popup.clickConfirm(true);
 		BudgetNavigator navigator = new BudgetNavigator();
@@ -126,15 +133,21 @@ public class VersionsTest extends WrapperTest {
 		TopHeaderBar headerBar = new TopHeaderBar();
 		BudgetNavigator navigator = new BudgetNavigator();
 		
+		SmallPopup popup = new SmallPopup();
+		if (popup.isDisplayed()){
+			popup.clickCancel();
+		}
+		
 		versions = new Versions();
 		headerBar.openRevisionswindow();
 		WebdriverUtils.sleep(5000);
 		headerBar.selectSavedRevisions();
+		versions = new Versions();
 		headerBar.selectVersion(snapshotName);
 
 		navigator.openInputTab();
-		
-		DeletePopup popup = versions.clickDeleteVersion();
+
+		popup = versions.clickDeleteVersion();
 		Assert.assertTrue(popup.isDisplayed(), "expected rename popup to be displayed");
 		popup.clickConfirm(true);
 		
@@ -153,8 +166,15 @@ public class VersionsTest extends WrapperTest {
 		TopHeaderBar headerBar = new TopHeaderBar();
 		BudgetNavigator navigator = new BudgetNavigator();
 		
+		SmallPopup popup = new SmallPopup();
+		if (popup.isDisplayed()){
+			popup.clickCancel();
+		}
+		
 		versions = new Versions();
+
 		headerBar.openRevisionswindow();
+		versions = new Versions();
 		headerBar.selectVersion("Snapshot");
 		navigator.openInputTab();
 		headerBar.clearVersion();

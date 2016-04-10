@@ -90,7 +90,8 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 
-	@KnownIssue(bugID = "BUD - 2537")
+//	@KnownIssue(bugID = "BUD - 2537")
+	@KnownIssue(bugID = "BUD - 3528")
 	@Test(enabled = true, priority = 3)
 	public void ShareBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
@@ -231,13 +232,16 @@ public class BudgetSettingsTest extends WrapperTest {
 		BudgetNavigator navigator = new BudgetNavigator();
 		MenuTrigger trigger = navigator.getMenuTrigger();
 		String BeforeRenameBudget = secondary.getSelectedBudgetName();
+		navigator.openSheetTab();
 		trigger.clickRenameBudgetFromNav();
 		newBudgetName = WebdriverUtils.getTimeStamp(newBudgetName);
 		navigator.setBudgetTitle(newBudgetName);
+		navigator.openInputTab();
 		Assert.assertTrue(navigator.isBudgetExist(newBudgetName), "expected to rename the line");
 		String AfterRenameBudget = secondary.getSelectedBudgetName();
 		Assert.assertNotEquals(BeforeRenameBudget, AfterRenameBudget);
 
+		navigator.openSheetTab();
 		trigger.clickRenameBudgetFromNav();
 		navigator.setBudgetTitle(BeforeRenameBudget);
 	}

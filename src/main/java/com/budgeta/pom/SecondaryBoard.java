@@ -1062,8 +1062,15 @@ public class SecondaryBoard extends AbstractPOM {
 
 	public void clickOnSubLine(String lineName, String subLineName) {
 		clickClose();
-		List<WebElement> sublines = getSubLinesForLine(lineName);
+		//List<WebElement> sublines = getSubLinesForLine(lineName);
+		List<WebElement> sublines = getSubLinesForSubLine(lineName, subLineName);
 		for (WebElement el : sublines) {
+			if (el.getAttribute("class").contains("collapsed")) {
+				el.findElement(By.cssSelector(".svg-icon")).click();
+				WebdriverUtils.elementToHaveClass(el, "expanded");
+				WebdriverUtils.sleep(200);
+			}
+			
 			if (getLineName(el).equals(subLineName)) {
 				el.findElement(budgetName).click();
 				// WebdriverUtils.waitForBudgetaBusyBar(driver);
@@ -1078,6 +1085,11 @@ public class SecondaryBoard extends AbstractPOM {
 			clickClose();
 		List<WebElement> sublines = getSubLinesForSubLine(lineName, subLineName);
 		for (WebElement el : sublines) {
+			if (el.getAttribute("class").contains("collapsed")) {
+				el.findElement(By.cssSelector(".svg-icon")).click();
+				WebdriverUtils.elementToHaveClass(el, "expanded");
+				WebdriverUtils.sleep(200);
+			}
 			if (getLineName(el).contains(sub_subLine)) {
 				el.findElement(budgetName).click();
 				// WebdriverUtils.waitForBudgetaBusyBar(driver);
@@ -1091,6 +1103,11 @@ public class SecondaryBoard extends AbstractPOM {
 		clickClose();
 		List<WebElement> sublines = getSubLinesFourthLevel(lineName, subLineName, sub_subLine);
 		for (WebElement el : sublines) {
+			if (el.getAttribute("class").contains("collapsed")) {
+				el.findElement(By.cssSelector(".svg-icon")).click();
+				WebdriverUtils.elementToHaveClass(el, "expanded");
+				WebdriverUtils.sleep(200);
+			}
 			if (getLineName(el).contains(nextLevelLine)) {
 				el.findElement(budgetName).click();
 				WebdriverUtils.elementToHaveClass(el, "active");
