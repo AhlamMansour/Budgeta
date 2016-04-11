@@ -578,7 +578,7 @@ public class SecondaryBoard extends AbstractPOM {
 						// addDepartmentAndProfessionalServices();
 					}
 
-					if (buildPopup.getTilte().equalsIgnoreCase(Department)) {
+					if (buildPopup.getTilte().equalsIgnoreCase("Department")) {
 						addDepartment();
 					}
 
@@ -1062,15 +1062,17 @@ public class SecondaryBoard extends AbstractPOM {
 
 	public void clickOnSubLine(String lineName, String subLineName) {
 		clickClose();
-		//List<WebElement> sublines = getSubLinesForLine(lineName);
-		List<WebElement> sublines = getSubLinesForSubLine(lineName, subLineName);
+		List<WebElement> sublines = getSubLinesForLine(lineName);
+		// List<WebElement> sublines = getSubLinesForSubLine(lineName,
+		// subLineName);
 		for (WebElement el : sublines) {
+			WebElementUtils.hoverOverField(el, driver, null);
 			if (el.getAttribute("class").contains("collapsed")) {
 				el.findElement(By.cssSelector(".svg-icon")).click();
 				WebdriverUtils.elementToHaveClass(el, "expanded");
 				WebdriverUtils.sleep(200);
 			}
-			
+
 			if (getLineName(el).equals(subLineName)) {
 				el.findElement(budgetName).click();
 				// WebdriverUtils.waitForBudgetaBusyBar(driver);
@@ -1162,8 +1164,9 @@ public class SecondaryBoard extends AbstractPOM {
 
 	public void openAddChild(String lineTitle, int level) {
 		clickClose();
-//		List<WebElement> allLinesInLevel = driver.findElements(By.cssSelector("ol.tree.nav")).get(0).findElement(By.className("selected-root"))
-//				.findElement(By.tagName("ol")).findElements(line);
+		// List<WebElement> allLinesInLevel =
+		// driver.findElements(By.cssSelector("ol.tree.nav")).get(0).findElement(By.className("selected-root"))
+		// .findElement(By.tagName("ol")).findElements(line);
 		List<WebElement> allLinesInLevel = driver.findElements(line);
 		for (WebElement el : allLinesInLevel) {
 			if (getLineName(el).equals(lineTitle) && el.getAttribute("data-level").equals(level + "")) {
@@ -1392,8 +1395,16 @@ public class SecondaryBoard extends AbstractPOM {
 	}
 
 	private List<WebElement> getAllLines() {
-//		return driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol"))
-//				.findElements(line);
+		// return
+		// driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol"))
+		// .findElements(line);
+		for (WebElement el : driver.findElements(line)) {
+			if (el.getAttribute("class").contains("collapsed")) {
+				el.findElement(By.cssSelector(".svg-icon")).click();
+				WebdriverUtils.elementToHaveClass(el, "expanded");
+				WebdriverUtils.sleep(200);
+			}
+		}
 		return driver.findElements(line);
 	}
 
@@ -1421,58 +1432,51 @@ public class SecondaryBoard extends AbstractPOM {
 		boolean startInsert = false;
 		for (WebElement el : lines) {
 			System.out.println(getLineName(el));
-			if (getLineName(el).startsWith(lineTitle)){// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
-				if (el.getAttribute("class").contains("collapsed")) {
-					el.findElement(By.cssSelector(".svg-icon")).click();
-					WebdriverUtils.elementToHaveClass(el, "expanded");
-					WebdriverUtils.sleep(200);
-				}
+			if (getLineName(el).startsWith(lineTitle)) {// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
 				dataLevel = Integer.parseInt(el.getAttribute("data-level"));
 				startInsert = true;
 				continue;
 			}
-			if(startInsert){
+			if (startInsert) {
 				int currentLevel = Integer.parseInt(el.getAttribute("data-level"));
-				if(currentLevel == (dataLevel+1)){
+				if (currentLevel == (dataLevel + 1)) {
 					subLines.add(el);
-				}
-				else if(currentLevel <= dataLevel){
+				} else if (currentLevel <= dataLevel) {
 					break;
 				}
 			}
 		}
 		return subLines;
-		//		WebElement lineElm = getLineByName(lineTitle);
-//		if (lineElm.getAttribute("class").contains("collapsed")) {
-//			lineElm.findElement(By.cssSelector(".svg-icon")).click();
-//			WebdriverUtils.elementToHaveClass(lineElm, "expanded");
-//			WebdriverUtils.sleep(200);
-//		}
-//		return lineElm.findElements(line);
-		
-		
+		// WebElement lineElm = getLineByName(lineTitle);
+		// if (lineElm.getAttribute("class").contains("collapsed")) {
+		// lineElm.findElement(By.cssSelector(".svg-icon")).click();
+		// WebdriverUtils.elementToHaveClass(lineElm, "expanded");
+		// WebdriverUtils.sleep(200);
+		// }
+		// return lineElm.findElements(line);
+
 	}
 
 	private List<WebElement> getSubLinesForSubLine(String lineTitle, String subLineTitle) {
-//		List<WebElement> sublines = getSubLinesForLine(lineTitle);
-//		for (WebElement el : sublines) {
-//			if (getLineName(el).equals(subLineTitle)) {
-//				if (el.getAttribute("class").contains("collapsed")) {
-//					el.findElement(By.cssSelector(".svg-icon.collapse-tree ")).click();
-//					WebdriverUtils.elementToHaveClass(el, "expanded");
-//					WebdriverUtils.sleep(200);
-//				}
-//				return el.findElements(line);
-//			}
-//		}
-//		return null;
-		List<WebElement> subLines = getSubLinesForLine(lineTitle);
+		// List<WebElement> sublines = getSubLinesForLine(lineTitle);
+		// for (WebElement el : sublines) {
+		// if (getLineName(el).equals(subLineTitle)) {
+		// if (el.getAttribute("class").contains("collapsed")) {
+		// el.findElement(By.cssSelector(".svg-icon.collapse-tree ")).click();
+		// WebdriverUtils.elementToHaveClass(el, "expanded");
+		// WebdriverUtils.sleep(200);
+		// }
+		// return el.findElements(line);
+		// }
+		// }
+		// return null;
+		List<WebElement> subLines = new ArrayList<WebElement>();
 		List<WebElement> lines = getAllLines();
 		int dataLevel = -1;
 		boolean startInsert = false;
 		for (WebElement el : lines) {
 			System.out.println(getLineName(el));
-			if (getLineName(el).equals(subLineTitle)){// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
+			if (getLineName(el).equals(subLineTitle)) {// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
 				if (el.getAttribute("class").contains("collapsed")) {
 					el.findElement(By.cssSelector(".svg-icon")).click();
 					WebdriverUtils.elementToHaveClass(el, "expanded");
@@ -1482,12 +1486,11 @@ public class SecondaryBoard extends AbstractPOM {
 				startInsert = true;
 				continue;
 			}
-			if(startInsert){
+			if (startInsert) {
 				int currentLevel = Integer.parseInt(el.getAttribute("data-level"));
-				if(currentLevel == (dataLevel+1)){
+				if (currentLevel == (dataLevel + 1)) {
 					subLines.add(el);
-				}
-				else if(currentLevel <= dataLevel){
+				} else if (currentLevel <= dataLevel) {
 					break;
 				}
 			}
