@@ -390,7 +390,8 @@ public class SecondaryBoard extends AbstractPOM {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		// buildPopup.clickCreateBudget("Create");
 		buildPopup.clickCreateBudget();
-		buildPopup.slectOption("Yes", "");
+		//buildPopup.slectOption("Yes", "");
+		buildPopup.selectOption();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("expense");
@@ -473,7 +474,8 @@ public class SecondaryBoard extends AbstractPOM {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		// buildPopup.clickCreateBudget("Create");
 		buildPopup.clickCreateBudget();
-		buildPopup.slectOption("Yes", "No Grouping");
+	//	buildPopup.slectOption("Yes", "No Grouping");
+		buildPopup.selectOption();
 		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
@@ -539,7 +541,8 @@ public class SecondaryBoard extends AbstractPOM {
 
 	public void addProfissionalServicesAndDepartment() {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		buildPopup.slectOption("Yes", "No Grouping");
+		//buildPopup.slectOption("Yes", "No Grouping");
+		buildPopup.selectOption();
 		// buildPopup.clickCreateBudget("Create");
 		buildPopup.clickCreateBudget();
 		buildPopup.selectAllcheckBoxes();
@@ -1087,11 +1090,6 @@ public class SecondaryBoard extends AbstractPOM {
 			clickClose();
 		List<WebElement> sublines = getSubLinesForSubLine(lineName, subLineName);
 		for (WebElement el : sublines) {
-			if (el.getAttribute("class").contains("collapsed")) {
-				el.findElement(By.cssSelector(".svg-icon")).click();
-				WebdriverUtils.elementToHaveClass(el, "expanded");
-				WebdriverUtils.sleep(200);
-			}
 			if (getLineName(el).contains(sub_subLine)) {
 				el.findElement(budgetName).click();
 				// WebdriverUtils.waitForBudgetaBusyBar(driver);
@@ -1470,32 +1468,35 @@ public class SecondaryBoard extends AbstractPOM {
 		// }
 		// }
 		// return null;
-		List<WebElement> subLines = new ArrayList<WebElement>();
+		List<WebElement> sub_subLines = new ArrayList<WebElement>();
+//		List<WebElement> subLines = getSubLinesForLine(lineTitle);
 		List<WebElement> lines = getAllLines();
 		int dataLevel = -1;
 		boolean startInsert = false;
+		boolean lineFound = false;
 		for (WebElement el : lines) {
 			System.out.println(getLineName(el));
-			if (getLineName(el).equals(subLineTitle)) {// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
-				if (el.getAttribute("class").contains("collapsed")) {
-					el.findElement(By.cssSelector(".svg-icon")).click();
-					WebdriverUtils.elementToHaveClass(el, "expanded");
-					WebdriverUtils.sleep(200);
-				}
-				dataLevel = Integer.parseInt(el.getAttribute("data-level"));
-				startInsert = true;
-				continue;
+			if (getLineName(el).equals(lineTitle)){
+				lineFound = true;
+			}
+			if(lineFound){
+				System.out.println(getLineName(el));
+				if (getLineName(el).equals(subLineTitle)) {// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
+						dataLevel = Integer.parseInt(el.getAttribute("data-level"));
+						startInsert = true;
+						continue;
+					}
 			}
 			if (startInsert) {
 				int currentLevel = Integer.parseInt(el.getAttribute("data-level"));
 				if (currentLevel == (dataLevel + 1)) {
-					subLines.add(el);
+					sub_subLines.add(el);
 				} else if (currentLevel <= dataLevel) {
 					break;
 				}
 			}
 		}
-		return subLines;
+		return sub_subLines;
 	}
 
 	private List<WebElement> getSubLinesFourthLevel(String lineTitle, String subLineTitle, String sub_subLine) {

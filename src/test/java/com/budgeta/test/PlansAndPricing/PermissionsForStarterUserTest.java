@@ -37,7 +37,7 @@ public class PermissionsForStarterUserTest extends BudgetaTest{
 		LoginPage loginPage = new LoginPage();
 		Assert.assertTrue(loginPage.isDisplayed(), "expected login page to be displayed");
 		
-		loginPage.setEmail("galiltest123@gmail.com");
+		loginPage.setEmail("galiltest1234@gmail.com");
 		loginPage.setPassword("galil1234");
 		loginPage.clickLogin(true);
 		
@@ -62,7 +62,7 @@ public class PermissionsForStarterUserTest extends BudgetaTest{
 		BudgetNavigator navigator = new BudgetNavigator();
 		navigator.openInputTab();
 		
-		Assert.assertEquals(currentPlan, "STARTER", "Your current plan is Starter plan");
+		Assert.assertEquals(currentPlan, "ESSENTIAL", "Your current plan is Starter plan");
 	
 			
 		
@@ -105,7 +105,7 @@ public class PermissionsForStarterUserTest extends BudgetaTest{
 
 	}
 	
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void AddLines() {
 		SecondaryBoard secondaryBoard = new SecondaryBoard();
 		int NumberOfBudgetLines = secondaryBoard.getNumberOfLines();

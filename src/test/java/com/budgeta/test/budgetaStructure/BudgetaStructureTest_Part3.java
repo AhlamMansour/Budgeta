@@ -57,29 +57,29 @@ public class BudgetaStructureTest_Part3 extends WrapperTest{
 		
 		secondaryBoard.addAllBudgetLines();
 		secondaryBoard = new SecondaryBoard();
-		secondaryBoard.addSubLine("Revenues");
+//		secondaryBoard.addSubLine("Revenues");
 		RevenuesAddSubLine subLine = new RevenuesAddSubLine();
-		subLine.setName(revenuesSubLine);
-		subLine.selectDropDown("Perpetual License");
-		subLine.clickAdd();
-
-		secondaryBoard = new SecondaryBoard();
-		secondaryBoard.addSubLine(cost_of_revenues);
-		secondaryBoard.addAllSubBudgetLines();
-		secondaryBoard = new SecondaryBoard();
-		secondaryBoard.addSubLineForLine(cost_of_revenues, cost_of_revenues_subLine);
-		secondaryBoard = new SecondaryBoard();
+//		subLine.setName(revenuesSubLine);
+//		subLine.selectDropDown("Perpetual License");
+//		subLine.clickAdd();
+//
+//		secondaryBoard = new SecondaryBoard();
+//		secondaryBoard.addSubLine(cost_of_revenues);
+//		secondaryBoard.addAllSubBudgetLines();
+//		secondaryBoard = new SecondaryBoard();
+//		secondaryBoard.addSubLineForLine(cost_of_revenues, cost_of_revenues_subLine);
+//		secondaryBoard = new SecondaryBoard();
 
 		//secondaryBoard.addSubLineForSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages);
-		secondaryBoard.addSubLine(OperationalExpenses);
-		secondaryBoard.addAllSubBudgetLines();
-		secondaryBoard = new SecondaryBoard();
-		secondaryBoard.openAddChild(OperationalExpensesSubline, 2);
-		subLine = new RevenuesAddSubLine();
-		employee = WebdriverUtils.getTimeStamp(employee);
-		subLine.setName(employee);
-		subLine.clickAdd();
-		secondaryBoard.selectDropDownInLine("Select Grouping", "No Grouping");
+//		secondaryBoard.addSubLine(OperationalExpenses);
+//		secondaryBoard.addAllSubBudgetLines();
+//		secondaryBoard = new SecondaryBoard();
+//		secondaryBoard.openAddChild(OperationalExpensesSubline, 2);
+//		subLine = new RevenuesAddSubLine();
+//		employee = WebdriverUtils.getTimeStamp(employee);
+//		subLine.setName(employee);
+//		subLine.clickAdd();
+//		secondaryBoard.selectDropDownInLine("Select Grouping", "No Grouping");
 
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLine(OtherIncomeAndExpensesLine);

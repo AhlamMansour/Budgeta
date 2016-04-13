@@ -57,18 +57,18 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 		
 		secondaryBoard.addAllBudgetLines();
 		secondaryBoard = new SecondaryBoard();
-		secondaryBoard.addSubLine("Revenues");
+	//	secondaryBoard.addSubLine("Revenues");
 		RevenuesAddSubLine subLine = new RevenuesAddSubLine();
-		subLine.setName(revenuesSubLine);
-		subLine.selectDropDown("Perpetual License");
-		subLine.clickAdd();
+		//subLine.setName(revenuesSubLine);
+//		subLine.selectDropDown("Perpetual License");
+//		subLine.clickAdd();
 
-		secondaryBoard = new SecondaryBoard();
-		secondaryBoard.addSubLine(cost_of_revenues);
-		secondaryBoard.addAllSubBudgetLines();
-		secondaryBoard = new SecondaryBoard();
-		secondaryBoard.addSubLineForLine(cost_of_revenues, cost_of_revenues_subLine);
-		secondaryBoard = new SecondaryBoard();
+//		secondaryBoard = new SecondaryBoard();
+//		secondaryBoard.addSubLine(cost_of_revenues);
+//		secondaryBoard.addAllSubBudgetLines();
+//		secondaryBoard = new SecondaryBoard();
+//		secondaryBoard.addSubLineForLine(cost_of_revenues, cost_of_revenues_subLine);
+//		secondaryBoard = new SecondaryBoard();
 
 		//secondaryBoard.addSubLineForSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages);
 		secondaryBoard.addSubLine(OperationalExpenses);
@@ -81,21 +81,21 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 		subLine.clickAdd();
 		secondaryBoard.selectDropDownInLine("Select Grouping", "No Grouping");
 
-		secondaryBoard = new SecondaryBoard();
-		secondaryBoard.addSubLine(OtherIncomeAndExpensesLine);
-		secondaryBoard.addAllSubBudgetLines();
-		secondaryBoard = new SecondaryBoard();
-		secondaryBoard.addSubLineForLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine);
-		secondaryBoard = new SecondaryBoard();
-		// secondaryBoard.addSubLinrForSubLine(OtherIncomeAndExpensesLine,
-		// OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
-		secondaryBoard.addSubLineForSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
-		secondaryBoard = new SecondaryBoard();
-		secondaryBoard.openAddChild(OtherIncomeAndExpensesSubLine, 2);
-		subLine = new RevenuesAddSubLine();
-		OtherIncomeAndExpensesSub_SubLine = WebdriverUtils.getTimeStamp(OtherIncomeAndExpensesSub_SubLine);
-		subLine.setName(OtherIncomeAndExpensesSub_SubLine);
-		subLine.clickAdd();
+//		secondaryBoard = new SecondaryBoard();
+//		secondaryBoard.addSubLine(OtherIncomeAndExpensesLine);
+//		secondaryBoard.addAllSubBudgetLines();
+//		secondaryBoard = new SecondaryBoard();
+//		secondaryBoard.addSubLineForLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine);
+//		secondaryBoard = new SecondaryBoard();
+//		// secondaryBoard.addSubLinrForSubLine(OtherIncomeAndExpensesLine,
+//		// OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
+//		secondaryBoard.addSubLineForSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
+//		secondaryBoard = new SecondaryBoard();
+//		secondaryBoard.openAddChild(OtherIncomeAndExpensesSubLine, 2);
+//		subLine = new RevenuesAddSubLine();
+//		OtherIncomeAndExpensesSub_SubLine = WebdriverUtils.getTimeStamp(OtherIncomeAndExpensesSub_SubLine);
+//		subLine.setName(OtherIncomeAndExpensesSub_SubLine);
+//		subLine.clickAdd();
 
 
 	}
@@ -203,6 +203,7 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 		board = new BudgetaBoard();
 		secondaryBoard = board.getSecondaryBoard();
 		secondaryBoard.clickOnSubLine(OperationalExpenses, OperationalExpensesSubline, employee);
+
 		secondaryBoard = new SecondaryBoard();
 
 		MainSection mainSection = new MainSection();
