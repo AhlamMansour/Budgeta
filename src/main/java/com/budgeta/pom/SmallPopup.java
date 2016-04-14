@@ -45,9 +45,18 @@ public class SmallPopup extends AbstractPOM{
 	
 	public String getTilte(){
 		//return driver.findElement(title).getText();
-		String title;
+		String title="";
+		List<WebElement> popups = driver.findElements(By.className("modal-title"));
+		int popUpsCount = popups.size(); 
 		try{
-			title = driver.findElement(By.className("modal-title")).getText();
+			if (popUpsCount == 1){
+				title = driver.findElements(By.className("modal-title")).get(0).getText();
+			}
+
+			if (popUpsCount > 1){
+				title = driver.findElements(By.className("modal-title")).get(popUpsCount - 1).getText();
+			}
+			
 		}catch(StaleElementReferenceException se){
 			WebdriverUtils.sleep(1000);
 			title = driver.findElement(By.className("modal-title")).getText();

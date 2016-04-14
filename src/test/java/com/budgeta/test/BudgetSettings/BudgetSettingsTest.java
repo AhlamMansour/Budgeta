@@ -91,7 +91,7 @@ public class BudgetSettingsTest extends WrapperTest {
 	}
 
 //	@KnownIssue(bugID = "BUD - 2537")
-	@KnownIssue(bugID = "BUD - 3528")
+//	@KnownIssue(bugID = "BUD - 3528")
 	@Test(enabled = true, priority = 3)
 	public void ShareBudgetLineTest() {
 		WebdriverUtils.sleep(1000);

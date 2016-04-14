@@ -18,7 +18,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class UpgradeAndDowngradePlanTest extends WrapperTest {
 
 	@Test(enabled = true)
-	public void upgradePlantoAdvanced() {
+	public void upgradePlantoEnterprise() {
 		TopBar topBar = new TopBar();
 		LicenseScreen licenseScreen = new LicenseScreen();
 		if (!licenseScreen.isDisplayed()) {
@@ -29,26 +29,26 @@ public class UpgradeAndDowngradePlanTest extends WrapperTest {
 		PlansAndPricingWindow plans = new PlansAndPricingWindow();
 		System.out.println("Your Plan name is: " + plans.getCurrentPlanName());
 
-		plans.upgradeFromBasic("ADVANCED", "UPGRADE");
+		plans.upgradeFromBasic("ENTERPRISE", "UPGRADE");
 
 		SmallPopup popup = new SmallPopup();
-		Assert.assertTrue(popup.isDisplayed(), "Advanced plan code pop up is displayed");
+		Assert.assertTrue(popup.isDisplayed(), "Enterpise plan code pop up is displayed");
 
-		popup.setName("beadvanced");
-		popup.clickConfirm(false);
-		popup = new SmallPopup();
+//		popup.setName("beadvanced");
+//		popup.clickConfirm(false);
+//		popup = new SmallPopup();
 		Assert.assertTrue(popup.isDisplayed(), "Advanced plan code pop up is displayed");
 		popup.clickConfirm();
 
 		licenseScreen.clickUpdate();
 
-		Assert.assertEquals(plans.getCurrentPlanName(), "ADVANCED");
+		Assert.assertEquals(plans.getCurrentPlanName(), "ENTERPRISE");
 
 		plans.closePriceAndPlansWin();
 
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void upgradeToBasic() {
 
 		PlansAndPricingWindow plans = new PlansAndPricingWindow();
@@ -61,17 +61,17 @@ public class UpgradeAndDowngradePlanTest extends WrapperTest {
 	}
 
 	@Test(enabled = true)
-	public void upgradeToProffesional() {
+	public void upgradeToPremium() {
 
 		PlansAndPricingWindow plans = new PlansAndPricingWindow();
 		if(plans.isDisplayed()){
 			plans.closePriceAndPlansWin();
 		}
-		selectOptionToUpgrade("PROFESSIONAL", "UPGRADE");
+		selectOptionToUpgrade("PREMIUM", "UPGRADE");
 	
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void downgradeToBasic() {
 
 		PlansAndPricingWindow plans = new PlansAndPricingWindow();
@@ -83,19 +83,19 @@ public class UpgradeAndDowngradePlanTest extends WrapperTest {
 	}
 
 	@Test(enabled = true)
-	public void downgradeToProfessional() {
+	public void downgradeToPremium() {
 
 		PlansAndPricingWindow plans = new PlansAndPricingWindow();
 		if(plans.isDisplayed()){
 			plans.closePriceAndPlansWin();
 		}
-		selectOptionToUpgrade("PROFESSIONAL", "DOWNGRADE");
+		selectOptionToUpgrade("PREMIUM", "DOWNGRADE");
 		
 		
 	}
 
 	@Test(enabled = true)
-	public void downgradeToStarter() {
+	public void downgradeToEssential() {
 
 		TopBar topBar = new TopBar();
 		LicenseScreen licenseScreen = new LicenseScreen();
@@ -107,19 +107,19 @@ public class UpgradeAndDowngradePlanTest extends WrapperTest {
 		PlansAndPricingWindow plans = new PlansAndPricingWindow();
 		System.out.println("Your Plan name is: " + plans.getCurrentPlanName());
 
-		if (!plans.subscriptionEndMsg("STARTER")) {
-			plans.upgradeFromBasic("STARTER", "DOWNGRADE");
+		if (!plans.subscriptionEndMsg("ESSENTIAL")) {
+			plans.upgradeFromBasic("ESSENTIAL", "DOWNGRADE");
 
 			SmallPopup popup = new SmallPopup();
-			Assert.assertTrue(popup.isDisplayed(), "Advanced plan code pop up is displayed");
+			Assert.assertTrue(popup.isDisplayed(), "Essential plan code pop up is displayed");
 			popup.clickConfirm();
 
 			licenseScreen.clickUpdate();
 
-			Assert.assertTrue(plans.subscriptionEndMsg("STARTER"), " Starter");
+			Assert.assertTrue(plans.subscriptionEndMsg("ESSENTIAL"), " Essential");
 			plans.closePriceAndPlansWin();
 		} else
-			Assert.assertTrue(plans.subscriptionEndMsg("STARTER"), " Starter");
+			Assert.assertTrue(plans.subscriptionEndMsg("ESSENTIAL"), " Essential");
 	
 		
 		if(plans.isDisplayed()){
@@ -140,9 +140,9 @@ public class UpgradeAndDowngradePlanTest extends WrapperTest {
 		PlansAndPricingWindow plans = new PlansAndPricingWindow();
 		System.out.println("Your Plan name is: " + plans.getCurrentPlanName());
 
-		if (plans.getCurrentPlanName().equals("STARTER")) {
+		if (plans.getCurrentPlanName().equals("ESSENTIAL")) {
 			
-			upgradeFromStarterPlan(option,action);
+			upgradeFromEssentialPlan(option,action);
 			
 			topBar.clickMyLicense();
 			licenseScreen.clickUpdate();
@@ -193,7 +193,7 @@ public class UpgradeAndDowngradePlanTest extends WrapperTest {
 	}
 	
 	
-	public void upgradeFromStarterPlan(String option, String action){
+	public void upgradeFromEssentialPlan(String option, String action){
 		PlansAndPricingWindow plans = new PlansAndPricingWindow();
 		plans.upgradeFromBasic(option, action);
 		WebdriverUtils.sleep(1000);

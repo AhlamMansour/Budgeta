@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.Actuals;
 import com.budgeta.pom.AddNewUser;
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetaBoard;
@@ -30,7 +31,7 @@ import com.galilsoftware.AF.core.listeners.TestNGListener;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
-public class PermissionsForProfessionalUserTest extends BudgetaTest{
+public class PermissionsForPremiumUserTest extends BudgetaTest{
 	
 	
 	//add budget 
@@ -76,12 +77,31 @@ public class PermissionsForProfessionalUserTest extends BudgetaTest{
 		BudgetNavigator navigator = new BudgetNavigator();
 		navigator.openInputTab();
 
-		Assert.assertEquals(currentPlan, "PROFESSIONAL", "Your current plan is not professional plan");
+		Assert.assertEquals(currentPlan, "PREMIUM", "Your current plan is not professional plan");
 
 	}
 	
 	@Test(enabled = true, priority = 1)
 	public void openActualsTab() {
+		
+//		LicenseScreen licenseScreen = new LicenseScreen();
+//		if (licenseScreen.isDisplayed()) {
+//			licenseScreen.clickCancele();
+//		}
+//		
+//		BudgetNavigator navigator = new BudgetNavigator();
+//		navigator.openInputTab();
+//		//navigator.selectRandomBudgeta();
+//	//	navigator.selectRandomBudgetWithPrefix("New budget ");
+//		
+//
+//		TopHeaderBar headerBar = new TopHeaderBar();
+//		headerBar.openActalsTab();
+//		LimitPopup limitPopup = new LimitPopup();
+//		Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
+//		Assert.assertEquals(limitPopup.getTilte(), "Actuals", "Budget line limit popup is open");
+//		limitPopup.clickCancel();
+
 		
 		LicenseScreen licenseScreen = new LicenseScreen();
 		if (licenseScreen.isDisplayed()) {
@@ -89,18 +109,15 @@ public class PermissionsForProfessionalUserTest extends BudgetaTest{
 		}
 		
 		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.openInputTab();
 		//navigator.selectRandomBudgeta();
-	//	navigator.selectRandomBudgetWithPrefix("New budget ");
+		navigator.openInputTab();
 		
 
 		TopHeaderBar headerBar = new TopHeaderBar();
 		headerBar.openActalsTab();
-		LimitPopup limitPopup = new LimitPopup();
-		Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
-		Assert.assertEquals(limitPopup.getTilte(), "Actuals", "Budget line limit popup is open");
-		limitPopup.clickCancel();
-
+		
+		Actuals actual = new Actuals();
+		Assert.assertTrue(actual.isDisplayed(), "expected true but found: " + actual.isDisplayed());
 	}
 	
 	@Test(enabled = true)
@@ -113,6 +130,7 @@ public class PermissionsForProfessionalUserTest extends BudgetaTest{
 			LimitPopup popup = navigator.budgetLimit();
 			Assert.assertTrue(popup.isDisplayed(), "Budget Limit pop up is display");
 			Assert.assertEquals(popup.getTilte(), "Budgets Limit", "Budget Limit pop up is open");
+			popup.clickCancel();
 			popup.clickCancel();
 		}
 		if (numberOfExistBudget <= 5) {
@@ -185,7 +203,7 @@ public class PermissionsForProfessionalUserTest extends BudgetaTest{
 	}
 	
 	
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void shareOneEditUser() {
 		TopBar topBar = new TopBar();
 		LicenseScreen licenseScreen = new LicenseScreen();
@@ -252,97 +270,104 @@ public class PermissionsForProfessionalUserTest extends BudgetaTest{
 		if (!licenseScreen.isDisplayed()) {
 			topBar.clickMyLicense();
 		}
-		PlansAndPricingWindow plans = new PlansAndPricingWindow();
-		licenseScreen.clickUpdate();
-		String currentEditUsers = plans.getCurrentEditingUser(plans.getCurrentPlanName());
-		plans.closePriceAndPlansWin();
-
-		int currentUsers = licenseScreen.usersNumber();
-
-		if (currentEditUsers.equals("Up to 3 user")) {
-
-			while (currentUsers < 3) {
-				licenseScreen.addUser();
-
-				AddNewUser addPopup = new AddNewUser();
-				Assert.assertTrue(addPopup.isDisplayed(), "Add user pop up is display");
-
-				SmallPopup smallPopup = new SmallPopup();
-
-				String prefix = email.substring(0, email.indexOf("@"));
-				String suffix = email.substring(email.indexOf("@"));
-				email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
-
-				smallPopup.setName(email);
-				addPopup.clickAddUser();
-				BudgetaBoard board = new BudgetaBoard();
-				String message = board.getNotyMessage();
-
-				if (!message.equals("User already connected to another account")) {
-					currentUsers = licenseScreen.usersNumber();
-				}
-
-				else
-					Assert.assertEquals(message, "User already connected to another account",
-							"excpeted message is: -User already connected to another account - but found: " + message);
-
-				email = "ahlam_mns@hotmail.com";
-
-			}
-
-			if (currentUsers >= 3) {
-				licenseScreen.addUser();
-				LimitPopup limitPopup = new LimitPopup();
-				Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
-				Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is open");
-				limitPopup.clickCancel();
-
-			}
-		}
-
-		if (currentEditUsers.equals("Up to 6 user")) {
-
-			while (currentUsers < 6) {
-				licenseScreen.addUser();
-
-				AddNewUser addPopup = new AddNewUser();
-				Assert.assertTrue(addPopup.isDisplayed(), "Add user pop up is display");
-
-				SmallPopup smallPopup = new SmallPopup();
-
-				String prefix = email.substring(0, email.indexOf("@"));
-				String suffix = email.substring(email.indexOf("@"));
-				email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
-
-				smallPopup.setName(email);
-				addPopup.clickAddUser();
-
-				BudgetaBoard board = new BudgetaBoard();
-				String message = board.getNotyMessage();
-
-				if (!message.equals("User already connected to another account")) {
-					currentUsers = licenseScreen.usersNumber();
-				}
-				else
-					Assert.assertEquals(message, "User already connected to another account",
-							"excpeted message is: -User already connected to another account - but found: " + message);
-				email = "ahlam_mns@hotmail.com";
-
-			}
-
-			if (currentUsers >= 6) {
-				licenseScreen.addUser();
-				LimitPopup limitPopup = new LimitPopup();
-				Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
-				Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is open");
-				limitPopup.clickCancel();
-
-			}
-		}
+		
+		licenseScreen.addUser();
+		LimitPopup limitPopup = new LimitPopup();
+		Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
+		Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is open");
+		limitPopup.clickCancel();
+		
+//		PlansAndPricingWindow plans = new PlansAndPricingWindow();
+//		licenseScreen.clickUpdate();
+//		String currentEditUsers = plans.getCurrentEditingUser(plans.getCurrentPlanName());
+//		plans.closePriceAndPlansWin();
+//
+//		int currentUsers = licenseScreen.usersNumber();
+//
+//		if (currentEditUsers.equals("Up to 3 user")) {
+//
+//			while (currentUsers < 3) {
+//				licenseScreen.addUser();
+//
+//				AddNewUser addPopup = new AddNewUser();
+//				Assert.assertTrue(addPopup.isDisplayed(), "Add user pop up is display");
+//
+//				SmallPopup smallPopup = new SmallPopup();
+//
+//				String prefix = email.substring(0, email.indexOf("@"));
+//				String suffix = email.substring(email.indexOf("@"));
+//				email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
+//
+//				smallPopup.setName(email);
+//				addPopup.clickAddUser();
+//				BudgetaBoard board = new BudgetaBoard();
+//				String message = board.getNotyMessage();
+//
+//				if (!message.equals("User already connected to another account")) {
+//					currentUsers = licenseScreen.usersNumber();
+//				}
+//
+//				else
+//					Assert.assertEquals(message, "User already connected to another account",
+//							"excpeted message is: -User already connected to another account - but found: " + message);
+//
+//				email = "ahlam_mns@hotmail.com";
+//
+//			}
+//
+//			if (currentUsers >= 3) {
+//				licenseScreen.addUser();
+//				LimitPopup limitPopup = new LimitPopup();
+//				Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
+//				Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is open");
+//				limitPopup.clickCancel();
+//
+//			}
+//		}
+//
+//		if (currentEditUsers.equals("Up to 6 user")) {
+//
+//			while (currentUsers < 6) {
+//				licenseScreen.addUser();
+//
+//				AddNewUser addPopup = new AddNewUser();
+//				Assert.assertTrue(addPopup.isDisplayed(), "Add user pop up is display");
+//
+//				SmallPopup smallPopup = new SmallPopup();
+//
+//				String prefix = email.substring(0, email.indexOf("@"));
+//				String suffix = email.substring(email.indexOf("@"));
+//				email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
+//
+//				smallPopup.setName(email);
+//				addPopup.clickAddUser();
+//
+//				BudgetaBoard board = new BudgetaBoard();
+//				String message = board.getNotyMessage();
+//
+//				if (!message.equals("User already connected to another account")) {
+//					currentUsers = licenseScreen.usersNumber();
+//				}
+//				else
+//					Assert.assertEquals(message, "User already connected to another account",
+//							"excpeted message is: -User already connected to another account - but found: " + message);
+//				email = "ahlam_mns@hotmail.com";
+//
+//			}
+//
+//			if (currentUsers >= 6) {
+//				licenseScreen.addUser();
+//				LimitPopup limitPopup = new LimitPopup();
+//				Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
+//				Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is open");
+//				limitPopup.clickCancel();
+//
+//			}
+//		}
 
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void editUserViaShare() {
 		TopBar topBar = new TopBar();
 		LicenseScreen licenseScreen = new LicenseScreen();

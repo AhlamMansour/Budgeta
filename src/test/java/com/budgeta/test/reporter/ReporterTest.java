@@ -13,6 +13,7 @@ import com.budgeta.pom.ReportsPopup;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.TopHeaderBar;
 import com.budgeta.test.WrapperTest;
+import com.galilsoftware.AF.core.listeners.KnownIssue;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
@@ -54,6 +55,8 @@ public class ReporterTest extends WrapperTest{
 		Assert.assertTrue(reports.isDisplayed(),"Expected the reports popup to be Displayed");
 	}
 
+	
+	@KnownIssue(bugID = "BUD - 3637")
 	@Test(dataProvider = "reportsTypeProvider", enabled = true)
 	public void fillGeneralAndValidateExcelReport(String boxToCheck) {
 		secondaryBoard = board.getSecondaryBoard();

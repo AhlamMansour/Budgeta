@@ -23,7 +23,7 @@ import com.galilsoftware.AF.core.listeners.TestNGListener;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
-public class PermissionsForStarterUserTest extends BudgetaTest{
+public class PermissionsForEssentialUserTest extends BudgetaTest{
 	
 	
 	String email = "ahlam_mns@hotmail.com";
@@ -82,6 +82,7 @@ public class PermissionsForStarterUserTest extends BudgetaTest{
 				LimitPopup popup = navigator.budgetLimit();
 				Assert.assertTrue(popup.isDisplayed(), "Budget Limit pop up is display");
 				Assert.assertEquals(popup.getTilte(), "Budgets Limit", "Budget Limit pop up is open");
+				popup.clickCancel();
 				popup.clickCancel();
 			}
 			if (numberOfExistBudget <= 5){
@@ -148,13 +149,15 @@ public class PermissionsForStarterUserTest extends BudgetaTest{
 			Assert.assertTrue(popup.isDisplayed(), "expected share popup to be displayed");
 			popup.setName(email);
 			popup.selectSharePermissios(modifyPermisssion);
-			popup.clickSend();
+	//		popup.clickSend();
 			LimitPopup limitPopup = new LimitPopup();
 			Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
-			Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is open");
+			Assert.assertEquals(limitPopup.getTilte(), "Sharing permissions", "Budget line limit popup is open");
+			limitPopup.clickCancel();
 			limitPopup.clickCancel();
 			
-			trigger.clickShareBudget();
+			trigger = secondaryBoard.getBudgetMenuTrigger();
+			popup = trigger.clickShareBudget();
 			popup =new SharePopup();
 			Assert.assertTrue(popup.isDisplayed(), "expected share popup to be displayed");
 			popup.setName(email);
