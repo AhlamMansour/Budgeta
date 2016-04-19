@@ -167,6 +167,7 @@ public class MenuTrigger extends AbstractPOM {
 			DeletePopup popup = new DeletePopup();
 			Assert.assertTrue(popup.isDisplayed(), "expected delete popup to be displayed");
 			popup.clickConfirm();
+			ExistBudget = ExistBudget - 1;
 		}
 		
 		return new DeletePopup();

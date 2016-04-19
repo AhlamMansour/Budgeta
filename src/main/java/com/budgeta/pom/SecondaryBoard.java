@@ -1090,11 +1090,21 @@ public class SecondaryBoard extends AbstractPOM {
 			clickClose();
 		List<WebElement> sublines = getSubLinesForSubLine(lineName, subLineName);
 		for (WebElement el : sublines) {
+//			if (getLineName(el).contains(sub_subLine)) {
+//				el.findElement(budgetName).click();
+//				// WebdriverUtils.waitForBudgetaBusyBar(driver);
+//				WebdriverUtils.waitForBudgetaLoadBar(driver);
+//				return;
+//			}
 			if (getLineName(el).contains(sub_subLine)) {
-				el.findElement(budgetName).click();
-				// WebdriverUtils.waitForBudgetaBusyBar(driver);
-				WebdriverUtils.waitForBudgetaLoadBar(driver);
-				return;
+				WebElementUtils.hoverOverField(el, driver, null);
+				if(el.findElement(lineType).getText().contains("Employee")){
+					el.findElement(budgetName).click();
+					// WebdriverUtils.waitForBudgetaBusyBar(driver);
+					WebdriverUtils.waitForBudgetaLoadBar(driver);
+					return;
+				}
+				
 			}
 		}
 	}
@@ -1486,6 +1496,14 @@ public class SecondaryBoard extends AbstractPOM {
 						startInsert = true;
 						continue;
 					}
+//				if (getLineName(el).contains(subLineTitle)) {// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
+//					if(el.findElement(lineType).getText().contains("Employee")){
+//						dataLevel = Integer.parseInt(el.getAttribute("data-level"));
+//						startInsert = true;
+//						continue;
+//					}
+//					
+//				}
 			}
 			if (startInsert) {
 				int currentLevel = Integer.parseInt(el.getAttribute("data-level"));

@@ -39,6 +39,7 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 	String OperationalExpensesSubline = "Salary & wages";
 	String salary_and_wages = "Salary & wages";
 	String employee = "employee_";
+	String employeeLine = "employee";
 
 	String OtherIncomeAndExpensesLine = "Other income and expenses";
 	String OtherIncomeAndExpensesSubLine = "Other income";
@@ -202,7 +203,7 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 
 		board = new BudgetaBoard();
 		secondaryBoard = board.getSecondaryBoard();
-		secondaryBoard.clickOnSubLine(OperationalExpenses, OperationalExpensesSubline, employee);
+		secondaryBoard.clickOnSubLine(OperationalExpenses, OperationalExpensesSubline, employeeLine);
 
 		secondaryBoard = new SecondaryBoard();
 
@@ -316,7 +317,7 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 			String dateTo = general.getGeneralDateRangeTo();
 			String yearFrom = dateFrom.split("/")[1];
 			String yearTo = dateTo.split("/")[1];
-			secondaryBoard.clickOnSubLine(OperationalExpenses, OperationalExpensesSubline, employee);
+			secondaryBoard.clickOnSubLine(OperationalExpenses, OperationalExpensesSubline, employeeLine);
 
 			int baseSalary = 0, benefits = 0, bonus = 0, AvgAccruedVacation = 0, yearlyVacationDays = 0, YearlyIncrease = 0 ;
 			String monthFrom = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom.split("/")[0]));
