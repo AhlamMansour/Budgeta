@@ -122,7 +122,7 @@ public class ReporterTest extends WrapperTest{
 
 	@DataProvider(name = "reportsTypeProvider")
 	public static Object[][] primeNumbers() {
-		return new Object[][] {{"Cash"}, {"Profit & Loss"}, {"Budget vs. Actual"}, {"Dashboard"},{"Balance Sheet"},{"Transactions"}};
+		return new Object[][] {{"Dashboard"}, {"Cash"}, {"Profit & Loss"}, {"Budget vs. Actual"},{"Balance Sheet"},{"Transactions"}};
 	}
 
 }

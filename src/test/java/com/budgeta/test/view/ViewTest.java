@@ -32,7 +32,7 @@ public class ViewTest extends WrapperTest {
 	BudgetNavigator navigator;
 	Sheets sheets;
 	Actuals actuals;
-	String fromMonth;
+	String fromMonth; 
 	String fromYear;
 	String toMonth;
 	String toYear;
@@ -89,6 +89,7 @@ public class ViewTest extends WrapperTest {
 		Assert.assertTrue(sheets.isDisplayed(), "expected to view page to be dislayed");
 	}
 
+	@KnownIssue(bugID = "BUD - 3252")
 	@Test(enabled = true)
 	public void validateTableDataTest() {
 
