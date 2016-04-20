@@ -203,7 +203,7 @@ public class BudgetaStructureTest_Part3 extends WrapperTest{
 		String monthY = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getGeneralDateRangeTo().split("/")[0]));
 		String yearY = general.getGeneralDateRangeTo().split("/")[1];
 
-		secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
+		secondaryBoard.clickOnIncomSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
 		secondaryBoard = new SecondaryBoard();
 
 		BillingsSection billings = new BillingsSection();
@@ -301,7 +301,7 @@ public class BudgetaStructureTest_Part3 extends WrapperTest{
 
 			secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine);
 
-			secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
+			secondaryBoard.clickOnIncomSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
 
 			if (data.get("PaymentAfter").isEmpty())
 				payAfter = 0;

@@ -258,6 +258,12 @@ public class SecondaryBoard extends AbstractPOM {
 	public void buildBudget() {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.slectOption("Yes", "No Grouping");
+		try{
+			//WebdriverUtils.waitForBudgetaBusyBar(driver);
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
+		}
+		catch(Exception e){}
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.clickNext();
 	}
@@ -1106,6 +1112,23 @@ public class SecondaryBoard extends AbstractPOM {
 				}
 				
 			}
+		}
+	}
+	
+	public void clickOnIncomSubLine(String lineName, String subLineName, String sub_subLine) {
+		if (WebdriverUtils.isDisplayed(closeBtn))
+			clickClose();
+		List<WebElement> sublines = getSubLinesForSubLine(lineName, subLineName);
+		for (WebElement el : sublines) {
+			if (getLineName(el).contains(sub_subLine)) {
+				el.findElement(budgetName).click();
+				// WebdriverUtils.waitForBudgetaBusyBar(driver);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				return;
+			}
+			
+				
+			
 		}
 	}
 
