@@ -53,7 +53,8 @@ public class ViewTest extends WrapperTest {
 
 		BudgetNavigator navigator = new BudgetNavigator();
 		Assert.assertTrue(navigator.isDisplayed(), "expected to inner bar to be dislayed");
-		navigator.selectRandomBudgeta();
+		//navigator.selectRandomBudgeta();
+		navigator.selectRandomBudgetWithPrefix("Actuals test");
 		generalSection = new GeneralSection();
 
 		String dateFrom = generalSection.getGeneralDateRangeFrom();
