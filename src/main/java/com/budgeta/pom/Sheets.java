@@ -111,7 +111,8 @@ public class Sheets extends AbstractPOM{
 	
 	private int getIndexOfTitle(String title){
 		int i = 0;
-		List<WebElement> elms = columns.get(0).findElements(columnTitle);
+//		List<WebElement> elms = columns.get(0).findElements(columnTitle);
+		List<WebElement> elms = columns.get(0).findElements(By.className("differrence-header"));
 		WebElementUtils.hoverOverField(elms.get(0), driver, null);
 		WebdriverUtils.sleep(200);
 		for(WebElement el : elms){

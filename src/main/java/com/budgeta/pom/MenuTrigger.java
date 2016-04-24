@@ -95,6 +95,7 @@ public class MenuTrigger extends AbstractPOM {
 		
 		selectDuplicateFromMenuTrigger("Duplicate");
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
 		WebdriverUtils.sleep(5000);
 	}
 	
