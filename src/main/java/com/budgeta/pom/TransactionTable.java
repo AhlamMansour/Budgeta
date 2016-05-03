@@ -2,6 +2,7 @@ package com.budgeta.pom;
 
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -19,9 +20,55 @@ public class TransactionTable extends AbstractPOM{
 	@FindBy(className = "flag")
 	private WebElement flag;
 	
+	
 	@FindBy(className = "svg-icon")
 	private List<WebElement> icons;
 	
+	private By selectedDropdown = By.className("select2-chosen");
+	
+	@FindBy(className = "currency")
+	private WebElement currency;
+	
+	@FindBy(className = "ember-text-field")
+	private WebElement textField;
+	
+	
+	
+	public void flagLine(){
+		flag.click();
+		WebdriverUtils.waitForElementToBeFound(driver, By.className("flagged"));
+		
+	}
+	
+	public void duplaicateTransactionLine(){
+		for (WebElement el : icons){
+			if(el.getAttribute("title").equalsIgnoreCase("Duplicate")){
+				el.click();
+				break;
+			}
+				
+		}
+	}
+	
+	public void reverseTransactionLine(){
+		for (WebElement el : icons){
+			if(el.getAttribute("title").equalsIgnoreCase("Reverse")){
+				el.click();
+				break;
+			}
+				
+		}
+	}
+	
+	public void deleteTransactionLine(){
+		for (WebElement el : icons){
+			if(el.getAttribute("title").equalsIgnoreCase("Delete")){
+				el.click();
+				break;
+			}
+				
+		}
+	}
 	
 	
 	@Override

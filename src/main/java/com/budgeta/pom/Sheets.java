@@ -103,9 +103,12 @@ public class Sheets extends AbstractPOM{
 		List<String> rowValues = getAllValuesOfRow(rowIndex);
 		int titleIndex = getIndexOfTitle(title);
 		List<String> res = new ArrayList<>();
-		for(int i=titleIndex ; i< rowValues.size(); i+=getNumberOfSubColumns()){
-			res.add(rowValues.get(i));
+		if(titleIndex > -1){
+			for(int i=titleIndex ; i< rowValues.size(); i+=getNumberOfSubColumns()){
+				res.add(rowValues.get(i));
+			}
 		}
+		
 		return res;
 	}
 	
@@ -116,8 +119,10 @@ public class Sheets extends AbstractPOM{
 		WebElementUtils.hoverOverField(elms.get(0), driver, null);
 		WebdriverUtils.sleep(200);
 		for(WebElement el : elms){
-			if(el.getText().equalsIgnoreCase(title))
-				return i;
+			if(el.isDisplayed()){
+				if(el.getText().equalsIgnoreCase(title))
+					return i;
+			}
 			i++;
 		}
 		return -1;

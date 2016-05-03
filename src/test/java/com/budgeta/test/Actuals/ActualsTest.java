@@ -8,12 +8,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.budgeta.pom.Actuals;
+import com.budgeta.pom.AddTransaction;
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetSettings;
 import com.budgeta.pom.InnerBar;
 import com.budgeta.pom.PreviewBoard;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.Sheets;
+import com.budgeta.pom.TopHeaderBar;
 import com.budgeta.test.BudgetaUtils;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.KnownIssue;
@@ -27,11 +30,13 @@ public class ActualsTest extends WrapperTest {
 	SecondaryBoard secondaryBoard;
 	InnerBar innerBar;
 	Sheets sheets;
+	Actuals actuals;
 	String fromMonth;
 	String fromYear;
 	String toMonth;
 	String toYear;
 	List<String> dates;
+	TopHeaderBar topHeaderBar;
 
 	@BeforeMethod
 	private void initTest() {	
@@ -43,44 +48,80 @@ public class ActualsTest extends WrapperTest {
 	}
 	
 	@TestFirst
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void setBudgetTest() {
 
+//		BudgetNavigator navigator = new BudgetNavigator();
+//		navigator.selectRandomBudgeta();
+//
+//		//innerBar = board.getInnerBar();
+//		//Assert.assertTrue(innerBar.isDisplayed(),	"expected to inner bar to be dislayed");
+//
+//		secondaryBoard.openBudgetSettings();
+//		BudgetSettings settings = new BudgetSettings();
+//		String dateFrom = settings.getDateRangeFrom();
+//		String dateTo = settings.getDateRangeTo();
+//		settings.clickCancel();
+//
+//		fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom
+//				.split("/")[0]));
+//		fromYear = dateFrom.split("/")[1];
+//		toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo
+//				.split("/")[0]));
+//		toYear = dateTo.split("/")[1];
+//		List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(
+//fromMonth, fromYear, toMonth, toYear, 0,
+//				false);
+//
+//		innerBar.openActualsTab();
+//		Assert.assertEquals(innerBar.getOpenTab(), "Actuals");
+//		sheets = new Sheets();
+//		Assert.assertTrue(sheets.isDisplayed(),
+//				"expected to View to be displayed");
+//		dates = sheets.getAllDates();
+//		Assert.assertEquals(dates.size(), expectedDates.size());
+//		for (int i = 0; i < expectedDates.size(); i++) {
+//			Assert.assertEquals(dates.get(i), expectedDates.get(i));
+//		}
+		
 		BudgetNavigator navigator = new BudgetNavigator();
+		Assert.assertTrue(navigator.isDisplayed(), "expected to inner bar to be dislayed");
 		navigator.selectRandomBudgeta();
+		
+		navigator.openInputTab();
+		
+		topHeaderBar = new TopHeaderBar();
+		topHeaderBar.openActalsTab();
 
-		innerBar = board.getInnerBar();
-		Assert.assertTrue(innerBar.isDisplayed(),
-				"expected to inner bar to be dislayed");
-
-		secondaryBoard.openBudgetSettings();
-		BudgetSettings settings = new BudgetSettings();
-		String dateFrom = settings.getDateRangeFrom();
-		String dateTo = settings.getDateRangeTo();
-		settings.clickCancel();
-
-		fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom
-				.split("/")[0]));
-		fromYear = dateFrom.split("/")[1];
-		toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo
-				.split("/")[0]));
-		toYear = dateTo.split("/")[1];
-		List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(
-fromMonth, fromYear, toMonth, toYear, 0,
-				false);
-
-		innerBar.openActualsTab();
-		Assert.assertEquals(innerBar.getOpenTab(), "Actuals");
-		sheets = new Sheets();
-		Assert.assertTrue(sheets.isDisplayed(),
-				"expected to View to be displayed");
-		dates = sheets.getAllDates();
-		Assert.assertEquals(dates.size(), expectedDates.size());
-		for (int i = 0; i < expectedDates.size(); i++) {
-			Assert.assertEquals(dates.get(i), expectedDates.get(i));
-		}
 	}
-	
+
+	@Test(enabled = true)
+	public void addTransaction(){
+		actuals = new Actuals();
+		int numberOfRows = actuals.getNumbreOfRows();
+		for (int row = 0; row < numberOfRows; row++) {
+			String rowTitle = actuals.getRowTitleByIndex(row);
+			actuals.clickOnLineByIndex(row);
+			if (rowTitle.contains(",")) {
+				rowTitle = rowTitle.split(",")[1].trim();
+				Assert.assertTrue(secondaryBoard.getSelectedLine().contains(
+						rowTitle));
+			} 
+			AddTransaction add = new AddTransaction();
+			add.clickAddTransaction();
+
+//			innerBar.openActualsTab();
+//			sheets = new Sheets();
+//			List<String> values = sheets.getAllValuesOfRow(row);
+//
+//			for (int i = 0; i < lineValues.size(); i++) {
+//				Assert.assertEquals(lineValues.get(i), values.get(i),
+//						"... Row title is: " + rowTitle + ", in header: "
+//								+ dates.get(i));
+//			}
+		}
+
+	}
 	
 
 	@Test(enabled = false)

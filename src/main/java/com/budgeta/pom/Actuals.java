@@ -13,13 +13,19 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class Actuals extends AbstractPOM{
 	
-	@FindBy(className = "forecast-view")
+//	@FindBy(className = "forecast-view")
+//	private WebElement wrapper;
+	
+	@FindBy(className = "main-content-overflow")
 	private WebElement wrapper;
 	
 	@FindBy(css = "div.forecast-header div.scroll-columns div.column")
 	private List<WebElement> dateHeader;
 	
-	@FindBy(className = "ember-list-item-view")
+//	@FindBy(className = "ember-list-item-view")
+//	private List<WebElement> rows;
+	
+	@FindBy(className = "budget-list-item")
 	private List<WebElement> rows;
 	
 	private By rowTitle = By.className("fixed-columns");
@@ -54,7 +60,7 @@ public class Actuals extends AbstractPOM{
 	
 	public void clickOnLineByIndex(int index){
 		rows.get(index).findElement(rowTitle).findElement(By.className("name")).click();
-		WebdriverUtils.elementToHaveClass(driver.findElement(By.className("input-tab")), "active");
+		//WebdriverUtils.elementToHaveClass(driver.findElement(By.className("input-tab")), "active");
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		

@@ -246,6 +246,7 @@ public class TopHeaderBar extends AbstractPOM {
 
 	public void openActalsTab() {
 		actualsTab.click();
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
 	}
 
 	public String selectedVesrionName() {

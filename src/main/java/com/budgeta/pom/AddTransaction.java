@@ -39,6 +39,7 @@ public class AddTransaction extends AbstractPOM {
 		
 		for(WebElement el : icons){
 			if(el.getText().equalsIgnoreCase("Import data")){
+		
 				el.click();
 			}
 		}
@@ -49,6 +50,7 @@ public class AddTransaction extends AbstractPOM {
 		for(WebElement el : icons){
 			if(el.getText().equalsIgnoreCase("Add transaction")){
 				el.click();
+				break;
 			}
 		}	
 	}
