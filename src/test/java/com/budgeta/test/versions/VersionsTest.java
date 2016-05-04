@@ -123,7 +123,7 @@ public class VersionsTest extends WrapperTest {
 		Assert.assertTrue(popup.isDisplayed(), "expected revert popup to be displayed");
 		popup.clickConfirm(true);
 		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.openInputTab();
+		navigator.clickInputTab();
 		Assert.assertFalse(headerBar.selectedVersionDisplay(), "expected to remove version changes");
 	}
 

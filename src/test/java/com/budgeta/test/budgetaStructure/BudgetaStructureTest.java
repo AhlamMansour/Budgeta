@@ -90,7 +90,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		employee = WebdriverUtils.getTimeStamp(employee);
 		subLine.setName(employee);
 		subLine.clickAdd();
-		secondaryBoard.selectDropDownInLine("Select Grouping", "No Grouping");
+//		secondaryBoard.selectDropDownInLine("Select Grouping", "No Grouping");
 
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLine(OtherIncomeAndExpensesLine);

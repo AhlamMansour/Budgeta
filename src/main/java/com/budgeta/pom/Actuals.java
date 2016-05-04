@@ -22,11 +22,11 @@ public class Actuals extends AbstractPOM{
 	@FindBy(css = "div.forecast-header div.scroll-columns div.column")
 	private List<WebElement> dateHeader;
 	
-//	@FindBy(className = "ember-list-item-view")
-//	private List<WebElement> rows;
+	@FindBy(className = "ember-list-item-view")
+	private List<WebElement> rows;
 	
 	@FindBy(className = "budget-list-item")
-	private List<WebElement> rows;
+	private List<WebElement> rowsTree;
 	
 	private By rowTitle = By.className("fixed-columns");
 	
@@ -53,16 +53,29 @@ public class Actuals extends AbstractPOM{
 	}
 	
 	public String getRowTitleByIndex(int index){
-		return rows.get(index).findElement(rowTitle).getText();
+		try{
+			return rows.get(index).findElement(rowTitle).getText();
+		}catch(Exception e){
+			return rowsTree.get(index).findElement(By.className("budget-name-text-display")).getText();
+		}
+		
 	}
 	
 
 	
 	public void clickOnLineByIndex(int index){
-		rows.get(index).findElement(rowTitle).findElement(By.className("name")).click();
-		//WebdriverUtils.elementToHaveClass(driver.findElement(By.className("input-tab")), "active");
-		WebdriverUtils.waitForBudgetaBusyBar(driver);
-		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		try{
+			rows.get(index).findElement(rowTitle).findElement(By.className("name")).click();
+			//WebdriverUtils.elementToHaveClass(driver.findElement(By.className("input-tab")), "active");
+			WebdriverUtils.waitForBudgetaBusyBar(driver);
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
+		}catch(Exception e){
+			rowsTree.get(index).findElement(By.className("budget-name-text-display")).click();
+			//WebdriverUtils.elementToHaveClass(driver.findElement(By.className("input-tab")), "active");
+			WebdriverUtils.waitForBudgetaBusyBar(driver);
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
+		}
+		
 		
 	}
 	

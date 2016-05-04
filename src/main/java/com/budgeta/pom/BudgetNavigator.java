@@ -78,7 +78,7 @@ public class BudgetNavigator extends AbstractPOM {
 		TopHeaderBar topBar = new TopHeaderBar();
 		topBar.openBaseTab();
 		
-	}catch(NoSuchElementException e){
+	}catch(Exception e){
 		selectRandomBudgeta();
 		//driver.findElement(By.xpath("//body")).sendKeys(Keys.F5);
 		driver.navigate().refresh();
@@ -91,6 +91,24 @@ public class BudgetNavigator extends AbstractPOM {
 
 	}
 
+	public void clickInputTab() {
+		try{
+			clickOnTab(inputs);
+			TopHeaderBar topBar = new TopHeaderBar();
+			topBar.openBaseTab();
+			
+		}catch(Exception e){
+			//selectRandomBudgeta();
+			//driver.findElement(By.xpath("//body")).sendKeys(Keys.F5);
+			driver.navigate().refresh();
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
+			clickOnTab(inputs);
+			TopHeaderBar topBar = new TopHeaderBar();
+			topBar.openBaseTab();
+		}
+			
+
+		}
 	public void openSheetTab() {
 		clickOnTab(Sheets);
 	}

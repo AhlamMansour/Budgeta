@@ -11,7 +11,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class CommentsSection extends AbstractPOM{
 	
 	
-	@FindBy(id = "section-Comments")
+	@FindBy(className = "section-Comments")
 	private WebElement wrapper;
 	
 	

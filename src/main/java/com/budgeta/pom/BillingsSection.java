@@ -13,7 +13,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class BillingsSection extends AbstractPOM{
 	
 	
-	@FindBy(id = "section-Billings")
+	@FindBy(className = "section-Billings")
 	private WebElement wrapper;
 	
 	@FindBy(id = "attribute-period")
