@@ -91,6 +91,30 @@
 			<class name="com.budgeta.test.reporter.ReporterTest"></class>
 		</classes>
 	</test>
+	
+	<test name="Downgrade/Upgrade test">
+		<classes>
+			<class name="com.budgeta.test.PlansAndPricing.UpgradeAndDowngradePlanTest"></class>
+		</classes>
+	</test>
+	
+	<test name="Permisssion For Essential User test">
+		<classes>
+			<class name="com.budgeta.test.PlansAndPricing.PermissionsForEssentialUserTest"></class>
+		</classes>
+	</test>
+	
+	<test name="Permisssion For Premium User test">
+		<classes>
+			<class name="com.budgeta.test.PlansAndPricing.PermissionsForPremiumUserTest"></class>
+		</classes>
+	</test>
+	
+	<test name="Permisssion For Enterprise User test">
+		<classes>
+			<class name="com.budgeta.test.PlansAndPricing.PermissionsForEnterpriseUserTest"></class>
+		</classes>
+	</test>
 
 </suite>
 

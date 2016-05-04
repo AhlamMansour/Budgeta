@@ -79,7 +79,7 @@ public class BudgetNavigator extends AbstractPOM {
 		topBar.openBaseTab();
 		
 	}catch(NoSuchElementException e){
-		//selectRandomBudgeta();
+		selectRandomBudgeta();
 		//driver.findElement(By.xpath("//body")).sendKeys(Keys.F5);
 		driver.navigate().refresh();
 		WebdriverUtils.waitForBudgetaLoadBar(driver);

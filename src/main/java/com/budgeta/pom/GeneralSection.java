@@ -13,7 +13,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 public class GeneralSection extends AbstractPOM{
 
-	@FindBy(id = "section-General")
+	@FindBy(className = "section-General")
 	private WebElement wrapper;
 	
 	@FindBy(css = ".inline-edit")
