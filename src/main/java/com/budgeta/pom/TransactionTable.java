@@ -20,6 +20,14 @@ public class TransactionTable extends AbstractPOM{
 	@FindBy(className = "flag")
 	private WebElement flag;
 	
+	@FindBy(css = "div.bottom-bar div.total")
+	private WebElement total;
+	
+	@FindBy(css = "div.bottom-bar button")
+	private List<WebElement> bottomButtons;
+	
+	@FindBy(css = "div.bottom-bar button.cancel")
+	private WebElement cancelButtons;
 	
 	@FindBy(className = "svg-icon")
 	private List<WebElement> icons;
@@ -31,6 +39,8 @@ public class TransactionTable extends AbstractPOM{
 	
 	@FindBy(className = "ember-text-field")
 	private WebElement textField;
+	
+	private By dateRange = By.cssSelector("div.year-picker-from div.month-picker");
 	
 	
 	
@@ -69,6 +79,46 @@ public class TransactionTable extends AbstractPOM{
 				
 		}
 	}
+	
+	public void undoChanges(){
+		cancelButtons.click();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
+	public void clickSave(){
+		for (WebElement el : bottomButtons){
+			if(el.getAttribute("type").equals("submit")){
+				el.click();
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				break;
+			}
+		}
+	}
+	
+	public DateRange openDate(){
+		wrapper.findElement(dateRange).click();
+		return new DateRange();
+	} 
+	
+	public void setAmount(String amount){
+		WebElement field = currency.findElement(By.className("ember-text-field"));
+		field.clear();
+		field.sendKeys(amount);
+	}
+	
+	
+	public int getTotalValue(){
+		int totalValue;
+		totalValue = Integer.parseInt(total.findElement(By.tagName("span")).getText());
+		
+		return totalValue;
+	}
+	
+	
+//	public int getAmountValue(){
+//		int amountValue;
+//		amountValue = 
+//	}
 	
 	
 	@Override

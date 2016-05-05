@@ -3,6 +3,7 @@ package com.budgeta.test.Actuals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.transaction.interceptor.TransactionAttributeEditor;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -12,11 +13,13 @@ import com.budgeta.pom.Actuals;
 import com.budgeta.pom.AddTransaction;
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetSettings;
+import com.budgeta.pom.DateRange;
 import com.budgeta.pom.InnerBar;
 import com.budgeta.pom.PreviewBoard;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.Sheets;
 import com.budgeta.pom.TopHeaderBar;
+import com.budgeta.pom.TransactionTable;
 import com.budgeta.test.BudgetaUtils;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.KnownIssue;
@@ -109,6 +112,17 @@ public class ActualsTest extends WrapperTest {
 			} 
 			AddTransaction add = new AddTransaction();
 			add.clickAddTransaction();
+			
+			TransactionTable table = new TransactionTable();
+			
+			DateRange date = table.openDate();
+			date.setHireYear("2016");
+			date.setHireMonth("Aug");
+			
+			table.setAmount("1000");
+			
+			table.clickSave();
+			
 
 //			innerBar.openActualsTab();
 //			sheets = new Sheets();
