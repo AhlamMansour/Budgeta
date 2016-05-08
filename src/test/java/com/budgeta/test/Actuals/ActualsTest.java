@@ -18,6 +18,7 @@ import com.budgeta.pom.InnerBar;
 import com.budgeta.pom.PreviewBoard;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.Sheets;
+import com.budgeta.pom.SummaryTable;
 import com.budgeta.pom.TopHeaderBar;
 import com.budgeta.pom.TransactionTable;
 import com.budgeta.test.BudgetaUtils;
@@ -110,8 +111,9 @@ public class ActualsTest extends WrapperTest {
 				Assert.assertTrue(secondaryBoard.getSelectedLine().contains(
 						rowTitle));
 			} 
-			AddTransaction add = new AddTransaction();
-			add.clickAddTransaction();
+			AddTransaction transactio = new AddTransaction();
+			transactio.clickTransactionTab();
+			transactio.clickAddTransaction();
 			
 			TransactionTable table = new TransactionTable();
 			
@@ -123,6 +125,22 @@ public class ActualsTest extends WrapperTest {
 			
 			table.clickSave();
 			
+			System.out.println(table.getAmountValue());
+			System.out.println(table.getTotalValue());
+			System.out.println(table.getTransactionDate());
+			
+			String totalRowValue = table.getTotalValue();
+			
+			transactio.clickSummaryTab();
+			
+			SummaryTable summary = new SummaryTable();
+			
+			Assert.assertEquals(summary.getTotalOfRow(row), totalRowValue);
+			
+			System.out.println(summary.getAllValuesOfRow(row));
+			
+			transactio = new AddTransaction();
+			transactio.clickTransactionTab();
 
 //			innerBar.openActualsTab();
 //			sheets = new Sheets();

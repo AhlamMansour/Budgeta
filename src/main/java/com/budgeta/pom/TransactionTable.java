@@ -107,18 +107,37 @@ public class TransactionTable extends AbstractPOM{
 	}
 	
 	
-	public int getTotalValue(){
-		int totalValue;
-		totalValue = Integer.parseInt(total.findElement(By.tagName("span")).getText());
-		
-		return totalValue;
+	public String getTotalValue(){
+//		String totalValue;
+//		totalValue = total.findElement(By.tagName("span")).getText();
+//		
+//		return totalValue;
+		String totalValue = total.findElement(By.tagName("span")).getText();
+		if(total.equals("-"))
+			return totalValue;
+		else
+			return totalValue.replaceAll("[^0-9 .]","").trim();
 	}
 	
 	
-//	public int getAmountValue(){
-//		int amountValue;
-//		amountValue = 
-//	}
+	public String getAmountValue(){
+		String amountValue;
+		AddTransaction transaction = new AddTransaction();
+		transaction.clickTransactionTab();
+		
+		amountValue = currency.findElement(By.className("ember-text-field")).getAttribute("title");
+		return amountValue;
+	}
+	
+	public String getTransactionDate(){
+		String Date;
+		AddTransaction transaction = new AddTransaction();
+		transaction.clickTransactionTab();
+		
+		Date = wrapper.findElement(dateRange).findElement(By.tagName("input")).getAttribute("value");
+		
+		return Date;
+	}
 	
 	
 	@Override
