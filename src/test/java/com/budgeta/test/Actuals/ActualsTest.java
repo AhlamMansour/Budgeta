@@ -128,14 +128,52 @@ public class ActualsTest extends WrapperTest {
 			System.out.println(table.getAmountValue());
 			System.out.println(table.getTotalValue());
 			System.out.println(table.getTransactionDate());
+			String Month = BudgetaUtils.getMonthWithIndex(Integer.parseInt(table.getTransactionDate().split("/")[0]));
+			String Year = table.getTransactionDate().split("/")[1];
+			
+			String actualsDate = Month + " " + Year;
 			
 			String totalRowValue = table.getTotalValue();
+			String amountRowValue = table.getAmountValue();
 			
 			transactio.clickSummaryTab();
 			
 			SummaryTable summary = new SummaryTable();
 			
-			Assert.assertEquals(summary.getTotalOfRow(row), totalRowValue);
+		//	Assert.assertEquals(summary.getTotalOfRow(row), totalRowValue);
+			
+			
+			topHeaderBar.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			String dateFrom = settings.getDateRangeFrom();
+			String dateTo = settings.getDateRangeTo();
+			settings.clickCancel();
+			
+			fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom
+					.split("/")[0]));
+			fromYear = dateFrom.split("/")[1];
+			toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo
+					.split("/")[0]));
+			toYear = dateTo.split("/")[1];
+			List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(
+	fromMonth, fromYear, toMonth, toYear, 0,
+					false);
+			
+			summary = new SummaryTable();
+			dates = summary.getAllDates();
+			
+			Assert.assertEquals(dates.size(), expectedDates.size());
+			
+			for (int i =0; i < expectedDates.size(); i++){
+				String getDate = dates.get(i);
+				if (getDate.equals(actualsDate)){
+					//Assert.assertEquals(summary.getActualsTotalOfRow(row,"Actual"), totalRowValue);
+//					Assert.assertEquals(summary.getActualsTotalOfRow(row,"Actual"), totalRowValue, "... Row title is: " + rowTitle + ", in header: " + dates.get(i));
+					Assert.assertEquals(summary.getActualsTotalOfRow(row,"Actual"), totalRowValue, "... Row title is: " + rowTitle + ", in header: " + dates.get(i));
+				}
+			}
+			
+			
 			
 			System.out.println(summary.getAllValuesOfRow(row));
 			

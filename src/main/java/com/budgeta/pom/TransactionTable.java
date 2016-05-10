@@ -121,12 +121,17 @@ public class TransactionTable extends AbstractPOM{
 	
 	
 	public String getAmountValue(){
-		String amountValue;
-		AddTransaction transaction = new AddTransaction();
-		transaction.clickTransactionTab();
-		
-		amountValue = currency.findElement(By.className("ember-text-field")).getAttribute("title");
-		return amountValue;
+//		String amountValue;
+//		AddTransaction transaction = new AddTransaction();
+//		transaction.clickTransactionTab();
+//		
+//		amountValue = currency.findElement(By.className("ember-text-field")).getAttribute("title");
+//		return amountValue;
+		String amountValue = currency.findElement(By.className("ember-text-field")).getAttribute("title");
+		if(total.equals("-"))
+			return amountValue;
+		else
+			return amountValue.replaceAll("[^0-9 .]","").trim();
 	}
 	
 	public String getTransactionDate(){

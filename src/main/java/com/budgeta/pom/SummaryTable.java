@@ -16,7 +16,7 @@ public class SummaryTable extends AbstractPOM{
 	@FindBy(className = "forecast-wrapper")
 	private WebElement wrapper;
 	
-	@FindBy(css = "div.scroll-columns div.forecast-row div.column")
+	@FindBy(css = "div.scroll-columns div.forecast-row div.column div.text-header")
 	private List<WebElement> dateHeader;
 	
 	@FindBy(className = "ember-list-item-view")
@@ -25,10 +25,14 @@ public class SummaryTable extends AbstractPOM{
 	@FindBy(css="div.column-wrapper div.header div.column")
 	private List<WebElement> columns;
 	
+	@FindBy(css="div.total-column div.sub-header-text-wrapper")
+	private List<WebElement> totalColumns;
+	
 	private By columnTitle = By.className("sub-header-text-wrapper");	
 	private By rowTitle = By.className("fixed-columns");
 	private By rowValues = By.cssSelector("div.scroll-columns div.forecast-row span");
 	private By rowTotal = By.className("total-column");
+	
 	
 	
 	
@@ -87,7 +91,7 @@ public class SummaryTable extends AbstractPOM{
 	
 	public List<String> getAllValuesOfRowByTitle(int rowIndex, String title){
 		List<String> rowValues = getAllValuesOfRow(rowIndex);
-		int titleIndex = getIndexOfTitle(title);
+		int titleIndex = getIndexOfActualsTitle(title);
 		List<String> res = new ArrayList<>();
 		if(titleIndex > -1){
 			for(int i=titleIndex ; i< rowValues.size(); i+=getNumberOfSubColumns()){
@@ -114,6 +118,23 @@ public class SummaryTable extends AbstractPOM{
 		return -1;
 	}
 	
+	
+	private int getIndexOfActualsTitle(String title){
+		int i = 0;
+//		List<WebElement> elms = columns.get(0).findElements(columnTitle);
+		List<WebElement> elms = totalColumns.get(0).findElements(By.tagName("span"));
+		WebElementUtils.hoverOverField(elms.get(0), driver, null);
+		WebdriverUtils.sleep(200);
+		for(WebElement el : elms){
+			if(el.isDisplayed()){
+				if(el.getText().equalsIgnoreCase(title))
+					return i;
+			}
+			i++;
+		}
+		return -1;
+	}
+	
 	private int getNumberOfSubColumns(){
 		return columns.get(0).findElements(columnTitle).size();
 		
@@ -126,9 +147,31 @@ public class SummaryTable extends AbstractPOM{
 		else
 			return total.replaceAll("[^0-9 .]","").trim();
 	}
+	
+	
 	public int getNumbreOfRows(){
 		return rows.size();
 	}
+	
+	
+	
+	public String getActualsTotalOfRow(int rowIndex, String title){
+		List<WebElement> elms = totalColumns.get(0).findElements(By.tagName("span"));
+		for(WebElement el : elms){
+			if (el.getText().equals(title)){
+				String total = rows.get(rowIndex).findElement(rowTotal).getText();
+				total = total.substring(0, total.indexOf("\n"));
+				if(total.equals("-"))
+					return total;
+				else
+					return total.replaceAll("[^0-9 .]","").trim();
+				
+			}
+		}
+		
+		return null;
+	}
+	
 	
 	public List<String> getAllDates(){
 		List<String> res = new ArrayList<>();

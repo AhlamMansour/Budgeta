@@ -70,6 +70,7 @@ public class BudgetSettingsTest extends WrapperTest {
 		Assert.assertTrue(navigator.isBudgetExist(newBudgetName), "expected to rename the line");
 		String AfterRenameBudget = secondary.getSelectedBudgetName();
 		navigator.closeBudgetsList();
+		secondary.clickClose();
 		Assert.assertNotEquals(BeforeRenameBudget, AfterRenameBudget);
 	}
 
@@ -117,20 +118,7 @@ public class BudgetSettingsTest extends WrapperTest {
 		Assert.assertTrue(secondary.isShareIconExist(BudgetName), "The budget  was shared");
 
 	}
-
-	@Test(enabled = true, priority = 6)
-	public void duplicateBudget() {
-		WebdriverUtils.sleep(1000);
-
-		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
-		String CurrentBudgetName = secondary.getSelectedBudgetName();
-		trigger.clickDuplicateBudget();
-		WebdriverUtils.sleep(2000);
-		String BudgetName = secondary.getSelectedBudgetName();
-		WebdriverUtils.sleep(2000);
-		Assert.assertEquals(BudgetName, "Copy of " + CurrentBudgetName);
-	}
-
+	
 	@Test(enabled = true, priority = 4)
 	public void backupBudgetTest() {
 		WebdriverUtils.sleep(1000);
@@ -206,6 +194,21 @@ public class BudgetSettingsTest extends WrapperTest {
 	}
 	
 
+
+	@Test(enabled = true, priority = 6)
+	public void duplicateBudget() {
+		WebdriverUtils.sleep(1000);
+
+		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
+		String CurrentBudgetName = secondary.getSelectedBudgetName();
+		trigger.clickDuplicateBudget();
+		WebdriverUtils.sleep(2000);
+		String BudgetName = secondary.getSelectedBudgetName();
+		WebdriverUtils.sleep(2000);
+		Assert.assertEquals(BudgetName, "Copy of " + CurrentBudgetName);
+	}
+
+	
 	@Test(enabled = true, priority = 7)
 	public void DeleteBudgetTest() {
 		WebdriverUtils.sleep(1000);
