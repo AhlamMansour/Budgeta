@@ -35,6 +35,7 @@ public class ReportsPopup extends AbstractPOM {
 
 	public void checkBox(String boxToCheck) {
 		getCheckBoxElement(boxToCheck).click();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 
 	public void selectOtherReportes() {
@@ -52,6 +53,7 @@ public class ReportsPopup extends AbstractPOM {
 		for (WebElement box : checkBoxes) {
 			if (box.getText().equals(option)) {
 				box.click();
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				return;
 			}
 

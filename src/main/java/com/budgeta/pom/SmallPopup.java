@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.springframework.web.util.WebUtils;
 
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
@@ -80,6 +81,7 @@ public class SmallPopup extends AbstractPOM{
 	public void setName(String name){
 		wrapper.findElement(nameField).clear();
 		wrapper.findElement(nameField).sendKeys(name);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
 	public void clickConfirm(){
