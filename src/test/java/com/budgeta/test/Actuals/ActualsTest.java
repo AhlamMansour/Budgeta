@@ -90,7 +90,8 @@ public class ActualsTest extends WrapperTest {
 		
 		BudgetNavigator navigator = new BudgetNavigator();
 		Assert.assertTrue(navigator.isDisplayed(), "expected to inner bar to be dislayed");
-		navigator.selectRandomBudgeta();
+		//navigator.selectRandomBudgeta();
+		navigator.selectRandomBudgetWithPrefix("budget8_1463277234876");
 		
 		navigator.openInputTab();
 		
@@ -101,6 +102,78 @@ public class ActualsTest extends WrapperTest {
 
 	@Test(enabled = true)
 	public void addTransaction(){
+		actuals = new Actuals();
+		int numberOfRows = actuals.getNumbreOfRows();
+		for (int row = 0; row < numberOfRows; row++) {
+			String rowTitle = actuals.getRowTitleByIndex(row);
+			actuals.clickOnLineByIndex(row);
+			if (rowTitle.contains(",")) {
+				rowTitle = rowTitle.split(",")[1].trim();
+				Assert.assertTrue(secondaryBoard.getSelectedLine().contains(
+						rowTitle));
+			} 
+			AddTransaction transactio = new AddTransaction();
+			transactio.clickTransactionTab();
+			transactio.clickAddTransaction();
+			
+			TransactionTable table = new TransactionTable();
+			
+			DateRange date = table.openDate();
+			date.setHireYear("2016");
+			date.setHireMonth("Aug");
+			
+			table.setAmount("1000");
+			
+			table.clickSave();
+			
+			System.out.println(table.getAmountValue());
+			System.out.println(table.getTotalValue());
+			System.out.println(table.getTransactionDate());
+			String Month = BudgetaUtils.getMonthWithIndex(Integer.parseInt(table.getTransactionDate().split("/")[0]));
+			String Year = table.getTransactionDate().split("/")[1];
+			
+	
+			
+			transactio.clickSummaryTab();
+			
+			SummaryTable summary = new SummaryTable();
+			
+
+			
+			
+			topHeaderBar.openBudgetSettings();
+			BudgetSettings settings = new BudgetSettings();
+			String dateFrom = settings.getDateRangeFrom();
+			String dateTo = settings.getDateRangeTo();
+			settings.clickCancel();
+			
+			fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom
+					.split("/")[0]));
+			fromYear = dateFrom.split("/")[1];
+			toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo
+					.split("/")[0]));
+			toYear = dateTo.split("/")[1];
+			List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(
+	fromMonth, fromYear, toMonth, toYear, 0,
+					false);
+			
+			summary = new SummaryTable();
+			dates = summary.getAllDates();
+			
+			Assert.assertEquals(dates.size(), expectedDates.size());
+
+			System.out.println(summary.getAllValuesOfRow(row));
+			
+			transactio = new AddTransaction();
+			transactio.clickTransactionTab();
+
+
+		}
+
+	}
+	
+	@Test(enabled = true)
+	public void ValidateActualToltal(){
 		actuals = new Actuals();
 		int numberOfRows = actuals.getNumbreOfRows();
 		for (int row = 0; row < numberOfRows; row++) {
@@ -170,7 +243,8 @@ public class ActualsTest extends WrapperTest {
 					//Assert.assertEquals(summary.getActualsTotalOfRow(row,"Actual"), totalRowValue);
 //					Assert.assertEquals(summary.getActualsTotalOfRow(row,"Actual"), totalRowValue, "... Row title is: " + rowTitle + ", in header: " + dates.get(i));
 					Assert.assertEquals(summary.getActualsTotalOfRow(row,"Actual"), totalRowValue, "... Row title is: " + rowTitle + ", in header: " + dates.get(i));
-				}
+				
+					}
 			}
 			
 			
@@ -193,6 +267,102 @@ public class ActualsTest extends WrapperTest {
 
 	}
 	
+	
+
+	@Test(enabled = true)
+	public void ValidateActualSummary(){
+		actuals = new Actuals();
+		int numberOfRows = actuals.getNumbreOfRows();
+		for (int row = 0; row < numberOfRows; row++) {
+			String rowTitle = actuals.getRowTitleByIndex(row);
+			actuals.clickOnLineByIndex(row);
+			if (rowTitle.contains(",")) {
+				rowTitle = rowTitle.split(",")[1].trim();
+				Assert.assertTrue(secondaryBoard.getSelectedLine().contains(
+						rowTitle));
+			} 
+			AddTransaction transaction = new AddTransaction();
+			transaction.clickTransactionTab();
+			
+			
+			TransactionTable table = new TransactionTable();
+			
+			int transactionRows = table.getNumberOfTransactionRows();
+			if (transactionRows == 0){
+				transaction.clickAddTransaction();
+				DateRange date = table.openDate();
+				date.setHireYear("2016");
+				date.setHireMonth("Aug");
+				
+				table.setAmount("1000");
+				
+				table.clickSave();
+				
+				System.out.println(table.getAmountValue());
+				System.out.println(table.getTotalValue());
+				System.out.println(table.getTransactionDate());
+				String Month = BudgetaUtils.getMonthWithIndex(Integer.parseInt(table.getTransactionDate().split("/")[0]));
+				String Year = table.getTransactionDate().split("/")[1];
+				String actualsDate = Month + " " + Year;
+				
+				String totalRowValue = table.getTotalValue();
+				String amountRowValue = table.getAmountValue();
+				
+				
+			}
+			
+			if(transactionRows > 0) {
+				if (table.sameDateInAllLines()){
+					String totalRowValue = table.getTotalValue();
+					
+					String Month = BudgetaUtils.getMonthWithIndex(Integer.parseInt(table.getTransactionDate().split("/")[0]));
+					String Year = table.getTransactionDate().split("/")[1];
+					
+					String actualsDate = Month + " " + Year;
+					
+					transaction.clickSummaryTab();
+					
+					SummaryTable summary = new SummaryTable();
+					
+				//	Assert.assertEquals(summary.getTotalOfRow(row), totalRowValue);
+					
+					
+					topHeaderBar.openBudgetSettings();
+					BudgetSettings settings = new BudgetSettings();
+					String dateFrom = settings.getDateRangeFrom();
+					String dateTo = settings.getDateRangeTo();
+					settings.clickCancel();
+					
+					fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom
+							.split("/")[0]));
+					fromYear = dateFrom.split("/")[1];
+					toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo
+							.split("/")[0]));
+					toYear = dateTo.split("/")[1];
+					List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(
+			fromMonth, fromYear, toMonth, toYear, 0,
+							false);
+					
+					summary = new SummaryTable();
+					dates = summary.getAllDates();
+					
+					Assert.assertEquals(dates.size(), expectedDates.size());
+					
+					for (int i =0; i < expectedDates.size(); i++){
+						String getDate = dates.get(i);
+						if (getDate.equals(actualsDate)){
+							//Assert.assertEquals(summary.getActualsTotalOfRow(row,"Actual"), totalRowValue);
+//							Assert.assertEquals(summary.getActualsTotalOfRow(row,"Actual"), totalRowValue, "... Row title is: " + rowTitle + ", in header: " + dates.get(i));
+							//Assert.assertEquals(summary.getActualsTotalOfRow(row,"Actual"), totalRowValue, "... Row title is: " + rowTitle + ", in header: " + dates.get(i));
+						
+							}
+				}
+				}
+			}
+		}
+
+
+	}
 
 	@Test(enabled = false)
 	public void validateTableDataTest() {

@@ -17,6 +17,10 @@ public class TransactionTable extends AbstractPOM{
 	@FindBy(className = "trx-table-header")
 	private WebElement headerWrapper;
 	
+	@FindBy(className = "trx-row")
+	private List<WebElement> rowTable;
+	
+
 	@FindBy(className = "flag")
 	private WebElement flag;
 	
@@ -43,6 +47,8 @@ public class TransactionTable extends AbstractPOM{
 	private By dateRange = By.cssSelector("div.year-picker-from div.month-picker");
 	
 	
+	@FindBy(css = "div.year-picker-from div.month-picker input")
+	private List<WebElement> dates; 
 	
 	public void flagLine(){
 		flag.click();
@@ -143,6 +149,24 @@ public class TransactionTable extends AbstractPOM{
 		
 		return Date;
 	}
+	
+	public int getNumberOfTransactionRows(){
+		return rowTable.size();
+	}
+	
+	public boolean sameDateInAllLines(){
+		String Dates = getTransactionDate();
+		
+		for (WebElement el : dates){
+			if(!el.getAttribute("value").equals(Dates)){
+				return false;
+			}
+			
+		}
+		return true;
+	}
+	
+	
 	
 	
 	@Override

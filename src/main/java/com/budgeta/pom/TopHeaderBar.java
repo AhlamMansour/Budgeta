@@ -102,6 +102,7 @@ public class TopHeaderBar extends AbstractPOM {
 		WebdriverUtils.sleep(1000);
 		revisions.click();
 		wait.until(ExpectedConditions.visibilityOf(listWrapper));
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		// wait.until(ExpectedConditions.visibilityOf(scenarioWrapper));
 	}
 

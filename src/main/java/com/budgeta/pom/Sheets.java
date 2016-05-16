@@ -72,16 +72,21 @@ public class Sheets extends AbstractPOM{
 	}
 	
 	public String getRowTitleByIndex(int index){
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		return rows.get(index).findElement(rowTitle).getText();
+		
 	}
 	
 
 	
 	public void clickOnLineByIndex(int index){
-		rows.get(index).findElement(rowTitle).findElement(By.className("name")).click();
+		WebElement el =rows.get(index).findElement(rowTitle).findElement(By.className("name"));
+		//WebElementUtils.clickElementEvent(driver, el);
+		el.click();
 		WebdriverUtils.elementToHaveClass(driver.findElement(By.cssSelector(".navigator-header-text.inputs")),
 				"active");
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		
 	}

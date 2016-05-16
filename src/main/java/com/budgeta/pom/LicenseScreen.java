@@ -60,6 +60,7 @@ public class LicenseScreen extends AbstractPOM {
 		for (WebElement el : wrapper.findElements(By.cssSelector("form.my-license-form button"))) {
 			if (el.getText().equals("Cancel")) {
 				el.click();
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				return;
 			}
 		}
