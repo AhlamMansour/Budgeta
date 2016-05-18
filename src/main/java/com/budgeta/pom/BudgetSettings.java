@@ -52,6 +52,10 @@ public class BudgetSettings extends SmallPopup{
 		return getSelectedValue(Fiscalstart);
 	}
 	
+	public String getSelectedCurrency(){
+		return getSelectedValue(currency);
+	}
+	
 	public String getDateRangeFrom(){
 		return wrapper.findElement(dateRangeFrom).findElement(By.tagName("input")).getAttribute("value");
 	}
@@ -59,6 +63,8 @@ public class BudgetSettings extends SmallPopup{
 	public String getDateRangeTo(){
 		return wrapper.findElement(dateRangeTo).findElement(By.tagName("input")).getAttribute("value");
 	}
+	
+	
 	/***********************************************************************************/	
 	private void openDropDown(WebElement dropdown){
 		if(!dropdown.getAttribute("class").contains("open")){

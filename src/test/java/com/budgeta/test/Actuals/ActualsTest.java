@@ -27,6 +27,7 @@ import com.galilsoftware.AF.core.listeners.KnownIssue;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class ActualsTest extends WrapperTest {
@@ -91,7 +92,7 @@ public class ActualsTest extends WrapperTest {
 		BudgetNavigator navigator = new BudgetNavigator();
 		Assert.assertTrue(navigator.isDisplayed(), "expected to inner bar to be dislayed");
 		//navigator.selectRandomBudgeta();
-		navigator.selectRandomBudgetWithPrefix("budget8_1463277234876");
+		navigator.selectRandomBudgetWithPrefix("budget5_1463016820518");
 		
 		navigator.openInputTab();
 		
@@ -100,7 +101,7 @@ public class ActualsTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false, priority = 1)
 	public void addTransaction(){
 		actuals = new Actuals();
 		int numberOfRows = actuals.getNumbreOfRows();
@@ -172,10 +173,12 @@ public class ActualsTest extends WrapperTest {
 
 	}
 	
-	@Test(enabled = true)
+	@Test(enabled = false, priority = 2)
 	public void ValidateActualToltal(){
 		actuals = new Actuals();
+		
 		int numberOfRows = actuals.getNumbreOfRows();
+		AddTransaction transaction = new AddTransaction();
 		for (int row = 0; row < numberOfRows; row++) {
 			String rowTitle = actuals.getRowTitleByIndex(row);
 			actuals.clickOnLineByIndex(row);
@@ -184,9 +187,9 @@ public class ActualsTest extends WrapperTest {
 				Assert.assertTrue(secondaryBoard.getSelectedLine().contains(
 						rowTitle));
 			} 
-			AddTransaction transactio = new AddTransaction();
-			transactio.clickTransactionTab();
-			transactio.clickAddTransaction();
+			
+			transaction.clickTransactionTab();
+			transaction.clickAddTransaction();
 			
 			TransactionTable table = new TransactionTable();
 			
@@ -209,7 +212,7 @@ public class ActualsTest extends WrapperTest {
 			String totalRowValue = table.getTotalValue();
 			String amountRowValue = table.getAmountValue();
 			
-			transactio.clickSummaryTab();
+			transaction.clickSummaryTab();
 			
 			SummaryTable summary = new SummaryTable();
 			
@@ -251,8 +254,8 @@ public class ActualsTest extends WrapperTest {
 			
 			System.out.println(summary.getAllValuesOfRow(row));
 			
-			transactio = new AddTransaction();
-			transactio.clickTransactionTab();
+			transaction = new AddTransaction();
+			transaction.clickTransactionTab();
 
 //			innerBar.openActualsTab();
 //			sheets = new Sheets();
@@ -269,9 +272,21 @@ public class ActualsTest extends WrapperTest {
 	
 	
 
-	@Test(enabled = true)
+	@Test(enabled = true, priority = 3)
 	public void ValidateActualSummary(){
 		actuals = new Actuals();
+		
+		topHeaderBar.openBudgetSettings();
+		BudgetSettings settings = new BudgetSettings();
+		String dateFrom = settings.getDateRangeFrom();
+		String dateTo = settings.getDateRangeTo();
+		
+		String currency = settings.getSelectedCurrency();
+		settings.clickCancel();
+		
+		AddTransaction transaction = new AddTransaction();
+		transaction.selectSubReportType("Cash contribution");
+		
 		int numberOfRows = actuals.getNumbreOfRows();
 		for (int row = 0; row < numberOfRows; row++) {
 			String rowTitle = actuals.getRowTitleByIndex(row);
@@ -281,7 +296,7 @@ public class ActualsTest extends WrapperTest {
 				Assert.assertTrue(secondaryBoard.getSelectedLine().contains(
 						rowTitle));
 			} 
-			AddTransaction transaction = new AddTransaction();
+			
 			transaction.clickTransactionTab();
 			
 			
@@ -295,6 +310,12 @@ public class ActualsTest extends WrapperTest {
 				date.setHireMonth("Aug");
 				
 				table.setAmount("1000");
+				
+				if(!currency.equals(table.getCurrentCurrency())){
+					table.selectCurrency(currency);
+					
+				}
+				
 				
 				table.clickSave();
 				
@@ -321,17 +342,16 @@ public class ActualsTest extends WrapperTest {
 					String actualsDate = Month + " " + Year;
 					
 					transaction.clickSummaryTab();
+					transaction = new AddTransaction();
+					
+					transaction.selectSubReportType("Cash contribution");
 					
 					SummaryTable summary = new SummaryTable();
 					
 				//	Assert.assertEquals(summary.getTotalOfRow(row), totalRowValue);
 					
 					
-					topHeaderBar.openBudgetSettings();
-					BudgetSettings settings = new BudgetSettings();
-					String dateFrom = settings.getDateRangeFrom();
-					String dateTo = settings.getDateRangeTo();
-					settings.clickCancel();
+					
 					
 					fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom
 							.split("/")[0]));
@@ -344,6 +364,7 @@ public class ActualsTest extends WrapperTest {
 							false);
 					
 					summary = new SummaryTable();
+					
 					dates = summary.getAllDates();
 					
 					Assert.assertEquals(dates.size(), expectedDates.size());
@@ -351,9 +372,8 @@ public class ActualsTest extends WrapperTest {
 					for (int i =0; i < expectedDates.size(); i++){
 						String getDate = dates.get(i);
 						if (getDate.equals(actualsDate)){
-							//Assert.assertEquals(summary.getActualsTotalOfRow(row,"Actual"), totalRowValue);
-//							Assert.assertEquals(summary.getActualsTotalOfRow(row,"Actual"), totalRowValue, "... Row title is: " + rowTitle + ", in header: " + dates.get(i));
-							//Assert.assertEquals(summary.getActualsTotalOfRow(row,"Actual"), totalRowValue, "... Row title is: " + rowTitle + ", in header: " + dates.get(i));
+							System.out.println("****************");
+							Assert.assertEquals(summary.getActualsAmountOfRow(row,"Actuals"), totalRowValue, "... Row title is: " + rowTitle + ", in header: " + dates.get(i));
 						
 							}
 				}

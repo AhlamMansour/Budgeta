@@ -36,7 +36,8 @@ public class TransactionTable extends AbstractPOM{
 	@FindBy(className = "svg-icon")
 	private List<WebElement> icons;
 	
-	private By selectedDropdown = By.className("select2-chosen");
+//	private By selectedDropdown = By.className("select2-chosen");
+	private By subReportType = By.className("select2-choice");
 	
 	@FindBy(className = "currency")
 	private WebElement currency;
@@ -49,6 +50,9 @@ public class TransactionTable extends AbstractPOM{
 	
 	@FindBy(css = "div.year-picker-from div.month-picker input")
 	private List<WebElement> dates; 
+	
+	private SideDropDown dropdown;
+	private SideDropDown subReporterDropDown;
 	
 	public void flagLine(){
 		flag.click();
@@ -110,6 +114,31 @@ public class TransactionTable extends AbstractPOM{
 		WebElement field = currency.findElement(By.className("ember-text-field"));
 		field.clear();
 		field.sendKeys(amount);
+	}
+	
+	public String getCurrentCurrency(){
+		dropdown = new SideDropDown(wrapper.findElement(By.className("has-currency-selection")).findElement(By.className("select2-choice")));
+		String str = dropdown.getSelectedValue();
+		return str;
+	}
+	
+	public void selectCurrency(String option){
+		getSubReporterDropDown().selectValue(option);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.sleep(200);
+		
+	}
+	
+private SideDropDown getSubReporterDropDown(){
+		
+		if(subReporterDropDown == null){
+//			for(WebElement el : wrapper.findElements(subReportType)){
+//				if(el.getText().trim().equals("Budget"))
+			subReporterDropDown = new SideDropDown(
+					driver.findElements(subReportType).get(0).findElement(By.xpath("..")));
+//		}
+		}
+		return subReporterDropDown;
 	}
 	
 	

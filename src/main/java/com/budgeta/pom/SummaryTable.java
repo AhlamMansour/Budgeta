@@ -28,6 +28,9 @@ public class SummaryTable extends AbstractPOM{
 	@FindBy(css="div.total-column div.sub-header-text-wrapper")
 	private List<WebElement> totalColumns;
 	
+	@FindBy(css="div.scroll-columns div.sub-header div.sub-header-text-wrapper span")
+	private List<WebElement> rowData;
+	
 	private By columnTitle = By.className("sub-header-text-wrapper");	
 	private By rowTitle = By.className("fixed-columns");
 	private By rowValues = By.cssSelector("div.scroll-columns div.forecast-row span");
@@ -165,6 +168,26 @@ public class SummaryTable extends AbstractPOM{
 					return total;
 				else
 					return total.replaceAll("[^0-9 .]","").trim();
+				
+			}
+		}
+		
+		return null;
+	}
+	
+	
+	public String getActualsAmountOfRow(int rowIndex, String title){
+		//List<WebElement> elms = rowData.get(0).findElements(By.tagName("span"));
+		WebElementUtils.hoverOverField(columns.get(0), driver, null);
+		WebdriverUtils.sleep(200);
+		for(WebElement el : rowData){
+			if (el.getText().equals(title)){
+				String actuals = rows.get(rowIndex).findElement(By.className("column-has-actual")).getText();
+				actuals = actuals.substring(0, actuals.indexOf("\n"));
+				if(actuals.equals("-"))
+					return actuals;
+				else
+					return actuals.replaceAll("[^0-9 .]","").trim();
 				
 			}
 		}
