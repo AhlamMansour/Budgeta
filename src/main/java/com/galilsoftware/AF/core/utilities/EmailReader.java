@@ -1,6 +1,9 @@
 package com.galilsoftware.AF.core.utilities; 
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,6 +13,7 @@ import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Store;
 
@@ -92,8 +96,19 @@ public class EmailReader {
 
 			try {
 				Message[] msgs = openSession(props);
+				msgs = reverseMsgs(msgs);
 				for (Message msg : msgs) {
 					Object content = msg.getContent();
+					if (msg.getContentType().contains("multipart")){
+			            try {
+			                Multipart mp = (Multipart) msg.getContent();
+			                WebdriverUtils.sleep(1000);
+			                content = mp.getBodyPart(0).getContent();
+			            } catch (Exception ex) {
+			                System.out.println("Exception arise at get Content");
+			            }
+			     }
+			     //
 					foundEmailFlag = true;
 					for(String innerWord : innerWords){
 						if (!content.toString().contains(innerWord)) {
@@ -245,4 +260,10 @@ public class EmailReader {
 		}
 	
 	}
+	
+	private Message[] reverseMsgs(Message[] msgs){
+	        List<Message> list = Arrays.asList(msgs);
+	        Collections.reverse(list);
+	        return (Message[]) list.toArray();
+	    }
 }

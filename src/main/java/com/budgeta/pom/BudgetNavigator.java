@@ -382,6 +382,8 @@ public class BudgetNavigator extends AbstractPOM {
 		}
 
 	}
+	
+
 
 	@Override
 	public boolean isDisplayed() {

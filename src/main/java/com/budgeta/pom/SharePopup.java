@@ -25,6 +25,9 @@ public class SharePopup extends SmallPopup {
 	@FindBy(css = "div.modal-content div.permission-select")
 	private WebElement permissionSelect;
 	
+	@FindBy(css = "div.budgeta-checkbox label")
+	private List<WebElement> excludeSheet;
+	
     private By sharePermissions = By.cssSelector("div.select2-drop-active ul.select2-results li");
 	
 
@@ -49,6 +52,20 @@ public class SharePopup extends SmallPopup {
 				return;
 			}
 		}
+	}
+	
+	public void selectExcludeSheet(String option){
+		
+		for (WebElement el : excludeSheet){
+			if(el.getText().equals(option))
+			{
+				el.click();
+				break;
+			}
+				
+			
+		}
+		
 	}
 	
 	
