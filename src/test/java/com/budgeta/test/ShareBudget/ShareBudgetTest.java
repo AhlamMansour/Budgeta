@@ -12,6 +12,7 @@ import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.SharePopup;
 import com.budgeta.pom.SuccessPage;
 import com.budgeta.pom.TopBar;
+import com.budgeta.pom.TopHeaderBar;
 import com.budgeta.test.BudgetaUtils;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
@@ -50,8 +51,21 @@ public class ShareBudgetTest extends WrapperTest {
 		email.emptyMailbox();
 	}
 
-	@Test(enabled = false, priority = 1)
+	@Test(enabled = true, priority = 1)
 	public void ShareBudgetLineTest() {
+		
+		
+		if (loginPage.isDisplayed()){
+			Assert.assertTrue(loginPage.isDisplayed(), "expected login page to be displayed");
+
+			loginPage.setEmail("ahlam.mansor@galilsoftware.com");
+			loginPage.setPassword("Ahlam123");
+			loginPage.clickLogin(true);
+
+			loginPage.setPasscode("nopasscode");
+			loginPage.clicksendPasscode(true);
+		}
+		
 		WebdriverUtils.sleep(1000);
 		secondary = new SecondaryBoard();
 		board = new BudgetaBoard();
@@ -83,9 +97,11 @@ public class ShareBudgetTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false, priority = 2)
+	@Test(enabled = true, priority = 2)
 	public void validateShareBudget() throws Exception {
 
+		WebdriverUtils.sleep(3000);
+		
 		BudgetaUtils email = new BudgetaUtils();
 
 		String invitationUrl = email.checkEmail(innerWords, subLink);
@@ -112,7 +128,7 @@ public class ShareBudgetTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = true, priority = 3)
 	public void shareBudgetExcludeCashSheet() throws Exception {
 
 		EmailReader email = new EmailReader(EMAIL, PASSWORD, IMAP_SERVER);
@@ -127,8 +143,8 @@ public class ShareBudgetTest extends WrapperTest {
 			loginPage.setPassword("Ahlam123");
 			loginPage.clickLogin(true);
 
-			loginPage.setPasscode("nopasscode");
-			loginPage.clicksendPasscode(true);
+//			loginPage.setPasscode("nopasscode");
+	//		loginPage.clicksendPasscode(true);
 		}
 		
 		
@@ -169,6 +185,100 @@ public class ShareBudgetTest extends WrapperTest {
 		TopBar topBar = new TopBar();
 		topBar.clickLogout();
 		
+		WebdriverUtils.sleep(3000);
+		
+		BudgetaUtils checkIvitation = new BudgetaUtils();
+
+		String invitationUrl = checkIvitation.checkEmail(innerWords, subLink);
+
+		driver.get(invitationUrl);
+
+		LoginPage loginPage = new LoginPage();
+		Assert.assertTrue(loginPage.isDisplayed(), "expected login page to be displayed");
+
+		loginPage.setEmail(EMAIL);
+		loginPage.setPassword(PASSWORD);
+		loginPage.clickLogin(true);
+
+	//	loginPage.setPasscode("nopasscode");
+		//loginPage.clicksendPasscode(true);
+
+		navigator = new BudgetNavigator();
+
+		Assert.assertFalse(navigator.isInputTabDispaly(), "Input tab Is display, the tab should not be display in case View only mode share");
+		
+		//Add click on sheets tab and validate that cash sheet not display
+		
+		
+		navigator.openSheetTab();
+		
+		TopHeaderBar topHeader = new TopHeaderBar();
+		
+		Assert.assertFalse(topHeader.sheetIsDisplay("Cash"), "The tab is display, the tab should not be displayed");
+		
+		topBar = new TopBar();
+		topBar.clickLogout();
+	}
+
+	@Test(enabled = true, priority = 4)
+	public void shareBudgetExcludeProfitAndLossSheet() throws Exception {
+		
+		EmailReader email = new EmailReader(EMAIL, PASSWORD, IMAP_SERVER);
+		email.emptyMailbox();
+		
+		
+//		LoginPage loginPage = new LoginPage();
+		if (loginPage.isDisplayed()){
+			Assert.assertTrue(loginPage.isDisplayed(), "expected login page to be displayed");
+
+			loginPage.setEmail("ahlam.mansor@galilsoftware.com");
+			loginPage.setPassword("Ahlam123");
+			loginPage.clickLogin(true);
+
+//			loginPage.setPasscode("nopasscode");
+	//		loginPage.clicksendPasscode(true);
+		}
+		
+		
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgeta();
+		
+		secondary = new SecondaryBoard();
+		navigator.openInputTab();
+		
+		WebdriverUtils.sleep(1000);
+		secondary = new SecondaryBoard();
+		board = new BudgetaBoard();
+		SecondaryBoard secondary = board.getSecondaryBoard();
+
+		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
+		SharePopup popup = trigger.clickShareBudget();
+		Assert.assertTrue(popup.isDisplayed(), "expected share popup to be displayed"); // popup.sendEmail(email);
+		popup.setName(EMAIL);
+		popup.selectSharePermissios(viewPermisssion);
+		popup.selectExcludeSheet("Profit and Loss");
+		
+		popup.clickSend();
+
+		if (popup.isShareErrorAppear() == false) {
+			successPage = new SuccessPage();
+			Assert.assertTrue(successPage.isDisplayed(), "Expected To Share Seccess page to be dispaly");
+			successPage.clickConfirm();
+		}
+
+		else {
+			popup.clickConfirm();
+		}
+
+		String BudgetName = secondary.getSelectedBudgetName();
+
+		Assert.assertTrue(secondary.isShareIconExist(BudgetName), "The budget  was shared");
+
+		TopBar topBar = new TopBar();
+		topBar.clickLogout();
+		
+		WebdriverUtils.sleep(3000);
+		
 		BudgetaUtils checkIvitation = new BudgetaUtils();
 
 		String invitationUrl = checkIvitation.checkEmail(innerWords, subLink);
@@ -192,24 +302,109 @@ public class ShareBudgetTest extends WrapperTest {
 		//Add click on sheets tab and validate that cash sheet not display
 		
 		
+		navigator.openSheetTab();
 		
+		TopHeaderBar topHeader = new TopHeaderBar();
 		
+		Assert.assertFalse(topHeader.sheetIsDisplay("Profit & Loss"), "The tab is display, the tab should not be displayed");
 		
+		topBar = new TopBar();
+		topBar.clickLogout();
 		
-		
-		
-		
-		
-	}
-
-	@Test(enabled = true)
-	public void shareBudgetExcludeProfitAndLossSheet() {
 
 	}
 	
-	@Test(enabled = true)
-	public void shareBudgetExcludeBalanceSheet() {
+	@Test(enabled = true, priority = 5)
+	public void shareBudgetExcludeBalanceSheet() throws Exception {
 
+		EmailReader email = new EmailReader(EMAIL, PASSWORD, IMAP_SERVER);
+		email.emptyMailbox();
+		
+		
+//		LoginPage loginPage = new LoginPage();
+		if (loginPage.isDisplayed()){
+			Assert.assertTrue(loginPage.isDisplayed(), "expected login page to be displayed");
+
+			loginPage.setEmail("ahlam.mansor@galilsoftware.com");
+			loginPage.setPassword("Ahlam123");
+			loginPage.clickLogin(true);
+
+//			loginPage.setPasscode("nopasscode");
+	//		loginPage.clicksendPasscode(true);
+		}
+		
+		
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgeta();
+		
+		secondary = new SecondaryBoard();
+		navigator.openInputTab();
+		
+		WebdriverUtils.sleep(1000);
+		secondary = new SecondaryBoard();
+		board = new BudgetaBoard();
+		SecondaryBoard secondary = board.getSecondaryBoard();
+
+		MenuTrigger trigger = secondary.getBudgetMenuTrigger();
+		SharePopup popup = trigger.clickShareBudget();
+		Assert.assertTrue(popup.isDisplayed(), "expected share popup to be displayed"); // popup.sendEmail(email);
+		popup.setName(EMAIL);
+		popup.selectSharePermissios(viewPermisssion);
+		popup.selectExcludeSheet("Balance Sheet");
+		
+		popup.clickSend();
+
+		if (popup.isShareErrorAppear() == false) {
+			successPage = new SuccessPage();
+			Assert.assertTrue(successPage.isDisplayed(), "Expected To Share Seccess page to be dispaly");
+			successPage.clickConfirm();
+		}
+
+		else {
+			popup.clickConfirm();
+		}
+
+		String BudgetName = secondary.getSelectedBudgetName();
+
+		Assert.assertTrue(secondary.isShareIconExist(BudgetName), "The budget  was shared");
+
+		TopBar topBar = new TopBar();
+		topBar.clickLogout();
+		
+		WebdriverUtils.sleep(3000);
+		
+		BudgetaUtils checkIvitation = new BudgetaUtils();
+
+		String invitationUrl = checkIvitation.checkEmail(innerWords, subLink);
+
+		driver.get(invitationUrl);
+
+		LoginPage loginPage = new LoginPage();
+		Assert.assertTrue(loginPage.isDisplayed(), "expected login page to be displayed");
+
+		loginPage.setEmail(EMAIL);
+		loginPage.setPassword(PASSWORD);
+		loginPage.clickLogin(true);
+
+		loginPage.setPasscode("nopasscode");
+		loginPage.clicksendPasscode(true);
+
+		navigator = new BudgetNavigator();
+
+		Assert.assertFalse(navigator.isInputTabDispaly(), "Input tab Is display, the tab should not be display in case View only mode share");
+		
+		//Add click on sheets tab and validate that cash sheet not display
+		
+		
+		navigator.openSheetTab();
+		
+		TopHeaderBar topHeader = new TopHeaderBar();
+		
+		Assert.assertFalse(topHeader.sheetIsDisplay("Balance Sheet"), "The tab is display, the tab should not be displayed");
+		
+		topBar = new TopBar();
+		topBar.clickLogout();
+		
 	}
 
 }

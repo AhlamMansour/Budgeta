@@ -95,6 +95,8 @@ public class TopBar extends AbstractPOM{
 		//clickDropDownOption(userMenu, "Logout");
 		openUserMenue();
 		logout.click();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 	
 	public void clickDocumentation(){

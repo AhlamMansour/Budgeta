@@ -12,7 +12,7 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 public class SideDropDown extends AbstractPOM{
 
 	private WebElement dropdown;
-	private By dropdownMenu = By.cssSelector("ul.select2-results li ");
+	private By dropdownMenu = By.cssSelector("ul.select2-results li");
 	
 	
 	public SideDropDown(WebElement wrapper){

@@ -91,8 +91,8 @@ public class ActualsTest extends WrapperTest {
 		
 		BudgetNavigator navigator = new BudgetNavigator();
 		Assert.assertTrue(navigator.isDisplayed(), "expected to inner bar to be dislayed");
-		//navigator.selectRandomBudgeta();
-		navigator.selectRandomBudgetWithPrefix("budget5_1463016820518");
+		navigator.selectRandomBudgeta();
+		
 		
 		navigator.openInputTab();
 		
@@ -328,11 +328,50 @@ public class ActualsTest extends WrapperTest {
 				
 				String totalRowValue = table.getTotalValue();
 				String amountRowValue = table.getAmountValue();
+				transaction.clickSummaryTab();
+				transaction = new AddTransaction();
+				
+				transaction.selectSubReportType("Cash contribution");
+				
+				SummaryTable summary = new SummaryTable();
+				
+			//	Assert.assertEquals(summary.getTotalOfRow(row), totalRowValue);
+				
+				
+				
+				
+				fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom
+						.split("/")[0]));
+				fromYear = dateFrom.split("/")[1];
+				toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo
+						.split("/")[0]));
+				toYear = dateTo.split("/")[1];
+				List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(
+		fromMonth, fromYear, toMonth, toYear, 0,
+						false);
+				
+				summary = new SummaryTable();
+				
+				dates = summary.getAllDates();
+				
+				//Assert.assertEquals(dates.size(), expectedDates.size());
+				Assert.assertEquals(dates.size(), expectedDates.size(),"Summary dates not equals Expected dates as in budget settings ");
+				
+				for (int i =0; i < expectedDates.size(); i++){
+					String getDate = dates.get(i);
+					if (getDate.equals(actualsDate)){
+						System.out.println("****************");
+						System.out.println(summary.getRowTitleByIndex(row));
+						Assert.assertEquals(summary.getActualsAmountOfRow(row,"Actuals"), totalRowValue, "... Row title is: " + rowTitle + ", in header: " + dates.get(i));
+					
+						}
+			}
+			
 				
 				
 			}
 			
-			if(transactionRows > 0) {
+			else if(transactionRows > 0) {
 				if (table.sameDateInAllLines()){
 					String totalRowValue = table.getTotalValue();
 					
@@ -367,7 +406,8 @@ public class ActualsTest extends WrapperTest {
 					
 					dates = summary.getAllDates();
 					
-					Assert.assertEquals(dates.size(), expectedDates.size());
+					//Assert.assertEquals(dates.size(), expectedDates.size());
+					Assert.assertEquals(dates.size(), expectedDates.size(),"Summary dates not equals Expected dates as in budget settings ");
 					
 					for (int i =0; i < expectedDates.size(); i++){
 						String getDate = dates.get(i);

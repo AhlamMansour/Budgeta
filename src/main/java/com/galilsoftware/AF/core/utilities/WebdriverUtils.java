@@ -1126,6 +1126,20 @@ public class WebdriverUtils {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollTo(0,document.body.scrollHeight);");
 	}
+	
+	public static void ScrollToThebottom(WebDriver driver) {
+
+		try {
+
+			Actions actions = new Actions(driver);
+			actions.sendKeys(Keys.END).perform();
+
+		} catch (Exception e) {
+			SelTestLog.error("Could not scroll to the botoom !");
+		}
+
+	}
+
 
 	public static void ScrollDownTo(WebDriver driver, int x, int y) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;

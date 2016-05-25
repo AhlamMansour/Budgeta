@@ -57,8 +57,8 @@ public class BudgetNavigator extends AbstractPOM {
 	@FindBy(css = "div.budget-title input.ember-text-field")
 	private WebElement editBudgetName;
 
-	@FindBy(css = "div.qtip-focus div.add-option")
-	private WebElement addNewBudget;
+	@FindBy(css = "div.qtip-focus div.add-option div.add-option-text")
+	private List<WebElement> addNewBudget;
 
 	@FindBy(css = "div.qtip-focus div.search-wrapper input")
 	private WebElement searchBudget;
@@ -329,14 +329,27 @@ public class BudgetNavigator extends AbstractPOM {
 
 	public NewBudgetPopup addNewBudget() {
 		openBudgetsList();
-		addNewBudget.click();
+		for(WebElement el : addNewBudget){
+			if(el.getText().equals("New budget"))
+			{
+				el.click();
+				break;
+			}
+		}
+		
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		return new NewBudgetPopup();
 	}
 
 	public LimitPopup budgetLimit() {
 		openBudgetsList();
-		addNewBudget.click();
+		for(WebElement el : addNewBudget){
+			if(el.getText().equals("New budget"))
+			{
+				el.click();
+				break;
+			}
+		}
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		return new LimitPopup();
 	}

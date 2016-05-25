@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
+import com.gargoylesoftware.htmlunit.javascript.host.media.rtc.webkitRTCPeerConnection;
 
 public class TopHeaderBar extends AbstractPOM {
 
@@ -71,6 +72,9 @@ public class TopHeaderBar extends AbstractPOM {
 
 	@FindBy(className = "table-edit")
 	private WebElement editTableIcon;
+	
+	@FindBy(css = "div.sheet-type-wrapper span")
+	private List<WebElement> sheetsType;
 
 	public void openHeaderTab(String reportName) {
 		if (activereport.getText().replaceAll("[^\\d\\p{IsLetter}]+", "_").equalsIgnoreCase(reportName)) {
@@ -340,8 +344,29 @@ public class TopHeaderBar extends AbstractPOM {
 
 	}
 	
+	public void selectSheetType(String option){
+		
+		for (WebElement el : sheetsType){
+			if(el.getText().equals(option)){
+				el.click();
+				break;
+			}
+		}
+	}
 	
-
+	public boolean sheetIsDisplay(String option){
+		boolean found = false;
+		for (WebElement el : sheetsType){
+			if(el.getText().equals(option)){
+				found = true;
+			}
+		}
+		
+		return found;
+	}
+		
+	
+	
 	@Override
 	public boolean isDisplayed() {
 		return WebdriverUtils.isDisplayed(wrapper);

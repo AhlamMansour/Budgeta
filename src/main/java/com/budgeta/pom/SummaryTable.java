@@ -179,17 +179,20 @@ public class SummaryTable extends AbstractPOM{
 	public String getActualsAmountOfRow(int rowIndex, String title){
 		//List<WebElement> elms = rowData.get(0).findElements(By.tagName("span"));
 		WebElementUtils.hoverOverField(columns.get(0), driver, null);
+		int i = 0;
 		WebdriverUtils.sleep(200);
 		for(WebElement el : rowData){
+			WebElementUtils.hoverOverField(columns.get(i), driver, null);
 			if (el.getText().equals(title)){
-				String actuals = rows.get(rowIndex).findElement(By.className("column-has-actual")).getText();
-				actuals = actuals.substring(0, actuals.indexOf("\n"));
+				String actuals = rows.get(rowIndex).findElement(By.className("column-has-actual")).findElement(By.className("actual-cell")).findElement(By.tagName("span")).getText();
+				//actuals = actuals.substring(0, actuals.indexOf("\n"));
 				if(actuals.equals("-"))
 					return actuals;
 				else
 					return actuals.replaceAll("[^0-9 .]","").trim();
 				
 			}
+			i++;
 		}
 		
 		return null;

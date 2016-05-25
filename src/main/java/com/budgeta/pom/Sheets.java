@@ -1,15 +1,19 @@
 package com.budgeta.pom;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
+import com.thoughtworks.selenium.webdriven.commands.KeyEvent;
 
 public class Sheets extends AbstractPOM{
 
@@ -81,6 +85,7 @@ public class Sheets extends AbstractPOM{
 	
 	public void clickOnLineByIndex(int index){
 		WebElement el =rows.get(index).findElement(rowTitle).findElement(By.className("name"));
+		WebElementUtils.hoverOverField(el, driver, null);
 		//WebElementUtils.clickElementEvent(driver, el);
 		el.click();
 		WebdriverUtils.elementToHaveClass(driver.findElement(By.cssSelector(".navigator-header-text.inputs")),
@@ -145,7 +150,7 @@ public class Sheets extends AbstractPOM{
 		else
 			return total.replaceAll("[^0-9 .]","").trim();
 	}
-	public int getNumbreOfRows(){
+	public int getNumbreOfRows(){		
 		return rows.size();
 	}
 	

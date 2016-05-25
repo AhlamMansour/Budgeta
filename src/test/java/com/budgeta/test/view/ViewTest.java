@@ -78,7 +78,7 @@ public class ViewTest extends WrapperTest {
 		}
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void selectReportType() {
 		navigator = board.getBudgetNavigator();
 		secondaryBoard = board.getSecondaryBoard();
@@ -100,7 +100,8 @@ public class ViewTest extends WrapperTest {
 		sheets = new Sheets();
 
 		int numberOfRows = sheets.getNumbreOfRows();
-		for (int row = 0; row < numberOfRows; row++) {
+//		for (int row = 0; row < numberOfRows; row++) {
+		for (int row = numberOfRows-1; row >0 ; row--) {
 			String rowTitle = sheets.getRowTitleByIndex(row);
 			sheets.clickOnLineByIndex(row);
 			if (rowTitle.contains(",")) {
@@ -156,7 +157,7 @@ public class ViewTest extends WrapperTest {
 		}
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void validateBudgetVsActuals() {
 		navigator = board.getBudgetNavigator();
 		secondaryBoard = board.getSecondaryBoard();
@@ -236,7 +237,7 @@ public class ViewTest extends WrapperTest {
 	}
 
 	@KnownIssue(bugID = "BUD - 3252")
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void calculateDifferences() {
 		navigator = board.getBudgetNavigator();
 		secondaryBoard = board.getSecondaryBoard();

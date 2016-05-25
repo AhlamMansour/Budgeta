@@ -117,7 +117,7 @@ public class TransactionTable extends AbstractPOM{
 	}
 	
 	public String getCurrentCurrency(){
-		dropdown = new SideDropDown(wrapper.findElement(By.className("has-currency-selection")).findElement(By.className("select2-choice")));
+		dropdown = new SideDropDown(wrapper.findElement(By.className("has-currency-selection")));
 		String str = dropdown.getSelectedValue();
 		return str;
 	}
