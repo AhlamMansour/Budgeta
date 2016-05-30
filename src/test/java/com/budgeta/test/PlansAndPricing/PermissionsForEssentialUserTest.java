@@ -97,6 +97,7 @@ public class PermissionsForEssentialUserTest extends BudgetaTest{
 				BuildCompanyBudgetPopup budgetPopup = new BuildCompanyBudgetPopup();
 				budgetPopup.clickExit();
 				
+				BudgetaBoard board = new BudgetaBoard();
 				SecondaryBoard secondaryBoard = board.getSecondaryBoard();	
 				Assert.assertEquals(secondaryBoard.getSelectedBudgetName(), budgetaName);
 			

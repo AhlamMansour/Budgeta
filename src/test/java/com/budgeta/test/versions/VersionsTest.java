@@ -94,7 +94,7 @@ public class VersionsTest extends WrapperTest {
 		headerBar.selectSavedRevisions();
 		headerBar.selectVersion(snapshotName);
 
-		navigator.clickInputTab();
+	//	navigator.clickInputTab();
 		
 		SmallPopup popup = versions.clickRenameVersion();
 		Assert.assertTrue(popup.isDisplayed(), "expected rename popup to be displayed");
@@ -145,7 +145,7 @@ public class VersionsTest extends WrapperTest {
 		versions = new Versions();
 		headerBar.selectVersion(snapshotName);
 
-		navigator.clickInputTab();
+//		navigator.clickInputTab();
 
 		popup = versions.clickDeleteVersion();
 		Assert.assertTrue(popup.isDisplayed(), "expected rename popup to be displayed");
@@ -176,7 +176,7 @@ public class VersionsTest extends WrapperTest {
 		headerBar.openRevisionswindow();
 		versions = new Versions();
 		headerBar.selectVersion("Snapshot");
-		navigator.clickInputTab();
+//		navigator.clickInputTab();
 		headerBar.clearVersion();
 		
 		navigator.clickInputTab();

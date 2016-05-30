@@ -157,7 +157,7 @@ public class ViewTest extends WrapperTest {
 		}
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void validateBudgetVsActuals() {
 		navigator = board.getBudgetNavigator();
 		secondaryBoard = board.getSecondaryBoard();

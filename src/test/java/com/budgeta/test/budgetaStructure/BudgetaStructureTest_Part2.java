@@ -197,7 +197,7 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 		}
 	}
 
-	@Test(dataProvider = "ExcelFileLoader", enabled = false, priority = 5)
+	@Test(dataProvider = "ExcelFileLoader", enabled = true, priority = 5)
 	@DataProviderParams(sheet = "BudgetaForm", area = "CostOfSale_Salary&wages_EmployeeForm")
 	public void employeeFormTest(Hashtable<String, String> data) {
 

@@ -259,6 +259,13 @@ public class BudgetNavigator extends AbstractPOM {
 		} catch (NoSuchElementException e) {
 
 		}
+		
+		if(!isInputTabDispaly()){
+			selectRandomBudgeta();
+			
+		}
+		
+		
 	}
 
 	public void selectRandomBudgetWithPrefix(String prefix) {
