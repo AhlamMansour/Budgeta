@@ -276,6 +276,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("revenue");
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 
 	public Map<String, List<String>> importRevenueLines() {
@@ -404,6 +406,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup.clickMore();
 		WebdriverUtils.sleep(1000);
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 
 	public void addProfessionalServices() {
@@ -413,6 +417,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName(Department);
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 
 	public void addDepartment() {
@@ -428,6 +434,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup.clickMore();
 		WebdriverUtils.sleep(1000);
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 
 	}
 
@@ -439,6 +447,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("employee1");
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 
 	}
 
@@ -450,6 +460,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("Contractor");
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 
 	}
 
@@ -462,6 +474,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("Empoloyee");
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 
 	}
 
@@ -473,6 +487,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("Balance");
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 
 	}
 
@@ -489,6 +505,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup.clickMore();
 		WebdriverUtils.sleep(1000);
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 
 	}
 
@@ -500,6 +518,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("employee");
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 
 	public void addOperationalExpensesAndProfessionalServices() {
@@ -510,6 +530,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("contractor");
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 
 	public void addExpensesAndPastBlances() {
@@ -520,6 +542,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("Balance1");
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 
 	public void addOtherIncomeAndExpenses() {
@@ -533,6 +557,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup.clickMore();
 		WebdriverUtils.sleep(1000);
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 
 	public void addOtherExpenses() {
@@ -543,6 +569,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("expense");
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 
 	public void addProfissionalServicesAndDepartment() {
@@ -553,6 +581,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup.clickCreateBudget();
 		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 
 	public void addOtherIncome() {
@@ -563,6 +593,8 @@ public class SecondaryBoard extends AbstractPOM {
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.setName("income");
 		buildPopup.clickNext();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
 
 	public void addAllBudgetLines() {
@@ -656,6 +688,8 @@ public class SecondaryBoard extends AbstractPOM {
 				if (buildPopup.getTilte().equalsIgnoreCase("All Done") || buildPopup.getConfirmButtontext().equalsIgnoreCase("Finish")) {
 					buildPopup.clickConfirm();
 					selectedBudget.findElement(addLinesBtn).click();
+					WebdriverUtils.waitForBudgetaLoadBar(driver);
+					WebdriverUtils.waitForBudgetaLoadBar(driver);
 				}
 
 			} else
@@ -1103,6 +1137,8 @@ public class SecondaryBoard extends AbstractPOM {
 //				return;
 //			}
 			if (getLineName(el).contains(sub_subLine)) {
+				Actions action = new Actions(driver);
+				action.moveToElement(el).build().perform();
 				WebElementUtils.hoverOverField(el, driver, null);
 				if(el.findElement(lineType).getText().contains("Employee")){
 					el.findElement(budgetName).click();
