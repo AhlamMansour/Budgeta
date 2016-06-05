@@ -63,7 +63,9 @@ public class PreviewBoard extends AbstractPOM{
 		String res = getAllValues().get(index).getText();
 		if(res.equals("-"))
 			return res;
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		return res.replaceAll("[^0-9]","").trim();
+		
 	}
 	
 	

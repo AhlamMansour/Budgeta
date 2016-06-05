@@ -106,6 +106,7 @@ public class Sheets extends AbstractPOM{
 			else
 				res.add(value.replaceAll("[^0-9 .]","").trim());
 		}
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		return res;
 	}
 	
