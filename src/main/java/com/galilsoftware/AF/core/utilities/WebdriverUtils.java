@@ -1124,7 +1124,8 @@ public class WebdriverUtils {
 
 	public static void ScrollToTheBottomJS(WebDriver driver) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("window.scrollTo(0,document.body.scrollHeight);");
+		js.executeScript("var elm = document.getElementsByClassName('ember-list-view')[0]; elm.scrollTop +=elm.scrollHeight;");
+		
 	}
 	
 	public static void ScrollToThebottom(WebDriver driver) {

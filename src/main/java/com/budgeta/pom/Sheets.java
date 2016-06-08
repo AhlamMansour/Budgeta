@@ -1,19 +1,17 @@
 package com.budgeta.pom;
 
-import java.awt.AWTException;
-import java.awt.Robot;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
-import com.thoughtworks.selenium.webdriven.commands.KeyEvent;
 
 public class Sheets extends AbstractPOM{
 
@@ -57,14 +55,28 @@ public class Sheets extends AbstractPOM{
 	private By fillterView = By.className("dropdown");
 
 	
-	
-	
-	
 	public Sheets(){
 		WebdriverUtils.elementToHaveClass(wrapper, "active");
 		WebdriverUtils.waitForBudgetaBusyBar(driver);
-		WebElementUtils.hoverOverField(dateHeader.get(dateHeader.size()-1), driver, null);
-		WebdriverUtils.sleep(200);
+		ScrollTableToTheBottomJS(driver);
+		WebdriverUtils.sleep(400);
+		ScrollTableToTheTopJS(driver);
+		WebdriverUtils.sleep(400);
+	}
+	
+	public static void ScrollTableToTheBottomJS(WebDriver driver) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("var elm = document.getElementsByClassName('ember-list-view')[0]; elm.scrollTop +=elm.scrollHeight;");
+	}
+	
+	public static void ScrollTableToJS(WebDriver driver, String pexils) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("var elm = document.getElementsByClassName('ember-list-view')[0]; elm.scrollTop += "+pexils+";");
+	}
+	
+	public static void ScrollTableToTheTopJS(WebDriver driver) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("var elm = document.getElementsByClassName('ember-list-view')[0]; elm.scrollTop -=elm.scrollHeight;");	
 	}
 	
 	public String getDateByIndex(int index){
@@ -139,6 +151,21 @@ public class Sheets extends AbstractPOM{
 		return -1;
 	}
 	
+	public int getIndexOfRowName(String title){
+		int i = 0;
+////		List<WebElement> elms = columns.get(0).findElements(columnTitle);
+//		List<WebElement> elms = columns.get(0).findElements(By.className("differrence-header"));
+//		WebElementUtils.hoverOverField(elms.get(0), driver, null);
+		WebdriverUtils.sleep(200);
+		for(WebElement el : rows){
+			if(el.isDisplayed()){
+				if(el.findElement(rowTitle).getText().equals(title))
+					return i;
+			}
+			i++;
+		}
+		return -1;
+	}
 	private int getNumberOfSubColumns(){
 		return columns.get(0).findElements(columnTitle).size();
 		

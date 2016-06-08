@@ -68,6 +68,9 @@ public class SecondaryBoard extends AbstractPOM {
 
 	@FindBy(css = "li.selected-root li.active")
 	private WebElement selectedLine;
+	
+	@FindBy(css = "div.input-header-content div.name")
+	private WebElement selectLine;
 
 	@FindBy(className = "scenario-changed")
 	private List<WebElement> versionChanges;
@@ -1252,6 +1255,10 @@ public class SecondaryBoard extends AbstractPOM {
 	public String getSelectedLine() {
 		return getLineName(selectedLine);
 	}
+	
+	public String getSelectedLineName() {
+		return getSelectedLineName(selectLine);
+	}
 
 	public String getSelectedBudgetName() {
 		return getLineName(selectedBudget);
@@ -1405,6 +1412,20 @@ public class SecondaryBoard extends AbstractPOM {
 		// return el.findElement(budgetName).getText().substring(startIndex,
 		// el.findElement(budgetName).getText().indexOf("\n")).trim();
 		//
+	}
+	
+	private String getSelectedLineName(WebElement el) {
+		try {
+//			if (el.getAttribute("class").contains("new-line"))
+//				return el.findElement(lineName).getText();
+			String str = el.getAttribute("title");
+			//str = str.replaceAll(" ", "");
+			str  = str.trim();
+			return str;
+		} catch (Exception e) {
+			return "";
+		}
+		
 	}
 
 	private boolean isBudgetDropDownOptionsOpen() {

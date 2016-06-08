@@ -110,7 +110,7 @@ public class ActualsTest extends WrapperTest {
 			actuals.clickOnLineByIndex(row);
 			if (rowTitle.contains(",")) {
 				rowTitle = rowTitle.split(",")[1].trim();
-				Assert.assertTrue(secondaryBoard.getSelectedLine().contains(
+				Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(
 						rowTitle));
 			} 
 			AddTransaction transactio = new AddTransaction();
@@ -184,7 +184,7 @@ public class ActualsTest extends WrapperTest {
 			actuals.clickOnLineByIndex(row);
 			if (rowTitle.contains(",")) {
 				rowTitle = rowTitle.split(",")[1].trim();
-				Assert.assertTrue(secondaryBoard.getSelectedLine().contains(
+				Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(
 						rowTitle));
 			} 
 			
@@ -293,7 +293,7 @@ public class ActualsTest extends WrapperTest {
 			actuals.clickOnLineByIndex(row);
 			if (rowTitle.contains(",")) {
 				rowTitle = rowTitle.split(",")[1].trim();
-				Assert.assertTrue(secondaryBoard.getSelectedLine().contains(
+				Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(
 						rowTitle));
 			} 
 			
@@ -438,11 +438,11 @@ public class ActualsTest extends WrapperTest {
 			sheets.clickOnLineByIndex(row);
 			if (rowTitle.contains(",")) {
 				rowTitle = rowTitle.split(",")[1].trim();
-				Assert.assertTrue(secondaryBoard.getSelectedLine().contains(
+				Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(
 						rowTitle));
 			} else {
 				Assert.assertTrue(rowTitle.contains(secondaryBoard
-						.getSelectedLine()));
+						.getSelectedLineName()));
 			}
 			PreviewBoard previewBoard = new PreviewBoard();
 			List<String> lineValues = new ArrayList<>();

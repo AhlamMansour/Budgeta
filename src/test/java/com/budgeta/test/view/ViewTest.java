@@ -23,6 +23,7 @@ import com.galilsoftware.AF.core.listeners.KnownIssue;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class ViewTest extends WrapperTest {
@@ -53,8 +54,8 @@ public class ViewTest extends WrapperTest {
 
 		BudgetNavigator navigator = new BudgetNavigator();
 		Assert.assertTrue(navigator.isDisplayed(), "expected to inner bar to be dislayed");
-		navigator.selectRandomBudgeta();
-		//navigator.selectRandomBudgetWithPrefix("Actuals test");
+		//navigator.selectRandomBudgeta();
+		navigator.selectRandomBudgetWithPrefix("TEST Forecast");
 		generalSection = new GeneralSection();
 
 		String dateFrom = generalSection.getGeneralDateRangeFrom();
@@ -102,13 +103,15 @@ public class ViewTest extends WrapperTest {
 		int numberOfRows = sheets.getNumbreOfRows();
 //		for (int row = 0; row < numberOfRows; row++) {
 		for (int row = numberOfRows-1; row >0 ; row--) {
+			String rowSheetTitle = sheets.getRowTitleByIndex(row);
 			String rowTitle = sheets.getRowTitleByIndex(row);
+			//sheets.ScrollTableToJS(driver, "50");
 			sheets.clickOnLineByIndex(row);
 			if (rowTitle.contains(",")) {
 				rowTitle = rowTitle.split(",")[1].trim();
-				Assert.assertTrue(secondaryBoard.getSelectedLine().contains(rowTitle));
+				Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(rowTitle));
 			} else {
-				Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLine()));
+				Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()));
 			}
 			PreviewBoard previewBoard = new PreviewBoard();
 			List<String> lineValues = new ArrayList<>();
@@ -125,7 +128,8 @@ public class ViewTest extends WrapperTest {
 
 			navigator.openSheetTab();
 			sheets = new Sheets();
-			List<String> values = sheets.getAllValuesOfRow(row);
+			int indexOfTitle = sheets.getIndexOfRowName(rowSheetTitle);
+			List<String> values = sheets.getAllValuesOfRow(indexOfTitle);
 
 			for (int i = 0; i < lineValues.size(); i++) {
 				Assert.assertEquals(lineValues.get(i), values.get(i), "... Row title is: " + rowTitle + ", in header: " + dates.get(i));
