@@ -20,7 +20,7 @@ public class AddNewUser extends SmallPopup{
 	public void clickAddUser(){
 		addUserBtn.click();
 		WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
-		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		//WebdriverUtils.waitForBudgetaBusyBar(driver);
 	}
 	
 	public void clickClosePopup(){

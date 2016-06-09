@@ -264,10 +264,56 @@ public class PermissionsForEnterpriseUserTest extends BudgetaTest{
 		}
 		
 		licenseScreen.addUser();
-		LimitPopup limitPopup = new LimitPopup();
-		Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
-		Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is open");
-		limitPopup.clickCancel();
+		
+		
+		AddNewUser addPopup = new AddNewUser();
+		Assert.assertTrue(addPopup.isDisplayed(), "Add user pop up is display");
+
+		SmallPopup smallPopup = new SmallPopup();
+
+		String prefix = email.substring(0, email.indexOf("@"));
+		String suffix = email.substring(email.indexOf("@"));
+		email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
+
+		smallPopup.setName(email);
+		addPopup.clickAddUser();
+		BudgetaBoard board = new BudgetaBoard();
+		String message = board.getNotyMessage();
+		
+		
+	
+
+		if (message.equals("User already connected to another account")) {
+			 addPopup = new AddNewUser();
+			Assert.assertTrue(addPopup.isDisplayed(), "Add user pop up is display");
+
+			 smallPopup = new SmallPopup();
+
+			 prefix = email.substring(0, email.indexOf("@"));
+			 suffix = email.substring(email.indexOf("@"));
+			email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
+
+			smallPopup.setName(email);
+			addPopup.clickAddUser();
+			 board = new BudgetaBoard();
+			 message = board.getNotyMessage();
+		}
+
+		else
+			Assert.assertEquals(message, "The user was added");
+//			Assert.assertEquals(message, "User already connected to another account",
+//					"excpeted message is: -User already connected to another account - but found: " + message);
+
+		email = "ahlam_mns@hotmail.com";
+		
+		
+		
+		
+		
+//		LimitPopup limitPopup = new LimitPopup();
+//		Assert.assertTrue(limitPopup.isDisplayed(), "Budget Line Limit is diplay");
+//		Assert.assertEquals(limitPopup.getTilte(), "Users Limit", "Budget line limit popup is open");
+//		limitPopup.clickCancel();
 		
 		
 //		PlansAndPricingWindow plans = new PlansAndPricingWindow();

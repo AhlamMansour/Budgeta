@@ -26,7 +26,7 @@ public class TestModal extends AbstractPOM {
 	private WebElement testCompleted;
 
 	public TestModal() {
-		WebdriverUtils.waitForBudgetaBusyBar(driver);
+//		WebdriverUtils.waitForBudgetaBusyBar(driver);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		WebdriverUtils.waitForVisibilityofElement(driver, wrapper, 600);
 	}
