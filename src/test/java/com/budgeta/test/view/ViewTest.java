@@ -101,17 +101,23 @@ public class ViewTest extends WrapperTest {
 		sheets = new Sheets();
 
 		int numberOfRows = sheets.getNumbreOfRows();
-//		for (int row = 0; row < numberOfRows; row++) {
-		for (int row = numberOfRows-1; row >0 ; row--) {
+		sheets.ScrollTableToJS(driver, "50");
+		for (int row = 0; row < numberOfRows -6; row++) {
+	//	for (int row = numberOfRows-1; row >0 ; row--) {
+			
 			String rowSheetTitle = sheets.getRowTitleByIndex(row);
 			String rowTitle = sheets.getRowTitleByIndex(row);
-			//sheets.ScrollTableToJS(driver, "50");
-			sheets.clickOnLineByIndex(row);
+			
+			//sheets.clickOnLineByIndex(row);
+			sheets.clickOnLineBtTitle(rowSheetTitle);
+	//		sheets.clickOnLine(row, rowSheetTitle);
 			if (rowTitle.contains(",")) {
 				rowTitle = rowTitle.split(",")[1].trim();
-				Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(rowTitle));
+				//Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(rowTitle));
+				Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(rowTitle), "Row name is: " + rowSheetTitle + "index of row is: " + row);
 			} else {
-				Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()));
+				//Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()));
+				Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()), "Row name is: " + rowSheetTitle + "index of row is: " + row);
 			}
 			PreviewBoard previewBoard = new PreviewBoard();
 			List<String> lineValues = new ArrayList<>();

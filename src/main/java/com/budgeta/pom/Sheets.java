@@ -108,6 +108,39 @@ public class Sheets extends AbstractPOM{
 		
 	}
 	
+	public void clickOnLine(int index, String title){
+		WebElement el =rows.get(index).findElement(rowTitle).findElement(By.className("name"));
+		WebElementUtils.hoverOverField(el, driver, null);
+		//WebElementUtils.clickElementEvent(driver, el);
+		if(el.getText().equals(title)){
+			WebElementUtils.hoverOverField(el, driver, null);
+			el.click();
+			
+			WebdriverUtils.elementToHaveClass(driver.findElement(By.cssSelector(".navigator-header-text.inputs")),
+					"active");	
+		}
+		else{
+			ScrollTableToJS(driver, "50");
+			el =rows.get(index).findElement(rowTitle).findElement(By.className("name"));
+			WebElementUtils.hoverOverField(el, driver, null);
+			if(el.getText().equals(title)){
+				el.click();
+				
+				WebdriverUtils.elementToHaveClass(driver.findElement(By.cssSelector(".navigator-header-text.inputs")),
+						"active");
+				
+			}
+			
+		}
+		
+		WebdriverUtils.elementToHaveClass(driver.findElement(By.cssSelector(".navigator-header-text.inputs")),
+				"active");
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		
+	}
+	
 	public List<String> getAllValuesOfRow(int rowIndex){
 		List<WebElement> values = rows.get(rowIndex).findElements(rowValues);
 		List<String> res = new ArrayList<>();
@@ -151,6 +184,29 @@ public class Sheets extends AbstractPOM{
 		return -1;
 	}
 	
+	public void clickOnLineBtTitle(String title){
+		
+////		List<WebElement> elms = columns.get(0).findElements(columnTitle);
+//		List<WebElement> elms = columns.get(0).findElements(By.className("differrence-header"));
+//		WebElementUtils.hoverOverField(elms.get(0), driver, null);
+		WebdriverUtils.sleep(200);
+		for(WebElement el : rows){
+			if(el.isDisplayed()){
+				if(el.findElement(rowTitle).getText().equals(title))
+				{
+					WebElementUtils.hoverOverField(el, driver, null);
+					el.findElement(rowTitle).click();
+				//	WebElementUtils.clickElementEvent(driver, el);
+					break;
+				}
+					
+				
+			}
+			
+		}
+		
+	}
+	
 	public int getIndexOfRowName(String title){
 		int i = 0;
 ////		List<WebElement> elms = columns.get(0).findElements(columnTitle);
@@ -166,6 +222,7 @@ public class Sheets extends AbstractPOM{
 		}
 		return -1;
 	}
+	
 	private int getNumberOfSubColumns(){
 		return columns.get(0).findElements(columnTitle).size();
 		
