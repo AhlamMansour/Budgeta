@@ -8,6 +8,7 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 
+import org.bouncycastle.crypto.modes.SICBlockCipher;
 import org.testng.Assert;
 
 import com.budgeta.pom.GeneralSection;
@@ -66,6 +67,39 @@ public class BudgetaUtils {
 		return res;
 	}
 
+	
+	public static List<String> getAllMonthsOfDateRange(String monthX, String yearX, String monthY, String yearY) {
+		System.out.println("get range from: " + monthX + "_" + yearX + " to: " + monthY + "_" + yearY);
+		int indexX = 0;
+		for (int i = 0; i < Month.length; i++) {
+			if (Month[i].equalsIgnoreCase(monthX.trim())) {
+				indexX = i;
+				break;
+			}
+		}
+		List<String> res = new ArrayList<String>();
+		int year1 = Integer.parseInt(yearX);
+		int year2 = Integer.parseInt(yearY);
+		if (year1 > year2)
+			return res;
+		if (year1 == year2) {
+			if (getIndexOfMonth(monthX) > getIndexOfMonth(monthY))
+				return res;
+		}
+		while (!(Month[indexX].equalsIgnoreCase(monthY.trim()) && yearX.trim().equalsIgnoreCase(yearY.trim()))) {
+			res.add(Month[indexX] + " " + yearX.trim());
+			indexX++;
+			if (indexX >= Month.length) {
+				indexX = 0;
+				yearX = (Integer.parseInt(yearX.trim()) + 1) + "";
+			}
+		}
+		res.add(Month[indexX] + " " + yearX.trim());
+
+		return res;
+	}
+	
+	
 	public static String getNextMonth(String month) {
 		for (int i = 0; i < Month.length; i++) {
 			if (Month[i].equals(month)) {
@@ -104,6 +138,19 @@ public class BudgetaUtils {
 		return -1;
 	}
 
+	public static List<Integer> getIndexOfFiscalMonth(String month,List<String> dates) {
+		List<Integer> fiscalIndex = new ArrayList<>();
+		
+		for (int i = 0; i < dates.size(); i++) {
+			if (dates.get(i).contains(month))
+			{
+				fiscalIndex.add(i);
+			}
+				
+		}
+		return fiscalIndex;
+	}
+	
 	public static String getMonthWithIndex(int index) {
 		return Month[index - 1];
 	}
@@ -523,6 +570,34 @@ public class BudgetaUtils {
 			}
 		}
 		return "the link is null";
+	}
+	
+	
+	public static String[] calculateSheetValues_Quaterly(String fromMonth, String fromYear, String toMonth, String toYear, String fiscal){
+		List<String> actualMonths;
+		List<String> months = getAllMonthsOfDateRange(fromMonth, fromYear, toMonth, toYear);
+		String[] res, finalRes;
+		actualMonths = months;
+		
+		res = new String[actualMonths.size()];
+		finalRes = new String[actualMonths.size()];
+		List<String> quaterly = new ArrayList<>();
+		
+		
+		float sum = 0;
+		quaterly = getBeginningOfQuaterlyMonths(fiscal);
+		
+		
+		
+		
+		
+		
+		return finalRes;
+		
+		
+		
+		
+		
 	}
 
 }

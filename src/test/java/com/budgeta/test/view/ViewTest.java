@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import com.budgeta.pom.Actuals;
 import com.budgeta.pom.BudgetNavigator;
+import com.budgeta.pom.BudgetSettings;
 import com.budgeta.pom.GeneralSection;
 import com.budgeta.pom.InnerBar;
 import com.budgeta.pom.PreviewBoard;
@@ -166,6 +167,9 @@ public class ViewTest extends WrapperTest {
 
 		}
 	}
+	
+	
+	//////////////////////////////////////////////////////////////////////
 
 	@Test(enabled = false)
 	public void validateBudgetVsActuals() {
@@ -332,6 +336,100 @@ public class ViewTest extends WrapperTest {
 			}
 		}
 
+	}
+	
+	@Test(enabled = false)
+	public void validateQuartlySheets(){
+		navigator = board.getBudgetNavigator();
+		secondaryBoard = board.getSecondaryBoard();
+		navigator.openInputTab();
+		TopHeaderBar topHeaderBar = new TopHeaderBar();
+		topHeaderBar.openBudgetSettings();
+		BudgetSettings settings = new BudgetSettings();
+		String dateFrom = settings.getDateRangeFrom();
+		String dateTo = settings.getDateRangeTo();
+		String fiscal = settings.getSelectedFiscal().substring(0, 3).toUpperCase();
+		settings.clickCancel();
+		
+		fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom
+				.split("/")[0]));
+		fromYear = dateFrom.split("/")[1];
+		toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo
+				.split("/")[0]));
+		toYear = dateTo.split("/")[1];
+		
+		List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(
+				fromMonth, fromYear, toMonth, toYear, 0,
+								false);
+		
+		
+		navigator.openSheetTab();
+		sheets = new Sheets();
+
+		int numberOfRows = sheets.getNumbreOfRows();
+		
+		for (int row =0 ;row < numberOfRows; row++){
+			
+			String rowTitle = sheets.getRowTitleByIndex(row);
+			int indexOfTitle = sheets.getIndexOfRowName(rowTitle);
+			List<String> budgetValues = sheets.getAllValuesOfRow(indexOfTitle);
+			
+			
+			
+		}
+		
+		
+		
+	}
+	
+	@Test(enabled = true)
+	public void validateYearlySheets(){
+		navigator = board.getBudgetNavigator();
+		secondaryBoard = board.getSecondaryBoard();
+		navigator.openInputTab();
+		TopHeaderBar topHeaderBar = new TopHeaderBar();
+		topHeaderBar.openBudgetSettings();
+		BudgetSettings settings = new BudgetSettings();
+		String dateFrom = settings.getDateRangeFrom();
+		String dateTo = settings.getDateRangeTo();
+		String fiscal = settings.getSelectedFiscal().substring(0, 3).toUpperCase();
+		settings.clickCancel();
+		
+		fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateFrom
+				.split("/")[0]));
+		fromYear = dateFrom.split("/")[1];
+		toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo
+				.split("/")[0]));
+		toYear = dateTo.split("/")[1];
+		List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(
+				fromMonth, fromYear, toMonth, toYear, 0,
+								false);
+		List<Integer> indexOfFiscal = BudgetaUtils.getIndexOfFiscalMonth(fiscal,expectedDates);
+		
+		navigator.openSheetTab();
+		sheets = new Sheets();
+
+		int numberOfRows = sheets.getNumbreOfRows();
+		
+		for (int row =0 ;row < numberOfRows; row++){
+			
+			String rowTitle = sheets.getRowTitleByIndex(row);
+			int indexOfTitle = sheets.getIndexOfRowName(rowTitle);
+			List<String> budgetMonthlyValues = sheets.getAllValuesOfRow(indexOfTitle);
+			
+			sheets = new Sheets();
+			topHeaderBar = new TopHeaderBar();
+			topHeaderBar.openHeaderTab(ReportEnum.CASH_FLOW.name());
+			sheets.selectRepeatReportType("Yearly");
+			
+			List<String> budgetYearlyValues = sheets.getAllValuesOfRow(indexOfTitle);
+			
+			
+			
+		}
+		
+		
+		
 	}
 
 }
