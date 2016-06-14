@@ -46,6 +46,10 @@ public class Sheets extends AbstractPOM {
 	// private By rowValues =
 	// By.cssSelector("div.scroll-columns div.column span span");
 	private By rowValues = By.cssSelector("div.scroll-columns div.forecast-row span");
+	
+	@FindBy(css = "div.scroll-columns div.forecast-row span")
+	private List<WebElement> rowValue;
+	
 	private By rowTotal = By.className("total-column");
 
 	// private By reportType =
@@ -146,6 +150,26 @@ public class Sheets extends AbstractPOM {
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		return res;
 	}
+	
+	public List<String> getAllValuesOfRowByTitle(String title) {
+	//	List<WebElement> values = rows.get(rowIndex).findElements(rowValues);
+		List<String> res = new ArrayList<>();
+		for (WebElement el : rows) {
+			if(el.isDisplayed()){
+				if(el.findElement(rowTitle).getText().equals(title)){
+					int indexOftitle = getIndexOfRowName(title);
+					res = getAllValuesOfRow(indexOftitle);
+					break;
+					
+				}
+			}
+		
+		}
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		return res;
+	}
+
+	
 
 	public List<String> getAllValuesOfRowByTitle(int rowIndex, String title) {
 		List<String> rowValues = getAllValuesOfRow(rowIndex);

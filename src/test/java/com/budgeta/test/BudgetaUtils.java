@@ -599,5 +599,59 @@ public class BudgetaUtils {
 		
 		
 	}
+	
+	
+	public static int[] calculateSheetValues_Yearly(List<String> expectedValues, List<Integer> indexOfFiscal){
+		List<String> res = new ArrayList<>();
+	//	int[] values = new int[expectedValues.size()];
+		int[] fiscal = new int[indexOfFiscal.size() + 1];
+		int[] result = new int[indexOfFiscal.size() + 1];
+		int index = 0,end,sum = 0;
+		
+		for(int i=0; i<fiscal.length;i++){
+			int start = index;
+			if(i==fiscal.length -1){
+				end = expectedValues.size();
+			}else
+				end = indexOfFiscal.get(i);
+			for(int j=start; j<end;j++){
+				sum += Integer.parseInt(expectedValues.get(j));
+			}
+			index = end;
+			result[i] = sum;
+			sum = 0;
+			
+		}
+		
+		
+		return result;
+		
+	
+//		for (int i = 0; i< values.length; i++){
+//			values[i] = Integer.parseInt(expectedValues.get(i));
+//			System.out.println(values);
+//		}
+//		
+//		for (int j = 0; j<index.length; j++){
+//			index[j] = indexOfFiscal.get(j);
+//		}
+		
+		
+ 
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 
 }

@@ -93,7 +93,7 @@ public class ViewTest extends WrapperTest {
 	}
 
 	@KnownIssue(bugID = "BUD - 3252")
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void validateTableDataTest() {
 
 		navigator = board.getBudgetNavigator();
@@ -118,7 +118,7 @@ public class ViewTest extends WrapperTest {
 				Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(rowTitle), "Row name is: " + rowSheetTitle + "index of row is: " + row);
 			} else {
 				//Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()));
-				Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()), "Row name is: " + rowSheetTitle + "index of row is: " + row);
+				Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()), "Row name is: " + rowSheetTitle + " index of row is: " + row);
 			}
 			PreviewBoard previewBoard = new PreviewBoard();
 			List<String> lineValues = new ArrayList<>();
@@ -145,7 +145,7 @@ public class ViewTest extends WrapperTest {
 	}
 
 	// @KnownIssue(bugID = "BUD - 2508")
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void validateTotalTest() {
 
 		navigator = board.getBudgetNavigator();
@@ -422,8 +422,17 @@ public class ViewTest extends WrapperTest {
 			topHeaderBar.openHeaderTab(ReportEnum.CASH_FLOW.name());
 			sheets.selectRepeatReportType("Yearly");
 			
-			List<String> budgetYearlyValues = sheets.getAllValuesOfRow(indexOfTitle);
+			List<String> budgetYearlyValues = sheets.getAllValuesOfRowByTitle(rowTitle);
 			
+			int[] yearlyExpectedValues = BudgetaUtils.calculateSheetValues_Yearly(budgetMonthlyValues, indexOfFiscal);
+			
+			
+			
+			for(int i=0; i<budgetYearlyValues.size(); i++){
+				Assert.assertEquals(Integer.parseInt(budgetYearlyValues.get(i)), yearlyExpectedValues[i]);
+			}
+			
+			sheets.selectRepeatReportType("Monthly");
 			
 			
 		}
