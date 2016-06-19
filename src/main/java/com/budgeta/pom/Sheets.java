@@ -210,7 +210,7 @@ public class Sheets extends AbstractPOM {
 		for (WebElement el : rows) {
 			if (el.isDisplayed()) {
 				if (el.findElement(rowTitle).getText().equals(title)) {
-					WebElementUtils.hoverOverField(el, driver, null);
+					//WebElementUtils.hoverOverField(el, driver, null);
 					el.findElement(rowTitle).click();
 					// WebElementUtils.clickElementEvent(driver, el);
 					break;

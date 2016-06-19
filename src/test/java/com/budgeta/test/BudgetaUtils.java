@@ -2,6 +2,8 @@ package com.budgeta.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.mail.Message;
@@ -137,6 +139,50 @@ public class BudgetaUtils {
 		}
 		return -1;
 	}
+	
+	public static int[] getIndexOfMonths(List<String> month) {
+		int[] result = new int[month.size() +1];
+		for (int i = 0; i < Month.length; i++) {
+			if (Month[i].equalsIgnoreCase(month.get(i)))
+			{
+				result[i]=i;
+			}
+				
+		}
+		return result;
+	}
+	
+	public static List<Integer> getIndexOfQuarterMonths(List<String> month,List<String> dates) {
+		List<Integer> quarterIndex = new ArrayList<>();
+		for (int j = 0; j < month.size(); j++){
+			for (int i = 0; i < dates.size(); i++) {
+				if (dates.get(i).contains(month.get(j)))
+				{
+					quarterIndex.add(i);
+				}
+					
+			}
+		}
+//		int tmp = 0;
+//		
+//		for (int x = 0; x < quarterIndex.size(); x++){
+//			if(quarterIndex.get(x) > quarterIndex.get(x+1)){
+//				tmp = quarterIndex.get(x);
+//				quarterIndex.add(quarterIndex.get(x +1));
+//				
+//				
+//				
+//			}
+//		
+//		
+//		}
+//		
+		Collections.sort(quarterIndex);
+
+
+		return quarterIndex;
+	}
+	
 
 	public static List<Integer> getIndexOfFiscalMonth(String month,List<String> dates) {
 		List<Integer> fiscalIndex = new ArrayList<>();
@@ -573,39 +619,46 @@ public class BudgetaUtils {
 	}
 	
 	
-	public static String[] calculateSheetValues_Quaterly(String fromMonth, String fromYear, String toMonth, String toYear, String fiscal){
-		List<String> actualMonths;
-		List<String> months = getAllMonthsOfDateRange(fromMonth, fromYear, toMonth, toYear);
-		String[] res, finalRes;
-		actualMonths = months;
+	public static String[] calculateSheetValues_Quaterly(List<String> expectedValues, List<Integer> indexOfquartermont){
+		List<String> res = new ArrayList<>();
+		//	int[] values = new int[expectedValues.size()];
+			String[] fiscal = new String[indexOfquartermont.size() + 1];
+			String[] result = new String[indexOfquartermont.size() + 1];
+			int index = 0,end,sum = 0;
+			
+			for(int i=0; i<fiscal.length;i++){
+				int start = index;
+				if(i==fiscal.length -1){
+					end = expectedValues.size();
+				}else
+					end = indexOfquartermont.get(i);
+				for(int j=start; j<end;j++){
+					if(expectedValues.get(j).equals("-")){
+						expectedValues.add("0");
+					}
+					sum += Integer.parseInt(expectedValues.get(j));
+				}
+				index = end;
+				result[i] = sum + "";
+				sum = 0;
+				
+			}
+			
+			
+			return result;
+			
+
 		
-		res = new String[actualMonths.size()];
-		finalRes = new String[actualMonths.size()];
-		List<String> quaterly = new ArrayList<>();
-		
-		
-		float sum = 0;
-		quaterly = getBeginningOfQuaterlyMonths(fiscal);
-		
-		
-		
-		
-		
-		
-		return finalRes;
-		
-		
-		
-		
+	
 		
 	}
 	
 	
-	public static int[] calculateSheetValues_Yearly(List<String> expectedValues, List<Integer> indexOfFiscal){
+	public static String[] calculateSheetValues_Yearly(List<String> expectedValues, List<Integer> indexOfFiscal){
 		List<String> res = new ArrayList<>();
 	//	int[] values = new int[expectedValues.size()];
-		int[] fiscal = new int[indexOfFiscal.size() + 1];
-		int[] result = new int[indexOfFiscal.size() + 1];
+		String[] fiscal = new String[indexOfFiscal.size() + 1];
+		String[] result = new String[indexOfFiscal.size() + 1];
 		int index = 0,end,sum = 0;
 		
 		for(int i=0; i<fiscal.length;i++){
@@ -615,10 +668,13 @@ public class BudgetaUtils {
 			}else
 				end = indexOfFiscal.get(i);
 			for(int j=start; j<end;j++){
+				if(expectedValues.get(j).equals("-")){
+					expectedValues.add("0");
+				}
 				sum += Integer.parseInt(expectedValues.get(j));
 			}
 			index = end;
-			result[i] = sum;
+			result[i] = sum + "";
 			sum = 0;
 			
 		}
@@ -635,23 +691,7 @@ public class BudgetaUtils {
 //		for (int j = 0; j<index.length; j++){
 //			index[j] = indexOfFiscal.get(j);
 //		}
-		
-		
- 
-		
-		
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 	}
 
 }

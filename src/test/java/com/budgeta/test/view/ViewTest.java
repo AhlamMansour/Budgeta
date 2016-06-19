@@ -93,7 +93,7 @@ public class ViewTest extends WrapperTest {
 	}
 
 	@KnownIssue(bugID = "BUD - 3252")
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void validateTableDataTest() {
 
 		navigator = board.getBudgetNavigator();
@@ -145,7 +145,7 @@ public class ViewTest extends WrapperTest {
 	}
 
 	// @KnownIssue(bugID = "BUD - 2508")
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void validateTotalTest() {
 
 		navigator = board.getBudgetNavigator();
@@ -163,7 +163,7 @@ public class ViewTest extends WrapperTest {
 			if (total == 0)
 				Assert.assertEquals(sheets.getTotalOfRow(row), "-", "... Row title is: " + sheets.getRowTitleByIndex(row));
 			else
-				Assert.assertEquals(Integer.parseInt(sheets.getTotalOfRow(row)), total, 3 , "... Row title is: " + sheets.getRowTitleByIndex(row));
+				Assert.assertEquals(Integer.parseInt(sheets.getTotalOfRow(row)), total, 9 , "... Row title is: " + sheets.getRowTitleByIndex(row));
 
 		}
 	}
@@ -337,8 +337,9 @@ public class ViewTest extends WrapperTest {
 		}
 
 	}
+	//////////////////////////////////////////////////////////////////
 	
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void validateQuartlySheets(){
 		navigator = board.getBudgetNavigator();
 		secondaryBoard = board.getSecondaryBoard();
@@ -357,10 +358,11 @@ public class ViewTest extends WrapperTest {
 		toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(dateTo
 				.split("/")[0]));
 		toYear = dateTo.split("/")[1];
-		
 		List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(
 				fromMonth, fromYear, toMonth, toYear, 0,
 								false);
+		List<String> quarterMonths = BudgetaUtils.getBeginningOfQuaterlyMonths(fiscal);
+		List<Integer> indexOfQuarterMonths  = BudgetaUtils.getIndexOfQuarterMonths(quarterMonths,expectedDates);
 		
 		
 		navigator.openSheetTab();
@@ -372,7 +374,22 @@ public class ViewTest extends WrapperTest {
 			
 			String rowTitle = sheets.getRowTitleByIndex(row);
 			int indexOfTitle = sheets.getIndexOfRowName(rowTitle);
-			List<String> budgetValues = sheets.getAllValuesOfRow(indexOfTitle);
+			List<String> budgetMonthlyValues = sheets.getAllValuesOfRow(indexOfTitle);
+			
+			sheets = new Sheets();
+			topHeaderBar = new TopHeaderBar();
+			topHeaderBar.openHeaderTab(ReportEnum.CASH_FLOW.name());
+			sheets.selectRepeatReportType("Quarterly");
+			
+			List<String> budgetQuarterlyyValues = sheets.getAllValuesOfRowByTitle(rowTitle);
+			
+			String[] quarterlyExpectedValues = BudgetaUtils.calculateSheetValues_Quaterly(budgetMonthlyValues, indexOfQuarterMonths);
+			
+			for(int i = 0; i < budgetQuarterlyyValues.size(); i++){
+				Assert.assertEquals(Integer.parseInt(budgetQuarterlyyValues.get(i)), Integer.parseInt(quarterlyExpectedValues[i]), 5 , "Row title is: " + rowTitle + " index is: " + row);
+			}
+			
+			sheets.selectRepeatReportType("Monthly");
 			
 			
 			
@@ -424,12 +441,15 @@ public class ViewTest extends WrapperTest {
 			
 			List<String> budgetYearlyValues = sheets.getAllValuesOfRowByTitle(rowTitle);
 			
-			int[] yearlyExpectedValues = BudgetaUtils.calculateSheetValues_Yearly(budgetMonthlyValues, indexOfFiscal);
+			String[] yearlyExpectedValues = BudgetaUtils.calculateSheetValues_Yearly(budgetMonthlyValues, indexOfFiscal);
 			
 			
 			
 			for(int i=0; i<budgetYearlyValues.size(); i++){
-				Assert.assertEquals(Integer.parseInt(budgetYearlyValues.get(i)), yearlyExpectedValues[i]);
+				//Assert.assertEquals(Integer.parseInt(budgetYearlyValues.get(i)), yearlyExpectedValues[i]);
+				//Assert.assertEquals(budgetYearlyValues.get(i), yearlyExpectedValues[i]);
+				//Assert.assertEquals(budgetYearlyValues.get(i), yearlyExpectedValues[i], "Row title is: " + rowTitle + " index is: " + row);
+				Assert.assertEquals(Integer.parseInt(budgetYearlyValues.get(i)), Integer.parseInt(yearlyExpectedValues[i]), 5 , "Row title is: " + rowTitle + " index is: " + row);
 			}
 			
 			sheets.selectRepeatReportType("Monthly");
