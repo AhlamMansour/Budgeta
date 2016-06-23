@@ -100,6 +100,7 @@ public class ViewTest extends WrapperTest {
 		secondaryBoard = board.getSecondaryBoard();
 		navigator.openSheetTab();
 		sheets = new Sheets();
+		sheets.selectRepeatReportType("Monthly");
 
 		int numberOfRows = sheets.getNumbreOfRows();
 		sheets.ScrollTableToJS(driver, "50");
@@ -115,7 +116,7 @@ public class ViewTest extends WrapperTest {
 			if (rowTitle.contains(",")) {
 				rowTitle = rowTitle.split(",")[1].trim();
 				//Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(rowTitle));
-				Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(rowTitle), "Row name is: " + rowSheetTitle + "index of row is: " + row);
+				Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(rowTitle), "Row name is: " + rowSheetTitle + " index of row is: " + row);
 			} else {
 				//Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()));
 				Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()), "Row name is: " + rowSheetTitle + " index of row is: " + row);
@@ -151,7 +152,7 @@ public class ViewTest extends WrapperTest {
 		navigator = board.getBudgetNavigator();
 		navigator.openSheetTab();
 		sheets = new Sheets();
-
+		sheets.selectRepeatReportType("Monthly");
 		int numberOfRows = sheets.getNumbreOfRows();
 		for (int row = 0; row < numberOfRows; row++) {
 			int total = 0;
@@ -163,7 +164,7 @@ public class ViewTest extends WrapperTest {
 			if (total == 0)
 				Assert.assertEquals(sheets.getTotalOfRow(row), "-", "... Row title is: " + sheets.getRowTitleByIndex(row));
 			else
-				Assert.assertEquals(Integer.parseInt(sheets.getTotalOfRow(row)), total, 9 , "... Row title is: " + sheets.getRowTitleByIndex(row));
+				Assert.assertEquals(Integer.parseInt(sheets.getTotalOfRow(row)), total, 12 , "... Row title is: " + sheets.getRowTitleByIndex(row));
 
 		}
 	}
@@ -367,6 +368,7 @@ public class ViewTest extends WrapperTest {
 		
 		navigator.openSheetTab();
 		sheets = new Sheets();
+		sheets.selectRepeatReportType("Monthly");
 
 		int numberOfRows = sheets.getNumbreOfRows();
 		
@@ -384,6 +386,20 @@ public class ViewTest extends WrapperTest {
 			List<String> budgetQuarterlyyValues = sheets.getAllValuesOfRowByTitle(rowTitle);
 			
 			String[] quarterlyExpectedValues = BudgetaUtils.calculateSheetValues_Quaterly(budgetMonthlyValues, indexOfQuarterMonths);
+			
+//			for (int j = 0; j < quarterlyExpectedValues.length; j++){
+//				if (quarterlyExpectedValues [j] == "0"){
+//					quarterlyExpectedValues [j]  = "-";
+//				}
+//			}
+			
+			for (int j = 0; j < budgetQuarterlyyValues.size(); j++){
+				if (budgetQuarterlyyValues.get(j).equals("-")){
+					budgetQuarterlyyValues.add(j, "0");
+					budgetQuarterlyyValues.remove(j+1);
+					
+				}
+			}
 			
 			for(int i = 0; i < budgetQuarterlyyValues.size(); i++){
 				Assert.assertEquals(Integer.parseInt(budgetQuarterlyyValues.get(i)), Integer.parseInt(quarterlyExpectedValues[i]), 5 , "Row title is: " + rowTitle + " index is: " + row);
@@ -425,7 +441,7 @@ public class ViewTest extends WrapperTest {
 		
 		navigator.openSheetTab();
 		sheets = new Sheets();
-
+		sheets.selectRepeatReportType("Monthly");
 		int numberOfRows = sheets.getNumbreOfRows();
 		
 		for (int row =0 ;row < numberOfRows; row++){

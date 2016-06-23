@@ -634,7 +634,8 @@ public class BudgetaUtils {
 					end = indexOfquartermont.get(i);
 				for(int j=start; j<end;j++){
 					if(expectedValues.get(j).equals("-")){
-						expectedValues.add("0");
+						expectedValues.add(j, "0");
+						expectedValues.remove(j+1);
 					}
 					sum += Integer.parseInt(expectedValues.get(j));
 				}
@@ -669,7 +670,8 @@ public class BudgetaUtils {
 				end = indexOfFiscal.get(i);
 			for(int j=start; j<end;j++){
 				if(expectedValues.get(j).equals("-")){
-					expectedValues.add("0");
+					expectedValues.add(j, "0");
+					expectedValues.remove(j+1);
 				}
 				sum += Integer.parseInt(expectedValues.get(j));
 			}
