@@ -92,7 +92,7 @@ public class ViewTest extends WrapperTest {
 		Assert.assertTrue(sheets.isDisplayed(), "expected to view page to be dislayed");
 	}
 
-	@KnownIssue(bugID = "BUD - 3252")
+	@KnownIssue(bugID = "BUD - 4401")
 	@Test(enabled = true)
 	public void validateTableDataTest() {
 
@@ -465,7 +465,7 @@ public class ViewTest extends WrapperTest {
 				//Assert.assertEquals(Integer.parseInt(budgetYearlyValues.get(i)), yearlyExpectedValues[i]);
 				//Assert.assertEquals(budgetYearlyValues.get(i), yearlyExpectedValues[i]);
 				//Assert.assertEquals(budgetYearlyValues.get(i), yearlyExpectedValues[i], "Row title is: " + rowTitle + " index is: " + row);
-				Assert.assertEquals(Integer.parseInt(budgetYearlyValues.get(i)), Integer.parseInt(yearlyExpectedValues[i]), 5 , "Row title is: " + rowTitle + " index is: " + row);
+				Assert.assertEquals(Integer.parseInt(budgetYearlyValues.get(i)), Integer.parseInt(yearlyExpectedValues[i]), 7 , "Row title is: " + rowTitle + " index is: " + row);
 			}
 			
 			sheets.selectRepeatReportType("Monthly");
