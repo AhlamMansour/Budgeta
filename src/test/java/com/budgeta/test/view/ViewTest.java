@@ -92,7 +92,7 @@ public class ViewTest extends WrapperTest {
 		Assert.assertTrue(sheets.isDisplayed(), "expected to view page to be dislayed");
 	}
 
-	@KnownIssue(bugID = "BUD - 4401")
+//	@KnownIssue(bugID = "BUD - 4401")
 	@Test(enabled = true)
 	public void validateTableDataTest() {
 
@@ -116,10 +116,10 @@ public class ViewTest extends WrapperTest {
 			if (rowTitle.contains(",")) {
 				rowTitle = rowTitle.split(",")[1].trim();
 				//Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(rowTitle));
-				Assert.assertTrue(secondaryBoard.getSelectedLineName().contains(rowTitle), "Row name is: " + rowSheetTitle + " index of row is: " + row);
+				Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()), "Row name is: " + rowSheetTitle + " index of row is: " + row + " Row is: " + secondaryBoard.getSelectedLineName());
 			} else {
 				//Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()));
-				Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()), "Row name is: " + rowSheetTitle + " index of row is: " + row);
+				Assert.assertTrue(rowTitle.contains(secondaryBoard.getSelectedLineName()), "Row name is: " + rowSheetTitle + " index of row is: " + row + " Row is: " + secondaryBoard.getSelectedLineName());
 			}
 			PreviewBoard previewBoard = new PreviewBoard();
 			List<String> lineValues = new ArrayList<>();

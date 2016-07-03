@@ -151,6 +151,20 @@ public class Sheets extends AbstractPOM {
 		return res;
 	}
 	
+	public List<String> getAllValuesOfRows(int rowIndex) {
+		List<WebElement> values = rows.get(rowIndex).findElements(rowValues);
+		List<String> res = new ArrayList<>();
+		for (WebElement el : values) {
+			String value = el.getText();
+			if (value.equals("-"))
+				res.add("0");
+			else
+				res.add(value.replaceAll("[^0-9 .]", "").trim());
+		}
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		return res;
+	}
+	
 	public List<String> getAllValuesOfRowByTitle(String title) {
 	//	List<WebElement> values = rows.get(rowIndex).findElements(rowValues);
 		List<String> res = new ArrayList<>();
@@ -158,7 +172,7 @@ public class Sheets extends AbstractPOM {
 			if(el.isDisplayed()){
 				if(el.findElement(rowTitle).getText().equals(title)){
 					int indexOftitle = getIndexOfRowName(title);
-					res = getAllValuesOfRow(indexOftitle);
+					res = getAllValuesOfRows(indexOftitle);
 					break;
 					
 				}
@@ -209,6 +223,7 @@ public class Sheets extends AbstractPOM {
 		WebdriverUtils.sleep(200);
 		for (WebElement el : rows) {
 			if (el.isDisplayed()) {
+				el.click();
 				if (el.findElement(rowTitle).getText().equals(title)) {
 					//WebElementUtils.hoverOverField(el, driver, null);
 					el.findElement(rowTitle).click();

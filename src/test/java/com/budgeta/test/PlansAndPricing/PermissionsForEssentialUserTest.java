@@ -37,7 +37,7 @@ public class PermissionsForEssentialUserTest extends BudgetaTest{
 		LoginPage loginPage = new LoginPage();
 		Assert.assertTrue(loginPage.isDisplayed(), "expected login page to be displayed");
 		
-		loginPage.setEmail("galiltest1234@gmail.com");
+		loginPage.setEmail("galiltest123+1515@gmail.com");
 		loginPage.setPassword("galil1234");
 		loginPage.clickLogin(true);
 		
