@@ -30,6 +30,8 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	String budgetLineName = "New Name";
 	String currentLine = "Revenues";
 	SharePopup sharePopup;
+	SecondaryBoard secondary;
+	
 
 	@BeforeMethod
 	private void initTest() {
@@ -44,12 +46,12 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
 		navigator.selectRandomBudgeta();
-		//navigator.selectRandomBudgetWithPrefix("budget6_1455851819835");
+		//navigator.selectRandomBudgetWithPrefix("Revenues Budget");
 
 		budgetNavigator = new BudgetNavigator();
 		budgetNavigator.openInputTab();
 
-		secondary.addLine("Revenues");
+		//secondary.addLine("Revenues");
 		secondary = new SecondaryBoard();
 
 	}
@@ -59,12 +61,13 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	public void DuplicateBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
+		String lineName = secondary.getFirstLineName();
 		// secondary.selectRandomBudgetWithPrefix("budget7_144215547406");
-		MenuTrigger trigger = secondary.getLineSettings("Revenues");
-		int num = secondary.getNumberOfLines("Revenues");
+		MenuTrigger trigger = secondary.getLineSettings(lineName);
+		int num = secondary.getNumberOfLines(lineName);
 		trigger.clickDuplicate();
 		secondary = new SecondaryBoard();
-		int num2 = secondary.getNumberOfLines("Revenues");
+		int num2 = secondary.getNumberOfLines(lineName);
 		Assert.assertTrue(num2 == (num + 1), "the line is duplicated, number of lines was: " + num + " and now is: " + num2);
 	}
 
@@ -75,8 +78,8 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		secondary = new SecondaryBoard();
 		int num = secondary.getNumberOfSubLinesForLine("Other income and expenses", "Revenues");
-
-		MenuTrigger trigger = secondary.getLineSettings("Revenues");
+		String lineName = secondary.getFirstLineName();
+		MenuTrigger trigger = secondary.getLineSettings(lineName);
 		trigger.clickCopy();
 		secondary = new SecondaryBoard();
 		int num2 = secondary.getNumberOfSubLinesForLine("Other income and expenses", "Revenues");
@@ -88,16 +91,17 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	public void MoveBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
+		String lineName = secondary.getFirstLineName();
 		int num = secondary.getNumberOfSubLinesForLine("Other income and expenses", "Revenues");
 		int num2;
 		// secondary = new SecondaryBoard();
 		if (secondary.isLineExist("Other income and expenses") == true) {
-			MenuTrigger trigger = secondary.getLineSettings("Revenues");
+			MenuTrigger trigger = secondary.getLineSettings(lineName);
 			secondary = trigger.clickMove();
 		} else {
 			secondary.addLine("Other income and expenses");
 			secondary = new SecondaryBoard();
-			MenuTrigger trigger = secondary.getLineSettings("Revenues");
+			MenuTrigger trigger = secondary.getLineSettings(lineName);
 			secondary = trigger.clickMove();
 		}
 		num2 = secondary.getNumberOfSubLinesForLine("Other income and expenses", "Revenues");
@@ -110,17 +114,18 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	public void FlagBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
-		MenuTrigger trigger = secondary.getLineSettings("Revenues");
-		if (secondary.isLineFlag("Revenues") == false) {
+		String lineName = secondary.getFirstLineName();
+		MenuTrigger trigger = secondary.getLineSettings(lineName);
+		if (secondary.isLineFlag(lineName) == false) {
 			secondary = new SecondaryBoard();
-			trigger = secondary.getLineSettings("Revenues");
+			trigger = secondary.getLineSettings(lineName);
 			trigger.clickFlag();
 
 		}
 		secondary = new SecondaryBoard();
-		trigger = secondary.getLineSettings("Revenues");
+		trigger = secondary.getLineSettings(lineName);
 
-		Assert.assertTrue(secondary.isLineFlag(currentLine), "Budget line is flaged");
+		Assert.assertTrue(secondary.isLineFlag(lineName), "Budget line is flaged");
 
 	}
 
@@ -128,9 +133,9 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	@Test(enabled = true, priority = 5)
 	public void RenameBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
-
 		SecondaryBoard secondary = board.getSecondaryBoard();
-		MenuTrigger trigger = secondary.getLineSettings("Revenues");
+		String lineName = secondary.getFirstLineName();
+		MenuTrigger trigger = secondary.getLineSettings(lineName);
 		trigger.clickRename();
 
 		// smallPopup.setName(budgetLineName);
@@ -141,7 +146,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		secondary = new SecondaryBoard();
 		trigger = secondary.getLineSettings(budgetLineName);
 		trigger.clickRename();
-		secondary.RenameLine(currentLine);
+		secondary.RenameLine(lineName);
 
 	}
 
@@ -149,7 +154,8 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	public void ShareBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
-		MenuTrigger trigger = secondary.getLineSettings("Revenues");
+		String lineName = secondary.getFirstLineName();
+		MenuTrigger trigger = secondary.getLineSettings(lineName);
 
 		SharePopup popup = trigger.clickShare();
 		Assert.assertTrue(popup.isDisplayed(), "expected share popup to be displayed"); // popup.sendEmail(email);
@@ -166,7 +172,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 			popup.clickConfirm();
 		}
 
-		Assert.assertTrue(secondary.isLineShared(currentLine), "The budget line was shared");
+		Assert.assertTrue(secondary.isLineShared(lineName), "The budget line was shared");
 
 	}
 
@@ -174,15 +180,16 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	public void DeleteBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
-		MenuTrigger trigger = secondary.getLineSettings("Revenues");
-		int num = secondary.getNumberOfLines("Revenues");
+		String lineName = secondary.getFirstLineName();
+		MenuTrigger trigger = secondary.getLineSettings(lineName);
+		int num = secondary.getNumberOfLines(lineName);
 
 		DeletePopup popup = trigger.clickDelete();
 		Assert.assertTrue(popup.isDisplayed(), "expected delete popup to be displayed");
 		popup.clickConfirm();
 
 		// Assert.assertFalse(secondary.isLineExist(budgetLineName),"Budget line is deleted");
-		int num2 = secondary.getNumberOfLines("Revenues");
+		int num2 = secondary.getNumberOfLines(lineName);
 		Assert.assertTrue(num2 == (num - 1), "the line is deleted, number of lines was: " + num + "and now is: " + num2);
 
 	}

@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
+import com.thoughtworks.selenium.webdriven.commands.GetAttribute;
 
 public class SecondaryBoard extends AbstractPOM {
 
@@ -90,6 +91,9 @@ public class SecondaryBoard extends AbstractPOM {
 	@FindBy(className = "collapse-tree")
 	private WebElement collapsedTree;
 
+	
+	@FindBy(className = "li.budget-list-item")
+	private WebElement Line;
 	// private final By newLine = By.className("new-line");
 	// private final By selectBudget =
 	// By.cssSelector("aside.secondary h2 input");
@@ -918,6 +922,7 @@ public class SecondaryBoard extends AbstractPOM {
 					return;
 				}
 			}
+			
 		}
 	}
 
@@ -956,6 +961,8 @@ public class SecondaryBoard extends AbstractPOM {
 		return new MenuTrigger(line.findElement(lineSetting));
 	}
 
+	
+	
 	public MenuTrigger getSubLinSettings(String lineTitle, String subLineTitle) {
 		List<WebElement> subLines = getSubLinesForLine(lineTitle);
 		for (WebElement el : subLines) {
@@ -1377,6 +1384,18 @@ public class SecondaryBoard extends AbstractPOM {
 
 		}
 	}
+	
+	public String getFirstLineName(){
+		String name= "";
+		WebElement el = driver.findElements(line).get(1);
+		//for (WebElement el : driver.findElements(line).get(0)) {
+		if(el.getAttribute("data-level").equals("1"))
+		{
+			 name = el.findElement(By.className("budget-name-text-display")).getText();
+		}
+		//}
+		return name;
+	}
 
 	/*************************************************************************************************************/
 	/*************************************************************************************************************/
@@ -1391,6 +1410,16 @@ public class SecondaryBoard extends AbstractPOM {
 		return null;
 	}
 
+	private WebElement getFirstLineByName(String name) {
+		List<WebElement> lines = getFirstLines();
+		for (WebElement el : lines) {
+			System.out.println(getLineName(el));
+			if (getLineName(el).startsWith(name))// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
+				return el;
+		}
+		return null;
+	}
+	
 	private String getLineName(WebElement el) {
 		try {
 			if (el.getAttribute("class").contains("new-line"))
@@ -1451,6 +1480,20 @@ public class SecondaryBoard extends AbstractPOM {
 		return list;
 	}
 
+	private List<WebElement> getFirstLines() {
+		List<WebElement> list = new ArrayList<WebElement>();
+		try {
+			// for (WebElement el :
+			// driver.findElement(By.cssSelector("ol.tree")).findElement(By.className("selected-root")).findElement(By.tagName("ol"))
+			// .findElements(line)) {
+			for (WebElement el : driver.findElements(line)) {
+				if (el.getAttribute("data-level").equals("1"))
+					list.add(el);
+			}
+		} catch (Exception e) {
+		}
+		return (List<WebElement>) list.get(0);
+	}
 	private List<WebElement> getSubLines() {
 		List<WebElement> list = new ArrayList<WebElement>();
 		try {
