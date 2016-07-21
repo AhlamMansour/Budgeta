@@ -69,6 +69,9 @@ public class TopHeaderBar extends AbstractPOM {
 	
 	@FindBy(className = "metrics-header")
 	private WebElement modelTab;
+	
+	@FindBy(className = "tables-header")
+	private WebElement tableEditTab;
 
 	@FindBy(className = "table-edit")
 	private WebElement editTableIcon;
@@ -249,6 +252,12 @@ public class TopHeaderBar extends AbstractPOM {
 		WebdriverUtils.elementToHaveClass(baseTab, "active");
 	}
 
+	public void openTableEditTab() {
+		tableEditTab.click();
+		WebdriverUtils.elementToHaveClass(tableEditTab, "active");
+	}
+
+	
 	public void openActalsTab() {
 		actualsTab.click();
 		WebdriverUtils.waitForBudgetaBusyBar(driver);

@@ -83,11 +83,15 @@ public class ScenariosTest extends WrapperTest{
 	@Test(enabled = true, priority = 3)
 	public void addLineToScenarioTest(){
 		TopHeaderBar headerBar = new TopHeaderBar();
-		secondaryBoard.addSubLine("Revenues");
+		SecondaryBoard secondary = board.getSecondaryBoard();
+		String lineName = secondary.getFirstLineName();
+		//secondaryBoard.addSubLine("Revenues");
+		secondaryBoard.addSubLine(lineName);
 		RevenuesAddSubLine subLine = new RevenuesAddSubLine();
 		subLine.setName(subLineName);
 		subLine.clickAdd();
-		Assert.assertTrue(secondaryBoard.isSubLineExist("Revenues", subLineName), "expected to found the added sub line");
+		//Assert.assertTrue(secondaryBoard.isSubLineExist("Revenues", subLineName), "expected to found the added sub line");
+		Assert.assertTrue(secondaryBoard.isSubLineExist(lineName, subLineName), "expected to found the added sub line");
 		scenarios = new Scenarios();
 		String scenarioName = headerBar.newScenatrioText().trim(); 
 		headerBar.clearScenario();
@@ -104,7 +108,10 @@ public class ScenariosTest extends WrapperTest{
 	}
 	@Test(enabled = true, priority = 4)
 	public void deleteLineFromScenarioTest(){
-		MenuTrigger trigger = secondaryBoard.getSubLinSettings("Revenues", subLineName);
+		SecondaryBoard secondary = board.getSecondaryBoard();
+		String lineName = secondary.getFirstLineName();
+		//MenuTrigger trigger = secondaryBoard.getSubLinSettings("Revenues", subLineName);
+		MenuTrigger trigger = secondaryBoard.getSubLinSettings(lineName, subLineName);
 		DeletePopup popup = trigger.clickDelete();
 		Assert.assertTrue(popup.isDisplayed(), "expected the popup to be displayed");
 		popup.clickConfirm();
