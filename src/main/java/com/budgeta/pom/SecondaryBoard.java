@@ -1112,6 +1112,38 @@ public class SecondaryBoard extends AbstractPOM {
 		// WebdriverUtils.waitForBudgetaBusyBar(driver);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
+	
+	
+	public void openLine(String lineTitle, int level) {
+		clickClose();
+		List<WebElement> allLinesInLevel = driver.findElements(line);
+		for (WebElement el : allLinesInLevel) {
+			if (getLineName(el).equals(lineTitle) && el.getAttribute("data-level").equals(level + "")) {
+				WebElementUtils.hoverOverField(el, driver, null);
+				WebdriverUtils.sleep(300);
+				el.click();
+				WebdriverUtils.sleep(600);
+				// WebdriverUtils.waitForBudgetaBusyBar(driver);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				return;
+			}
+		}
+	}
+	
+	
+	public int getLineLevel(String lineTitle) {
+		clickClose();
+		List<WebElement> allLinesInLevel = driver.findElements(line);
+		int level = -1;
+		for (WebElement el : allLinesInLevel) {
+			if (getLineName(el).equals(lineTitle)){
+				WebElementUtils.hoverOverField(el, driver, null);
+				WebdriverUtils.sleep(300);
+				level = Integer.parseInt(el.getAttribute("data-level")); 
+			}
+		}
+		return level;
+	}
 
 	public void clickOnSubLine(String lineName, String subLineName) {
 		clickClose();

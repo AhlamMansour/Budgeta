@@ -174,6 +174,10 @@ public class GeneralSection extends AbstractPOM{
 		Actions act = new Actions(driver);
 		act.moveToElement(notes).build().perform();
 	}
+	
+	public String getNoteText(){
+		return notes.findElement(By.tagName("textarea")).getAttribute("value");
+	}
 	public void setAccountNumberInRowByIndex(int indexOfRow, String value){
 		WebElement row = getAccountNumber().findElements(By.tagName("input")).get(indexOfRow - 1);
 		row.clear();
