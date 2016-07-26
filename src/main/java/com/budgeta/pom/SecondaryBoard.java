@@ -1090,6 +1090,11 @@ public class SecondaryBoard extends AbstractPOM {
 		}
 		return num;
 	}
+	
+	public int getNumberOfSublines(String lineTitle){
+		List<WebElement> subLines = getSubLinesForLine(lineTitle);
+		return subLines.size();
+	}
 
 	public int getNumberOfLines(String lineTitle) {
 		List<WebElement> Lines = getLines();

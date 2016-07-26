@@ -55,18 +55,7 @@ public class EmployeeTableEdit extends AbstractPOM {
 		}
 	}
 
-	public void clickOnGeneralFields() {
-		for (WebElement el : tableBtn) {
-			if (el.getText().equals("General Fields")) {
-				el.click();
-				WebdriverUtils.waitForBudgetaLoadBar(driver);
-				WebdriverUtils.elementToHaveClass(el, "active");
-				break;
-			}
-
-		}
-
-	}
+	
 
 	public void clickOnAddEmployeeButton() {
 
