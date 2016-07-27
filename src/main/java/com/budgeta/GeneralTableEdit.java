@@ -1,9 +1,12 @@
 package com.budgeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.budgeta.pom.SideDropDown;
@@ -204,20 +207,20 @@ public class GeneralTableEdit extends AbstractPOM {
 		}
 		return i;
 	}
-	
+
 	public int getLineLevel(String lineTitle) {
 		List<WebElement> allLinesInLevel = driver.findElements(lines);
 		int level = -1;
 		for (WebElement el : allLinesInLevel) {
-			if (getLineName(el).equals(lineTitle)){
+			if (getLineName(el).equals(lineTitle)) {
 				WebElementUtils.hoverOverField(el, driver, null);
 				WebdriverUtils.sleep(300);
-				level = Integer.parseInt(el.getAttribute("data-level")); 
+				level = Integer.parseInt(el.getAttribute("data-level"));
 			}
 		}
 		return level;
 	}
-	
+
 	private String getLineName(WebElement el) {
 		try {
 			if (el.getAttribute("class").contains("new-line"))
@@ -225,6 +228,81 @@ public class GeneralTableEdit extends AbstractPOM {
 			return el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value");
 		} catch (Exception e) {
 			return "";
+		}
+	}
+
+	public boolean isLineExistByLevel(String name, int level) {
+		boolean flag = false;
+		for (WebElement el : tableLines) {
+			if (el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name) && getLineLevel(name) == level)
+				flag = true;
+		}
+
+		return flag;
+	}
+
+	public boolean isLineExistByIndex(String name, int index) {
+		boolean flag = false;
+		for (WebElement el : tableLines) {
+			if (el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name)) {
+				if (getIndexOfSlectedLine() == index)
+					flag = true;
+			}
+
+		}
+
+		return flag;
+	}
+
+	public List<Integer> getIndexOfLine(String name) {
+		List<Integer> lineIndex = new ArrayList<>();
+		int i = 0;
+		for (WebElement el : tableLines) {
+			if (el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name)) {
+				lineIndex.add(i);
+				i++;
+			}
+		}
+
+		return lineIndex;
+	}
+
+	public List<Integer> getIndexOfLineBylevel(String name, int level) {
+		List<Integer> lineIndex = new ArrayList<>();
+		int i = 0;
+		for (WebElement el : tableLines) {
+			if (el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name) && getLineLevel(name) == level) {
+				lineIndex.add(i);
+				i++;
+			}
+		}
+
+		return lineIndex;
+	}
+	
+	public int numberOfSameLine(String name) {
+		return getIndexOfLine(name).size();
+	}
+	
+	public int numberOfSameLineInSameLevel(String name, int level) {
+		return getIndexOfLineBylevel(name, level).size();
+	}
+	
+	
+	public void renameLine(String name, String text){
+		for (WebElement el : tableLines) {
+			WebElement elm = el.findElement(lineName).findElement(By.tagName("input"));
+			if (elm.getAttribute("value").equals(name)){
+				Actions act = new Actions(driver);
+				act.moveToElement(el).build().perform();
+				el.findElement(lineName).click();
+				elm.clear();
+				elm.sendKeys(text);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				elm.sendKeys(Keys.ENTER);
+				break;
+			}
+			
 		}
 	}
 

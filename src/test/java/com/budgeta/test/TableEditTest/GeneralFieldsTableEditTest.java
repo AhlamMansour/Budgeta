@@ -1,5 +1,8 @@
 package com.budgeta.test.TableEditTest;
 
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -20,14 +23,14 @@ import com.galilsoftware.AF.core.listeners.TestNGListener;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
-public class GeneralFieldsTableEditTest extends WrapperTest{
-	
+public class GeneralFieldsTableEditTest extends WrapperTest {
+
 	protected BudgetaBoard board;
 	SecondaryBoard secondaryBoard;
 	GeneralTableEdit generalTableEdit;
 	String note = "Add new note for General fields_";
-	
-	
+	String newLineName = "Line to delete_";
+
 	@TestFirst
 	@Test(enabled = true)
 	public void setBudgetTest() {
@@ -41,8 +44,7 @@ public class GeneralFieldsTableEditTest extends WrapperTest{
 		topHeaderBar.openTableEditTab();
 
 	}
-	
-	
+
 	@Test(enabled = false)
 	public void addNoteEmployeeLine() {
 		note = WebdriverUtils.getTimeStamp(note);
@@ -70,7 +72,7 @@ public class GeneralFieldsTableEditTest extends WrapperTest{
 		String noteFormText = note.getNoteText();
 
 		Assert.assertEquals(addedNote, noteFormText, "the note not added to the line, the new note is: " + addedNote + " the current note is: " + noteFormText);
-		
+
 		topHeaderBar.openTableEditTab();
 		generalTableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
@@ -89,9 +91,7 @@ public class GeneralFieldsTableEditTest extends WrapperTest{
 		Assert.assertTrue(generalTableEdit.isLineFlag(selectedLine, indexOfSelectedLine), "Selected line is not flagged :" + selectedLine);
 		generalTableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
-	
-	
-	
+
 	@Test(enabled = true)
 	public void deleteEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
@@ -103,53 +103,30 @@ public class GeneralFieldsTableEditTest extends WrapperTest{
 		int indexOfSelectedLine = generalTableEdit.getIndexOfSlectedLine();
 		String selectedLine = generalTableEdit.getLineNameByIndex(indexOfSelectedLine);
 		int numberOfLines = generalTableEdit.getNumberOflines();
-		
-		while (indexOfSelectedLine == numberOfLines - 2){
+
+		while (indexOfSelectedLine == numberOfLines - 2) {
 			generalTableEdit.unSelectLineByIndex(indexOfSelectedLine);
 			generalTableEdit.selectRandomLine();
 			indexOfSelectedLine = generalTableEdit.getIndexOfSlectedLine();
+			selectedLine = generalTableEdit.getLineNameByIndex(indexOfSelectedLine);
 		}
-		String nextOfSelectedLine = generalTableEdit.getLineNameByIndex(indexOfSelectedLine + 1);
-		
-//		board = new BudgetaBoard();
-//		secondaryBoard = board.getSecondaryBoard();
-//		int selectedLineLevel = secondaryBoard.getLineLevel(selectedLine);
-//		int nextOfSelectedLineLevel = secondaryBoard.getLineLevel(nextOfSelectedLine);
-		
 		int selectedLineLevel = generalTableEdit.getLineLevel(selectedLine);
+		String nextOfSelectedLine = generalTableEdit.getLineNameByIndex(indexOfSelectedLine + 1);
 		int nextOfSelectedLineLevel = generalTableEdit.getLineLevel(nextOfSelectedLine);
-		
-		if (selectedLineLevel == nextOfSelectedLineLevel || selectedLineLevel > nextOfSelectedLineLevel){
-			// get line name and level before deleting line
+
+		if (selectedLineLevel == nextOfSelectedLineLevel) {
+			newLineName = WebdriverUtils.getTimeStamp(newLineName);
+			generalTableEdit.renameLine(selectedLine, newLineName);
+			selectedLine = generalTableEdit.getLineNameByIndex(indexOfSelectedLine);
+
 			generalTableEdit.deleteLineBylineName(selectedLine, indexOfSelectedLine);
 			DeletePopup ConfirmDelete = new DeletePopup();
 			ConfirmDelete.clickConfirm();
-			
-			//add assert if line is exist
-			int EmployeesLinesAfterDeleteLine = generalTableEdit.getNumberOflines();
-			
-			
-			
-			Assert.assertEquals(EmployeesLinesAfterDeleteLine, EmployeesLinesBeforeDeleteLine - 1, "Line is not deleted, Lines after deleted line: "
-					+ EmployeesLinesAfterDeleteLine + " Lines before deleted line: " + EmployeesLinesBeforeDeleteLine);
-		}
-		
-		if (selectedLineLevel < nextOfSelectedLineLevel){
-			
-			
-		}
-		
-		
-		
 
-		
-		
-	
+			Assert.assertFalse(generalTableEdit.isLineExistByIndex(selectedLine, indexOfSelectedLine), "Line is not deleted: " + selectedLine);
+
+		}
 
 	}
-	
-	
-	
-	
 
 }
