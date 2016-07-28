@@ -30,6 +30,7 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 	GeneralTableEdit generalTableEdit;
 	String note = "Add new note for General fields_";
 	String newLineName = "Line to delete_";
+	String newSubLineName = "Sub Line to delete_";
 
 	@TestFirst
 	@Test(enabled = true)
@@ -45,7 +46,7 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void addNoteEmployeeLine() {
 		note = WebdriverUtils.getTimeStamp(note);
 		generalTableEdit = new GeneralTableEdit();
@@ -77,7 +78,7 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 		generalTableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void flagEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -103,6 +104,8 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 		int indexOfSelectedLine = generalTableEdit.getIndexOfSlectedLine();
 		String selectedLine = generalTableEdit.getLineNameByIndex(indexOfSelectedLine);
 		int numberOfLines = generalTableEdit.getNumberOflines();
+		
+		
 
 		while (indexOfSelectedLine == numberOfLines - 2) {
 			generalTableEdit.unSelectLineByIndex(indexOfSelectedLine);
@@ -114,6 +117,15 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 		String nextOfSelectedLine = generalTableEdit.getLineNameByIndex(indexOfSelectedLine + 1);
 		int nextOfSelectedLineLevel = generalTableEdit.getLineLevel(nextOfSelectedLine);
 
+		while (selectedLineLevel == 0){
+			generalTableEdit.unSelectLineByIndex(indexOfSelectedLine);
+			generalTableEdit.selectRandomLine();
+			indexOfSelectedLine = generalTableEdit.getIndexOfSlectedLine();
+			selectedLine = generalTableEdit.getLineNameByIndex(indexOfSelectedLine);
+			selectedLineLevel = generalTableEdit.getLineLevel(selectedLine);
+			
+			
+		}
 		if (selectedLineLevel == nextOfSelectedLineLevel) {
 			newLineName = WebdriverUtils.getTimeStamp(newLineName);
 			generalTableEdit.renameLine(selectedLine, newLineName);
@@ -126,7 +138,27 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 			Assert.assertFalse(generalTableEdit.isLineExistByIndex(selectedLine, indexOfSelectedLine), "Line is not deleted: " + selectedLine);
 
 		}
+		
+		if (selectedLineLevel < nextOfSelectedLineLevel) {
+			int subLinenumbers = generalTableEdit.getAllSublinesForLine(selectedLine);
+			newLineName = WebdriverUtils.getTimeStamp(newLineName);
+			generalTableEdit.renameSubLines(selectedLine, newSubLineName);
+			List<String> subLinesName = generalTableEdit.getSubLinesName(selectedLine);
+			List<String> getAllLinesName = generalTableEdit.getAllLinesName();
+			generalTableEdit.renameLine(selectedLine, newLineName);
+			selectedLine = generalTableEdit.getLineNameByIndex(indexOfSelectedLine);
+			generalTableEdit.deleteLineBylineName(selectedLine, indexOfSelectedLine);
+			DeletePopup ConfirmDelete = new DeletePopup();
+			ConfirmDelete.clickConfirm();
+			
+			Assert.assertFalse(generalTableEdit.isLineExistByIndex(selectedLine, indexOfSelectedLine), "Line is not deleted: " + selectedLine);
+			
+			for (int i = 0; i<subLinesName.size(); i++){
+				Assert.assertFalse(generalTableEdit.isLineExist(subLinesName.get(i)), "Line is not deleted: " + selectedLine);
+			}
+			
 
 	}
-
+	
+	}
 }

@@ -150,7 +150,8 @@ public class GeneralTableEdit extends AbstractPOM {
 
 	public void ClickOnDelete(int Index) {
 		WebElement el = tableLines.get(Index).findElement(By.className("delete_budget"));
-		el.click();
+		WebdriverUtils.click(el);
+		//el.click();
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
 
@@ -254,6 +255,17 @@ public class GeneralTableEdit extends AbstractPOM {
 		return flag;
 	}
 
+	public boolean isLineExist(String name) {
+		boolean flag = false;
+		for (WebElement el : tableLines) {
+			if (el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name)) {
+					flag = true;
+			}
+
+		}
+
+		return flag;
+	}
 	public List<Integer> getIndexOfLine(String name) {
 		List<Integer> lineIndex = new ArrayList<>();
 		int i = 0;
@@ -300,11 +312,100 @@ public class GeneralTableEdit extends AbstractPOM {
 				elm.sendKeys(text);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				elm.sendKeys(Keys.ENTER);
+//				el.findElement(By.className("account-id-column")).click();
+//				act.moveToElement(el).build().perform();
+//				driver.findElements(By.className("column-text")).get(0).click();
 				break;
 			}
 			
 		}
+		
 	}
+	
+	public void renameSubLines(String name, String text){
+		List<WebElement> subLine = getSublinesForLine(name);
+		String sublineText = text;
+		for (WebElement el : subLine) {
+			WebElement elm = el.findElement(lineName).findElement(By.tagName("input"));
+				Actions act = new Actions(driver);
+				act.moveToElement(el).build().perform();
+				el.findElement(lineName).click();
+				elm.clear();
+				sublineText = WebdriverUtils.getTimeStamp(text);
+				elm.sendKeys(sublineText);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				elm.sendKeys(Keys.ENTER);
+				text = text;
+				continue;
+
+		}
+	}
+	
+	public List<String> getAllLinesName(){
+		List<String> LineName = new ArrayList<>();
+		
+		for (WebElement el : tableLines) {
+			WebElement elm = el.findElement(lineName).findElement(By.tagName("input"));
+			LineName.add(elm.getAttribute("value"));
+		}
+		
+		return LineName;
+	}
+	
+	public List<String> getSubLinesName(String name){
+		List<WebElement> subLine = getSublinesForLine(name);
+		List<String> subLineName = new ArrayList<>();
+		
+		for (WebElement el : subLine) {
+			WebElement elm = el.findElement(lineName).findElement(By.tagName("input"));
+			subLineName.add(elm.getAttribute("value"));
+		}
+		
+		return subLineName;
+	}
+	
+	private List<WebElement> getAllLines(){
+		return driver.findElements(lines);
+	}
+	
+	private List<WebElement> getSublinesForLine(String lineTitle){
+		List<WebElement> subLine = new ArrayList<WebElement>();
+		List<WebElement> lines = getAllLines();
+		int dataLevel = -1;
+		boolean startInsert = false;
+		for(WebElement el : lines){
+			if(getLineName(el).equals(lineTitle)){
+				dataLevel = Integer.parseInt(el.getAttribute("data-level"));
+				startInsert = true;
+				continue;
+			}
+			if(startInsert){
+				int currentLevel = Integer.parseInt(el.getAttribute("data-level"));
+				if(currentLevel > dataLevel){
+					subLine.add(el);
+				}else if (currentLevel <= dataLevel){
+					break;
+				}
+			}
+		}
+		return subLine;
+	}
+	
+	public int getAllSublinesForLine(String name){
+		int subLine = 0;
+		for(WebElement el : tableLines){
+			if(el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name)){
+				subLine = getSublinesForLine(name).size();
+			}
+		}
+		
+		return subLine;
+	}
+	
+	public int allLines(){
+		return getAllLines().size();
+	}
+	
 
 	@Override
 	public boolean isDisplayed() {
