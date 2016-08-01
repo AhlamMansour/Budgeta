@@ -46,8 +46,8 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true)
-	public void addNoteEmployeeLine() {
+	@Test(enabled = false)
+	public void addNoteToLine() {
 		note = WebdriverUtils.getTimeStamp(note);
 		generalTableEdit = new GeneralTableEdit();
 		generalTableEdit.clickOnGeneralFields();
@@ -78,8 +78,8 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 		generalTableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
 
-	@Test(enabled = true)
-	public void flagEmployeeLine() {
+	@Test(enabled = false)
+	public void flagLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
 		generalTableEdit = new GeneralTableEdit();
@@ -93,8 +93,8 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 		generalTableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
 
-	@Test(enabled = true)
-	public void deleteEmployeeLine() {
+	@Test(enabled = false)
+	public void deleteLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
 		generalTableEdit = new GeneralTableEdit();
@@ -160,5 +160,39 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 
 	}
 	
+	}
+	
+	@Test(enabled = false)
+	public void filterAccordingToDepartments() {
+		generalTableEdit = new GeneralTableEdit();
+		generalTableEdit.clickOnGeneralFields();
+		/* 1.get selected option
+		 * 2. get department for all lines
+		 * 3. select new department
+		 * */
+		List<String> allDepartments = generalTableEdit.getAllDepartmentForAllLines();
+		System.out.println(" Departments befor filter: " + allDepartments);
+		generalTableEdit.selectRandomDepartment();
+		
+		allDepartments = generalTableEdit.getAllDepartmentForAllLines();
+		System.out.println(" Departments after filter: " + allDepartments);
+		
+		//validate that all lines have the selected department 
+
+	}
+	
+	
+	
+	@Test(enabled = true)
+	public void filterAccordingToGeography() {
+		generalTableEdit = new GeneralTableEdit();
+		generalTableEdit.clickOnGeneralFields();
+		
+		List<String> allGeographies = generalTableEdit.getAllGeographyForAllLines();
+		System.out.println(" Geography befor filter: " + allGeographies);
+		
+		generalTableEdit.selectRandomGeography();
+		allGeographies = generalTableEdit.getAllGeographyForAllLines();
+		System.out.println(" Geography befor filter: " + allGeographies);
 	}
 }

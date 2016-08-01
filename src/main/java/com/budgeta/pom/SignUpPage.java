@@ -22,6 +22,9 @@ public class SignUpPage extends AbstractPOM {
 	@FindBy(id = "lastName")
 	private WebElement LastName;
 	
+	@FindBy(id = "phoneNumber")
+	private WebElement phoneNumber;
+	
 	@FindBy(id = "email")
 	private WebElement email;
 	
@@ -68,6 +71,10 @@ public class SignUpPage extends AbstractPOM {
 		LastName.sendKeys(lastname);
 	}
 	
+	public void setPhoneNumber(String phonenumber){
+		phoneNumber.sendKeys(phonenumber);
+	}
+	
 	public void setEmail(String e_mail){
 		email.sendKeys(e_mail);
 		
@@ -93,6 +100,11 @@ public class SignUpPage extends AbstractPOM {
 	public void getLastName()
 	{
 		LastName.getAttribute("value");
+	}
+	
+	public void getPhoneNumber()
+	{
+		phoneNumber.getAttribute("value");
 	}
 	
 	public void getEmail(){

@@ -37,6 +37,12 @@ public class GeneralTableEdit extends AbstractPOM {
 	@FindBy(className = "table-mod-btn")
 	private List<WebElement> tableBtn;
 
+	@FindBy(css = "div.department-column span.type-ahead-lazy-inactive-label")
+	private List<WebElement> departmentLine;
+	
+	@FindBy(css = "div.geography-column span.type-ahead-lazy-inactive-label")
+	private List<WebElement> geographyLine;
+
 	@FindBy(className = "budgeta-checkbox")
 	private List<WebElement> checkbox;
 
@@ -45,6 +51,10 @@ public class GeneralTableEdit extends AbstractPOM {
 
 	private final By lineName = By.className("name-column");
 	private final By lines = By.className("table-edit-line");
+
+	private By departments = By.className("department-filter-select");
+
+	private By geography = By.className("geo-filter-select");
 
 	private SideDropDown HeadcountDropDown;
 	private SideDropDown DepartmentsDropDown;
@@ -151,7 +161,7 @@ public class GeneralTableEdit extends AbstractPOM {
 	public void ClickOnDelete(int Index) {
 		WebElement el = tableLines.get(Index).findElement(By.className("delete_budget"));
 		WebdriverUtils.click(el);
-		//el.click();
+		// el.click();
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		WebdriverUtils.waitForElementToBeFound(driver, By.className("modal-content"));
 
@@ -259,13 +269,14 @@ public class GeneralTableEdit extends AbstractPOM {
 		boolean flag = false;
 		for (WebElement el : tableLines) {
 			if (el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name)) {
-					flag = true;
+				flag = true;
 			}
 
 		}
 
 		return flag;
 	}
+
 	public List<Integer> getIndexOfLine(String name) {
 		List<Integer> lineIndex = new ArrayList<>();
 		int i = 0;
@@ -291,20 +302,19 @@ public class GeneralTableEdit extends AbstractPOM {
 
 		return lineIndex;
 	}
-	
+
 	public int numberOfSameLine(String name) {
 		return getIndexOfLine(name).size();
 	}
-	
+
 	public int numberOfSameLineInSameLevel(String name, int level) {
 		return getIndexOfLineBylevel(name, level).size();
 	}
-	
-	
-	public void renameLine(String name, String text){
+
+	public void renameLine(String name, String text) {
 		for (WebElement el : tableLines) {
 			WebElement elm = el.findElement(lineName).findElement(By.tagName("input"));
-			if (elm.getAttribute("value").equals(name)){
+			if (elm.getAttribute("value").equals(name)) {
 				Actions act = new Actions(driver);
 				act.moveToElement(el).build().perform();
 				el.findElement(lineName).click();
@@ -312,100 +322,162 @@ public class GeneralTableEdit extends AbstractPOM {
 				elm.sendKeys(text);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				elm.sendKeys(Keys.ENTER);
-//				el.findElement(By.className("account-id-column")).click();
-//				act.moveToElement(el).build().perform();
-//				driver.findElements(By.className("column-text")).get(0).click();
+				// el.findElement(By.className("account-id-column")).click();
+				// act.moveToElement(el).build().perform();
+				// driver.findElements(By.className("column-text")).get(0).click();
 				break;
 			}
-			
+
 		}
-		
+
 	}
-	
-	public void renameSubLines(String name, String text){
+
+	public void renameSubLines(String name, String text) {
 		List<WebElement> subLine = getSublinesForLine(name);
 		String sublineText = text;
 		for (WebElement el : subLine) {
 			WebElement elm = el.findElement(lineName).findElement(By.tagName("input"));
-				Actions act = new Actions(driver);
-				act.moveToElement(el).build().perform();
-				el.findElement(lineName).click();
-				elm.clear();
-				sublineText = WebdriverUtils.getTimeStamp(text);
-				elm.sendKeys(sublineText);
-				WebdriverUtils.waitForBudgetaLoadBar(driver);
-				elm.sendKeys(Keys.ENTER);
-				text = text;
-				continue;
+			Actions act = new Actions(driver);
+			act.moveToElement(el).build().perform();
+			el.findElement(lineName).click();
+			elm.clear();
+			sublineText = WebdriverUtils.getTimeStamp(text);
+			elm.sendKeys(sublineText);
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
+			elm.sendKeys(Keys.ENTER);
+			text = text;
+			continue;
 
 		}
 	}
-	
-	public List<String> getAllLinesName(){
+
+	public List<String> getAllLinesName() {
 		List<String> LineName = new ArrayList<>();
-		
+
 		for (WebElement el : tableLines) {
 			WebElement elm = el.findElement(lineName).findElement(By.tagName("input"));
 			LineName.add(elm.getAttribute("value"));
 		}
-		
+
 		return LineName;
 	}
-	
-	public List<String> getSubLinesName(String name){
+
+	public List<String> getSubLinesName(String name) {
 		List<WebElement> subLine = getSublinesForLine(name);
 		List<String> subLineName = new ArrayList<>();
-		
+
 		for (WebElement el : subLine) {
 			WebElement elm = el.findElement(lineName).findElement(By.tagName("input"));
 			subLineName.add(elm.getAttribute("value"));
 		}
-		
+
 		return subLineName;
 	}
-	
-	private List<WebElement> getAllLines(){
+
+	private List<WebElement> getAllLines() {
 		return driver.findElements(lines);
 	}
-	
-	private List<WebElement> getSublinesForLine(String lineTitle){
+
+	private List<WebElement> getSublinesForLine(String lineTitle) {
 		List<WebElement> subLine = new ArrayList<WebElement>();
 		List<WebElement> lines = getAllLines();
 		int dataLevel = -1;
 		boolean startInsert = false;
-		for(WebElement el : lines){
-			if(getLineName(el).equals(lineTitle)){
+		for (WebElement el : lines) {
+			if (getLineName(el).equals(lineTitle)) {
 				dataLevel = Integer.parseInt(el.getAttribute("data-level"));
 				startInsert = true;
 				continue;
 			}
-			if(startInsert){
+			if (startInsert) {
 				int currentLevel = Integer.parseInt(el.getAttribute("data-level"));
-				if(currentLevel > dataLevel){
+				if (currentLevel > dataLevel) {
 					subLine.add(el);
-				}else if (currentLevel <= dataLevel){
+				} else if (currentLevel <= dataLevel) {
 					break;
 				}
 			}
 		}
 		return subLine;
 	}
-	
-	public int getAllSublinesForLine(String name){
+
+	public int getAllSublinesForLine(String name) {
 		int subLine = 0;
-		for(WebElement el : tableLines){
-			if(el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name)){
+		for (WebElement el : tableLines) {
+			if (el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name)) {
 				subLine = getSublinesForLine(name).size();
 			}
 		}
-		
+
 		return subLine;
 	}
-	
-	public int allLines(){
+
+	public int allLines() {
 		return getAllLines().size();
 	}
+
+	public List<String> getAllDepartmentForAllLines() {
+		List<String> departmentsList = new ArrayList<>();
+		for (WebElement el : departmentLine) {
+			departmentsList.add(el.getAttribute("title"));
+			
+
+		}
+
+		return departmentsList;
+
+	}
+
+	public List<String> getAllGeographyForAllLines() {
+		List<String> departmentsList = new ArrayList<>();
+		for (WebElement el : geographyLine) {
+			departmentsList.add(el.getAttribute("title"));
+			
+
+		}
+
+		return departmentsList;
+
+	}
 	
+	// /////////////////
+
+	public void selectSubReportType(String option) {
+		getDepartmentDropDown().selectValue(option);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+
+	public void selectRandomDepartment() {
+		getDepartmentDropDown().selectRandomValue();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+
+	private SideDropDown getDepartmentDropDown() {
+
+		if (DepartmentsDropDown == null) {
+			// for(WebElement el : wrapper.findElements(subReportType)){
+			// if(el.getText().trim().equals("Budget"))
+			DepartmentsDropDown = new SideDropDown(driver.findElement(departments));
+			// }
+		}
+		return DepartmentsDropDown;
+	}
+
+	public void selectRandomGeography() {
+		getGeographyDropDown().selectRandomValue();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+
+	private SideDropDown getGeographyDropDown() {
+
+		if (GeographyDropDown == null) {
+			// for(WebElement el : wrapper.findElements(subReportType)){
+			// if(el.getText().trim().equals("Budget"))
+			GeographyDropDown = new SideDropDown(driver.findElement(geography));
+			// }
+		}
+		return GeographyDropDown;
+	}
 
 	@Override
 	public boolean isDisplayed() {

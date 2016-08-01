@@ -51,6 +51,8 @@ public class SignUpTest extends BudgetaTest{
 		
 		signUpPage.setFirstName(data.get("FirstName"));
 		signUpPage.setLastName(data.get("LastName"));
+		//signUpPage.setPhoneNumber(data.get("PhoneNumber"));
+		signUpPage.setPhoneNumber("11111111111");
 		String email = data.get("email");
 		
 		if(email.contains("@")){
