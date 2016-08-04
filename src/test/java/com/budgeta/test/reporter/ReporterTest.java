@@ -69,6 +69,10 @@ public class ReporterTest extends WrapperTest{
 		reports.selectExcelReportType();
 		reports.selectReports("Selected reports");
 		reports.checkBox(boxToCheck);
+		
+		if (!reports.isBoxChecked(boxToCheck)){
+			reports.checkBox(boxToCheck);
+		}
 		Assert.assertTrue(reports.isBoxChecked(boxToCheck),"Expected the check box ["+boxToCheck+"] to be checked");
 		reports.clickCreate();
 		File f = null;

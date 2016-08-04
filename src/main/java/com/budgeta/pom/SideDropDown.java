@@ -32,7 +32,7 @@ public class SideDropDown extends AbstractPOM {
 			if (str.trim().equals(value)) {
 				el.click();
 				WebdriverUtils.waitForElementToDisappear(driver, By.className("open"));
-				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				//WebdriverUtils.waitForBudgetaBusyBar(driver);
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				return;
 			}
@@ -46,7 +46,7 @@ public class SideDropDown extends AbstractPOM {
 		driver.findElements(dropdownMenu).get(random).click();
 
 		WebdriverUtils.waitForElementToDisappear(driver, By.className("open"));
-		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		//WebdriverUtils.waitForBudgetaBusyBar(driver);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 
 		closeDropDown();
@@ -58,7 +58,7 @@ public class SideDropDown extends AbstractPOM {
 		driver.findElements(dropdownMenu).get(random).click();
 
 		WebdriverUtils.waitForElementToDisappear(driver, By.className("open"));
-		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		//WebdriverUtils.waitForBudgetaBusyBar(driver);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 
 		closeDropDown();

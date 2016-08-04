@@ -192,7 +192,12 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 		System.out.println(" Geography befor filter: " + allGeographies);
 		
 		generalTableEdit.selectRandomGeography();
+		
+		String selectedOption = generalTableEdit.getSelectedGeographyFilterOption();
 		allGeographies = generalTableEdit.getAllGeographyForAllLines();
-		System.out.println(" Geography befor filter: " + allGeographies);
+		
+		for(int i=0; i<allGeographies.size(); i++){
+			Assert.assertEquals(allGeographies.get(i), selectedOption, "Geography not match");
+		}
 	}
 }

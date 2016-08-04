@@ -1,9 +1,12 @@
 package com.budgeta.test.TableEditTest;
 
+import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.budgeta.GeneralTableEdit;
 import com.budgeta.pom.AddNotePopup;
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetaBoard;
@@ -40,7 +43,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false, priority = 1)
 	public void duplicateEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -62,7 +65,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = true, priority = 2)
 	public void addNoteEmployeeLine() {
 		note = WebdriverUtils.getTimeStamp(note);
 		tableEdit = new EmployeeTableEdit();
@@ -94,7 +97,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 		tableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = true, priority = 3)
 	public void flagEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -109,7 +112,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 		tableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false, priority = 4)
 	public void deleteEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -130,5 +133,81 @@ public class EmployeesTableEditTest extends WrapperTest {
 	
 
 	}
+	
+	@Test(enabled = true, priority = 5)
+	public void filterAccordingToHeadcount() {
+		tableEdit = new EmployeeTableEdit();
+		tableEdit.clickOnEmployeeButton();
+		
+		List<String> allTypes = tableEdit.getAllTypeForAllLines();
+		List<String> allStatus = tableEdit.getAllStatusForAllLines();
+		
+		tableEdit.selectRandomType();
+		String selectedOption = tableEdit.getSelectedTypeFilterOption();
+		
+		if(selectedOption.equals("New Hires")){
+			allStatus = tableEdit.getAllStatusForAllLines();
+			for(int i=0; i<allStatus.size(); i++){
+				//Assert.assertEquals(allStatus.get(i), selectedOption, "Status not match");
+				Assert.assertTrue(selectedOption.contains(allStatus.get(i)), "Status not match");
+			}
+		}else{
+			allTypes = tableEdit.getAllTypeForAllLines();
+			
+			for(int i=0; i<allTypes.size(); i++){
+				//Assert.assertEquals(allTypes.get(i), selectedOption, "Type not match");
+				Assert.assertTrue(selectedOption.contains(allTypes.get(i)), "Type not match");
+			}
+		}
+		
+		tableEdit.selectHeadcount("All Headcount");
+		
+	}
+	
+	
+	
+	@Test(enabled = true, priority = 6)
+	public void filterAccordingToDepartment() {
+		tableEdit = new EmployeeTableEdit();
+		tableEdit.clickOnEmployeeButton();
+		
+		List<String> allDepartments = tableEdit.getAllDepartmentForAllLines();
+
+		tableEdit.selectRandomDepartment();
+		String selectedOption = tableEdit.getSelectedDepartmentFilterOption();
+		
+		while(selectedOption.equals("Professional Services")){
+			tableEdit.selectRandomGeography();
+			selectedOption = tableEdit.getSelectedDepartmentFilterOption();
+		}
+		allDepartments = tableEdit.getAllDepartmentForAllLines();
+		
+		for(int i=0; i<allDepartments.size(); i++){
+			Assert.assertEquals(allDepartments.get(i), selectedOption, "Department not match");
+		}
+		tableEdit.selectDepartment("All Departments");
+	}
+	
+	
+	@Test(enabled = true, priority = 7)
+	public void filterAccordingToGeography() {
+		tableEdit = new EmployeeTableEdit();
+		tableEdit.clickOnEmployeeButton();
+		
+		List<String> allGeographies = tableEdit.getAllGeographyForAllLines();
+		
+		tableEdit.selectRandomGeography();
+		
+		String selectedOption = tableEdit.getSelectedGeographyFilterOption();
+		allGeographies = tableEdit.getAllGeographyForAllLines();
+		
+		for(int i=0; i<allGeographies.size(); i++){
+			Assert.assertEquals(allGeographies.get(i), selectedOption, "Geography not match");
+		}
+		
+		tableEdit.selectGeopgraphy("All Geographies");
+	}
+	
+
 
 }

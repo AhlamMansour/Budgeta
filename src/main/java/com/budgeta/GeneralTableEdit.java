@@ -54,8 +54,11 @@ public class GeneralTableEdit extends AbstractPOM {
 
 	private By departments = By.className("department-filter-select");
 
-	private By geography = By.className("geo-filter-select");
+	private By geographies = By.className("geo-filter-select");
 
+	@FindBy(className = "geo-filter-select")
+	private WebElement geography; 
+	
 	private SideDropDown HeadcountDropDown;
 	private SideDropDown DepartmentsDropDown;
 	private SideDropDown GeographyDropDown;
@@ -473,10 +476,14 @@ public class GeneralTableEdit extends AbstractPOM {
 		if (GeographyDropDown == null) {
 			// for(WebElement el : wrapper.findElements(subReportType)){
 			// if(el.getText().trim().equals("Budget"))
-			GeographyDropDown = new SideDropDown(driver.findElement(geography));
+			GeographyDropDown = new SideDropDown(driver.findElement(geographies));
 			// }
 		}
 		return GeographyDropDown;
+	}
+	
+	public String getSelectedGeographyFilterOption(){
+		return geography.findElement(By.className("select2-chosen")).getText();
 	}
 
 	@Override

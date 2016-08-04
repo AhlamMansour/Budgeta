@@ -1,5 +1,6 @@
 package com.budgeta.pom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -37,10 +38,39 @@ public class EmployeeTableEdit extends AbstractPOM {
 	private List<WebElement> linesName;
 
 	private final By lineName = By.className("name-column");
+	private By departments = By.className("department-filter-select");
 
+	@FindBy(className = "department-filter-select")
+	private WebElement department;
+	
+	private By geographies = By.className("geo-filter-select");
+	
+	private By types = By.className("emp-filter-select");
+
+	@FindBy(className = "emp-filter-select")
+	private WebElement type;
+	
+	@FindBy(className = "geo-filter-select")
+	private WebElement geography;
+
+	@FindBy(css = "div.department-column span.type-ahead-lazy-inactive-label")
+	private List<WebElement> departmentLine;
+	
+	@FindBy(css = "div.geography-column span.type-ahead-lazy-inactive-label")
+	private List<WebElement> geographyLine;
+	
+	@FindBy(css = "div.type-column span.line-type")
+	private List<WebElement> typeLine;
+	
+	@FindBy(css = "div.status-column div.text-status")
+	private List<WebElement> statusLine;
+	
+	private final By lines = By.className("employee-edit-line");
+	
 	private SideDropDown HeadcountDropDown;
 	private SideDropDown DepartmentsDropDown;
 	private SideDropDown GeographyDropDown;
+	private SideDropDown TypeDropDown;
 
 	public void clickOnEmployeeButton() {
 		for (WebElement el : tableBtn) {
@@ -254,6 +284,143 @@ public class EmployeeTableEdit extends AbstractPOM {
 			i++;
 		}
 		return i;
+	}
+	
+	///////////////////////////////////////
+	
+	private List<WebElement> getAllLines() {
+		return driver.findElements(lines);
+	}
+	
+	public int allLines() {
+		return getAllLines().size();
+	}
+
+	public List<String> getAllDepartmentForAllLines() {
+		List<String> departmentsList = new ArrayList<>();
+		for (WebElement el : departmentLine) {
+			departmentsList.add(el.getAttribute("title"));
+			
+
+		}
+
+		return departmentsList;
+
+	}
+
+	public List<String> getAllGeographyForAllLines() {
+		List<String> geographyList = new ArrayList<>();
+		for (WebElement el : geographyLine) {
+			geographyList.add(el.getAttribute("title"));
+			
+
+		}
+
+		return geographyList;
+
+	}
+	
+	public List<String> getAllTypeForAllLines() {
+		List<String> typeList = new ArrayList<>();
+		for (WebElement el : typeLine) {
+			typeList.add(el.getAttribute("title"));
+			
+
+		}
+
+		return typeList;
+
+	}
+	
+	public List<String> getAllStatusForAllLines() {
+		List<String> statusList = new ArrayList<>();
+		for (WebElement el : statusLine) {
+			statusList.add(el.getAttribute("title"));
+			
+
+		}
+
+		return statusList;
+
+	}
+	
+	public void selectSubReportType(String option) {
+		getDepartmentDropDown().selectValue(option);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+
+	public void selectRandomDepartment() {
+		getDepartmentDropDown().selectRandomValue();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+
+	private SideDropDown getDepartmentDropDown() {
+
+		if (DepartmentsDropDown == null) {
+			// for(WebElement el : wrapper.findElements(subReportType)){
+			// if(el.getText().trim().equals("Budget"))
+			DepartmentsDropDown = new SideDropDown(driver.findElement(departments));
+			// }
+		}
+		return DepartmentsDropDown;
+	}
+
+	public void selectRandomGeography() {
+		getGeographyDropDown().selectRandomValue();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+
+	private SideDropDown getGeographyDropDown() {
+
+		if (GeographyDropDown == null) {
+			// for(WebElement el : wrapper.findElements(subReportType)){
+			// if(el.getText().trim().equals("Budget"))
+			GeographyDropDown = new SideDropDown(driver.findElement(geographies));
+			// }
+		}
+		return GeographyDropDown;
+	}
+	
+	public void selectRandomType() {
+		getTypeDropDown().selectRandomValue();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
+	public void selectHeadcount(String option) {
+		getTypeDropDown().selectValue(option);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
+	public void selectDepartment(String option) {
+		getDepartmentDropDown().selectValue(option);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+
+	public void selectGeopgraphy(String option) {
+		getGeographyDropDown().selectValue(option);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
+	private SideDropDown getTypeDropDown() {
+
+		if (TypeDropDown == null) {
+			// for(WebElement el : wrapper.findElements(subReportType)){
+			// if(el.getText().trim().equals("Budget"))
+			TypeDropDown = new SideDropDown(driver.findElement(types));
+			// }
+		}
+		return TypeDropDown;
+	}
+	
+	public String getSelectedGeographyFilterOption(){
+		return geography.findElement(By.className("select2-chosen")).getText();
+	}
+	
+	public String getSelectedTypeFilterOption(){
+		return type.findElement(By.className("select2-chosen")).getText();
+	} 
+	public String getSelectedDepartmentFilterOption(){
+		return department.findElement(By.className("select2-chosen")).getText();
 	}
 
 	@Override
