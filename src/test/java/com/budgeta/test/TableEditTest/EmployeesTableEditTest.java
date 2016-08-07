@@ -6,7 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import com.budgeta.GeneralTableEdit;
 import com.budgeta.pom.AddNotePopup;
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetaBoard;
@@ -28,6 +27,8 @@ public class EmployeesTableEditTest extends WrapperTest {
 	SecondaryBoard secondaryBoard;
 	EmployeeTableEdit tableEdit;
 	String note = "Add new note_";
+	String newLineName = "Line to delete_";
+	String duplicateLine = "Line to duplicate";
 
 	@TestFirst
 	@Test(enabled = true)
@@ -43,7 +44,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false, priority = 1)
+	@Test(enabled = true, priority = 1)
 	public void duplicateEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -53,15 +54,39 @@ public class EmployeesTableEditTest extends WrapperTest {
 		tableEdit.selectRandomLine();
 		int indexOfSelectedLine = tableEdit.getIndexOfSlectedLine();
 		String selectedLine = tableEdit.getLineNameByIndex(indexOfSelectedLine);
+		int numberOfAllLines = tableEdit.getNumberOflines();
+
+		while (indexOfSelectedLine == numberOfAllLines - 2) {
+			tableEdit.unSelectLineByIndex(indexOfSelectedLine);
+			tableEdit.selectRandomLine();
+			indexOfSelectedLine = tableEdit.getIndexOfSlectedLine();
+			selectedLine = tableEdit.getLineNameByIndex(indexOfSelectedLine);
+		}
+
+		duplicateLine = WebdriverUtils.getTimeStamp(duplicateLine);
+		tableEdit.renameLine(selectedLine, duplicateLine);
+
+		selectedLine = tableEdit.getLineNameByIndex(indexOfSelectedLine);
+		int numberOfLinesBeforDuplicate = tableEdit.getNumberOfSpecificLine(selectedLine);
 
 		// tableEdit.duplicateLineBylineName(selectedLine);
 		tableEdit.duplicateLine(selectedLine, indexOfSelectedLine);
 
-		int DuplicatedEmployeesLines = tableEdit.getNumberOflines();
-		Assert.assertEquals(EmployeesLines + 1, DuplicatedEmployeesLines, "the lines befor duplicated are : " + EmployeesLines + " Lines after Duplicated are: "
-				+ DuplicatedEmployeesLines);
-		
-		tableEdit.unSelectLineByIndex(indexOfSelectedLine +1 );
+		int numberOfLinesAfterDuplicate = tableEdit.getNumberOfSpecificLine(selectedLine);
+
+		Assert.assertEquals(numberOfLinesAfterDuplicate, numberOfLinesBeforDuplicate + 1, "the lines before duplicated are : " + numberOfLinesBeforDuplicate
+				+ " Lines after Duplicated are: " + numberOfLinesAfterDuplicate);
+		// get number of lines contains line name
+
+		// assert true number lines
+
+		// int DuplicatedEmployeesLines = tableEdit.getNumberOflines();
+		// Assert.assertEquals(EmployeesLines + 1, DuplicatedEmployeesLines,
+		// "the lines befor duplicated are : " + EmployeesLines +
+		// " Lines after Duplicated are: "
+		// + DuplicatedEmployeesLines);
+
+		tableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 
 	}
 
@@ -92,7 +117,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 		String noteFormText = note.getNoteText();
 
 		Assert.assertEquals(addedNote, noteFormText, "the note not added to the line, the new note is: " + addedNote + " the current note is: " + noteFormText);
-		
+
 		topHeaderBar.openTableEditTab();
 		tableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
@@ -112,7 +137,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 		tableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
 
-	@Test(enabled = false, priority = 4)
+	@Test(enabled = true, priority = 4)
 	public void deleteEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -122,92 +147,99 @@ public class EmployeesTableEditTest extends WrapperTest {
 		tableEdit.selectRandomLine();
 		int indexOfSelectedLine = tableEdit.getIndexOfSlectedLine();
 		String selectedLine = tableEdit.getLineNameByIndex(indexOfSelectedLine);
+
+		newLineName = WebdriverUtils.getTimeStamp(newLineName);
+		tableEdit.renameLine(selectedLine, newLineName);
+
+		selectedLine = tableEdit.getLineNameByIndex(indexOfSelectedLine);
 		tableEdit.deleteLineBylineName(selectedLine, indexOfSelectedLine);
 		DeletePopup ConfirmDelete = new DeletePopup();
 		ConfirmDelete.clickConfirm();
 		int EmployeesLinesAfterDeleteLine = tableEdit.getNumberOflines();
+		// is line exist
 
-		Assert.assertEquals(EmployeesLinesAfterDeleteLine, EmployeesLinesBeforeDeleteLine - 1, "Line is not deleted, Lines after deleted line: "
-				+ EmployeesLinesAfterDeleteLine + " Lines before deleted line: " + EmployeesLinesBeforeDeleteLine);
-		
-	
+		Assert.assertFalse(tableEdit.isLineExistByIndex(selectedLine, indexOfSelectedLine), "Line is not deleted: " + selectedLine);
+
+		// Assert.assertEquals(EmployeesLinesAfterDeleteLine,
+		// EmployeesLinesBeforeDeleteLine - 1,
+		// "Line is not deleted, Lines after deleted line: " +
+		// EmployeesLinesAfterDeleteLine + " Lines before deleted line: " +
+		// EmployeesLinesBeforeDeleteLine);
 
 	}
-	
+
 	@Test(enabled = true, priority = 5)
 	public void filterAccordingToHeadcount() {
 		tableEdit = new EmployeeTableEdit();
 		tableEdit.clickOnEmployeeButton();
-		
+
 		List<String> allTypes = tableEdit.getAllTypeForAllLines();
 		List<String> allStatus = tableEdit.getAllStatusForAllLines();
-		
+
 		tableEdit.selectRandomType();
 		String selectedOption = tableEdit.getSelectedTypeFilterOption();
-		
-		if(selectedOption.equals("New Hires")){
+
+		if (selectedOption.equals("New Hires")) {
 			allStatus = tableEdit.getAllStatusForAllLines();
-			for(int i=0; i<allStatus.size(); i++){
-				//Assert.assertEquals(allStatus.get(i), selectedOption, "Status not match");
-				Assert.assertTrue(selectedOption.contains(allStatus.get(i)), "Status not match");
+			for (int i = 0; i < allStatus.size(); i++) {
+				// Assert.assertEquals(allStatus.get(i), selectedOption,
+				// "Status not match");
+				Assert.assertTrue(selectedOption.toLowerCase().contains(allStatus.get(i).toLowerCase()), "Status not match");
 			}
-		}else{
+		} else {
 			allTypes = tableEdit.getAllTypeForAllLines();
-			
-			for(int i=0; i<allTypes.size(); i++){
-				//Assert.assertEquals(allTypes.get(i), selectedOption, "Type not match");
+
+			for (int i = 0; i < allTypes.size(); i++) {
+				// Assert.assertEquals(allTypes.get(i), selectedOption,
+				// "Type not match");
 				Assert.assertTrue(selectedOption.contains(allTypes.get(i)), "Type not match");
 			}
 		}
-		
+
 		tableEdit.selectHeadcount("All Headcount");
-		
+
 	}
-	
-	
-	
+
 	@Test(enabled = true, priority = 6)
 	public void filterAccordingToDepartment() {
 		tableEdit = new EmployeeTableEdit();
 		tableEdit.clickOnEmployeeButton();
-		
+
 		List<String> allDepartments = tableEdit.getAllDepartmentForAllLines();
 
 		tableEdit.selectRandomDepartment();
 		String selectedOption = tableEdit.getSelectedDepartmentFilterOption();
-		
-		while(selectedOption.equals("Professional Services")){
+
+		while (selectedOption.equals("Professional Services")) {
 			tableEdit.selectRandomGeography();
 			selectedOption = tableEdit.getSelectedDepartmentFilterOption();
 		}
 		allDepartments = tableEdit.getAllDepartmentForAllLines();
-		
-		for(int i=0; i<allDepartments.size(); i++){
+
+		for (int i = 0; i < allDepartments.size(); i++) {
 			Assert.assertEquals(allDepartments.get(i), selectedOption, "Department not match");
 		}
 		tableEdit.selectDepartment("All Departments");
 	}
-	
-	
+
 	@Test(enabled = true, priority = 7)
 	public void filterAccordingToGeography() {
 		tableEdit = new EmployeeTableEdit();
 		tableEdit.clickOnEmployeeButton();
-		
+
 		List<String> allGeographies = tableEdit.getAllGeographyForAllLines();
-		
+
 		tableEdit.selectRandomGeography();
-		
+
 		String selectedOption = tableEdit.getSelectedGeographyFilterOption();
 		allGeographies = tableEdit.getAllGeographyForAllLines();
-		
-		for(int i=0; i<allGeographies.size(); i++){
+
+		for (int i = 0; i < allGeographies.size(); i++) {
 			Assert.assertEquals(allGeographies.get(i), selectedOption, "Geography not match");
 		}
-		
+
 		tableEdit.selectGeopgraphy("All Geographies");
 	}
 	
-
 
 }

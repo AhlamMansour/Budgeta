@@ -443,6 +443,19 @@ public class GeneralTableEdit extends AbstractPOM {
 
 	}
 	
+	public boolean isLineRemovedByIndex(String name) {
+		boolean flag = false;
+		for (WebElement el : tableLines) {
+			if (el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name)) {
+				if (WebdriverUtils.hasClass("scenario-line-removed", el))
+					flag = true;
+			}
+
+		}
+
+		return flag;
+	}
+	
 	// /////////////////
 
 	public void selectSubReportType(String option) {

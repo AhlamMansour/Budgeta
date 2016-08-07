@@ -46,7 +46,7 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void addNoteToLine() {
 		note = WebdriverUtils.getTimeStamp(note);
 		generalTableEdit = new GeneralTableEdit();
@@ -78,7 +78,7 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 		generalTableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void flagLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -93,7 +93,7 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 		generalTableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void deleteLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -162,7 +162,7 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 	
 	}
 	
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void filterAccordingToDepartments() {
 		generalTableEdit = new GeneralTableEdit();
 		generalTableEdit.clickOnGeneralFields();

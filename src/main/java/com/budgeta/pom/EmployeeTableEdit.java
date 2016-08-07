@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.galilsoftware.AF.core.AbstractPOM;
@@ -276,6 +278,16 @@ public class EmployeeTableEdit extends AbstractPOM {
 		return i;
 	}
 
+	public int getNumberOfSpecificLine(String name)
+	{
+		int i = 0;
+		for (WebElement el : employeeEditLine) {
+			if (el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").contains(name))
+				i++;
+		}
+		return i;
+	}
+	
 	public int getIndexOfSlectedLine() {
 		int i = 0;
 		for (WebElement el : employeeEditLine) {
@@ -422,6 +434,55 @@ public class EmployeeTableEdit extends AbstractPOM {
 	public String getSelectedDepartmentFilterOption(){
 		return department.findElement(By.className("select2-chosen")).getText();
 	}
+	
+	
+	public void renameLine(String name, String text) {
+		for (WebElement el : employeeEditLine) {
+			WebElement elm = el.findElement(lineName).findElement(By.tagName("input"));
+			if (elm.getAttribute("value").equals(name)) {
+				Actions act = new Actions(driver);
+				act.moveToElement(el).build().perform();
+				el.findElement(lineName).click();
+				elm.clear();
+				elm.sendKeys(text);
+				WebdriverUtils.waitForBudgetaLoadBar(driver);
+				elm.sendKeys(Keys.ENTER);
+				// el.findElement(By.className("account-id-column")).click();
+				// act.moveToElement(el).build().perform();
+				// driver.findElements(By.className("column-text")).get(0).click();
+				break;
+			}
+
+		}
+
+	}
+	
+	public boolean isLineExistByIndex(String name, int index) {
+		boolean flag = false;
+		for (WebElement el : employeeEditLine) {
+			if (el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name)) {
+				if (getIndexOfSlectedLine() == index)
+					flag = true;
+			}
+
+		}
+
+		return flag;
+	}
+	
+	public boolean isLineRemovedByIndex(String name, int index) {
+		boolean flag = false;
+		for (WebElement el : employeeEditLine) {
+			if (el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name)) {
+				if (WebdriverUtils.hasClass("scenario-line-removed", el))
+					flag = true;
+			}
+
+		}
+
+		return flag;
+	}
+	
 
 	@Override
 	public boolean isDisplayed() {
