@@ -28,6 +28,7 @@ public class Employees_ScenarioVsBudget extends WrapperTest {
 	SecondaryBoard secondaryBoard;
 	EmployeeTableEdit tableEdit;
 	String newLineName = "Line to rename_";
+	String scenarioNameToDeleteLines = "new employee scenario to test delete lines_";
 
 	@TestFirst
 	@Test(enabled = true)
@@ -116,8 +117,16 @@ public class Employees_ScenarioVsBudget extends WrapperTest {
 	public void deleteEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
+		scenarioNameToDeleteLines = WebdriverUtils.getTimeStamp(scenarioNameToDeleteLines);
 		topHeaderBar.openScenariowindow();
-		topHeaderBar.selectScenario(scenarioName);
+		Scenarios scenarios = new Scenarios();
+
+		CreateNewScenarioPopup popup = scenarios.createNewScenario();
+		Assert.assertTrue(popup.isDisplayed(), "expected create new scenario popup to be displayed");
+		popup.setName(scenarioNameToDeleteLines);
+		popup.clickConfirm();
+		topHeaderBar.openScenariowindow();
+		topHeaderBar.selectScenario(scenarioNameToDeleteLines);
 		tableEdit = new EmployeeTableEdit();
 		tableEdit.clickOnEmployeeButton();
 		tableEdit.selectRandomLine();

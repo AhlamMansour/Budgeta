@@ -27,7 +27,8 @@ public class GeneralFields_ScenarioVsBudget extends WrapperTest{
 	
 	
 	Scenarios scenarios;
-	String scenarioName = "new general , priority = 3scenario to test";
+	String scenarioName = "new general scenario to test";
+	String scenarioNameToDeleteLines = "new general scenario to test delete lines_";
 	protected BudgetaBoard board;
 	SecondaryBoard secondaryBoard;
 	GeneralTableEdit generalTableEdit;
@@ -122,7 +123,8 @@ public class GeneralFields_ScenarioVsBudget extends WrapperTest{
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
 		topHeaderBar.openScenariowindow();
-		topHeaderBar.selectScenario(scenarioName);
+		scenarioNameToDeleteLines = WebdriverUtils.getTimeStamp(scenarioNameToDeleteLines);
+		topHeaderBar.selectScenario(scenarioNameToDeleteLines);
 		generalTableEdit = new GeneralTableEdit();
 		generalTableEdit.clickOnGeneralFields();
 		generalTableEdit.selectRandomLine();
@@ -150,6 +152,17 @@ public class GeneralFields_ScenarioVsBudget extends WrapperTest{
 	public void deleteLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
+		scenarioNameToDeleteLines = WebdriverUtils.getTimeStamp(scenarioNameToDeleteLines);
+		topHeaderBar.openScenariowindow();
+		Scenarios scenarios = new Scenarios();
+
+			CreateNewScenarioPopup popup = scenarios.createNewScenario();
+			Assert.assertTrue(popup.isDisplayed(), "expected create new scenario popup to be displayed");
+			popup.setName(scenarioNameToDeleteLines);
+			popup.clickConfirm();
+			topHeaderBar.openScenariowindow();
+			topHeaderBar.selectScenario(scenarioNameToDeleteLines);
+			
 		generalTableEdit = new GeneralTableEdit();
 		generalTableEdit.clickOnGeneralFields();
 		int EmployeesLinesBeforeDeleteLine = generalTableEdit.getNumberOflines();
@@ -185,7 +198,7 @@ public class GeneralFields_ScenarioVsBudget extends WrapperTest{
 			selectedLine = generalTableEdit.getLineNameByIndex(indexOfSelectedLine);
 			
 			topHeaderBar.openScenariowindow();
-			topHeaderBar.selectScenario(scenarioName);
+			topHeaderBar.selectScenario(scenarioNameToDeleteLines);
 	
 			generalTableEdit.deleteLineBylineName(selectedLine, indexOfSelectedLine);
 //			DeletePopup ConfirmDelete = new DeletePopup();
@@ -210,7 +223,7 @@ public class GeneralFields_ScenarioVsBudget extends WrapperTest{
 			selectedLine = generalTableEdit.getLineNameByIndex(indexOfSelectedLine);
 			
 			topHeaderBar.openScenariowindow();
-			topHeaderBar.selectScenario(scenarioName);
+			topHeaderBar.selectScenario(scenarioNameToDeleteLines);
 			
 			generalTableEdit.deleteLineBylineName(selectedLine, indexOfSelectedLine);
 //			DeletePopup ConfirmDelete = new DeletePopup();
