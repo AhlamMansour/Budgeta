@@ -236,7 +236,7 @@ public class GeneralSection extends AbstractPOM{
 	
 	private WebElement getAccountNumber(){
 		for(WebElement el : accountNumbers){
-			if (el.getText().equals("Account #"))
+			if (el.getText().equals("Actuals account"))
 				return el.findElement(By.xpath(".."));
 		}
 		return null;
