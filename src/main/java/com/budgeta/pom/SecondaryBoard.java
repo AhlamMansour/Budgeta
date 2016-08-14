@@ -20,7 +20,6 @@ import com.budgeta.test.BudgetaUtils;
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
-import com.thoughtworks.selenium.webdriven.commands.GetAttribute;
 
 public class SecondaryBoard extends AbstractPOM {
 

@@ -1,19 +1,14 @@
 package com.budgeta.test;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Multipart;
 
-import org.bouncycastle.crypto.modes.SICBlockCipher;
 import org.testng.Assert;
 
-import com.budgeta.pom.GeneralSection;
 import com.galilsoftware.AF.core.utilities.EmailReader;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
