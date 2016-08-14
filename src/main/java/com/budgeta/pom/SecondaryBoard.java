@@ -1372,62 +1372,62 @@ public class SecondaryBoard extends AbstractPOM {
 		return false;
 	}
 	
-	public Map<String, List<String>> allEmployees() {
-		List<WebElement> lines = getAllLines();
-	//	List<String> employees = new ArrayList<>();
-		Map<String, List<String>> employees = new HashMap<String, List<String>>();
-		for (WebElement el : lines) {
-				WebElementUtils.hoverOverField(el, driver, null);
-				if(WebdriverUtils.hasClass("has-children", el)){
-					try{
-						el.click();
-						GeneralSection dates = new GeneralSection();
-						if(!dates.getHireDateRangeFrom().equals("MM/YYYY")){
-							parentFromDate = dates.getHireDateRangeFrom();
-							parentToDate = dates.getHireDateRangeTo();
-						}
-						
-					}catch(ElementNotVisibleException e){
-						continue;
-					}
-					
-				}
-				if (el.findElement(lineType).getText().equals("Employee") || el.findElement(lineType).getText().equals("Contractor") ){
-					String employeeName = el.findElement(By.className("budget-name-text-display")).getText();
-					el.click();
-					GeneralSection dates = new GeneralSection();
-					String fromDate = dates.getHireDateRangeFrom();
-					String toDate = dates.getHireDateRangeTo();
-					if(fromDate.equals("MM/YYYY")){
-						fromDate = parentFromDate;
-						toDate = parentToDate;
-						fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(fromDate.split("/")[0]));
-						fromYear = fromDate.split("/")[1];
-						toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
-						toYear = toDate.split("/")[1];
-						List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
-						//employees.add(employeeName + "," + fromDate + "-" + toDate);
-						employees.put(employeeName, expectedDates);
-						System.out.println(employees);
-						
-						
-					}else{
-						fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(fromDate.split("/")[0]));
-						fromYear = fromDate.split("/")[1];
-						toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
-						toYear = toDate.split("/")[1];
-						List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
-						//employees.add(employeeName + "," + fromDate + "-" + toDate);
-						employees.put(employeeName, expectedDates);
-						System.out.println(employees);
-					}
-					
-				}
-				
-			}
-		return employees;
-		
-	}
+//	public Map<String, List<String>> allEmployees() {
+//		List<WebElement> lines = getAllLines();
+//	//	List<String> employees = new ArrayList<>();
+//		Map<String, List<String>> employees = new HashMap<String, List<String>>();
+//		for (WebElement el : lines) {
+//				WebElementUtils.hoverOverField(el, driver, null);
+//				if(WebdriverUtils.hasClass("has-children", el)){
+//					try{
+//						el.click();
+//						GeneralSection dates = new GeneralSection();
+//						if(!dates.getHireDateRangeFrom().equals("MM/YYYY")){
+//							parentFromDate = dates.getHireDateRangeFrom();
+//							parentToDate = dates.getHireDateRangeTo();
+//						}
+//						
+//					}catch(ElementNotVisibleException e){
+//						continue;
+//					}
+//					
+//				}
+//				if (el.findElement(lineType).getText().equals("Employee") || el.findElement(lineType).getText().equals("Contractor") ){
+//					String employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+//					el.click();
+//					GeneralSection dates = new GeneralSection();
+//					String fromDate = dates.getHireDateRangeFrom();
+//					String toDate = dates.getHireDateRangeTo();
+//					if(fromDate.equals("MM/YYYY")){
+//						fromDate = parentFromDate;
+//						toDate = parentToDate;
+//						fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(fromDate.split("/")[0]));
+//						fromYear = fromDate.split("/")[1];
+//						toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
+//						toYear = toDate.split("/")[1];
+//						List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
+//						//employees.add(employeeName + "," + fromDate + "-" + toDate);
+//						employees.put(employeeName, expectedDates);
+//						System.out.println(employees);
+//						
+//						
+//					}else{
+//						fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(fromDate.split("/")[0]));
+//						fromYear = fromDate.split("/")[1];
+//						toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
+//						toYear = toDate.split("/")[1];
+//						List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
+//						//employees.add(employeeName + "," + fromDate + "-" + toDate);
+//						employees.put(employeeName, expectedDates);
+//						System.out.println(employees);
+//					}
+//					
+//				}
+//				
+//			}
+//		return employees;
+//		
+//	}
 
 	public void addNewline() {
 		clickAddLineButton();
