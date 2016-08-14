@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Budgeta Tests" parallel="tests" thread-count="6"
+<suite name="Budgeta Tests" parallel="tests" thread-count="1"
 	verbose="3">
 
 	<listeners>
@@ -56,11 +56,11 @@
 
 
 
-<!-- 	<test name="Login Test"> -->
-<!-- 		<classes> -->
-<!-- 			<class name="com.budgeta.test.login.LoginTest"></class> -->
-<!-- 		</classes> -->
-<!-- 	</test> -->
+	<test name="Login Test">
+		<classes>
+			<class name="com.budgeta.test.login.LoginTest"></class>
+		</classes>
+	</test>
 
 <!-- 	<test name="Scenarios Test"> -->
 <!-- 		<classes> -->
@@ -105,23 +105,23 @@
 <!-- 		</classes> -->
 <!-- 	</test> -->
 
-	<test name="Budgeta Structure Test">
-		<classes>
-			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Budgeta Structure Test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
-	<test name="Budgeta Structure Test Part2">
-		<classes>
-			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part2"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Budgeta Structure Test Part2"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part2"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
-	<test name="Budgeta Structure Test Part3">
-		<classes>
-			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part3"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Budgeta Structure Test Part3"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.budgetaStructure.BudgetaStructureTest_Part3"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
 <!-- 	<test name="Budgeta Settings"> -->
 <!-- 		<classes> -->
