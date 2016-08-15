@@ -1,7 +1,9 @@
 package com.budgeta.pom;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -23,6 +25,8 @@ public class Sheets extends AbstractPOM {
 
 	private SideDropDown reporterDropDown;
 	private SideDropDown subReporterDropDown;
+	private SideDropDown HeadcountReporterDropDown;
+	private SideDropDown employeestReporterDropDown;
 	private SideDropDown subActualReporterDropDown;
 	private SideDropDown currencyTypeDropDown;
 
@@ -35,6 +39,9 @@ public class Sheets extends AbstractPOM {
 	@FindBy(className = "ember-list-item-view")
 	private List<WebElement> rows;
 
+	@FindBy(className = "forecast-footer")
+	private WebElement totalrow;
+
 	@FindBy(css = "div.column-wrapper div.header div.column")
 	private List<WebElement> columns;
 
@@ -46,10 +53,10 @@ public class Sheets extends AbstractPOM {
 	// private By rowValues =
 	// By.cssSelector("div.scroll-columns div.column span span");
 	private By rowValues = By.cssSelector("div.scroll-columns div.forecast-row span");
-	
+
 	@FindBy(css = "div.scroll-columns div.forecast-row span")
 	private List<WebElement> rowValue;
-	
+
 	private By rowTotal = By.className("total-column");
 
 	// private By reportType =
@@ -150,7 +157,7 @@ public class Sheets extends AbstractPOM {
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		return res;
 	}
-	
+
 	public List<String> getAllValuesOfRows(int rowIndex) {
 		List<WebElement> values = rows.get(rowIndex).findElements(rowValues);
 		List<String> res = new ArrayList<>();
@@ -164,26 +171,54 @@ public class Sheets extends AbstractPOM {
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		return res;
 	}
-	
-	public List<String> getAllValuesOfRowByTitle(String title) {
-	//	List<WebElement> values = rows.get(rowIndex).findElements(rowValues);
+
+	public List<String> getAllValuesOfTotalRow() {
+		List<WebElement> values = totalrow.findElements(rowValues);
 		List<String> res = new ArrayList<>();
-		for (WebElement el : rows) {
-			if(el.isDisplayed()){
-				if(el.findElement(rowTitle).getText().equals(title)){
-					int indexOftitle = getIndexOfRowName(title);
-					res = getAllValuesOfRows(indexOftitle);
-					break;
-					
-				}
-			}
-		
+		for (WebElement el : values) {
+			String value = el.getText();
+			if (value.equals("-"))
+				res.add("0");
+			else
+				res.add(value.replaceAll("[^0-9 .]", "").trim());
 		}
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		return res;
 	}
 
-	
+	public List<String> getAllValuesOfRowByTitle(String title) {
+		// List<WebElement> values = rows.get(rowIndex).findElements(rowValues);
+		List<String> res = new ArrayList<>();
+		for (WebElement el : rows) {
+			if (el.isDisplayed()) {
+				if (el.findElement(rowTitle).getText().equals(title)) {
+					int indexOftitle = getIndexOfRowName(title);
+					res = getAllValuesOfRows(indexOftitle);
+					break;
+
+				}
+			}
+
+		}
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		return res;
+	}
+
+	public List<String> getAllValuesOfTotalRow(String title) {
+		// List<WebElement> values = rows.get(rowIndex).findElements(rowValues);
+		List<String> res = new ArrayList<>();
+
+		if (totalrow.isDisplayed()) {
+			if (totalrow.findElement(rowTitle).getText().equals(title)) {
+				int indexOftitle = getIndexOfRowName(title);
+				res = getAllValuesOfTotalRow();
+
+			}
+		}
+
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		return res;
+	}
 
 	public List<String> getAllValuesOfRowByTitle(int rowIndex, String title) {
 		List<String> rowValues = getAllValuesOfRow(rowIndex);
@@ -225,7 +260,7 @@ public class Sheets extends AbstractPOM {
 			if (el.isDisplayed()) {
 				el.click();
 				if (el.findElement(rowTitle).getText().equals(title)) {
-					//WebElementUtils.hoverOverField(el, driver, null);
+					// WebElementUtils.hoverOverField(el, driver, null);
 					el.findElement(rowTitle).click();
 					// WebElementUtils.clickElementEvent(driver, el);
 					break;
@@ -287,7 +322,17 @@ public class Sheets extends AbstractPOM {
 		getSubReporterDropDown().selectValue(option);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
-	
+
+	public void selectHeadcount(String option) {
+		getHeadCountReporterDropDown().selectValue(option);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+
+	public void selectEmployees(String option) {
+		getEmployeesReporterDropDown().selectValue(option);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+
 	public void selectRepeatReportType(String option) {
 		getRepeatReporterDropDown().selectValue(option);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
@@ -325,6 +370,28 @@ public class Sheets extends AbstractPOM {
 			// }
 		}
 		return subReporterDropDown;
+	}
+
+	private SideDropDown getHeadCountReporterDropDown() {
+
+		if (HeadcountReporterDropDown == null) {
+			// for(WebElement el : wrapper.findElements(subReportType)){
+			// if(el.getText().trim().equals("Budget"))
+			HeadcountReporterDropDown = new SideDropDown(driver.findElements(subReportType).get(1).findElement(By.xpath("..")));
+			// }
+		}
+		return HeadcountReporterDropDown;
+	}
+
+	private SideDropDown getEmployeesReporterDropDown() {
+
+		if (employeestReporterDropDown == null) {
+			// for(WebElement el : wrapper.findElements(subReportType)){
+			// if(el.getText().trim().equals("Budget"))
+			employeestReporterDropDown = new SideDropDown(driver.findElements(subReportType).get(2).findElement(By.xpath("..")));
+			// }
+		}
+		return employeestReporterDropDown;
 	}
 
 	private SideDropDown getSubActualReporterDropDown() {
@@ -369,6 +436,37 @@ public class Sheets extends AbstractPOM {
 
 	public String getDateRangeTo() {
 		return wrapper.findElement(dateRangeTo).findElement(By.tagName("input")).getAttribute("placeholder");
+	}
+
+	public Map<String, List<String>> HeadcountCost() {
+		Map<String, List<String>> allCost = new HashMap<String, List<String>>();
+
+		for (WebElement el : rows) {
+			if (WebdriverUtils.hasClass("collapsed", el.findElement(By.className("fixed-columns")))) {
+				el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).click();
+		
+			}
+		}
+
+		for (WebElement elm : rows) {
+			String lineName = elm.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.name-text")).getText();
+			List<WebElement> values = elm.findElements(rowValues);
+			List<String> res = new ArrayList<>();
+			for (WebElement el : values) {
+				String value = el.getText();
+				if (value.equals("-"))
+					res.add(value);
+				else
+					res.add(value.replaceAll("[^0-9 .]", "").trim());
+			}
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
+			
+			
+			allCost.put(lineName, res);
+			System.out.println(allCost);
+		}
+
+		return allCost;
 	}
 
 	@Override

@@ -42,12 +42,12 @@ public class ViewTest extends WrapperTest {
 	GeneralSection generalSection;
 	TopHeaderBar topHeaderBar;
 
-	@BeforeMethod
-	private void initTest() {
-
-		driver.manage().window().maximize();
-
-	}
+//	@BeforeMethod
+//	private void initTest() {
+//
+//		driver.manage().window().maximize();
+//
+//	}
 
 	@TestFirst
 	@Test(enabled = true)

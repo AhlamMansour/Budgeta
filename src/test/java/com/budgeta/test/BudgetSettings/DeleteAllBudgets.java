@@ -34,13 +34,13 @@ public class DeleteAllBudgets extends WrapperTest{
 	SuccessPage successPage;
 	SmallPopup smallPopup;
 
-	@BeforeMethod
-	private void initTest() {	
-		
-		driver.manage().window().maximize();
-		
-		
-	}
+//	@BeforeMethod
+//	private void initTest() {	
+//		
+//		driver.manage().window().maximize();
+//		
+//		
+//	}
 	
 	@TestFirst
 	@Test(enabled = true)

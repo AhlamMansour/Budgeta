@@ -33,12 +33,12 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	SecondaryBoard secondary;
 	
 
-	@BeforeMethod
-	private void initTest() {
-
-		driver.manage().window().maximize();
-
-	}
+//	@BeforeMethod
+//	private void initTest() {
+//
+//		driver.manage().window().maximize();
+//
+//	}
 
 	@TestFirst
 	@Test(enabled = true)
