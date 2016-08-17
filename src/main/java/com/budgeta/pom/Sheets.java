@@ -53,6 +53,11 @@ public class Sheets extends AbstractPOM {
 	// private By rowValues =
 	// By.cssSelector("div.scroll-columns div.column span span");
 	private By rowValues = By.cssSelector("div.scroll-columns div.forecast-row span");
+	
+	private By costValues = By.className("cost-value");
+	
+	private By headcountValue = By.className("headcount-value");
+	
 
 	@FindBy(css = "div.scroll-columns div.forecast-row span")
 	private List<WebElement> rowValue;
@@ -64,6 +69,8 @@ public class Sheets extends AbstractPOM {
 	private By subReportType = By.className("select2-choice");
 
 	private By fillterView = By.className("dropdown");
+	
+	private By newRows = By.className("ember-list-item-view");
 
 	public Sheets() {
 		WebdriverUtils.elementToHaveClass(wrapper, "active");
@@ -438,19 +445,40 @@ public class Sheets extends AbstractPOM {
 		return wrapper.findElement(dateRangeTo).findElement(By.tagName("input")).getAttribute("placeholder");
 	}
 
+	
+	
+	private List<WebElement> openAllRows(List<WebElement> els, int level) {
+		if (els == null || els.size() == 0)
+			return null;
+		for (WebElement el : els) {
+			WebElement elm = el.findElement(By.className("fixed-columns"));
+			if (WebdriverUtils.hasClass("collapsed", elm)) {
+				int newLevel = Integer.parseInt(elm.getAttribute("data-level"));
+				if (newLevel - level == 1 || newLevel - level == 0 || newLevel == 1) {
+					el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).click();
+					openAllRows(driver.findElements(newRows), newLevel);
+				}
+			}
+		}
+		return null;
+	}
+	
+	
 	public Map<String, List<String>> HeadcountCost() {
 		Map<String, List<String>> allCost = new HashMap<String, List<String>>();
-
+				
 		for (WebElement el : rows) {
-			if (WebdriverUtils.hasClass("collapsed", el.findElement(By.className("fixed-columns")))) {
+			WebElement elm = el.findElement(By.className("fixed-columns"));
+			if (WebdriverUtils.hasClass("collapsed", elm)) {
 				el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).click();
+				openAllRows(driver.findElements(newRows) , Integer.parseInt(elm.getAttribute("data-level")));
 		
 			}
 		}
 
 		for (WebElement elm : rows) {
 			String lineName = elm.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.name-text")).getText();
-			List<WebElement> values = elm.findElements(rowValues);
+			List<WebElement> values = elm.findElements(costValues);
 			List<String> res = new ArrayList<>();
 			for (WebElement el : values) {
 				String value = el.getText();
@@ -469,6 +497,39 @@ public class Sheets extends AbstractPOM {
 		return allCost;
 	}
 
+	public Map<String, List<String>> allHeadcount() {
+		Map<String, List<String>> allHeadcount = new HashMap<String, List<String>>();
+				
+		for (WebElement el : rows) {
+			WebElement elm = el.findElement(By.className("fixed-columns"));
+			if (WebdriverUtils.hasClass("collapsed", elm)) {
+				el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).click();
+				openAllRows(driver.findElements(newRows) , Integer.parseInt(elm.getAttribute("data-level")));
+		
+			}
+		}
+
+		for (WebElement elm : rows) {
+			String lineName = elm.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.name-text")).getText();
+			List<WebElement> values = elm.findElements(headcountValue);
+			List<String> res = new ArrayList<>();
+			for (WebElement el : values) {
+				String value = el.getText();
+				if (value.equals("-"))
+					res.add(value);
+				else
+					res.add(value.replaceAll("[^0-9 .]", "").trim());
+			}
+			WebdriverUtils.waitForBudgetaLoadBar(driver);
+			
+			
+			allHeadcount.put(lineName, res);
+			System.out.println(allHeadcount);
+		}
+
+		return allHeadcount;
+	}
+	
 	@Override
 	public boolean isDisplayed() {
 		return WebdriverUtils.isDisplayed(wrapper);
