@@ -49,7 +49,11 @@ public class EmplyeeSection extends AbstractPOM{
 	@FindBy(css = "div.currency div.select2-container a")
 	private WebElement currency;
 	
+	@FindBy(css = "div.budgeta-type-inner span.select2-chosen")
+	private WebElement employeeType;
 	
+	@FindBy(name = "amount")
+	private WebElement numberOfEmployee;
 	
 	
 	
@@ -106,6 +110,10 @@ public class EmplyeeSection extends AbstractPOM{
 		setText(yearlyVacationDays, value);
 	}
 	
+	public void setNumberOfEmployees(String value){
+		setText(numberOfEmployee, value);
+	}
+	
 	
 	
 	public String getRole(){
@@ -134,6 +142,11 @@ public class EmplyeeSection extends AbstractPOM{
 	
 	public String getYearlyIncrease(){
 		return yearlyIncrease.getAttribute("value");
+	}
+	
+	
+	public String getNumberOfEmployees(){
+		return numberOfEmployee.getAttribute("value");
 	}
 	
 	

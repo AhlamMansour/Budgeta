@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -53,11 +54,10 @@ public class Sheets extends AbstractPOM {
 	// private By rowValues =
 	// By.cssSelector("div.scroll-columns div.column span span");
 	private By rowValues = By.cssSelector("div.scroll-columns div.forecast-row span");
-	
+
 	private By costValues = By.className("cost-value");
-	
+
 	private By headcountValue = By.className("headcount-value");
-	
 
 	@FindBy(css = "div.scroll-columns div.forecast-row span")
 	private List<WebElement> rowValue;
@@ -69,7 +69,7 @@ public class Sheets extends AbstractPOM {
 	private By subReportType = By.className("select2-choice");
 
 	private By fillterView = By.className("dropdown");
-	
+
 	private By newRows = By.className("ember-list-item-view");
 
 	public Sheets() {
@@ -445,14 +445,17 @@ public class Sheets extends AbstractPOM {
 		return wrapper.findElement(dateRangeTo).findElement(By.tagName("input")).getAttribute("placeholder");
 	}
 
-	
-	
 	private List<WebElement> openAllRows(List<WebElement> els, int level) {
 		if (els == null || els.size() == 0)
 			return null;
 		for (WebElement el : els) {
 			WebElement elm = el.findElement(By.className("fixed-columns"));
 			if (WebdriverUtils.hasClass("collapsed", elm)) {
+				try{
+					el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).isDisplayed();
+				}catch (NoSuchElementException e){
+					continue;
+				}
 				int newLevel = Integer.parseInt(elm.getAttribute("data-level"));
 				if (newLevel - level == 1 || newLevel - level == 0 || newLevel == 1) {
 					el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).click();
@@ -462,17 +465,17 @@ public class Sheets extends AbstractPOM {
 		}
 		return null;
 	}
-	
-	
+
 	public Map<String, List<String>> HeadcountCost() {
 		Map<String, List<String>> allCost = new HashMap<String, List<String>>();
-				
+
 		for (WebElement el : rows) {
 			WebElement elm = el.findElement(By.className("fixed-columns"));
-			if (WebdriverUtils.hasClass("collapsed", elm)) {
+			if (WebdriverUtils.hasClass("collapsed", elm)
+					&& el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).isDisplayed()) {
 				el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).click();
-				openAllRows(driver.findElements(newRows) , Integer.parseInt(elm.getAttribute("data-level")));
-		
+				openAllRows(driver.findElements(newRows), Integer.parseInt(elm.getAttribute("data-level")));
+
 			}
 		}
 
@@ -488,8 +491,7 @@ public class Sheets extends AbstractPOM {
 					res.add(value.replaceAll("[^0-9 .]", "").trim());
 			}
 			WebdriverUtils.waitForBudgetaLoadBar(driver);
-			
-			
+
 			allCost.put(lineName, res);
 			System.out.println(allCost);
 		}
@@ -499,13 +501,18 @@ public class Sheets extends AbstractPOM {
 
 	public Map<String, List<String>> allHeadcount() {
 		Map<String, List<String>> allHeadcount = new HashMap<String, List<String>>();
-				
+
 		for (WebElement el : rows) {
 			WebElement elm = el.findElement(By.className("fixed-columns"));
 			if (WebdriverUtils.hasClass("collapsed", elm)) {
+				try{
+					el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).isDisplayed();
+				}catch (NoSuchElementException e){
+					continue;
+				}
 				el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).click();
-				openAllRows(driver.findElements(newRows) , Integer.parseInt(elm.getAttribute("data-level")));
-		
+				openAllRows(driver.findElements(newRows), Integer.parseInt(elm.getAttribute("data-level")));
+
 			}
 		}
 
@@ -521,15 +528,14 @@ public class Sheets extends AbstractPOM {
 					res.add(value.replaceAll("[^0-9 .]", "").trim());
 			}
 			WebdriverUtils.waitForBudgetaLoadBar(driver);
-			
-			
+
 			allHeadcount.put(lineName, res);
 			System.out.println(allHeadcount);
 		}
 
 		return allHeadcount;
 	}
-	
+
 	@Override
 	public boolean isDisplayed() {
 		return WebdriverUtils.isDisplayed(wrapper);

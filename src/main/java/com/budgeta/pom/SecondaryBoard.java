@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -16,7 +15,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import com.budgeta.test.BudgetaUtils;
 import com.galilsoftware.AF.core.AbstractPOM;
 import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
@@ -70,7 +68,7 @@ public class SecondaryBoard extends AbstractPOM {
 
 	@FindBy(css = "li.selected-root li.active")
 	private WebElement selectedLine;
-	
+
 	@FindBy(css = "div.input-header-content div.name")
 	private WebElement selectLine;
 
@@ -92,7 +90,6 @@ public class SecondaryBoard extends AbstractPOM {
 	@FindBy(className = "collapse-tree")
 	private WebElement collapsedTree;
 
-	
 	@FindBy(className = "li.budget-list-item")
 	private WebElement Line;
 	// private final By newLine = By.className("new-line");
@@ -129,14 +126,14 @@ public class SecondaryBoard extends AbstractPOM {
 	// By.cssSelector("div.actions-toggle span.budget-name  div.svg-icon");
 
 	private By lineType = By.className("type");
-	
-	String fromMonth; 
+
+	String fromMonth;
 	String fromYear;
 	String toMonth;
 	String toYear;
-	
+
 	String parentFromDate;
-	String parentToDate; 
+	String parentToDate;
 
 	public Scenarios openScenarios() {
 		if (driver.findElement(By.id("sidebar-scenarios")).getAttribute("title").equals("Scenarios")) {
@@ -274,12 +271,12 @@ public class SecondaryBoard extends AbstractPOM {
 	public void buildBudget() {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.slectOption("Yes", "No Grouping");
-		try{
-			//WebdriverUtils.waitForBudgetaBusyBar(driver);
+		try {
+			// WebdriverUtils.waitForBudgetaBusyBar(driver);
 			WebdriverUtils.waitForBudgetaLoadBar(driver);
 			WebdriverUtils.waitForBudgetaLoadBar(driver);
+		} catch (Exception e) {
 		}
-		catch(Exception e){}
 		buildPopup = new BuildCompanyBudgetPopup();
 		buildPopup.clickNext();
 	}
@@ -414,7 +411,7 @@ public class SecondaryBoard extends AbstractPOM {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		// buildPopup.clickCreateBudget("Create");
 		buildPopup.clickCreateBudget();
-		//buildPopup.slectOption("Yes", "");
+		// buildPopup.slectOption("Yes", "");
 		buildPopup.selectOption();
 		buildPopup.clickAdd();
 		buildPopup = new BuildCompanyBudgetPopup();
@@ -512,7 +509,7 @@ public class SecondaryBoard extends AbstractPOM {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
 		// buildPopup.clickCreateBudget("Create");
 		buildPopup.clickCreateBudget();
-	//	buildPopup.slectOption("Yes", "No Grouping");
+		// buildPopup.slectOption("Yes", "No Grouping");
 		buildPopup.selectOption();
 		buildPopup.selectAllcheckBoxes();
 		buildPopup.clickAdd();
@@ -591,7 +588,7 @@ public class SecondaryBoard extends AbstractPOM {
 
 	public void addProfissionalServicesAndDepartment() {
 		BuildCompanyBudgetPopup buildPopup = new BuildCompanyBudgetPopup();
-		//buildPopup.slectOption("Yes", "No Grouping");
+		// buildPopup.slectOption("Yes", "No Grouping");
 		buildPopup.selectOption();
 		// buildPopup.clickCreateBudget("Create");
 		buildPopup.clickCreateBudget();
@@ -931,7 +928,7 @@ public class SecondaryBoard extends AbstractPOM {
 					return;
 				}
 			}
-			
+
 		}
 	}
 
@@ -970,8 +967,6 @@ public class SecondaryBoard extends AbstractPOM {
 		return new MenuTrigger(line.findElement(lineSetting));
 	}
 
-	
-	
 	public MenuTrigger getSubLinSettings(String lineTitle, String subLineTitle) {
 		List<WebElement> subLines = getSubLinesForLine(lineTitle);
 		for (WebElement el : subLines) {
@@ -1099,8 +1094,8 @@ public class SecondaryBoard extends AbstractPOM {
 		}
 		return num;
 	}
-	
-	public int getNumberOfSublines(String lineTitle){
+
+	public int getNumberOfSublines(String lineTitle) {
 		List<WebElement> subLines = getSubLinesForLine(lineTitle);
 		return subLines.size();
 	}
@@ -1126,8 +1121,7 @@ public class SecondaryBoard extends AbstractPOM {
 		// WebdriverUtils.waitForBudgetaBusyBar(driver);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
-	
-	
+
 	public void openLine(String lineTitle, int level) {
 		clickClose();
 		List<WebElement> allLinesInLevel = driver.findElements(line);
@@ -1143,17 +1137,16 @@ public class SecondaryBoard extends AbstractPOM {
 			}
 		}
 	}
-	
-	
+
 	public int getLineLevel(String lineTitle) {
 		clickClose();
 		List<WebElement> allLinesInLevel = driver.findElements(line);
 		int level = -1;
 		for (WebElement el : allLinesInLevel) {
-			if (getLineName(el).equals(lineTitle)){
+			if (getLineName(el).equals(lineTitle)) {
 				WebElementUtils.hoverOverField(el, driver, null);
 				WebdriverUtils.sleep(300);
-				level = Integer.parseInt(el.getAttribute("data-level")); 
+				level = Integer.parseInt(el.getAttribute("data-level"));
 			}
 		}
 		return level;
@@ -1186,27 +1179,27 @@ public class SecondaryBoard extends AbstractPOM {
 			clickClose();
 		List<WebElement> sublines = getSubLinesForSubLine(lineName, subLineName);
 		for (WebElement el : sublines) {
-//			if (getLineName(el).contains(sub_subLine)) {
-//				el.findElement(budgetName).click();
-//				// WebdriverUtils.waitForBudgetaBusyBar(driver);
-//				WebdriverUtils.waitForBudgetaLoadBar(driver);
-//				return;
-//			}
+			// if (getLineName(el).contains(sub_subLine)) {
+			// el.findElement(budgetName).click();
+			// // WebdriverUtils.waitForBudgetaBusyBar(driver);
+			// WebdriverUtils.waitForBudgetaLoadBar(driver);
+			// return;
+			// }
 			if (getLineName(el).contains(sub_subLine)) {
 				Actions action = new Actions(driver);
 				action.moveToElement(el).build().perform();
 				WebElementUtils.hoverOverField(el, driver, null);
-				if(el.findElement(lineType).getText().contains("Employee")){
+				if (el.findElement(lineType).getText().contains("Employee")) {
 					el.findElement(budgetName).click();
 					// WebdriverUtils.waitForBudgetaBusyBar(driver);
 					WebdriverUtils.waitForBudgetaLoadBar(driver);
 					return;
 				}
-				
+
 			}
 		}
 	}
-	
+
 	public void clickOnIncomSubLine(String lineName, String subLineName, String sub_subLine) {
 		if (WebdriverUtils.isDisplayed(closeBtn))
 			clickClose();
@@ -1218,9 +1211,7 @@ public class SecondaryBoard extends AbstractPOM {
 				WebdriverUtils.waitForBudgetaLoadBar(driver);
 				return;
 			}
-			
-				
-			
+
 		}
 	}
 
@@ -1308,7 +1299,7 @@ public class SecondaryBoard extends AbstractPOM {
 	public String getSelectedLine() {
 		return getLineName(selectedLine);
 	}
-	
+
 	public String getSelectedLineName() {
 		return getSelectedLineName(selectLine);
 	}
@@ -1371,63 +1362,85 @@ public class SecondaryBoard extends AbstractPOM {
 		}
 		return false;
 	}
-	
+
 //	public Map<String, List<String>> allEmployees() {
 //		List<WebElement> lines = getAllLines();
-//	//	List<String> employees = new ArrayList<>();
+//		// List<String> employees = new ArrayList<>();
 //		Map<String, List<String>> employees = new HashMap<String, List<String>>();
 //		for (WebElement el : lines) {
-//				WebElementUtils.hoverOverField(el, driver, null);
-//				if(WebdriverUtils.hasClass("has-children", el)){
-//					try{
-//						el.click();
-//						GeneralSection dates = new GeneralSection();
-//						if(!dates.getHireDateRangeFrom().equals("MM/YYYY")){
-//							parentFromDate = dates.getHireDateRangeFrom();
-//							parentToDate = dates.getHireDateRangeTo();
-//						}
-//						
-//					}catch(ElementNotVisibleException e){
-//						continue;
-//					}
-//					
-//				}
-//				if (el.findElement(lineType).getText().equals("Employee") || el.findElement(lineType).getText().equals("Contractor") ){
-//					String employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+//			WebElementUtils.hoverOverField(el, driver, null);
+//			if (WebdriverUtils.hasClass("has-children", el)) {
+//				try {
 //					el.click();
 //					GeneralSection dates = new GeneralSection();
-//					String fromDate = dates.getHireDateRangeFrom();
-//					String toDate = dates.getHireDateRangeTo();
-//					if(fromDate.equals("MM/YYYY")){
-//						fromDate = parentFromDate;
-//						toDate = parentToDate;
-//						fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(fromDate.split("/")[0]));
-//						fromYear = fromDate.split("/")[1];
-//						toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
-//						toYear = toDate.split("/")[1];
-//						List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
-//						//employees.add(employeeName + "," + fromDate + "-" + toDate);
-//						employees.put(employeeName, expectedDates);
-//						System.out.println(employees);
-//						
-//						
-//					}else{
-//						fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(fromDate.split("/")[0]));
-//						fromYear = fromDate.split("/")[1];
-//						toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
-//						toYear = toDate.split("/")[1];
-//						List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
-//						//employees.add(employeeName + "," + fromDate + "-" + toDate);
-//						employees.put(employeeName, expectedDates);
-//						System.out.println(employees);
+//					if (!dates.getHireDateRangeFrom().equals("MM/YYYY")) {
+//						parentFromDate = dates.getHireDateRangeFrom();
+//						parentToDate = dates.getHireDateRangeTo();
 //					}
-//					
+//
+//				} catch (ElementNotVisibleException e) {
+//					continue;
 //				}
-//				
+//
 //			}
+//			if (el.findElement(lineType).getText().equals("Employee") || el.findElement(lineType).getText().equals("Contractor")
+//					|| el.findElement(lineType).getText().equals("Multiple employees")) {
+//				String employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+//				String lineType = el.findElement(By.className("type")).getText();
+//				el.click();
+//				GeneralSection dates = new GeneralSection();
+//				String fromDate = dates.getHireDateRangeFrom();
+//				String toDate = dates.getHireDateRangeTo();
+//				if (fromDate.equals("MM/YYYY")) {
+//					fromDate = parentFromDate;
+//					toDate = parentToDate;
+//					fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(fromDate.split("/")[0]));
+//					fromYear = fromDate.split("/")[1];
+//					toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
+//					toYear = toDate.split("/")[1];
+//					List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
+//					// employees.add(employeeName + "," + fromDate + "-" +
+//					// toDate);
+//					if(lineType.equals("Multiple employees")){
+//						EmplyeeSection employee = new EmplyeeSection();
+//						int numberOfEmployee = Integer.parseInt(employee.getNumberOfEmployees());
+//						
+//						for (int i = 0; i < numberOfEmployee - 1; i++){
+//							employees.put(employeeName, expectedDates);
+//						}
+//					}
+//					employees.put(employeeName, expectedDates);
+//					System.out.println(employees);
+//
+//				} else {
+//					fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(fromDate.split("/")[0]));
+//					fromYear = fromDate.split("/")[1];
+//					toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
+//					toYear = toDate.split("/")[1];
+//					List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
+//					// employees.add(employeeName + "," + fromDate + "-" +
+//					// toDate);
+//					
+//					if(lineType.equals("Multiple employees")){
+//						EmplyeeSection employee = new EmplyeeSection();
+//						int numberOfEmployee = Integer.parseInt(employee.getNumberOfEmployees());
+//						
+//						for (int i = 0; i < numberOfEmployee - 1; i++){
+//							employees.put(employeeName, expectedDates);
+//						}
+//					}
+//					employees.put(employeeName, expectedDates);
+//					System.out.println(employees);
+//				}
+//
+//			}
+//
+//		}
 //		return employees;
-//		
+//
 //	}
+
+
 
 	public void addNewline() {
 		clickAddLineButton();
@@ -1487,16 +1500,15 @@ public class SecondaryBoard extends AbstractPOM {
 
 		}
 	}
-	
-	public String getFirstLineName(){
-		String name= "";
+
+	public String getFirstLineName() {
+		String name = "";
 		WebElement el = driver.findElements(line).get(1);
-		//for (WebElement el : driver.findElements(line).get(0)) {
-		if(el.getAttribute("data-level").equals("1"))
-		{
-			 name = el.findElement(By.className("budget-name-text-display")).getText();
+		// for (WebElement el : driver.findElements(line).get(0)) {
+		if (el.getAttribute("data-level").equals("1")) {
+			name = el.findElement(By.className("budget-name-text-display")).getText();
 		}
-		//}
+		// }
 		return name;
 	}
 
@@ -1522,7 +1534,7 @@ public class SecondaryBoard extends AbstractPOM {
 		}
 		return null;
 	}
-	
+
 	private String getLineName(WebElement el) {
 		try {
 			if (el.getAttribute("class").contains("new-line"))
@@ -1545,19 +1557,19 @@ public class SecondaryBoard extends AbstractPOM {
 		// el.findElement(budgetName).getText().indexOf("\n")).trim();
 		//
 	}
-	
+
 	private String getSelectedLineName(WebElement el) {
 		try {
-//			if (el.getAttribute("class").contains("new-line"))
-//				return el.findElement(lineName).getText();
+			// if (el.getAttribute("class").contains("new-line"))
+			// return el.findElement(lineName).getText();
 			String str = el.getAttribute("title");
-			//str = str.replaceAll(" ", "");
-			str  = str.trim();
+			// str = str.replaceAll(" ", "");
+			str = str.trim();
 			return str;
 		} catch (Exception e) {
 			return "";
 		}
-		
+
 	}
 
 	private boolean isBudgetDropDownOptionsOpen() {
@@ -1597,6 +1609,7 @@ public class SecondaryBoard extends AbstractPOM {
 		}
 		return (List<WebElement>) list.get(0);
 	}
+
 	private List<WebElement> getSubLines() {
 		List<WebElement> list = new ArrayList<WebElement>();
 		try {
@@ -1705,31 +1718,32 @@ public class SecondaryBoard extends AbstractPOM {
 		// }
 		// return null;
 		List<WebElement> sub_subLines = new ArrayList<WebElement>();
-//		List<WebElement> subLines = getSubLinesForLine(lineTitle);
+		// List<WebElement> subLines = getSubLinesForLine(lineTitle);
 		List<WebElement> lines = getAllLines();
 		int dataLevel = -1;
 		boolean startInsert = false;
 		boolean lineFound = false;
 		for (WebElement el : lines) {
 			System.out.println(getLineName(el));
-			if (getLineName(el).equals(lineTitle)){
+			if (getLineName(el).equals(lineTitle)) {
 				lineFound = true;
 			}
-			if(lineFound){
+			if (lineFound) {
 				System.out.println(getLineName(el));
 				if (getLineName(el).equals(subLineTitle)) {// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
-						dataLevel = Integer.parseInt(el.getAttribute("data-level"));
-						startInsert = true;
-						continue;
-					}
-//				if (getLineName(el).contains(subLineTitle)) {// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
-//					if(el.findElement(lineType).getText().contains("Employee")){
-//						dataLevel = Integer.parseInt(el.getAttribute("data-level"));
-//						startInsert = true;
-//						continue;
-//					}
-//					
-//				}
+					dataLevel = Integer.parseInt(el.getAttribute("data-level"));
+					startInsert = true;
+					continue;
+				}
+				// if (getLineName(el).contains(subLineTitle)) {//
+				// if(getLineName(el).replaceAll("\\d","").trim().equals(name))
+				// if(el.findElement(lineType).getText().contains("Employee")){
+				// dataLevel = Integer.parseInt(el.getAttribute("data-level"));
+				// startInsert = true;
+				// continue;
+				// }
+				//
+				// }
 			}
 			if (startInsert) {
 				int currentLevel = Integer.parseInt(el.getAttribute("data-level"));

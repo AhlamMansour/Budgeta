@@ -40,7 +40,7 @@ public class HeadcountSheetTest extends WrapperTest {
 
 	}
 
-//	@Test(enabled = false)
+//	@Test(enabled = true)
 //	public void calculateAllHeadcount() {
 //		secondaryBoard = new SecondaryBoard();
 //		Map<String, List<String>> employees = secondaryBoard.allEmployees();
