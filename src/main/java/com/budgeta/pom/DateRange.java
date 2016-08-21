@@ -61,14 +61,16 @@ public class DateRange extends AbstractPOM{
 			
 			wrapper.findElement(prevYear).click();
 		//	WebdriverUtils.waitForBudgetaBusyBar(driver);
-			WebdriverUtils.waitForBudgetaLoadBar(driver);
+			//WebdriverUtils.waitForBudgetaLoadBar(driver);
+			WebdriverUtils.sleep(1000);
 			selectedYear = Integer.parseInt(wrapper.findElement(year).getText());
 		}
 		while(wantedYear > selectedYear){
 			
 			wrapper.findElement(nextYear).click();
 			//WebdriverUtils.waitForBudgetaBusyBar(driver);
-			WebdriverUtils.waitForBudgetaLoadBar(driver);
+//			WebdriverUtils.waitForBudgetaLoadBar(driver);
+			WebdriverUtils.sleep(1000);
 			selectedYear = Integer.parseInt(wrapper.findElement(year).getText());
 		}
 		

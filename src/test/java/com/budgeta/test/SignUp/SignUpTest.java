@@ -72,6 +72,8 @@ public class SignUpTest extends BudgetaTest{
 		signUpPage.setPassword(data.get("password"));
 		signUpPage.setPasswordVerify(data.get("PasswordVerify"));
 		
+		
+		signUpPage.clickAgreeSignUp();
 		signUpPage.clickSignUp();
 		
 		String errorField = data.get("ErrorField");
@@ -86,8 +88,10 @@ public class SignUpTest extends BudgetaTest{
 		if(errorField.equals("InvalidPass"))
 			Assert.assertFalse(signUpPage.passHasDigitsAndLetters(data.get("password")), "Password must contain at least one letter and one number and Password length must be at least 8 characters");
 		
+		
 	
 		if (data.get("ShouldPass").equals("TRUE")){
+			
 			signUpSuccessPage = new SignUpSuccessPage();
 			Assert.assertTrue(signUpSuccessPage.isDisplayed(), "Expected To Sign Uo Seccess page to be dispaly");
 			signUpSuccessPage.ConfirmSignUp();

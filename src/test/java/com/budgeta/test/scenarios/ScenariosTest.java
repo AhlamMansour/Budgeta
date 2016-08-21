@@ -35,13 +35,13 @@ public class ScenariosTest extends WrapperTest{
     
     
     
-    @BeforeMethod
-	private void initTest() {	
-		
-		driver.manage().window().maximize();
-		
-		
-	}
+//    @BeforeMethod
+//	private void initTest() {	
+//		
+//		driver.manage().window().maximize();
+//		
+//		
+//	}
     
     
     @TestFirst

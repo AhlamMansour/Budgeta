@@ -47,6 +47,8 @@ public class SignUpPage extends AbstractPOM {
 	@FindBy(className = "login")
 	private WebElement Login;
 	
+	@FindBy(id = "agree-to-tnc")
+	private WebElement agreeSignUp;
 	
 	private By fieldError = By.className("input-error");
 
@@ -236,6 +238,11 @@ public String getPassworVerifydMessage(){
 		
 	}
 	
+	
+	public void clickAgreeSignUp(){
+		agreeSignUp.click();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+		}
 	
 	
 
