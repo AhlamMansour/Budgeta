@@ -1,6 +1,7 @@
 package com.budgeta.pom;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
@@ -44,10 +45,10 @@ public class BudgetaBoard extends AbstractPOM {
 	}
 
 	public String getNotyMessage() {
-		WebdriverUtils.waitForBudgetaBusyBar(driver);
+		//WebdriverUtils.waitForBudgetaBusyBar(driver);
 		String notyMessage = "no_message";
 		try {
-			WebdriverUtils.waitForBudgetaBusyBar(driver);
+			//WebdriverUtils.waitForBudgetaBusyBar(driver);
 			// WebdriverUtils.waitForElementToBeFound(driver, noty_message);
 			notyMessage = driver.findElement(noty_message).getText().trim();
 			WebdriverUtils.waitForElementToDisappear(driver, noty_message);
@@ -55,8 +56,13 @@ public class BudgetaBoard extends AbstractPOM {
 			// WebdriverUtils.waitForBudgetaLoadBar(driver);
 		} catch (Exception e) {
 			// WebdriverUtils.waitForElementToBeFound(driver, noty_message);
-			notyMessage = driver.findElement(noty_message).getText().trim();
-			WebdriverUtils.waitForElementToDisappear(driver, noty_message);
+			try{
+				notyMessage = driver.findElement(noty_message).getText().trim();
+				WebdriverUtils.waitForElementToDisappear(driver, noty_message);
+			}catch (NoSuchElementException em){
+				
+			}
+			
 		}
 		return notyMessage;
 	}

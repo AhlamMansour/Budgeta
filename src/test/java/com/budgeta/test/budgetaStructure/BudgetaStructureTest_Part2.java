@@ -308,7 +308,7 @@ public class BudgetaStructureTest_Part2 extends WrapperTest{
 			Assert.assertTrue(mainSection.isMainSectionHasError() || general.isGeneralHasError(),
 					"expected to error in employee assumption sectcion or in general section");
 		else {
-			board.clickSaveChanges();
+			//board.clickSaveChanges();
 			secondaryBoard.clickOnSubLine(OperationalExpenses, OperationalExpensesSubline);
 			general = new GeneralSection();
 			///////////////////////

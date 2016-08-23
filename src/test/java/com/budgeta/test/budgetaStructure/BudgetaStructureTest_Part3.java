@@ -293,7 +293,7 @@ public class BudgetaStructureTest_Part3 extends WrapperTest{
 			Assert.assertTrue(billings.isBillingsHasError() || general.isGeneralHasError(), "expected to error in billings section");
 		} else {
 			// //////////////////////////////////////////////////////////////////
-			board.clickSaveChanges();
+			//board.clickSaveChanges();
 
 	
 			int payAfter, growth;

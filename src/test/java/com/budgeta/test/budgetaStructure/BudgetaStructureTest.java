@@ -276,7 +276,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			
 			general.setNotes(data.get("Notes"));
 			board.clickSaveChanges();
-			board.clickSaveChanges();
+		//	board.clickSaveChanges();
 			// CommentsSection comments = new CommentsSection();
 			// Assert.assertTrue(comments.isDisplayed(),
 			// "expected comments section to be displayed");
@@ -312,8 +312,8 @@ public class BudgetaStructureTest extends WrapperTest {
 			toExactMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getGeneralDateRangeTo().split("/")[0]));
 			toExactYear = general.getGeneralDateRangeTo().split("/")[1];
 
-			board.clickSaveChanges();
-			board.clickSaveChanges();
+		//	board.clickSaveChanges();
+		//	board.clickSaveChanges();
 			topHeaderBar = new TopHeaderBar();
 			if (data.get("Repeat").equals("Once")) {
 				String[] expectedValues = BudgetaUtils.calculateValues_Once(monthX, yearX, monthY, yearY, data.get("OnDate_Month"), data.get("OnDate_Year"),

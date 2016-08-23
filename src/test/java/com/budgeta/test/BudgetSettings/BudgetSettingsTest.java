@@ -21,6 +21,7 @@ import com.galilsoftware.AF.core.listeners.KnownIssue;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
+import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 
@@ -56,7 +57,7 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true, priority = 1)
+	@Test(enabled = true, priority = 4)
 	public void RenameBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 
@@ -89,11 +90,12 @@ public class BudgetSettingsTest extends WrapperTest {
 
 		Assert.assertTrue(secondary.isBudgetFlag(BudgetName), "Budget line is flaged");
 
+
 	}
 
 //	@KnownIssue(bugID = "BUD - 2537")
 //	@KnownIssue(bugID = "BUD - 3528")
-	@Test(enabled = true, priority = 3)
+	@Test(enabled = false, priority = 3)
 	public void ShareBudgetLineTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -119,7 +121,7 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 	
-	@Test(enabled = true, priority = 4)
+	@Test(enabled = true, priority = 1)
 	public void backupBudgetTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();

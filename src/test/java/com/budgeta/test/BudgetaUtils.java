@@ -483,6 +483,8 @@ public class BudgetaUtils {
 		int Bonus = (int) Math.round(((double) bonus / 100) * baseSalary) * fromHireDateToFiscal;
 
 		int BonusForEmployee = baseSalary + Bonus + benefit;
+		
+		double calculateYearlyIncrease =  ((double)fromHireDateToFiscal / 12) * YearlyIncrease;
 
 		// float sum = baseSalary + benefit;
 
@@ -507,7 +509,8 @@ public class BudgetaUtils {
 				// * baseSalary)) + "";
 				bonusMonths = 0;
 			} else if (months.get(i).contains(fiscal) && !HireDateMonth.equals(fiscal)) {
-				sum = sum + ((int) Math.round(((double) YearlyIncrease / 100) * sum));
+				//sum = sum + ((int) Math.round(((double) YearlyIncrease / 100) * sum));
+				sum = sum + ((int) Math.round(((double) calculateYearlyIncrease / 100) * sum));
 				res[i] = sum + "";
 			} else {
 				res[i] = sum + "";

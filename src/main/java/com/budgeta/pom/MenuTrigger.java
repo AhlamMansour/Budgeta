@@ -1,10 +1,13 @@
 package com.budgeta.pom;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.galilsoftware.AF.core.AbstractPOM;
@@ -85,7 +88,7 @@ public class MenuTrigger extends AbstractPOM {
 				el.findElement(By.tagName("input")).sendKeys(path);
 				WebdriverUtils.sleep(2000);
 				//WebdriverUtils.waitForBudgetaLoadBar(driver);
-				WebdriverUtils.waitForBudgetaBusyBar(driver);
+				//WebdriverUtils.waitForBudgetaBusyBar(driver);
 				return;
 			}
 		}
@@ -230,8 +233,16 @@ public class MenuTrigger extends AbstractPOM {
 		openTrigger();
 		for(WebElement el : driver.findElements(budgetSettingTriggerMenu)){
 			if(el.getText().equals(option)){
-				el.click();
-				return;
+				try{
+					el.click();
+					return;
+				}catch(WebDriverException e){
+					WebDriverWait wait = new WebDriverWait(driver, 2);
+			        wait.until(ExpectedConditions.alertIsPresent());
+			        Alert alert = driver.switchTo().alert();
+					alert.accept();
+				}
+				
 			}
 		}
 	}
