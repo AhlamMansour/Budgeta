@@ -314,7 +314,7 @@ public class BudgetaStructureTest_Part3 extends WrapperTest{
 				growth = Integer.parseInt(data.get("GrowthPercentage"));
 
 
-			board.clickSaveChanges();
+			//board.clickSaveChanges();
 			general = new GeneralSection();
 			String dateFrom = general.getGeneralDateRangeFrom();
 			String dateTo = general.getGeneralDateRangeTo();

@@ -121,7 +121,7 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 	
-	@Test(enabled = true, priority = 1)
+	@Test(enabled = true, priority = 7)
 	public void backupBudgetTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -168,7 +168,7 @@ public class BudgetSettingsTest extends WrapperTest {
 //		
 //	}
 	
-	@Test(enabled = true, priority = 5)
+	@Test(enabled = true, priority = 8)
 	public void restoreBudgetTest(){
 		WebdriverUtils.sleep(1000);
 		secondary = board.getSecondaryBoard();
@@ -197,7 +197,7 @@ public class BudgetSettingsTest extends WrapperTest {
 	
 
 
-	@Test(enabled = true, priority = 6)
+	@Test(enabled = true, priority = 1)
 	public void duplicateBudget() {
 		WebdriverUtils.sleep(1000);
 
@@ -211,7 +211,7 @@ public class BudgetSettingsTest extends WrapperTest {
 	}
 
 	
-	@Test(enabled = true, priority = 7)
+	@Test(enabled = true, priority = 6)
 	public void DeleteBudgetTest() {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
@@ -229,7 +229,7 @@ public class BudgetSettingsTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true, priority = 8)
+	@Test(enabled = true, priority = 5)
 	public void RenameBudgetFromNavTest() {
 		WebdriverUtils.sleep(1000);
 
