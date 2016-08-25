@@ -235,10 +235,11 @@ public class MenuTrigger extends AbstractPOM {
 			if(el.getText().equals(option)){
 				try{
 					el.click();
-					WebDriverWait wait = new WebDriverWait(driver, 2);
-			        wait.until(ExpectedConditions.alertIsPresent());
-			        Alert alert = driver.switchTo().alert();
-					alert.accept();
+//					WebDriverWait wait = new WebDriverWait(driver, 2);
+//			        wait.until(ExpectedConditions.alertIsPresent());
+//			        Alert alert = driver.switchTo().alert();
+//					alert.accept();
+					break;
 				}catch(WebDriverException e){
 					
 				}

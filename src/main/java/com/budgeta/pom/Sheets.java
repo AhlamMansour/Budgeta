@@ -471,12 +471,17 @@ public class Sheets extends AbstractPOM {
 
 		for (WebElement el : rows) {
 			WebElement elm = el.findElement(By.className("fixed-columns"));
-			if (WebdriverUtils.hasClass("collapsed", elm)
-					&& el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).isDisplayed()) {
-				el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).click();
-				openAllRows(driver.findElements(newRows), Integer.parseInt(elm.getAttribute("data-level")));
+			try{
+				if (WebdriverUtils.hasClass("collapsed", elm)&& el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).isDisplayed()){
+//					if (WebdriverUtils.hasClass("collapsed", elm)){
+					el.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.svg-icon")).click();
+					openAllRows(driver.findElements(newRows), Integer.parseInt(elm.getAttribute("data-level")));
 
+				}
+			}catch (NoSuchElementException e){
+				continue;
 			}
+					
 		}
 
 		for (WebElement elm : rows) {

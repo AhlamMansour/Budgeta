@@ -36,8 +36,8 @@ public class Employees_ScenarioVsBudget extends WrapperTest {
 
 		BudgetNavigator navigator = new BudgetNavigator();
 		Assert.assertTrue(navigator.isDisplayed(), "expected to inner bar to be dislayed");
-		// navigator.selectRandomBudgeta();
-		navigator.selectRandomBudgetWithPrefix("TEST Forecast");
+		 navigator.selectRandomBudgeta();
+		//navigator.selectRandomBudgetWithPrefix("TEST Forecast");
 		navigator.openInputTab();
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
