@@ -89,7 +89,7 @@ public class HeadcountSheetTest extends WrapperTest {
 
 	}
 	@KnownIssue(bugID = "BUD - 4760")
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void viewHeadcountAndAverage() {
 		BudgetNavigator navigator = new BudgetNavigator();
 		navigator.openSheetTab();
