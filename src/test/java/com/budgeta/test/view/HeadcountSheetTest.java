@@ -5,20 +5,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetNavigator;
+import com.budgeta.pom.EmplyeeSection;
+import com.budgeta.pom.GeneralSection;
 import com.budgeta.pom.SecondaryBoard;
 import com.budgeta.pom.Sheets;
 import com.budgeta.pom.TopHeaderBar;
 import com.budgeta.pom.Enum.ReportEnum;
+import com.budgeta.test.BudgetaUtils;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.KnownIssue;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
+import com.galilsoftware.AF.core.utilities.WebElementUtils;
+import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class HeadcountSheetTest extends WrapperTest {
@@ -26,6 +34,14 @@ public class HeadcountSheetTest extends WrapperTest {
 	SecondaryBoard secondaryBoard;
 	Sheets sheets;
 	List<String> dates;
+	
+	String fromMonth;
+	String fromYear;
+	String toMonth;
+	String toYear;
+
+	String parentFromDate;
+	String parentToDate;
 
 	@TestFirst
 	@Test(enabled = true)
@@ -41,53 +57,53 @@ public class HeadcountSheetTest extends WrapperTest {
 
 	}
 
-//	@Test(enabled = true)
-//	public void calculateAllHeadcount() {
-//		secondaryBoard = new SecondaryBoard();
-//		Map<String, List<String>> employees = secondaryBoard.allEmployees();
-//
-//		BudgetNavigator navigator = new BudgetNavigator();
-//		navigator.openSheetTab();
-//		Assert.assertEquals(navigator.getOpenTab(), "Sheets");
-//
-//		sheets = new Sheets();
-//		Assert.assertTrue(sheets.isDisplayed(), "expected to Sheets to be displayed");
-//
-//		TopHeaderBar topHeaderBar = new TopHeaderBar();
-//		topHeaderBar = new TopHeaderBar();
-//		topHeaderBar.openHeaderTab(ReportEnum.HEADCOUNT.name());
-//		dates = sheets.getAllDates();
-//		List<String> employeeCount = new ArrayList<>();
-//
-//		for (int i = 0; i < dates.size(); i++) {
-//			int count = 0;
-//			for (String lines : employees.keySet()) {
-//				List<String> employeesDates = employees.get(lines);
-//				for (int j = 0; j < employeesDates.size(); j++) {
-//					if (employeesDates.get(j).equals(dates.get(i))) {
-//						count++;
-//						continue;
-//					}
-//				}
-//			}
-//			employeeCount.add(count + "");
-//		}
-//
-//		for (int x = 0; x < employeeCount.size(); x++) {
-//			System.out.println(employeeCount.get(x));
-//		}
-//
-//		sheets.selectSubReportType("Budget");
-//		sheets.selectHeadcount("Headcount");
-//		sheets.selectEmployees("All Headcount");
-//
-//		List<String> allTotaleValues = sheets.getAllValuesOfTotalRow("Totals");
-//
-//		for (int y = 0; y < allTotaleValues.size(); y++) {
-//			Assert.assertEquals(allTotaleValues.get(y), employeeCount.get(y), "Test failed");
-//		}
-//
-//	}
+	@Test(enabled = true)
+	public void calculateAllHeadcount() {
+		secondaryBoard = new SecondaryBoard();
+		Map<String, List<String>> employees = allEmployees();
+
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.openSheetTab();
+		Assert.assertEquals(navigator.getOpenTab(), "Sheets");
+
+		sheets = new Sheets();
+		Assert.assertTrue(sheets.isDisplayed(), "expected to Sheets to be displayed");
+
+		TopHeaderBar topHeaderBar = new TopHeaderBar();
+		topHeaderBar = new TopHeaderBar();
+		topHeaderBar.openHeaderTab(ReportEnum.HEADCOUNT.name());
+		dates = sheets.getAllDates();
+		List<String> employeeCount = new ArrayList<>();
+
+		for (int i = 0; i < dates.size(); i++) {
+			int count = 0;
+			for (String lines : employees.keySet()) {
+				List<String> employeesDates = employees.get(lines);
+				for (int j = 0; j < employeesDates.size(); j++) {
+					if (employeesDates.get(j).equals(dates.get(i))) {
+						count++;
+						continue;
+					}
+				}
+			}
+			employeeCount.add(count + "");
+		}
+
+		for (int x = 0; x < employeeCount.size(); x++) {
+			System.out.println(employeeCount.get(x));
+		}
+
+		sheets.selectSubReportType("Budget");
+		sheets.selectHeadcount("Headcount");
+		sheets.selectEmployees("All Headcount");
+
+		List<String> allTotaleValues = sheets.getAllValuesOfTotalRow("Totals");
+
+		for (int y = 0; y < allTotaleValues.size(); y++) {
+			Assert.assertEquals(allTotaleValues.get(y), employeeCount.get(y), "Test failed");
+		}
+
+	}
 	@KnownIssue(bugID = "BUD - 4760")
 	@Test(enabled = false)
 	public void viewHeadcountAndAverage() {
@@ -168,6 +184,99 @@ public class HeadcountSheetTest extends WrapperTest {
 		}
 
 		return allAverage;
+	}
+	
+	
+	
+	private Map<String, List<String>> allEmployees() {
+		List<WebElement> lines = secondaryBoard.getAllLines();
+		// List<String> employees = new ArrayList<>();
+		Map<String, List<String>> employees = new HashMap<String, List<String>>();
+		for (WebElement el : lines) {
+			WebElementUtils.hoverOverField(el, driver, null);
+			if (WebdriverUtils.hasClass("has-children", el)) {
+				try {
+					el.click();
+					GeneralSection dates = new GeneralSection();
+					if (!dates.getHireDateRangeFrom().equals("MM/YYYY")) {
+						parentFromDate = dates.getHireDateRangeFrom();
+						parentToDate = dates.getHireDateRangeTo();
+					}
+
+				} catch (ElementNotVisibleException e) {
+					continue;
+				}
+
+			}
+			if (secondaryBoard.getTypeLine(el).equals("Employee") || secondaryBoard.getTypeLine(el).equals("Contractor")
+					|| secondaryBoard.getTypeLine(el).equals("Multiple employees")) {
+				String employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+				String lineType = el.findElement(By.className("type")).getText();
+				el.click();
+				GeneralSection dates = new GeneralSection();
+				String fromDate = dates.getHireDateRangeFrom();
+				String toDate = dates.getHireDateRangeTo();
+				if (fromDate.equals("MM/YYYY")) {
+					fromDate = parentFromDate;
+					toDate = parentToDate;
+					fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(fromDate.split("/")[0]));
+					fromYear = fromDate.split("/")[1];
+					toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
+					toYear = toDate.split("/")[1];
+					List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
+					// employees.add(employeeName + "," + fromDate + "-" +
+					// toDate);
+					if (lineType.equals("Multiple employees")) {
+						EmplyeeSection employee = new EmplyeeSection();
+						String numberOfEmployees = employee.getNumberOfEmployees();
+						if (!numberOfEmployees.isEmpty()) {
+							int numberOfEmployee = Integer.parseInt(numberOfEmployees);
+							for (int i = 0; i < numberOfEmployee; i++) {
+								employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+								employeeName = WebdriverUtils.getTimeStamp(employeeName);
+								employees.put(employeeName, expectedDates);
+								employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+								employeeName = WebdriverUtils.getTimeStamp(employeeName);
+							}
+						}
+					}
+					employees.put(employeeName, expectedDates);
+					System.out.println(employees);
+
+				} else {
+					fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(fromDate.split("/")[0]));
+					fromYear = fromDate.split("/")[1];
+					toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
+					toYear = toDate.split("/")[1];
+					List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
+					// employees.add(employeeName + "," + fromDate + "-" +
+					// toDate);
+
+					if (lineType.equals("Multiple employees")) {
+						EmplyeeSection employee = new EmplyeeSection();
+						String numberOfEmployees = employee.getNumberOfEmployees();
+						if (!numberOfEmployees.isEmpty()) {
+							int numberOfEmployee = Integer.parseInt(numberOfEmployees);
+							for (int i = 0; i < numberOfEmployee - 1; i++) {
+								employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+								employeeName = WebdriverUtils.getTimeStamp(employeeName);
+								employees.put(employeeName, expectedDates);
+								employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+								employeeName = WebdriverUtils.getTimeStamp(employeeName);
+								
+							}
+						}
+					}
+
+					employees.put(employeeName, expectedDates);
+					System.out.println(employees);
+				}
+
+			}
+
+		}
+		return employees;
+
 	}
 
 }

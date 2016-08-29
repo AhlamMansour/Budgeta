@@ -1454,6 +1454,10 @@ public class SecondaryBoard extends AbstractPOM {
 //
 //	}
 
+	public String getTypeLine(WebElement el){
+		return el.findElement(lineType).getText();
+		
+	}
 	public void addNewline() {
 		clickAddLineButton();
 		clickAddSubLineButton();
@@ -1653,7 +1657,7 @@ public class SecondaryBoard extends AbstractPOM {
 		return list.size();
 	}
 
-	private List<WebElement> getAllLines() {
+	public List<WebElement> getAllLines() {
 		// return
 		// driver.findElements(By.cssSelector("ol.tree.nav")).get(1).findElement(By.className("selected-root")).findElement(By.tagName("ol"))
 		// .findElements(line);
