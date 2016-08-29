@@ -56,11 +56,11 @@
 
 
 
-	<test name="Login Test">
-		<classes>
-			<class name="com.budgeta.test.login.LoginTest"></class>
-		</classes>
-	</test>
+<!-- 	<test name="Login Test"> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.budgeta.test.login.LoginTest"></class> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
 <!-- 	<test name="Scenarios Test"> -->
 <!-- 		<classes> -->
@@ -160,6 +160,12 @@
 <!-- 			<class name="com.budgeta.test.ShareBudget.ViewOnlyModeTest"></class> -->
 <!-- 		</classes> -->
 <!-- 	</test> -->
+
+	<test name="Headcount Test">
+		<classes>
+			<class name="com.budgeta.test.view.HeadcountSheetTest"></class>
+		</classes>
+	</test>
 
 </suite>
 	
