@@ -28,6 +28,12 @@ public class GeneralSection extends AbstractPOM{
 	@FindBy(id = "attribute-region")
 	private WebElement geography;
 	
+	@FindBy(id = "attribute-role")
+	private WebElement role;
+	
+//	@FindBy(name = "role")
+//	private WebElement role;
+	
 	@FindBy(id = "attribute-product")
 	private WebElement product;
 	
@@ -196,7 +202,20 @@ public class GeneralSection extends AbstractPOM{
 	}
 	
 	public String getGeography(){
-		return geography.findElements(By.tagName("input")).get(1).getAttribute("value");
+		//return geography.findElements(By.tagName("input")).get(1).getAttribute("value");
+		return geography.findElements(By.tagName("input")).get(1).getAttribute("placeholder");
+	}
+	
+	public void setRole(String value){
+		WebElement field = role.findElements(By.tagName("input")).get(1);
+		field.clear();
+		if (value != null)
+		field.sendKeys(value);
+	}
+	
+	public String getRole(){
+		return role.findElements(By.tagName("input")).get(1).getAttribute("value");
+		
 	}
 	
 	public void setProduct(String value){
@@ -241,6 +260,7 @@ public class GeneralSection extends AbstractPOM{
 		}
 		return null;
 	}
+
 	
 	@Override
 	public boolean isDisplayed() {

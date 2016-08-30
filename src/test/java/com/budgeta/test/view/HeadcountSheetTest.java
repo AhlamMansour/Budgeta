@@ -57,7 +57,7 @@ public class HeadcountSheetTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void calculateAllHeadcount() {
 		secondaryBoard = new SecondaryBoard();
 		Map<String, List<String>> employees = allEmployees();
@@ -143,8 +143,53 @@ public class HeadcountSheetTest extends WrapperTest {
 	
 	
 	@Test(enabled = true)
-	public void showHeadcountByCurrency(){
+	public void showHeadcountByDepartment(){
+
+		Map<String, String> allDepartments = new HashMap<String, String>();
+		secondaryBoard = new SecondaryBoard();
+		Map<String, List<String>> employees = allEmployeesDetails();
+
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.openSheetTab();
+		Assert.assertEquals(navigator.getOpenTab(), "Sheets");
+
+		sheets = new Sheets();
+		Assert.assertTrue(sheets.isDisplayed(), "expected to Sheets to be displayed");
+
+		TopHeaderBar topHeaderBar = new TopHeaderBar();
+		topHeaderBar = new TopHeaderBar();
+		topHeaderBar.openHeaderTab(ReportEnum.HEADCOUNT.name());
 		
+		sheets.selectSubReportType("Budget");
+		sheets.selectHeadcount("Headcount");
+		sheets.selectEmployees("All Headcount");
+		sheets.selectDepartmentType("By department");
+		dates = sheets.getAllDates();
+		List<String> departments = sheets.getPrimaryLinesName();
+		List<String> employeeCount = new ArrayList<>();
+		
+		for (int i = 0; i < dates.size(); i++) {
+			int count = 0;
+			for (String lines : employees.keySet()) {
+				List<String> employeesData = employees.get(lines);
+				for (int j = 0; j < employeesData.size(); j++) {
+					
+					String data = employeesData.get(j);
+					String date = data.split("-")[0];
+					String dep = data.split("-")[1];
+					for (int k= 0; k < departments.size(); k++){
+						if (date.equals(dates.get(i)) && dep.equals(departments.get(k))){
+							count++;
+							continue;
+						}
+					}
+					
+				}
+			}
+			employeeCount.add(count + "");
+		}
+		
+		System.out.println("test");
 	}
 	
 
@@ -278,5 +323,127 @@ public class HeadcountSheetTest extends WrapperTest {
 		return employees;
 
 	}
+	
+	
+	
+	private Map<String, List<String>> allEmployeesDetails() {
+		List<WebElement> lines = secondaryBoard.getAllLines();
+		// List<String> employees = new ArrayList<>();
+		Map<String, List<String>> employees = new HashMap<String, List<String>>();
+		for (WebElement el : lines) {
+			WebElementUtils.hoverOverField(el, driver, null);
+			if (WebdriverUtils.hasClass("has-children", el)) {
+				try {
+					el.click();
+					GeneralSection dates = new GeneralSection();
+					if (!dates.getHireDateRangeFrom().equals("MM/YYYY")) {
+						parentFromDate = dates.getHireDateRangeFrom();
+						parentToDate = dates.getHireDateRangeTo();
+					}
+
+				} catch (ElementNotVisibleException e) {
+					continue;
+				}
+
+			}
+			if (secondaryBoard.getTypeLine(el).equals("Employee") || secondaryBoard.getTypeLine(el).equals("Contractor")
+					|| secondaryBoard.getTypeLine(el).equals("Multiple employees")) {
+				String employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+				String lineType = el.findElement(By.className("type")).getText();
+				el.click();
+				GeneralSection general = new GeneralSection();
+				String fromDate = general.getHireDateRangeFrom();
+				String toDate = general.getHireDateRangeTo();
+				String department = general.getDepartment();
+				String geography = general.getGeography();
+				String currency = general.getSelectedCurrency();
+				String role = general.getRole();
+				
+				if(department.isEmpty()){
+					department = "No department";
+				}
+				
+				if(geography.isEmpty()){
+					geography = "No geography";
+				}
+				
+				if(role.isEmpty()){
+					role = "No role";
+				}
+				
+				if (fromDate.equals("MM/YYYY")) {
+					fromDate = parentFromDate;
+					toDate = parentToDate;
+					fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(fromDate.split("/")[0]));
+					fromYear = fromDate.split("/")[1];
+					toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
+					toYear = toDate.split("/")[1];
+					List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
+//					expectedDates.add(department);
+					// employees.add(employeeName + "," + fromDate + "-" +
+					// toDate);
+					List<String> allValues = new ArrayList<>();
+					for (int i=0 ; i<expectedDates.size(); i++){
+						allValues.add(expectedDates.get(i) + "-" + department + "-" + currency + "-" + geography + "-" + role);
+						
+					}
+					if (lineType.equals("Multiple employees")) {
+						EmplyeeSection employee = new EmplyeeSection();
+						String numberOfEmployees = employee.getNumberOfEmployees();
+						if (!numberOfEmployees.isEmpty()) {
+							int numberOfEmployee = Integer.parseInt(numberOfEmployees);
+							for (int i = 0; i < numberOfEmployee; i++) {
+								employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+								employeeName = WebdriverUtils.getTimeStamp(employeeName);
+								employees.put(employeeName, allValues);
+								employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+								employeeName = WebdriverUtils.getTimeStamp(employeeName);
+							}
+						}
+					}
+					employees.put(employeeName, allValues);
+					System.out.println(employees);
+
+				} else {
+					fromMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(fromDate.split("/")[0]));
+					fromYear = fromDate.split("/")[1];
+					toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
+					toYear = toDate.split("/")[1];
+					List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
+					// employees.add(employeeName + "," + fromDate + "-" +
+					// toDate);
+					List<String> allValues = new ArrayList<>();
+					for (int i=0 ; i<expectedDates.size(); i++){
+						allValues.add(expectedDates.get(i) + "-" + department + "-" + currency + "-" + geography + "-" + role);
+						
+					}
+
+					if (lineType.equals("Multiple employees")) {
+						EmplyeeSection employee = new EmplyeeSection();
+						String numberOfEmployees = employee.getNumberOfEmployees();
+						if (!numberOfEmployees.isEmpty()) {
+							int numberOfEmployee = Integer.parseInt(numberOfEmployees);
+							for (int i = 0; i < numberOfEmployee - 1; i++) {
+								employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+								employeeName = WebdriverUtils.getTimeStamp(employeeName);
+								employees.put(employeeName, allValues);
+								employeeName = el.findElement(By.className("budget-name-text-display")).getText();
+								employeeName = WebdriverUtils.getTimeStamp(employeeName);
+								
+							}
+						}
+					}
+
+					employees.put(employeeName, allValues);
+					System.out.println(employees);
+				}
+
+			}
+
+		}
+		return employees;
+
+	}
+	
 
 }

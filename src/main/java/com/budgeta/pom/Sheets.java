@@ -30,6 +30,7 @@ public class Sheets extends AbstractPOM {
 	private SideDropDown employeestReporterDropDown;
 	private SideDropDown subActualReporterDropDown;
 	private SideDropDown currencyTypeDropDown;
+	private SideDropDown departmentTypeDropDown;
 
 	@FindBy(css = ".select2-choice")
 	private List<WebElement> choiceList;
@@ -278,6 +279,18 @@ public class Sheets extends AbstractPOM {
 		}
 
 	}
+	
+	public List<String> getPrimaryLinesName(){
+		List<String> lines = new ArrayList<>();
+		for(WebElement el : rows){
+			if(el.findElement(By.className("fixed-columns")).getAttribute("data-level").equals("1")){
+				lines.add(el.findElement(rowTitle).getText());
+				
+			}
+		}
+
+		return lines;
+	}
 
 	public int getIndexOfRowName(String title) {
 		int i = 0;
@@ -344,6 +357,12 @@ public class Sheets extends AbstractPOM {
 		getRepeatReporterDropDown().selectValue(option);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
+	
+	
+	public void selectDepartmentType(String option) {
+		getDepartmentDropDown().selectValue(option);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
 
 	public void selectSubActualReportType(String option) {
 		getSubActualReporterDropDown().selectValue(option);
@@ -377,6 +396,17 @@ public class Sheets extends AbstractPOM {
 			// }
 		}
 		return subReporterDropDown;
+	}
+	
+	private SideDropDown getDepartmentDropDown() {
+
+		if (departmentTypeDropDown == null) {
+			// for(WebElement el : wrapper.findElements(subReportType)){
+			// if(el.getText().trim().equals("Budget"))
+			departmentTypeDropDown = new SideDropDown(driver.findElements(subReportType).get(5).findElement(By.xpath("..")));
+			// }
+		}
+		return departmentTypeDropDown;
 	}
 
 	private SideDropDown getHeadCountReporterDropDown() {
@@ -483,6 +513,8 @@ public class Sheets extends AbstractPOM {
 			}
 					
 		}
+		
+		
 
 		for (WebElement elm : rows) {
 			String lineName = elm.findElement(By.cssSelector("div.ember-list-item-view div.column-content div.name-text")).getText();
@@ -504,6 +536,10 @@ public class Sheets extends AbstractPOM {
 		return allCost;
 	}
 
+	
+	
+	
+	
 	public Map<String, List<String>> allHeadcount() {
 		Map<String, List<String>> allHeadcount = new HashMap<String, List<String>>();
 
