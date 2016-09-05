@@ -470,6 +470,20 @@ public class EmployeeTableEdit extends AbstractPOM {
 		return flag;
 	}
 	
+	
+	public boolean isLineExist(String name) {
+		boolean flag = false;
+		for (WebElement el : employeeEditLine) {
+			if (el.findElement(lineName).findElement(By.tagName("input")).getAttribute("value").equals(name)) {
+					flag = true;
+			}
+
+		}
+
+		return flag;
+	}
+	
+	
 	public boolean isLineRemovedByIndex(String name, int index) {
 		boolean flag = false;
 		for (WebElement el : employeeEditLine) {

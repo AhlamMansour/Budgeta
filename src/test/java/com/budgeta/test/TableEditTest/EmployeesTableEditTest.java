@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import com.budgeta.pom.AddNotePopup;
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetaBoard;
+import com.budgeta.pom.CreateNewEmployeePopup;
 import com.budgeta.pom.DeletePopup;
 import com.budgeta.pom.EmployeeTableEdit;
 import com.budgeta.pom.GeneralSection;
@@ -26,9 +27,11 @@ public class EmployeesTableEditTest extends WrapperTest {
 	protected BudgetaBoard board;
 	SecondaryBoard secondaryBoard;
 	EmployeeTableEdit tableEdit;
+	CreateNewEmployeePopup addEmployee;
 	String note = "Add new note_";
 	String newLineName = "Line to delete_";
 	String duplicateLine = "Line to duplicate";
+	String employeeName = "New Employee_";
 
 	@TestFirst
 	@Test(enabled = true)
@@ -44,7 +47,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true, priority = 1)
+	@Test(enabled = false, priority = 1)
 	public void duplicateEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -90,7 +93,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true, priority = 2)
+	@Test(enabled = false, priority = 2)
 	public void addNoteEmployeeLine() {
 		note = WebdriverUtils.getTimeStamp(note);
 		tableEdit = new EmployeeTableEdit();
@@ -122,7 +125,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 		tableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
 
-	@Test(enabled = true, priority = 3)
+	@Test(enabled = false, priority = 3)
 	public void flagEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -137,7 +140,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 		tableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
 
-	@Test(enabled = true, priority = 4)
+	@Test(enabled = false, priority = 4)
 	public void deleteEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -168,7 +171,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true, priority = 5)
+	@Test(enabled = false, priority = 5)
 	public void filterAccordingToHeadcount() {
 		tableEdit = new EmployeeTableEdit();
 		tableEdit.clickOnEmployeeButton();
@@ -200,7 +203,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = true, priority = 6)
+	@Test(enabled = false, priority = 6)
 	public void filterAccordingToDepartment() {
 		tableEdit = new EmployeeTableEdit();
 		tableEdit.clickOnEmployeeButton();
@@ -222,7 +225,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 		tableEdit.selectDepartment("All Departments");
 	}
 
-	@Test(enabled = true, priority = 7)
+	@Test(enabled = false, priority = 7)
 	public void filterAccordingToGeography() {
 		tableEdit = new EmployeeTableEdit();
 		tableEdit.clickOnEmployeeButton();
@@ -242,4 +245,69 @@ public class EmployeesTableEditTest extends WrapperTest {
 	}
 	
 
+	@Test(enabled = false, priority = 8)
+	public void AddEmployee() {
+		tableEdit = new EmployeeTableEdit();
+		tableEdit.clickOnEmployeeButton();
+		
+		tableEdit.clickOnAddEmployeeButton();
+		
+		addEmployee = new CreateNewEmployeePopup();
+		
+		Assert.assertTrue(addEmployee.isDisplayed(), "Create New Employee pop up not opened");
+
+		employeeName = WebdriverUtils.getTimeStamp(employeeName);
+		
+		addEmployee.setEmployeeName(employeeName);
+		addEmployee.selectRandomBudgetLine();
+		addEmployee.setEmployeeBaseSalary("2000");
+		addEmployee.clickOnMoreOptions();
+		addEmployee.setEmployeeRole("QA");
+		addEmployee.setEmployeeId("122");
+		addEmployee.setEmployeeBonus("10");
+		//addEmployee.setEmployeeBonusPaymentAfter("0");
+		addEmployee.setEmployeeYearlyIncrease("2");
+		addEmployee.setEmployeeGeography("UK");
+
+		addEmployee.clickOnSave();
+		
+		Assert.assertTrue(tableEdit.isLineExist(employeeName), "Employee was not added");
+	
+		
+		
+	}
+	
+	@Test(enabled = true, priority = 9)
+	public void AddMoreThanEmployee() {
+		tableEdit = new EmployeeTableEdit();
+		tableEdit.clickOnEmployeeButton();
+		
+		tableEdit.clickOnAddEmployeeButton();
+		
+		addEmployee = new CreateNewEmployeePopup();
+		
+		Assert.assertTrue(addEmployee.isDisplayed(), "Create New Employee pop up not opened");
+
+		employeeName = WebdriverUtils.getTimeStamp(employeeName);
+		
+		addEmployee.setEmployeeName(employeeName);
+		addEmployee.selectRandomBudgetLine();
+		addEmployee.setEmployeeBaseSalary("2000");
+		addEmployee.clickOnMoreOptions();
+		addEmployee.setEmployeeRole("QA");
+		addEmployee.setEmployeeId("122");
+		addEmployee.setEmployeeBonus("10");
+		//addEmployee.setEmployeeBonusPaymentAfter("0");
+		addEmployee.setEmployeeYearlyIncrease("2");
+		addEmployee.setEmployeeGeography("UK");
+		
+		addEmployee.checkAddAnotherEmployee();
+
+		addEmployee.clickOnSave();
+		
+		Assert.assertTrue(addEmployee.isDisplayed(), "Create New Emplyee Window is closed");
+	
+		
+		
+	}
 }

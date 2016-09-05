@@ -202,8 +202,8 @@ public class GeneralSection extends AbstractPOM{
 	}
 	
 	public String getGeography(){
-		//return geography.findElements(By.tagName("input")).get(1).getAttribute("value");
-		return geography.findElements(By.tagName("input")).get(1).getAttribute("placeholder");
+		return geography.findElements(By.tagName("input")).get(1).getAttribute("value");
+		//return geography.findElements(By.tagName("input")).get(1).getAttribute("placeholder");
 	}
 	
 	public void setRole(String value){

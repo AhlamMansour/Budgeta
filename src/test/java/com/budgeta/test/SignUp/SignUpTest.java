@@ -101,7 +101,7 @@ public class SignUpTest extends BudgetaTest{
 			login.setPassword(data.get("password"));
 			login.clickLoginAfterSignup();
 			
-			Assert.assertEquals(login.getErrorMessage(), "Your account is not verified, please look for the verification email in your inbox");
+			Assert.assertEquals(login.getErrorMessage(), "Your account is not verified, please look for the verification email in your inbox. Click here to resend.");
 			
 			/*WelcomeScreen welcomescreen =  new WelcomeScreen();
 			Assert.assertTrue(welcomescreen.isDisplayed(), "Expected welcome screen to be displayed");

@@ -34,7 +34,7 @@ public class HeadcountSheetTest extends WrapperTest {
 	SecondaryBoard secondaryBoard;
 	Sheets sheets;
 	List<String> dates;
-	
+
 	String fromMonth;
 	String fromYear;
 	String toMonth;
@@ -104,6 +104,7 @@ public class HeadcountSheetTest extends WrapperTest {
 		}
 
 	}
+
 	@KnownIssue(bugID = "BUD - 4760")
 	@Test(enabled = false)
 	public void viewHeadcountAndAverage() {
@@ -134,16 +135,15 @@ public class HeadcountSheetTest extends WrapperTest {
 
 			if (value1.size() == value2.size()) {
 				for (int i = 0; i < value1.size(); i++) {
-					Assert.assertEquals(value1.get(i), value2.get(i), "index of: " + i + " Row Name is: " + key );
+					Assert.assertEquals(value1.get(i), value2.get(i), "index of: " + i + " Row Name is: " + key);
 				}
 			}
 		}
 
 	}
-	
-	
+
 	@Test(enabled = true)
-	public void showHeadcountByDepartment(){
+	public void showHeadcountByDepartment() {
 
 		Map<String, String> allDepartments = new HashMap<String, String>();
 		secondaryBoard = new SecondaryBoard();
@@ -159,37 +159,165 @@ public class HeadcountSheetTest extends WrapperTest {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openHeaderTab(ReportEnum.HEADCOUNT.name());
-		
+
 		sheets.selectSubReportType("Budget");
 		sheets.selectHeadcount("Headcount");
 		sheets.selectEmployees("All Headcount");
 		sheets.selectDepartmentType("By department");
+
 		dates = sheets.getAllDates();
 		List<String> departments = sheets.getPrimaryLinesName();
 		List<String> employeeCount = new ArrayList<>();
+		Map<String, List<String>> departmetValues = new HashMap<String, List<String>>();
+
+		 for (int i = 0; i < dates.size(); i++) {
+		 int count = 0;
+		 for (String lines : employees.keySet()) {
+		 List<String> employeesData = employees.get(lines);
+		 for (int j = 0; j < employeesData.size(); j++) {
 		
-		for (int i = 0; i < dates.size(); i++) {
-			int count = 0;
-			for (String lines : employees.keySet()) {
-				List<String> employeesData = employees.get(lines);
-				for (int j = 0; j < employeesData.size(); j++) {
-					
-					String data = employeesData.get(j);
-					String date = data.split("-")[0];
-					String dep = data.split("-")[1];
-					for (int k= 0; k < departments.size(); k++){
-						if (date.equals(dates.get(i)) && dep.equals(departments.get(k))){
-							count++;
-							continue;
-						}
-					}
-					
-				}
-			}
-			employeeCount.add(count + "");
+		 String data = employeesData.get(j);
+		 String date = data.split("-")[0];
+		 String dep = data.split("-")[1];
+		 for (int k= 0; k < departments.size(); k++){
+		 if (date.equals(dates.get(i)) && dep.equals(departments.get(k))){
+		 count++;
+		 continue;
+		 }
+		 }
+		
+		 }
+		 }
+		 employeeCount.add(count + "");
+		 }
+
+		List<String> allTotaleValues = sheets.getAllValuesOfTotalRow("Totals");
+
+		for (int y = 0; y < allTotaleValues.size(); y++) {
+			Assert.assertEquals(allTotaleValues.get(y), employeeCount.get(y), "Test failed");
 		}
 		
-		System.out.println("test");
+		sheets.selectDepartmentType("All departments");
+		
+	}
+	
+	
+	@Test(enabled = true)
+	public void showHeadcountByGeography() {
+
+		Map<String, String> allGeographies = new HashMap<String, String>();
+		secondaryBoard = new SecondaryBoard();
+		Map<String, List<String>> employees = allEmployeesDetails();
+
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.openSheetTab();
+		Assert.assertEquals(navigator.getOpenTab(), "Sheets");
+
+		sheets = new Sheets();
+		Assert.assertTrue(sheets.isDisplayed(), "expected to Sheets to be displayed");
+
+		TopHeaderBar topHeaderBar = new TopHeaderBar();
+		topHeaderBar = new TopHeaderBar();
+		topHeaderBar.openHeaderTab(ReportEnum.HEADCOUNT.name());
+
+		sheets.selectSubReportType("Budget");
+		sheets.selectHeadcount("Headcount");
+		sheets.selectEmployees("All Headcount");
+		sheets.selectGeography("By geography");
+
+		dates = sheets.getAllDates();
+		List<String> departments = sheets.getPrimaryLinesName();
+		List<String> employeeCount = new ArrayList<>();
+		Map<String, List<String>> geographyValues = new HashMap<String, List<String>>();
+
+		 for (int i = 0; i < dates.size(); i++) {
+		 int count = 0;
+		 for (String lines : employees.keySet()) {
+		 List<String> employeesData = employees.get(lines);
+		 for (int j = 0; j < employeesData.size(); j++) {
+		
+		 String data = employeesData.get(j);
+		 String date = data.split("-")[0];
+		 String geo = data.split("-")[3];
+		 for (int k= 0; k < departments.size(); k++){
+		 if (date.equals(dates.get(i)) && geo.equals(departments.get(k))){
+		 count++;
+		 continue;
+		 }
+		 }
+		
+		 }
+		 }
+		 employeeCount.add(count + "");
+		 }
+
+		List<String> allTotaleValues = sheets.getAllValuesOfTotalRow("Totals");
+
+		for (int y = 0; y < allTotaleValues.size(); y++) {
+			Assert.assertEquals(allTotaleValues.get(y), employeeCount.get(y), "Test failed");
+		}
+		
+		sheets.selectGeography("All geographies");
+	}
+	
+	
+	
+	@Test(enabled = true)
+	public void showHeadcountByRole() {
+
+		Map<String, String> allRoles = new HashMap<String, String>();
+		secondaryBoard = new SecondaryBoard();
+		Map<String, List<String>> employees = allEmployeesDetails();
+
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.openSheetTab();
+		Assert.assertEquals(navigator.getOpenTab(), "Sheets");
+
+		sheets = new Sheets();
+		Assert.assertTrue(sheets.isDisplayed(), "expected to Sheets to be displayed");
+
+		TopHeaderBar topHeaderBar = new TopHeaderBar();
+		topHeaderBar = new TopHeaderBar();
+		topHeaderBar.openHeaderTab(ReportEnum.HEADCOUNT.name());
+
+		sheets.selectSubReportType("Budget");
+		sheets.selectHeadcount("Headcount");
+		sheets.selectEmployees("All Headcount");
+		sheets.selectRole("By role");
+
+		dates = sheets.getAllDates();
+		List<String> departments = sheets.getPrimaryLinesName();
+		List<String> employeeCount = new ArrayList<>();
+		Map<String, List<String>> roleValues = new HashMap<String, List<String>>();
+
+		 for (int i = 0; i < dates.size(); i++) {
+		 int count = 0;
+		 for (String lines : employees.keySet()) {
+		 List<String> employeesData = employees.get(lines);
+		 for (int j = 0; j < employeesData.size(); j++) {
+		
+		 String data = employeesData.get(j);
+		 String date = data.split("-")[0];
+		 String role = data.split("-")[4];
+		 for (int k= 0; k < departments.size(); k++){
+		 if (date.equals(dates.get(i)) && role.equals(departments.get(k))){
+		 count++;
+		 continue;
+		 }
+		 }
+		
+		 }
+		 }
+		 employeeCount.add(count + "");
+		 }
+
+		List<String> allTotaleValues = sheets.getAllValuesOfTotalRow("Totals");
+
+		for (int y = 0; y < allTotaleValues.size(); y++) {
+			Assert.assertEquals(allTotaleValues.get(y), employeeCount.get(y), "Test failed");
+		}
+		
+		sheets.selectRole("All roles");
 	}
 	
 
@@ -199,7 +327,6 @@ public class HeadcountSheetTest extends WrapperTest {
 		sheets.selectHeadcount("Headcount & Cost");
 		sheets.selectEmployees("Cash");
 
-		
 		Map<String, List<String>> costValues = sheets.HeadcountCost();
 		Map<String, List<String>> headcountValues = sheets.allHeadcount();
 		sheets = new Sheets();
@@ -219,20 +346,16 @@ public class HeadcountSheetTest extends WrapperTest {
 						average.add(avg + "");
 					}
 					allAverage.put(key, average);
-				
+
 				}
-				
-				
+
 			}
 
-			
 		}
 
 		return allAverage;
 	}
-	
-	
-	
+
 	private Map<String, List<String>> allEmployees() {
 		List<WebElement> lines = secondaryBoard.getAllLines();
 		// List<String> employees = new ArrayList<>();
@@ -308,7 +431,7 @@ public class HeadcountSheetTest extends WrapperTest {
 								employees.put(employeeName, expectedDates);
 								employeeName = el.findElement(By.className("budget-name-text-display")).getText();
 								employeeName = WebdriverUtils.getTimeStamp(employeeName);
-								
+
 							}
 						}
 					}
@@ -323,10 +446,12 @@ public class HeadcountSheetTest extends WrapperTest {
 		return employees;
 
 	}
-	
-	
-	
+
 	private Map<String, List<String>> allEmployeesDetails() {
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.openInputTab();
+		TopHeaderBar topHeaderBar = new TopHeaderBar();
+		topHeaderBar.openBaseTab();
 		List<WebElement> lines = secondaryBoard.getAllLines();
 		// List<String> employees = new ArrayList<>();
 		Map<String, List<String>> employees = new HashMap<String, List<String>>();
@@ -358,19 +483,19 @@ public class HeadcountSheetTest extends WrapperTest {
 				String geography = general.getGeography();
 				String currency = general.getSelectedCurrency();
 				String role = general.getRole();
-				
-				if(department.isEmpty()){
+
+				if (department.isEmpty()) {
 					department = "No department";
 				}
-				
-				if(geography.isEmpty()){
+
+				if (geography.isEmpty()) {
 					geography = "No geography";
 				}
-				
-				if(role.isEmpty()){
+
+				if (role.isEmpty()) {
 					role = "No role";
 				}
-				
+
 				if (fromDate.equals("MM/YYYY")) {
 					fromDate = parentFromDate;
 					toDate = parentToDate;
@@ -379,13 +504,13 @@ public class HeadcountSheetTest extends WrapperTest {
 					toMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(toDate.split("/")[0]));
 					toYear = toDate.split("/")[1];
 					List<String> expectedDates = BudgetaUtils.getAllMonthsBetweenTwoMonths(fromMonth, fromYear, toMonth, toYear, 0, false);
-//					expectedDates.add(department);
+					// expectedDates.add(department);
 					// employees.add(employeeName + "," + fromDate + "-" +
 					// toDate);
 					List<String> allValues = new ArrayList<>();
-					for (int i=0 ; i<expectedDates.size(); i++){
+					for (int i = 0; i < expectedDates.size(); i++) {
 						allValues.add(expectedDates.get(i) + "-" + department + "-" + currency + "-" + geography + "-" + role);
-						
+
 					}
 					if (lineType.equals("Multiple employees")) {
 						EmplyeeSection employee = new EmplyeeSection();
@@ -413,9 +538,9 @@ public class HeadcountSheetTest extends WrapperTest {
 					// employees.add(employeeName + "," + fromDate + "-" +
 					// toDate);
 					List<String> allValues = new ArrayList<>();
-					for (int i=0 ; i<expectedDates.size(); i++){
+					for (int i = 0; i < expectedDates.size(); i++) {
 						allValues.add(expectedDates.get(i) + "-" + department + "-" + currency + "-" + geography + "-" + role);
-						
+
 					}
 
 					if (lineType.equals("Multiple employees")) {
@@ -429,7 +554,7 @@ public class HeadcountSheetTest extends WrapperTest {
 								employees.put(employeeName, allValues);
 								employeeName = el.findElement(By.className("budget-name-text-display")).getText();
 								employeeName = WebdriverUtils.getTimeStamp(employeeName);
-								
+
 							}
 						}
 					}
@@ -444,6 +569,5 @@ public class HeadcountSheetTest extends WrapperTest {
 		return employees;
 
 	}
-	
 
 }

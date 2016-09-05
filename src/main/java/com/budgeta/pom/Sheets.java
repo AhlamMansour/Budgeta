@@ -31,6 +31,8 @@ public class Sheets extends AbstractPOM {
 	private SideDropDown subActualReporterDropDown;
 	private SideDropDown currencyTypeDropDown;
 	private SideDropDown departmentTypeDropDown;
+	private SideDropDown geographyTypeDropDown;
+	private SideDropDown roleTypeDropDown;
 
 	@FindBy(css = ".select2-choice")
 	private List<WebElement> choiceList;
@@ -363,6 +365,16 @@ public class Sheets extends AbstractPOM {
 		getDepartmentDropDown().selectValue(option);
 		WebdriverUtils.waitForBudgetaLoadBar(driver);
 	}
+	
+	public void selectGeography(String option) {
+		getGeographyDropDown().selectValue(option);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
+	
+	public void selectRole(String option) {
+		getRoleDropDown().selectValue(option);
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
+	}
 
 	public void selectSubActualReportType(String option) {
 		getSubActualReporterDropDown().selectValue(option);
@@ -408,7 +420,29 @@ public class Sheets extends AbstractPOM {
 		}
 		return departmentTypeDropDown;
 	}
+	
+	private SideDropDown getGeographyDropDown() {
 
+		if (geographyTypeDropDown == null) {
+			// for(WebElement el : wrapper.findElements(subReportType)){
+			// if(el.getText().trim().equals("Budget"))
+			geographyTypeDropDown = new SideDropDown(driver.findElements(subReportType).get(6).findElement(By.xpath("..")));
+			// }
+		}
+		return geographyTypeDropDown;
+	}
+
+	private SideDropDown getRoleDropDown() {
+
+		if (roleTypeDropDown == null) {
+			// for(WebElement el : wrapper.findElements(subReportType)){
+			// if(el.getText().trim().equals("Budget"))
+			roleTypeDropDown = new SideDropDown(driver.findElements(subReportType).get(7).findElement(By.xpath("..")));
+			// }
+		}
+		return roleTypeDropDown;
+	}
+	
 	private SideDropDown getHeadCountReporterDropDown() {
 
 		if (HeadcountReporterDropDown == null) {
