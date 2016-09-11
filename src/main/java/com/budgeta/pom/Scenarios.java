@@ -82,6 +82,11 @@ public class Scenarios extends AbstractPOM{
 		return new SmallPopup();
 	}
 	
+	public SmallPopup clickMergeScenario(){
+		selectBudgetTrigger("Merge with budget");
+		return new SmallPopup();
+	}
+	
 	public DeletePopup deleteScenario(){
 		selectBudgetTrigger("Delete");
 		return new DeletePopup();

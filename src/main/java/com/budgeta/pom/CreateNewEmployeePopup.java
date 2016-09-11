@@ -318,7 +318,8 @@ public class CreateNewEmployeePopup extends AbstractPOM {
 
 	public void clickOnSave() {
 		confirmBtn.click();
-		WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
+		//WebdriverUtils.waitForElementToDisappear(driver, By.className("modal-content"));
+		WebdriverUtils.waitForBudgetaBusyBar(driver);
 	}
 
 	@Override

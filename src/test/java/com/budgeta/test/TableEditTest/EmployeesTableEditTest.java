@@ -47,7 +47,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false, priority = 1)
+	@Test(enabled = true, priority = 1)
 	public void duplicateEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -93,7 +93,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false, priority = 2)
+	@Test(enabled = true, priority = 2)
 	public void addNoteEmployeeLine() {
 		note = WebdriverUtils.getTimeStamp(note);
 		tableEdit = new EmployeeTableEdit();
@@ -125,7 +125,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 		tableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
 
-	@Test(enabled = false, priority = 3)
+	@Test(enabled = true, priority = 3)
 	public void flagEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -140,7 +140,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 		tableEdit.unSelectLineByIndex(indexOfSelectedLine + 1);
 	}
 
-	@Test(enabled = false, priority = 4)
+	@Test(enabled = true, priority = 4)
 	public void deleteEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -171,7 +171,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false, priority = 5)
+	@Test(enabled = true, priority = 5)
 	public void filterAccordingToHeadcount() {
 		tableEdit = new EmployeeTableEdit();
 		tableEdit.clickOnEmployeeButton();
@@ -203,7 +203,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 
 	}
 
-	@Test(enabled = false, priority = 6)
+	@Test(enabled = true, priority = 6)
 	public void filterAccordingToDepartment() {
 		tableEdit = new EmployeeTableEdit();
 		tableEdit.clickOnEmployeeButton();
@@ -225,7 +225,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 		tableEdit.selectDepartment("All Departments");
 	}
 
-	@Test(enabled = false, priority = 7)
+	@Test(enabled = true, priority = 7)
 	public void filterAccordingToGeography() {
 		tableEdit = new EmployeeTableEdit();
 		tableEdit.clickOnEmployeeButton();
@@ -245,7 +245,7 @@ public class EmployeesTableEditTest extends WrapperTest {
 	}
 	
 
-	@Test(enabled = false, priority = 8)
+	@Test(enabled = true, priority = 8)
 	public void AddEmployee() {
 		tableEdit = new EmployeeTableEdit();
 		tableEdit.clickOnEmployeeButton();
@@ -270,6 +270,8 @@ public class EmployeesTableEditTest extends WrapperTest {
 		addEmployee.setEmployeeGeography("UK");
 
 		addEmployee.clickOnSave();
+		
+		Assert.assertFalse(addEmployee.isDisplayed(), "Create New Emplyee Window is not closed");
 		
 		Assert.assertTrue(tableEdit.isLineExist(employeeName), "Employee was not added");
 	
@@ -306,8 +308,8 @@ public class EmployeesTableEditTest extends WrapperTest {
 		addEmployee.clickOnSave();
 		
 		Assert.assertTrue(addEmployee.isDisplayed(), "Create New Emplyee Window is closed");
-	
-		
-		
+
 	}
+	
+
 }

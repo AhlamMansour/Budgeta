@@ -6,11 +6,13 @@ import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetaBoard;
+import com.budgeta.pom.CreateNewEmployeePopup;
 import com.budgeta.pom.CreateNewScenarioPopup;
 import com.budgeta.pom.DeletePopup;
 import com.budgeta.pom.EmployeeTableEdit;
 import com.budgeta.pom.Scenarios;
 import com.budgeta.pom.SecondaryBoard;
+import com.budgeta.pom.SmallPopup;
 import com.budgeta.pom.TopHeaderBar;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.KnownIssue;
@@ -29,6 +31,8 @@ public class Employees_ScenarioVsBudget extends WrapperTest {
 	EmployeeTableEdit tableEdit;
 	String newLineName = "Line to rename_";
 	String scenarioNameToDeleteLines = "new employee scenario to test delete lines_";
+	CreateNewEmployeePopup addEmployee;
+	String employeeName = "New Employee_";
 
 	@TestFirst
 	@Test(enabled = true)
@@ -36,8 +40,8 @@ public class Employees_ScenarioVsBudget extends WrapperTest {
 
 		BudgetNavigator navigator = new BudgetNavigator();
 		Assert.assertTrue(navigator.isDisplayed(), "expected to inner bar to be dislayed");
-		 navigator.selectRandomBudgeta();
-		//navigator.selectRandomBudgetWithPrefix("TEST Forecast");
+		navigator.selectRandomBudgeta();
+		// navigator.selectRandomBudgetWithPrefix("TEST Forecast");
 		navigator.openInputTab();
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -58,7 +62,7 @@ public class Employees_ScenarioVsBudget extends WrapperTest {
 	}
 
 	@KnownIssue(bugID = "BUD - 4626")
-	@Test(enabled = true, priority = 1)
+	@Test(enabled = true, priority = 4)
 	public void flagEmployeeLine() {
 		TopHeaderBar topHeaderBar = new TopHeaderBar();
 		topHeaderBar.openTableEditTab();
@@ -138,14 +142,69 @@ public class Employees_ScenarioVsBudget extends WrapperTest {
 
 		selectedLine = tableEdit.getLineNameByIndex(indexOfSelectedLine);
 		tableEdit.deleteLineBylineName(selectedLine, indexOfSelectedLine);
-//		DeletePopup ConfirmDelete = new DeletePopup();
-//		ConfirmDelete.clickConfirm();
+		// DeletePopup ConfirmDelete = new DeletePopup();
+		// ConfirmDelete.clickConfirm();
 
 		Assert.assertTrue(tableEdit.isLineRemovedByIndex(selectedLine, indexOfSelectedLine), "Line is not deleted: " + selectedLine);
 
 		topHeaderBar.clearScenario();
 		Assert.assertTrue(tableEdit.isLineExistByIndex(selectedLine, indexOfSelectedLine), "Line is deleted also from budget: " + selectedLine);
 
+	}
 
+	@Test(enabled = true, priority = 1)
+	public void MergeIScenarioWithBudget() {
+
+		TopHeaderBar topHeaderBar = new TopHeaderBar();
+		topHeaderBar.openTableEditTab();
+		topHeaderBar.openScenariowindow();
+		topHeaderBar.selectScenario(scenarioName);
+
+		tableEdit = new EmployeeTableEdit();
+		tableEdit.clickOnEmployeeButton();
+
+		tableEdit.clickOnAddEmployeeButton();
+
+		addEmployee = new CreateNewEmployeePopup();
+
+		Assert.assertTrue(addEmployee.isDisplayed(), "Create New Employee pop up not opened");
+
+		employeeName = WebdriverUtils.getTimeStamp(employeeName);
+
+		addEmployee.setEmployeeName(employeeName);
+		addEmployee.selectRandomBudgetLine();
+		addEmployee.setEmployeeBaseSalary("2000");
+		addEmployee.clickOnMoreOptions();
+		addEmployee.setEmployeeRole("QA");
+		addEmployee.setEmployeeId("122");
+		addEmployee.setEmployeeBonus("10");
+		// addEmployee.setEmployeeBonusPaymentAfter("0");
+		addEmployee.setEmployeeYearlyIncrease("2");
+		addEmployee.setEmployeeGeography("UK");
+
+		addEmployee.clickOnSave();
+
+		Assert.assertFalse(addEmployee.isDisplayed(), "Create New Emplyee Window is not closed");
+
+		Assert.assertTrue(tableEdit.isLineExist(employeeName), "Employee was not added");
+
+		topHeaderBar.clearScenario();
+
+		Assert.assertFalse(tableEdit.isLineExist(employeeName), "Employee was added also to budgte");
+		topHeaderBar.openScenariowindow();
+		topHeaderBar.selectScenario(scenarioName);
+		
+		Assert.assertTrue(tableEdit.isLineExist(employeeName), "Employee was not added");
+		
+		scenarios = new Scenarios();
+		SmallPopup popup = scenarios.clickMergeScenario();
+		Assert.assertTrue(popup.isDisplayed(), "expected rename popup to be displayed");
+		popup.clickConfirm();
+		
+		Assert.assertTrue(tableEdit.isLineExist(employeeName), "Employee was not added");
+		
+		
+		
+		
 	}
 }
