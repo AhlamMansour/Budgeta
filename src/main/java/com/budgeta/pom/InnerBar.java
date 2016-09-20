@@ -21,7 +21,7 @@ public class InnerBar extends AbstractPOM{
 	@FindBy(id = "view-tab-header")
 	private WebElement view;
 	
-	@FindBy(id = "actuals-tab-header")
+	@FindBy(className = "actuals-header")
 	private WebElement actuals;
 	
 	

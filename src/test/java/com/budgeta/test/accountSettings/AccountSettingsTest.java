@@ -2,7 +2,6 @@ package com.budgeta.test.accountSettings;
 
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -10,30 +9,20 @@ import com.budgeta.pom.AccountSettings;
 import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.ChangePassword;
 import com.budgeta.pom.LoginPage;
-import com.budgeta.pom.SignUpPage;
 import com.budgeta.pom.TopBar;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
-import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class AccountSettingsTest extends WrapperTest{
 	
-//	@BeforeMethod
-//	private void initTest() {	
-//		//((JavascriptExecutor)driver).executeScript("");
-//		
-//		driver.manage().window().maximize();
-//		
-//		
-//	}
+
 	
 	@Test(enabled = true)
 	public void changeAccountSettingsTest(){
 		
 		TopBar topBar = new TopBar();
-		//topBar.clickAccountSettings();
 		topBar.clickAccountSetting();
 
 		
@@ -48,8 +37,7 @@ public class AccountSettingsTest extends WrapperTest{
 		topBar.waitNotyMessageTodisappear();
 		
 		Assert.assertEquals(topBar.getUserName(), "Dema Ma");
-		
-		//WebdriverUtils.sleep(1000);
+
 		topBar.clickAccountSetting();
 		account = new AccountSettings();
 		
@@ -65,7 +53,6 @@ public class AccountSettingsTest extends WrapperTest{
 	@Test(enabled = true)
 	public void changePasswordTest(){
 		TopBar topBar = new TopBar();
-		//WebdriverUtils.sleep(1000);
 		topBar.clickChangePassword();
 		
 		ChangePassword changePassword = new ChangePassword();
@@ -73,24 +60,6 @@ public class AccountSettingsTest extends WrapperTest{
 		Assert.assertTrue(changePassword.isDisplayed(), "expected change password page to be displayed");
 		Assert.assertEquals(changePassword.getTitle(), "Change Password");
 		
-		/*
-		//error current password
-		changePassword.setCurrentPassword(WebdriverUtils.getTimeStamp(""));
-		changePassword.setNewPassword(newPassword);
-		changePassword.setVerifyPassword(newPassword);
-		changePassword.clickSave(false);
-		Assert.assertTrue(changePassword.isErrorDisplayed(), "expected to error");
-		
-		//error verify password
-		changePassword.setCurrentPassword(password);
-		changePassword.setNewPassword(newPassword);
-		changePassword.setVerifyPassword(newPassword+WebdriverUtils.getTimeStamp(""));
-		changePassword.clickSave(false);
-		Assert.assertTrue(changePassword.isErrorDisplayed(), "expected to error");
-		*/
-		
-		 
-		//success change password
 		changePassword.setCurrentPassword(password);
 		changePassword.setNewPassword(newPassword);
 		changePassword.setVerifyPassword(newPassword);

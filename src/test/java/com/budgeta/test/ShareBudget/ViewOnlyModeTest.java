@@ -5,6 +5,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetNavigator;
+import com.budgeta.pom.BudgetaBoard;
+import com.budgeta.pom.LoginPage;
 import com.budgeta.pom.MainInputForm;
 import com.budgeta.pom.MenuTrigger;
 import com.budgeta.pom.SecondaryBoard;
@@ -13,19 +15,40 @@ import com.budgeta.pom.TopBarButtons;
 import com.budgeta.pom.TopHeaderBar;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
+import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
 
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class ViewOnlyModeTest extends WrapperTest{
 	
 	
+	@TestFirst
+	@Test(enabled = true)
+	public void setTest() {
+		
+		TopBar topBar = new TopBar();
+		topBar.clickLogout();
+
+		LoginPage loginPage = new LoginPage();
+		Assert.assertTrue(loginPage.isDisplayed(), "expected login page to be displayed");
+
+		loginPage.setEmail("ahlam_mns@hotmail.com");
+		loginPage.setPassword("a1234567");
+		loginPage.clickLogin(true);
+		
+		loginPage.setPasscode("nopasscode");
+		loginPage.clicksendPasscode(true);
+		BudgetaBoard board = new BudgetaBoard();
+		Assert.assertTrue(board.isDisplayed(), "expected budgeta board to be displayed");
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgetWithPrefix("TEST Forecast");
+	}
+	
 	
 	@Test(enabled = true, priority = 1)
 	public void settingIcon(){
 		TopHeaderBar topHeader = new TopHeaderBar();
 		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.openInputTab();
-		navigator.selectRandomBudgetWithPrefix("New Budget name_1458137461403");
 		Assert.assertFalse(topHeader.isSettingIconDispaly(), "Icone is display");
 	}
 	
@@ -49,7 +72,7 @@ public class ViewOnlyModeTest extends WrapperTest{
 	}
 	
 	
-	@Test(enabled = true, priority = 5)
+	@Test(enabled = false, priority = 5)
 	public void viewOnlyMode(){
 		MainInputForm mainForm = new MainInputForm();
 		Assert.assertTrue(mainForm.isViewOnlyMode(), "Icone is display");
@@ -62,14 +85,14 @@ public class ViewOnlyModeTest extends WrapperTest{
 		Assert.assertFalse(secondary.isBudgetSettingIconDispaly(), "Icone is display");
 	}
 	
-	@Test(enabled = true, priority = 7)
+	@Test(enabled = false, priority = 7)
 	public void budgetLineMenuIcon(){
 		SecondaryBoard secondary = new SecondaryBoard();
 		Assert.assertFalse(secondary.isBudgetLineSettingIconDispaly("Revenues"), "Icone is display");
 	}
 
 	
-	@Test(enabled = true, priority = 8)
+	@Test(enabled = false, priority = 8)
 	public void importAndTransactionIcon(){
 		TopHeaderBar topHeader = new TopHeaderBar();
 		topHeader.openActalsTab();

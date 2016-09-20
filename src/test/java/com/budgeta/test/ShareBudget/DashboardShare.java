@@ -5,11 +5,17 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BudgetNavigator;
+import com.budgeta.pom.BudgetaBoard;
+import com.budgeta.pom.LicenseScreen;
+import com.budgeta.pom.LoginPage;
 import com.budgeta.pom.MenuTrigger;
+import com.budgeta.pom.PlansAndPricingWindow;
 import com.budgeta.pom.SharePopup;
+import com.budgeta.pom.TopBar;
 import com.budgeta.pom.TopHeaderBar;
 import com.budgeta.test.WrapperTest;
 import com.galilsoftware.AF.core.listeners.MethodListener;
+import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
@@ -21,10 +27,33 @@ public class DashboardShare extends WrapperTest {
 	String email = "ahlam_mns@hotmail.com";
 	
 	
+	
+	@TestFirst
+	@Test(enabled = true)
+	public void setTest() {
+		
+		TopBar topBar = new TopBar();
+		topBar.clickLogout();
+
+		LoginPage loginPage = new LoginPage();
+		Assert.assertTrue(loginPage.isDisplayed(), "expected login page to be displayed");
+
+		loginPage.setEmail("ahlam_mns@hotmail.com");
+		loginPage.setPassword("a1234567");
+		loginPage.clickLogin(true);
+		
+		loginPage.setPasscode("nopasscode");
+		loginPage.clicksendPasscode(true);
+		BudgetaBoard board = new BudgetaBoard();
+		Assert.assertTrue(board.isDisplayed(), "expected budgeta board to be displayed");
+		BudgetNavigator navigator = new BudgetNavigator();
+		navigator.selectRandomBudgetWithPrefix("Copy of TEST Forecast");
+	}
+	
 	@Test(enabled = true, priority = 1)
 	public void InputTab() {
 		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.selectRandomBudgetWithPrefix("Copy of New Budget name_1458137461403");
+
 
 		Assert.assertFalse(navigator.isInputTabDispaly(), "Icone is display");
 	}
@@ -32,7 +61,7 @@ public class DashboardShare extends WrapperTest {
 	@Test(enabled = true, priority = 2)
 	public void SheetsTab() {
 		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.selectRandomBudgetWithPrefix("Copy of New Budget name_1458137461403");
+
 
 		Assert.assertFalse(navigator.isSheetsTabDispaly(), "Icone is display");
 	}
@@ -52,7 +81,7 @@ public class DashboardShare extends WrapperTest {
 	@Test(enabled = true, priority = 5)
 	public void DashboardTab() {
 		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.selectRandomBudgetWithPrefix("Copy of New Budget name_1458137461403");
+
 
 		Assert.assertTrue(navigator.isDashboardTabDispaly(), "Icone is display");
 
@@ -105,21 +134,4 @@ public class DashboardShare extends WrapperTest {
 		Assert.assertFalse(trigger.checkBudgetMenuTrigger("Duplicate"), "Icone is display");
 	}
 
-	@Test(enabled = true, priority = 12)
-	public void shareBudget() {
-		BudgetNavigator navigator = new BudgetNavigator();
-		navigator.openSharePopup();
-		SharePopup popup = new SharePopup();
-		Assert.assertTrue(popup.isDisplayed(), "expected share popup to be displayed"); // popup.sendEmail(email);
-		
-		String prefix = email.substring(0, email.indexOf("@"));
-		String suffix = email.substring(email.indexOf("@"));
-		email = prefix + WebdriverUtils.getTimeStamp("_") + suffix;
-		
-		popup.setName(email);
-		popup.clickSend();
-		
-		String message = board.getNotyMessage();
-		Assert.assertEquals(message, "Could not send email. Forbidden");
-	}
 }

@@ -34,9 +34,6 @@ public class UpgradeAndDowngradePlanTest extends WrapperTest {
 		SmallPopup popup = new SmallPopup();
 		Assert.assertTrue(popup.isDisplayed(), "Enterpise plan code pop up is displayed");
 
-//		popup.setName("beadvanced");
-//		popup.clickConfirm(false);
-//		popup = new SmallPopup();
 		Assert.assertTrue(popup.isDisplayed(), "Advanced plan code pop up is displayed");
 		popup.clickConfirm();
 

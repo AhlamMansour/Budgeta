@@ -34,16 +34,6 @@ public class ScenariosTest extends WrapperTest{
     
     
     
-    
-//    @BeforeMethod
-//	private void initTest() {	
-//		
-//		driver.manage().window().maximize();
-//		
-//		
-//	}
-    
-    
     @TestFirst
     @Test(enabled = true)
     public void setBudgetTest() {
@@ -56,7 +46,7 @@ public class ScenariosTest extends WrapperTest{
 	secondaryBoard.addSubLine("Revenues");
 	RevenuesAddSubLine subLine = new RevenuesAddSubLine();
 	subLine.setName(revenuesSubLine);
-	//subLine.selectDropDown("Perpetual License");
+
 	subLine.clickAdd();
 	
     }
@@ -66,7 +56,7 @@ public class ScenariosTest extends WrapperTest{
 		TopHeaderBar headerBar = new TopHeaderBar();
 		headerBar.openScenariowindow();
 		scenarios = new Scenarios();
-		//Assert.assertTrue(scenarios.isDisplayed(), "expected scenarios to be displayed");
+
 		
 		CreateNewScenarioPopup popup = scenarios.createNewScenario();
 		Assert.assertTrue(popup.isDisplayed(), "expected create new scenario popup to be displayed");
@@ -85,18 +75,18 @@ public class ScenariosTest extends WrapperTest{
 		TopHeaderBar headerBar = new TopHeaderBar();
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		String lineName = secondary.getFirstLineName();
-		//secondaryBoard.addSubLine("Revenues");
+
 		secondaryBoard.addSubLine(lineName);
 		RevenuesAddSubLine subLine = new RevenuesAddSubLine();
 		subLine.setName(subLineName);
 		subLine.clickAdd();
-		//Assert.assertTrue(secondaryBoard.isSubLineExist("Revenues", subLineName), "expected to found the added sub line");
+
 		Assert.assertTrue(secondaryBoard.isSubLineExist(lineName, subLineName), "expected to found the added sub line");
 		scenarios = new Scenarios();
 		String scenarioName = headerBar.newScenatrioText().trim(); 
 		headerBar.clearScenario();
 		Assert.assertFalse(secondaryBoard.isScenarioLineDisplayed(subLineName), "expected the new line to be disappear in base scenario");
-		//secondary.clickClose();
+
 		
 		headerBar.openScenariowindow();
 		if(headerBar.isScenarioExist(scenarioName) == true){
@@ -110,7 +100,7 @@ public class ScenariosTest extends WrapperTest{
 	public void deleteLineFromScenarioTest(){
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		String lineName = secondary.getFirstLineName();
-		//MenuTrigger trigger = secondaryBoard.getSubLinSettings("Revenues", subLineName);
+
 		MenuTrigger trigger = secondaryBoard.getSubLinSettings(lineName, subLineName);
 		DeletePopup popup = trigger.clickDelete();
 		Assert.assertTrue(popup.isDisplayed(), "expected the popup to be displayed");

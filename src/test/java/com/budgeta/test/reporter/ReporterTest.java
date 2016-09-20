@@ -65,7 +65,6 @@ public class ReporterTest extends WrapperTest{
 		if(!reports.isDisplayed())
 			openReports();
 		
-		//reports.selectOtherReportes();
 		reports.selectExcelReportType();
 		reports.selectReports("Selected reports");
 		reports.checkBox(boxToCheck);

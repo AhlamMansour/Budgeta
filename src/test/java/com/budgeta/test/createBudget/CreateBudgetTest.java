@@ -25,14 +25,6 @@ import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 @Listeners({ MethodListener.class, TestNGListener.class })
 public class CreateBudgetTest extends WrapperTest{
 	
-//	@BeforeMethod
-//	private void initTest() {	
-//		
-//		driver.manage().window().maximize();
-//		
-//		
-//	}
-	
 	@Test(dataProvider = "ExcelFileLoader", enabled = true)
 	@DataProviderParams(sheet = "CreateBudget" , area = "CreateNewBudget")
 	public void createBudgetTest(Hashtable<String, String> data) {
@@ -55,7 +47,6 @@ public class CreateBudgetTest extends WrapperTest{
 		from.setYear(data.get("DateRange_year_from"));
 		from.setMonth(data.get("DateRange_month_from"));
 		
-		//DateRange to = popup.openDateRangeTo();
 		from.setYear(data.get("DateRange_year_to"));
 		from.setMonth(data.get("DateRange_month_to"));
 		
@@ -64,11 +55,11 @@ public class CreateBudgetTest extends WrapperTest{
 		
 		
 		
-		//error in the first page
+
 		if(data.get("ContinueShouldPass").equals("FALSE")){
 			popup.clickContinue(false);
 			Assert.assertTrue(popup.pageHasError(), "expected error to be displayed");
-			//Assert.assertEquals(popup.getVisibleErrorText(), "Start Date must be before End Date");
+
 		}
 		//else, continue to the next page
 		else{

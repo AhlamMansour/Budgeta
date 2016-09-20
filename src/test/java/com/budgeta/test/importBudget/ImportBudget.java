@@ -42,11 +42,23 @@ public class ImportBudget extends WrapperTest{
 	}
 	
 	
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void ValidateRevenues(){
 		Map<String, List<String>> revenuesValues = allMaps.get("Revenues");
 		for(String line : revenuesValues.keySet()){
-			List<String> values = revenuesValues.get(line);
+			List<String> expectedValues = revenuesValues.get(line);
+			List<String> values = new ArrayList<>();
+			for(int x=0;x < expectedValues.size(); x++){
+				if(expectedValues.get(x).equals("-"))
+					values.add(expectedValues.get(x));
+				else{
+					int value= Math.round(Float.parseFloat(expectedValues.get(x).replaceAll("[^0-9 .]", "").trim()));
+					//value = (int) Math.round(value);
+					String expected = value +"";
+					values.add(expected);
+				}
+					
+			}
 			
 			secondaryBoard.clickOnSubLine("Revenues", line);
 			
@@ -72,11 +84,25 @@ public class ImportBudget extends WrapperTest{
 		}
 	}
 	
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void ValidateCostOfRevenues(){
 		Map<String, List<String>> revenuesValues = allMaps.get("Cost of Revenues");
 		for(String line : revenuesValues.keySet()){
-			List<String> values = revenuesValues.get(line);
+			List<String> expectedValues = revenuesValues.get(line);
+			List<String> values = new ArrayList<>();
+			
+			for(int x=0;x < expectedValues.size(); x++){
+				if(expectedValues.get(x).equals("-"))
+					values.add(expectedValues.get(x));
+				else{
+					int value= Math.round(Float.parseFloat(expectedValues.get(x).replaceAll("[^0-9 .]", "").trim()));
+					//value = (int) Math.round(value);
+					String expected = value +"";
+					values.add(expected);
+				}
+					
+			}
+			
 			
 			secondaryBoard.clickOnSubLine("Cost of Revenues", line);
 			
@@ -106,7 +132,18 @@ public class ImportBudget extends WrapperTest{
 	public void ValidateOperationalExpenses(){
 		Map<String, List<String>> revenuesValues = allMaps.get("Operational Expenses");
 		for(String line : revenuesValues.keySet()){
-			List<String> values = revenuesValues.get(line);
+			List<String> expectedValues = revenuesValues.get(line);
+			List<String> values = new ArrayList<>();
+			for(int x=0;x < expectedValues.size(); x++){
+				if(expectedValues.get(x).equals("-"))
+					values.add(expectedValues.get(x));
+				else{
+					int value= Math.round(Float.parseFloat(expectedValues.get(x).replaceAll("[^0-9 .]", "").trim()));
+					String expected = value +"";
+					values.add(expected);
+				}
+					
+			}
 			
 			secondaryBoard.clickOnSubLine("Operational Expenses", line);
 			
@@ -187,12 +224,23 @@ public class ImportBudget extends WrapperTest{
 		}
 	}
 	
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void ValidateOtherIncomeAndExpenses(){
 		Map<String, List<String>> revenuesValues = allMaps.get("Other income and expenses");
 		for(String line : revenuesValues.keySet()){
-			List<String> values = revenuesValues.get(line);
+			List<String> expectedValues = revenuesValues.get(line);
+			List<String> values = new ArrayList<>();
 			
+			for(int x=0;x < expectedValues.size(); x++){
+				if(expectedValues.get(x).equals("-"))
+					values.add(expectedValues.get(x));
+				else{
+					int value= Math.round(Float.parseFloat(expectedValues.get(x).replaceAll("[^0-9 .]", "").trim()));
+					String expected = value +"";
+					values.add(expected);
+				}
+					
+			}
 			secondaryBoard.clickOnSubLine("Other income and expenses", line);
 			
 			

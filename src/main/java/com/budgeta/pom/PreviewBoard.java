@@ -35,6 +35,7 @@ public class PreviewBoard extends AbstractPOM{
 	
 	public PreviewBoard(){
 		List<WebElement> header = wrapper.findElements(By.cssSelector("div.forecast-header div.scroll-columns div.column"));
+		
 	//	WebElementUtils.hoverOverField(header.get(header.size()-1), driver, null);
 		for(int i = 0 ; i < header.size()-1 ; i++){
 			WebElementUtils.hoverOverField(header.get(i), driver, null);

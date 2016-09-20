@@ -7,7 +7,6 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.budgeta.pom.BillingsSection;
-import com.budgeta.pom.BudgetNavigator;
 import com.budgeta.pom.BudgetSettings;
 import com.budgeta.pom.BudgetaBoard;
 import com.budgeta.pom.CommentsSection;
@@ -48,12 +47,6 @@ public class BudgetaStructureTest extends WrapperTest {
 	String OtherIncomeAndExpensesSub_SubLine = "Simple_";
 	private TopHeaderBar topHeaderBar;
 
-//	@BeforeMethod
-//	private void initTest() {	
-//		//((JavascriptExecutor)driver).executeScript("");
-//		
-//		driver.manage().window().maximize();
-//	}
 
 	@TestFirst
 	@Test(enabled = true)
@@ -61,10 +54,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		BudgetaCommon create = new BudgetaCommon();
 		create.createBudget();
 		secondaryBoard = board.getSecondaryBoard();
-		//BudgetNavigator navigator = new BudgetNavigator();
-		//navigator.selectRandomBudgeta();
-		//navigator.selectRandomBudgetWithPrefix("aaaa");
-		//navigator.openInputTab();
+
 		
 		secondaryBoard.addAllBudgetLines();
 		secondaryBoard = new SecondaryBoard();
@@ -81,7 +71,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		secondaryBoard.addSubLineForLine(cost_of_revenues, cost_of_revenues_subLine);
 		secondaryBoard = new SecondaryBoard();
 
-		//secondaryBoard.addSubLineForSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages);
+
 		secondaryBoard.addSubLine(OperationalExpenses);
 		secondaryBoard.addAllSubBudgetLines();
 		secondaryBoard = new SecondaryBoard();
@@ -90,7 +80,6 @@ public class BudgetaStructureTest extends WrapperTest {
 		employee = WebdriverUtils.getTimeStamp(employee);
 		subLine.setName(employee);
 		subLine.clickAdd();
-//		secondaryBoard.selectDropDownInLine("Select Grouping", "No Grouping");
 
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLine(OtherIncomeAndExpensesLine);
@@ -98,8 +87,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLineForLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine);
 		secondaryBoard = new SecondaryBoard();
-		// secondaryBoard.addSubLinrForSubLine(OtherIncomeAndExpensesLine,
-		// OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
+
 		secondaryBoard.addSubLineForSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.openAddChild(OtherIncomeAndExpensesSubLine, 2);
@@ -125,11 +113,9 @@ public class BudgetaStructureTest extends WrapperTest {
 		from.setYear(data.get("DateRange_from_year"));
 		from.setMonth(data.get("DateRange_from_month"));
 
-		//DateRange to = general.openDateRangeTo();
 		from.setYear(data.get("DateRange_to_year"));
 		from.setMonth(data.get("DateRange_to_month"));
 
-		//general.selectCurrency(data.get("Currency"));
 
 		general.setAccountNumberInRowByIndex(1, data.get("AccountNumber"));
 		
@@ -166,7 +152,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+
 		}
 	}
 
@@ -276,11 +262,6 @@ public class BudgetaStructureTest extends WrapperTest {
 			
 			general.setNotes(data.get("Notes"));
 			board.clickSaveChanges();
-		//	board.clickSaveChanges();
-			// CommentsSection comments = new CommentsSection();
-			// Assert.assertTrue(comments.isDisplayed(),
-			// "expected comments section to be displayed");
-			// comments.setComments(data.get("Comments"));
 
 			// start validation
 			int payAfter, supportPercent, supportPeriod, growth;
@@ -312,8 +293,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			toExactMonth = BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getGeneralDateRangeTo().split("/")[0]));
 			toExactYear = general.getGeneralDateRangeTo().split("/")[1];
 
-		//	board.clickSaveChanges();
-		//	board.clickSaveChanges();
+
 			topHeaderBar = new TopHeaderBar();
 			if (data.get("Repeat").equals("Once")) {
 				String[] expectedValues = BudgetaUtils.calculateValues_Once(monthX, yearX, monthY, yearY, data.get("OnDate_Month"), data.get("OnDate_Year"),
@@ -364,13 +344,9 @@ public class BudgetaStructureTest extends WrapperTest {
 		from.setYear(data.get("DateRange_from_year"));
 		from.setMonth(data.get("DateRange_from_month"));
 
-		//DateRange to = general.openDateRangeTo();
 		from.setYear(data.get("DateRange_to_year"));
 		from.setMonth(data.get("DateRange_to_month"));
 
-	//	general.selectCurrency(data.get("Currency"));
-
-	//	general.setDepartment(data.get("Departments"));
 		if (!data.get("AccountNumber").isEmpty())
 		{
 			TopHeaderBar topheader = new TopHeaderBar();
@@ -437,8 +413,6 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-		//	Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
-			//Assert.assertEquals(general.getDepartment(), data.get("Departments"));
 			Assert.assertEquals(general.getGeography(), data.get("Geography"));
 			Assert.assertEquals(general.getProduct(), data.get("Product"));
 
@@ -471,7 +445,6 @@ public class BudgetaStructureTest extends WrapperTest {
 		from.setYear(data.get("DateRange_from_year"));
 		from.setMonth(data.get("DateRange_from_month"));
 
-	//	DateRange to = general.openDateRangeTo();
 		from.setYear(data.get("DateRange_to_year"));
 		from.setMonth(data.get("DateRange_to_month"));
 
@@ -560,8 +533,6 @@ public class BudgetaStructureTest extends WrapperTest {
 
 		board = new BudgetaBoard();
 		secondaryBoard = board.getSecondaryBoard();
-		//secondaryBoard.clickOnSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages, employee);
-		//secondaryBoard.clickOnSubLine(OperationalExpenses, OperationalExpensesSubline);
 		secondaryBoard.clickOnSubLine(OperationalExpenses, OperationalExpensesSubline, employee);
 		secondaryBoard = new SecondaryBoard();
 
@@ -753,7 +724,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		to.setYear(data.get("DateRange_to_year"));
 		to.setMonth(data.get("DateRange_to_month"));
 
-		//general.selectCurrency(data.get("Currency"));
+
 
 		if (!data.get("AccountNumber").isEmpty())
 		{
@@ -806,7 +777,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-		//	Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+
 		}
 	}
 
@@ -830,7 +801,7 @@ public class BudgetaStructureTest extends WrapperTest {
 		to.setYear(data.get("DateRange_to_year"));
 		to.setMonth(data.get("DateRange_to_month"));
 
-		//general.selectCurrency(data.get("Currency"));
+
 
 		if (!data.get("AccountNumber").isEmpty())
 		{
@@ -898,7 +869,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+
 		}
 
 	}
@@ -923,7 +894,6 @@ public class BudgetaStructureTest extends WrapperTest {
 		to.setYear(data.get("DateRange_to_year"));
 		to.setMonth(data.get("DateRange_to_month"));
 
-	//	general.selectCurrency(data.get("Currency"));
 
 		if (!data.get("AccountNumber").isEmpty())
 		{
@@ -992,7 +962,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+
 		}
 
 	}
@@ -1013,11 +983,11 @@ public class BudgetaStructureTest extends WrapperTest {
 		from.setYear(data.get("DateRange_from_year"));
 		from.setMonth(data.get("DateRange_from_month"));
 
-		//DateRange to = general.openDateRangeTo();
+
 		from.setYear(data.get("DateRange_to_year"));
 		from.setMonth(data.get("DateRange_to_month"));
 
-	//	general.selectCurrency(data.get("Currency"));
+
 
 		if (!data.get("AccountNumber").isEmpty())
 		{
@@ -1086,7 +1056,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+
 		}
 
 	}
@@ -1129,7 +1099,7 @@ public class BudgetaStructureTest extends WrapperTest {
 			from.setYear(data.get("DateRange_from_year"));
 			from.setMonth(data.get("DateRange_from_month"));
 		}
-	//	DateRange to = general.openDateRangeTo();
+
 		if (!data.get("DateRange_to_year").isEmpty()) {
 			from.setYear(data.get("DateRange_to_year"));
 			from.setMonth(data.get("DateRange_to_month"));
@@ -1200,7 +1170,7 @@ public class BudgetaStructureTest extends WrapperTest {
 
 			secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine);
 
-			// yearY = dateTo.split("/")[1];
+
 			secondaryBoard.clickOnSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
 
 			if (data.get("PaymentAfter").isEmpty())
@@ -1213,12 +1183,6 @@ public class BudgetaStructureTest extends WrapperTest {
 			else
 				growth = Integer.parseInt(data.get("GrowthPercentage"));
 
-			// monthX =
-			// BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getDateRangeFrom().split("/")[0]));
-			// yearX = general.getDateRangeFrom().split("/")[1];
-			// monthY =
-			// BudgetaUtils.getMonthWithIndex(Integer.parseInt(general.getDateRangeTo().split("/")[0]));
-			// yearY = general.getDateRangeTo().split("/")[1];
 
 			board.clickSaveChanges();
 			general = new GeneralSection();
@@ -1267,22 +1231,13 @@ public class BudgetaStructureTest extends WrapperTest {
 
 	private void compareExpectedResults(String[] expectedValues) {
 		int total = 0;
-		/*
-		 * for (int i = 0; i < expectedValues.length; i++) { if
-		 * (!expectedValues[i].equals("-")) {
-		 * 
-		 * // expectedValues[i] = String.format("%.2f", expectedValues[i]);
-		 * 
-		 * expectedValues[i] =
-		 * String.valueOf(round(Double.parseDouble(expectedValues[i]), 2)); } }
-		 */
 
 		PreviewBoard preview = new PreviewBoard();
 		for (int i = 0; i < expectedValues.length; i++) {
 			Assert.assertEquals(preview.getValueByIndex(i), expectedValues[i], "error in calculation budgets in index: " + i);
 			if (!expectedValues[i].equals("-"))
 				total += Integer.parseInt(expectedValues[i]);
-			// total += Float.parseFloat(expectedValues[i]);
+
 		}
 		for (int i = expectedValues.length; i < preview.getValuesSize(); i++) {
 			Assert.assertEquals(preview.getValueByIndex(i), "-", "error in calculation budgets in index: " + i);
@@ -1293,10 +1248,4 @@ public class BudgetaStructureTest extends WrapperTest {
 			Assert.assertEquals(Integer.parseInt(preview.getTotalValue()), total, (int) (0.5 * preview.getValuesSize()));
 	}
 
-	// public double round(double value, int numberOfDigitsAfterDecimalPoint) {
-	// BigDecimal bigDecimal = new BigDecimal(value);
-	// bigDecimal = bigDecimal.setScale(numberOfDigitsAfterDecimalPoint,
-	// BigDecimal.ROUND_HALF_UP);
-	// return bigDecimal.doubleValue();
-	// }
 }

@@ -33,25 +33,16 @@ public class BudgetLineSettingsTest extends WrapperTest {
 	SecondaryBoard secondary;
 	
 
-//	@BeforeMethod
-//	private void initTest() {
-//
-//		driver.manage().window().maximize();
-//
-//	}
-
 	@TestFirst
 	@Test(enabled = true)
 	public void CreateSettingTest() {
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
 		navigator.selectRandomBudgeta();
-		//navigator.selectRandomBudgetWithPrefix("Revenues Budget");
 
 		budgetNavigator = new BudgetNavigator();
 		budgetNavigator.openInputTab();
 
-		//secondary.addLine("Revenues");
 		secondary = new SecondaryBoard();
 
 	}
@@ -62,7 +53,6 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		WebdriverUtils.sleep(1000);
 		SecondaryBoard secondary = board.getSecondaryBoard();
 		String lineName = secondary.getFirstLineName();
-		// secondary.selectRandomBudgetWithPrefix("budget7_144215547406");
 		MenuTrigger trigger = secondary.getLineSettings(lineName);
 		int num = secondary.getNumberOfLines(lineName);
 		trigger.clickDuplicate();
@@ -94,7 +84,7 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		String lineName = secondary.getFirstLineName();
 		int num = secondary.getNumberOfSubLinesForLine("Other income and expenses", "Revenues");
 		int num2;
-		// secondary = new SecondaryBoard();
+
 		if (secondary.isLineExist("Other income and expenses") == true) {
 			MenuTrigger trigger = secondary.getLineSettings(lineName);
 			secondary = trigger.clickMove();
@@ -107,7 +97,6 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		num2 = secondary.getNumberOfSubLinesForLine("Other income and expenses", "Revenues");
 		Assert.assertTrue(num2 > num, "The line is Moved, before move: " + num + "... after move: " + num2);
 
-		// secondary.getNumberOfSubLinesForLine("Other income and expenses","Revenues");
 	}
 
 	@Test(enabled = true, priority = 4)
@@ -138,7 +127,6 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		MenuTrigger trigger = secondary.getLineSettings(lineName);
 		trigger.clickRename();
 
-		// smallPopup.setName(budgetLineName);
 
 		secondary.RenameLine(budgetLineName);
 		Assert.assertTrue(secondary.isLineExist(budgetLineName), "expected to rename the line");
@@ -188,7 +176,6 @@ public class BudgetLineSettingsTest extends WrapperTest {
 		Assert.assertTrue(popup.isDisplayed(), "expected delete popup to be displayed");
 		popup.clickConfirm();
 
-		// Assert.assertFalse(secondary.isLineExist(budgetLineName),"Budget line is deleted");
 		int num2 = secondary.getNumberOfLines(lineName);
 		Assert.assertTrue(num2 == (num - 1), "the line is deleted, number of lines was: " + num + "and now is: " + num2);
 

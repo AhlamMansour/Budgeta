@@ -50,36 +50,10 @@ public class BudgetaStructureTest_Part3 extends WrapperTest{
 		BudgetaCommon create = new BudgetaCommon();
 		create.createBudget();
 		secondaryBoard = board.getSecondaryBoard();
-		//BudgetNavigator navigator = new BudgetNavigator();
-		//navigator.selectRandomBudgeta();
-		//navigator.selectRandomBudgetWithPrefix("aaaa");
-		//navigator.openInputTab();
-		
+
 		secondaryBoard.addAllBudgetLines();
 		secondaryBoard = new SecondaryBoard();
-//		secondaryBoard.addSubLine("Revenues");
 		RevenuesAddSubLine subLine = new RevenuesAddSubLine();
-//		subLine.setName(revenuesSubLine);
-//		subLine.selectDropDown("Perpetual License");
-//		subLine.clickAdd();
-//
-//		secondaryBoard = new SecondaryBoard();
-//		secondaryBoard.addSubLine(cost_of_revenues);
-//		secondaryBoard.addAllSubBudgetLines();
-//		secondaryBoard = new SecondaryBoard();
-//		secondaryBoard.addSubLineForLine(cost_of_revenues, cost_of_revenues_subLine);
-//		secondaryBoard = new SecondaryBoard();
-
-		//secondaryBoard.addSubLineForSubLine(cost_of_revenues, cost_of_revenues_subLine, salary_and_wages);
-//		secondaryBoard.addSubLine(OperationalExpenses);
-//		secondaryBoard.addAllSubBudgetLines();
-//		secondaryBoard = new SecondaryBoard();
-//		secondaryBoard.openAddChild(OperationalExpensesSubline, 2);
-//		subLine = new RevenuesAddSubLine();
-//		employee = WebdriverUtils.getTimeStamp(employee);
-//		subLine.setName(employee);
-//		subLine.clickAdd();
-//		secondaryBoard.selectDropDownInLine("Select Grouping", "No Grouping");
 
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLine(OtherIncomeAndExpensesLine);
@@ -87,8 +61,7 @@ public class BudgetaStructureTest_Part3 extends WrapperTest{
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.addSubLineForLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine);
 		secondaryBoard = new SecondaryBoard();
-		// secondaryBoard.addSubLinrForSubLine(OtherIncomeAndExpensesLine,
-		// OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
+
 		secondaryBoard.addSubLineForSubLine(OtherIncomeAndExpensesLine, OtherIncomeAndExpensesSubLine, OtherIncomeAndExpensesSub_SubLine);
 		secondaryBoard = new SecondaryBoard();
 		secondaryBoard.openAddChild(OtherIncomeAndExpensesSubLine, 2);
@@ -187,7 +160,7 @@ public class BudgetaStructureTest_Part3 extends WrapperTest{
 			Assert.assertEquals(general.getGeneralDateRangeFrom(),
 					BudgetaTest.getDateByNumbersFormat(data.get("DateRange_from_month"), data.get("DateRange_from_year")));
 			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(data.get("DateRange_to_month"), data.get("DateRange_to_year")));
-			//Assert.assertEquals(general.getSelectedCurrency(), data.get("Currency"));
+			
 		}
 
 	}
@@ -292,8 +265,7 @@ public class BudgetaStructureTest_Part3 extends WrapperTest{
 		if (data.get("ShouldPass").equals("FALSE")) {
 			Assert.assertTrue(billings.isBillingsHasError() || general.isGeneralHasError(), "expected to error in billings section");
 		} else {
-			// //////////////////////////////////////////////////////////////////
-			//board.clickSaveChanges();
+
 
 	
 			int payAfter, growth;
@@ -314,7 +286,7 @@ public class BudgetaStructureTest_Part3 extends WrapperTest{
 				growth = Integer.parseInt(data.get("GrowthPercentage"));
 
 
-			//board.clickSaveChanges();
+
 			general = new GeneralSection();
 			String dateFrom = general.getGeneralDateRangeFrom();
 			String dateTo = general.getGeneralDateRangeTo();

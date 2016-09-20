@@ -45,25 +45,4 @@ public class RestoreBudgetTest extends WrapperTest{
 		
 		
 	}
-	
-	
-	
-/*	
-	@Test(enabled = true)
-	public void restoreBudgetTest(){
-		
-		secondaryBoard = board.getSecondaryBoard();
-		BudgetNavigator navigator = new BudgetNavigator();
-		int num = navigator.getNumberOfBudgetsWithName("RestoreTest");
-		navigator.selectRandomBudgetWithPrefix("RestoreTest");
-		NewBudgetPopup popup = secondaryBoard.addBudgeta();
-		
-		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");
-		popup.clickRestoreAndUpload("C:\\RestoreTest.bdg");
-		secondaryBoard = board.getSecondaryBoard();
-		int num2 = navigator.getNumberOfBudgetsWithName("RestoreTest");
-		Assert.assertEquals(num + 1 , num2);
-	}
-	
-*/
 }

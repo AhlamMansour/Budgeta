@@ -310,6 +310,7 @@ public class EmployeeTableEdit extends AbstractPOM {
 
 	public List<String> getAllDepartmentForAllLines() {
 		List<String> departmentsList = new ArrayList<>();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		for (WebElement el : departmentLine) {
 			departmentsList.add(el.getAttribute("title"));
 			
@@ -322,6 +323,7 @@ public class EmployeeTableEdit extends AbstractPOM {
 
 	public List<String> getAllGeographyForAllLines() {
 		List<String> geographyList = new ArrayList<>();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		for (WebElement el : geographyLine) {
 			geographyList.add(el.getAttribute("title"));
 			
@@ -334,6 +336,7 @@ public class EmployeeTableEdit extends AbstractPOM {
 	
 	public List<String> getAllTypeForAllLines() {
 		List<String> typeList = new ArrayList<>();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		for (WebElement el : typeLine) {
 			typeList.add(el.getAttribute("title"));
 			
@@ -346,6 +349,7 @@ public class EmployeeTableEdit extends AbstractPOM {
 	
 	public List<String> getAllStatusForAllLines() {
 		List<String> statusList = new ArrayList<>();
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		for (WebElement el : statusLine) {
 			statusList.add(el.getAttribute("title"));
 			

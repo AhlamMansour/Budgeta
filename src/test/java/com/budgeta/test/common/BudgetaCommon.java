@@ -31,12 +31,12 @@ public class BudgetaCommon extends WrapperTest{
 	
 	@Test
 	public void createBudget(){
-		//driver.get(baseURL);
+
 		
 		BudgetaBoard board = new BudgetaBoard();
 		SecondaryBoard secondaryBoard = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
-		//WebdriverUtils.waitForBudgetaLoadBar(driver);
+
 		navigator.openInputTab();
 		NewBudgetPopup popup = navigator.addNewBudget();
 		String budgetaName = "Test Budget";
@@ -49,7 +49,6 @@ public class BudgetaCommon extends WrapperTest{
 		from.setYear(setFromYear);
 		from.setMonth(setFromMonth);
 		
-		//DateRange to = popup.openDateRangeTo();
 		from.setYear(setToYear);
 		from.setMonth(setToMonth);
 		
@@ -84,7 +83,6 @@ public class BudgetaCommon extends WrapperTest{
 			Assert.assertEquals(general.getGeneralDateRangeFrom(), BudgetaTest.getDateByNumbersFormat(setFromMonth, setFromYear));
 			Assert.assertEquals(general.getGeneralDateRangeTo(), BudgetaTest.getDateByNumbersFormat(setToMonth, setToYear));
 			Assert.assertEquals(general.getSelectedCurrency(), currency);
-			//secondaryBoard.addAllLines();
 			
 	
 		}

@@ -3,7 +3,6 @@ package com.budgeta.test.BudgetSettings;
 import java.io.File;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -17,11 +16,9 @@ import com.budgeta.pom.SmallPopup;
 import com.budgeta.pom.SuccessPage;
 import com.budgeta.pom.Versions;
 import com.budgeta.test.WrapperTest;
-import com.galilsoftware.AF.core.listeners.KnownIssue;
 import com.galilsoftware.AF.core.listeners.MethodListener;
 import com.galilsoftware.AF.core.listeners.TestFirst;
 import com.galilsoftware.AF.core.listeners.TestNGListener;
-import com.galilsoftware.AF.core.utilities.WebElementUtils;
 import com.galilsoftware.AF.core.utilities.WebdriverUtils;
 
 
@@ -37,14 +34,6 @@ public class BudgetSettingsTest extends WrapperTest {
 	SuccessPage successPage;
 	SmallPopup smallPopup;
 
-//	@BeforeMethod
-//	private void initTest() {	
-//		
-//		driver.manage().window().maximize();
-//		
-//		
-//	}
-	
 	@TestFirst
 	@Test(enabled = true)
 	public void CreateSettingTest() {
@@ -147,26 +136,6 @@ public class BudgetSettingsTest extends WrapperTest {
 	}
 	
 	
-//	@Test(enabled = true, priority = 5)
-//	public void restoreBudgetTest(){
-//		WebdriverUtils.sleep(1000);
-//		secondary = board.getSecondaryBoard();
-//		BudgetNavigator navigator = new BudgetNavigator();
-//		String budgetName = secondary.getSelectedBudgetName();
-//		int num = navigator.getNumberOfBudget(budgetName);
-//		
-//		NewBudgetPopup popup = navigator.addNewBudget();
-//		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");
-//		popup.clickRestoreAndUpload(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
-//		board = new BudgetaBoard();
-//		String message = board.getNotyMessage();
-//		Assert.assertEquals(message, "Budget restored successfully.");
-//		navigator = new BudgetNavigator();
-//		int num2 = navigator.getNumberOfBudget(budgetName);
-//		Assert.assertEquals(num2,num + 1 );
-//		
-//		
-//	}
 	
 	@Test(enabled = true, priority = 8)
 	public void restoreBudgetTest(){
@@ -174,13 +143,10 @@ public class BudgetSettingsTest extends WrapperTest {
 		secondary = board.getSecondaryBoard();
 		BudgetNavigator navigator = new BudgetNavigator();
 		String budgetName = secondary.getSelectedBudgetName();
-		//int num = navigator.getNumberOfBudget(budgetName);
-		
-//		NewBudgetPopup popup = navigator.addNewBudget();
-//		Assert.assertTrue(popup.isDisplayed(), "expected create budget popup to be displayed");
+
 		MenuTrigger trigger = navigator.getMenuTrigger();
 		trigger.clickRestoreBudget(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
-		//popup.clickRestoreAndUpload(new File("").getAbsolutePath() + "/browserDownloads/" + budgetName + ".bdg");
+
 		board = new BudgetaBoard();
 		
 		SmallPopup popup = new SmallPopup();
@@ -188,9 +154,7 @@ public class BudgetSettingsTest extends WrapperTest {
 		popup.clickConfirm();
 		String message = board.getNotyMessage();
 		Assert.assertEquals(message, "Budget restored successfully.");
-//		navigator = new BudgetNavigator();
-//		int num2 = navigator.getNumberOfBudget(budgetName);
-//		Assert.assertEquals(num2,num + 1 );
+
 		
 		
 	}
@@ -251,26 +215,6 @@ public class BudgetSettingsTest extends WrapperTest {
 		navigator.setBudgetTitle(BeforeRenameBudget);
 	}
 	
-	
-
-	@Test(enabled = false, priority = 9)
-	public void DeleteAllBudgetTest() {
-		WebdriverUtils.sleep(1000);
-		SecondaryBoard secondary = board.getSecondaryBoard();
-		BudgetNavigator navigator = new BudgetNavigator();
-		MenuTrigger trigger = navigator.getMenuTrigger();
-
-		String BudgetName = secondary.getSelectedBudgetName();
-		int num = navigator.getNumberOfBudget(BudgetName);
-		DeletePopup popup = trigger.clickDeleteAllBudget();
-//		Assert.assertTrue(popup.isDisplayed(), "expected delete popup to be displayed");
-//		popup.clickConfirm();
-
-		int num2 = navigator.getNumberOfBudget(BudgetName);
-		
-		Assert.assertFalse(num == (num - 1), "The budget was successfully deleted, number of budget was:" + num + " now is:" + num2);
-
-	}
 	
 
 }
