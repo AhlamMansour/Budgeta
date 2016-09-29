@@ -182,6 +182,7 @@ public class GeneralSection extends AbstractPOM{
 	}
 	
 	public String getNoteText(){
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		return notes.findElement(By.tagName("textarea")).getAttribute("value");
 	}
 	public void setAccountNumberInRowByIndex(int indexOfRow, String value){

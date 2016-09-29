@@ -84,6 +84,18 @@ public class GeneralFieldsTableEditTest extends WrapperTest {
 		topHeaderBar.openTableEditTab();
 		generalTableEdit = new GeneralTableEdit();
 		generalTableEdit.clickOnGeneralFields();
+		int numberOfLine = generalTableEdit.getNumberOflines();
+		while(numberOfLine == 0){
+			BudgetNavigator navigator = new BudgetNavigator();
+			navigator.selectRandomBudgeta();
+			topHeaderBar.openTableEditTab();
+			generalTableEdit = new GeneralTableEdit();
+			generalTableEdit.clickOnGeneralFields();
+			numberOfLine = generalTableEdit.getNumberOflines();
+		}
+		topHeaderBar.openTableEditTab();
+		generalTableEdit = new GeneralTableEdit();
+		generalTableEdit.clickOnGeneralFields();
 		generalTableEdit.selectRandomLine();
 		int indexOfSelectedLine = generalTableEdit.getIndexOfSlectedLine();
 		String selectedLine = generalTableEdit.getLineNameByIndex(indexOfSelectedLine);

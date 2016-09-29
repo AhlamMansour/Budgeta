@@ -20,6 +20,9 @@ public class BudgetaBoard extends AbstractPOM {
 	@FindBy(className = "center")
 	private WebElement centerBar;
 
+	@FindBy(className = "noty_text")
+	private WebElement notifyMessage;
+	
 	private final By noty_message = By.className("noty_text");
 
 	private GeneralSection generalSection;
@@ -44,6 +47,9 @@ public class BudgetaBoard extends AbstractPOM {
 		return bottomBar.getAttribute("class").contains("changed");
 	}
 
+	public boolean isNotyMessageDispaly(){
+		return notifyMessage.isDisplayed();
+	}
 	public String getNotyMessage() {
 		//WebdriverUtils.waitForBudgetaBusyBar(driver);
 		String notyMessage = "no_message";

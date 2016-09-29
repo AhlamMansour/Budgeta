@@ -186,6 +186,7 @@ public class GeneralTableEdit extends AbstractPOM {
 	}
 
 	public void selectRandomLine() {
+		WebdriverUtils.waitForBudgetaLoadBar(driver);
 		int random = WebElementUtils.getRandomNumberByRange(1, getNumberOflines() - 1);
 
 		checkbox.get(random).click();
